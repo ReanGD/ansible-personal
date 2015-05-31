@@ -60,12 +60,29 @@ class Config(object):
         self.ignore_groups = set(config_data["ignore_groups"])
 
 
+def gen_install_list(pkgs, gen_list=None, parent=None):
+    if gen_list is None:
+        gen_list = []
+    if parent not in gen_list:
+        for it in pkgs if parent is None else pkgs[parent]:
+            if it not in gen_list:
+                gen_install_list(pkgs, gen_list, it)
+
+        if parent is not None:
+            gen_list.append(parent)
+
+    return gen_list
+
 mng = get_package_manager()
 cfg = Config("config.py")
 
-ignore_pkgs = mng.groups_depend_packages(cfg.ignore_groups)
-explicit_pkgs = mng.explicit_packages()
-new_pkgs = explicit_pkgs.difference(ignore_pkgs, cfg.packages)
-print(len(new_pkgs))
-print(new_pkgs)
-print(len(cfg.packages.intersection(ignore_pkgs)))
+pkgs = {}
+for pkg in cfg.packages:
+    pkgs[pkg] = mng.depend_packages(pkg).intersection(cfg.packages)
+print(gen_install_list(pkgs))
+# ignore_pkgs = mng.groups_depend_packages(cfg.ignore_groups)
+# explicit_pkgs = mng.explicit_packages()
+# new_pkgs = explicit_pkgs.difference(ignore_pkgs, cfg.packages)
+# print(len(new_pkgs))
+# print(new_pkgs)
+# print(len(cfg.packages.intersection(ignore_pkgs)))
