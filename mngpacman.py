@@ -73,13 +73,18 @@ def gen_install_list(pkgs, gen_list=None, parent=None):
 
     return gen_list
 
+
+def gen_install_script(pkgs):
+    return os.linesep.join(["yaourt -S --needed {0}".format(pkg)
+                            for pkg in gen_install_list(pkgs)])
+
 mng = get_package_manager()
 cfg = Config("config.py")
 
 pkgs = {}
 for pkg in cfg.packages:
     pkgs[pkg] = mng.depend_packages(pkg).intersection(cfg.packages)
-print(gen_install_list(pkgs))
+print(gen_install_script(pkgs))
 # ignore_pkgs = mng.groups_depend_packages(cfg.ignore_groups)
 # explicit_pkgs = mng.explicit_packages()
 # new_pkgs = explicit_pkgs.difference(ignore_pkgs, cfg.packages)
