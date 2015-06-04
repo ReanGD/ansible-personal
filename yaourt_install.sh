@@ -1,5 +1,7 @@
 #!/bin/bash
 
+yaourt -S --needed --noconfirm curl
+
 rm -rf /tmp/yaourt
 mkdir -p /tmp/yaourt
 
