@@ -57,6 +57,7 @@ class Config(object):
         config_data = {}
         exec(open(path).read(), config_data)
         self.packages = set(config_data["packages"])
+        self.ignore_packages = set(config_data["ignore_packages"])
         self.ignore_groups = set(config_data["ignore_groups"])
 
 
@@ -81,13 +82,14 @@ def gen_install_script(pkgs):
 mng = get_package_manager()
 cfg = Config("config.py")
 
-pkgs = {}
-for pkg in cfg.packages:
-    pkgs[pkg] = mng.depend_packages(pkg).intersection(cfg.packages)
-print(gen_install_script(pkgs))
-# ignore_pkgs = mng.groups_depend_packages(cfg.ignore_groups)
-# explicit_pkgs = mng.explicit_packages()
-# new_pkgs = explicit_pkgs.difference(ignore_pkgs, cfg.packages)
-# print(len(new_pkgs))
-# print(new_pkgs)
-# print(len(cfg.packages.intersection(ignore_pkgs)))
+# pkgs = {}
+# for pkg in cfg.packages:
+#     pkgs[pkg] = mng.depend_packages(pkg).intersection(cfg.packages)
+# print(gen_install_script(pkgs))
+ignore_pkgs = mng.groups_depend_packages(cfg.ignore_groups)
+ignore_pkgs.update(cfg.ignore_packages)
+explicit_pkgs = mng.explicit_packages()
+new_pkgs = explicit_pkgs.difference(ignore_pkgs, cfg.packages)
+print(len(new_pkgs))
+print(new_pkgs)
+print(len(cfg.packages.intersection(ignore_pkgs)))
