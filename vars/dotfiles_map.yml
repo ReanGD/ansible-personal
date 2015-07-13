@@ -1,0 +1,11 @@
+---
+usr_cfg:
+  - {src: ".config/bin",     dst: "~/.config/bin" }
+  - {src: ".config/ansible", dst: "~/.config/ansible" }
+  - {src: ".config/awesome", dst: "~/.config/awesome" }
+  - {src: ".config/enchant", dst: "~/.config/enchant" }
+  - {src: ".config/emacs",   dst: "~/.config/emacs" }
+  - {src: ".config/qtile",   dst: "~/.config/qtile" }
+  - {src: ".config/zsh",     dst: "~/.config/zsh" }
+  - {src: ".config/firefox", dst: "~/.config/firefox" }
+  - {src: ".config/git",     dst: "~/.config/git" }

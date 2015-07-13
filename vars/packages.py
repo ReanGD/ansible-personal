@@ -1,8 +1,7 @@
 pkgs = []
 
 # font packages
-pkgs += ["freetype2-ubuntu",
-         "fontconfig-ubuntu",
+pkgs += ["fontconfig-ubuntu",
          "cairo-ubuntu",
          "ttf-ms-fonts",
          "ttf-fixedsys-excelsior-linux",
@@ -36,6 +35,9 @@ pkgs += ["python",
 
 # text editors
 pkgs += ["emacs", "vim", "sublime-text-nightly"]
+
+# file managers
+pkgs += ["doublecmd-gtk2"]
 
 # git
 pkgs += ["git", "meld"]

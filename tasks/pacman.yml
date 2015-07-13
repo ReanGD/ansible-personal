@@ -1,0 +1,7 @@
+---
+- name: Copy pacman configuration
+  copy: src=files/pacman.conf dest=/etc/pacman.conf owner=root group=root mode=0644
+
+- name: Update pacman cache
+  shell: /usr/bin/pacman -Syy
+  changed_when: false
