@@ -10,7 +10,8 @@ else:
     pkgs += ["mesa",
              "xf86-video-intel",
              "lib32-intel-dri",
-             "xf86-input-synaptics"]
+             "xf86-input-synaptics",
+             "broadcom-wl"]     # wi-fi
 
 # font packages
 pkgs += ["fontconfig-ubuntu",
@@ -26,7 +27,8 @@ pkgs += ["fontconfig-ubuntu",
 pkgs += ["rxvt-unicode-patched", "urxvt-perls-git", "zsh", "oh-my-zsh-git"]
 
 # system
-pkgs += ["polkit",
+pkgs += ["grub",
+         "polkit",
          "htop",
          "xcursor-aero",
          "pkgfile",    # pkgfile makepkg (get package for makepkg)
@@ -35,7 +37,10 @@ pkgs += ["polkit",
          "autofs"]
 
 # WM
-pkgs += ["awesome",
+pkgs += ["xorg-server",
+         "xorg-xinit",
+         "xorg-server-utils",
+         "awesome",
          "vicious",
          "rofi-git",            # run app menu
          "xcursor-aero"]
@@ -45,7 +50,9 @@ pkgs += ["slim", "slim-themes", "archlinux-themes-slim"]
 
 # net tools
 pkgs += ["wget",
+         "wpa_supplicant",
          "net-tools",
+         "dialog",              # ???
          "wireless_tools",
          "smbclient",
          "nfs-utils",
@@ -66,6 +73,10 @@ pkgs += ["firefox", "firefox-i18n-ru", "flashplugin"]
 
 # cpp
 pkgs += ["boost", "clang", "gtest", "zeromq", "valgrind", "cmake"]
+
+# rust
+pkgs += ["rust-nightly-bin", "racer-git"]
+# rust-doc-git
 
 # python
 pkgs += ["python",
