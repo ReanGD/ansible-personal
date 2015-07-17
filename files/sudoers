@@ -1,0 +1,6 @@
+root ALL=(ALL) ALL
+
+Defaults:{{ user }}	!env_reset
+Defaults:{{ user }}	timestamp_timeout=20
+
+{{ user }}	ALL = (ALL) ALL
