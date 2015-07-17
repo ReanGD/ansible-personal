@@ -4,11 +4,11 @@
   vars:
     ansible_connection: local
     ansible_python_interpreter: /usr/bin/python2
-    # user: rean
+    user: rean
 
   tasks:
-    # - include: tasks/pacman.yml
-    # - include: tasks/git.yml
-    # - include: tasks/aur.yml
-    
-    # - include: tasks/packages.yml
+    - include: tasks/pacman.yml
+    - include: tasks/sudo.yml
+    - include: tasks/aur.yml
+    - include: tasks/git.yml
+    - include: tasks/packages.yml
