@@ -1,10 +1,8 @@
 ---
 - name: Refresh package list
-  sudo: yes
   yaourt: update_cache=yes
 
 - name: Install packages
-  sudo: yes
   yaourt: name={{ item }} state=present
   with_cfg_file: vars/packages.py action=not_installed
 

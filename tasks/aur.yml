@@ -1,3 +1,4 @@
 ---
 - name: Install git
   pacman: name=yaourt state=present
+  sudo: yes
