@@ -1,4 +1,16 @@
+import socket
+
+
 pkgs = []
+
+# drivers
+if socket.gethostname() == "archhost":
+    pkgs += ["mesa", "nvidia"]
+else:
+    pkgs += ["mesa",
+             "xf86-video-intel",
+             "lib32-intel-dri",
+             "xf86-input-synaptics"]
 
 # font packages
 pkgs += ["fontconfig-ubuntu",
@@ -12,6 +24,42 @@ pkgs += ["fontconfig-ubuntu",
 
 # terminal
 pkgs += ["rxvt-unicode-patched", "urxvt-perls-git", "zsh", "oh-my-zsh-git"]
+
+# system
+pkgs += ["polkit",
+         "htop",
+         "xcursor-aero",
+         "pkgfile",    # pkgfile makepkg (get package for makepkg)
+         "rsync",
+         "kbdd",       # daemon to make per window layout
+         "autofs"]
+
+# WM
+pkgs += ["awesome",
+         "vicious",
+         "rofi-git",            # run app menu
+         "xcursor-aero"]
+
+# login manager
+pkgs += ["slim", "slim-themes", "archlinux-themes-slim"]
+
+# net tools
+pkgs += ["wget",
+         "net-tools",
+         "wireless_tools",
+         "smbclient",
+         "nfs-utils",
+         "openssh"]
+
+# remote access
+pkgs += ["teamviewer"]
+
+# audio
+pkgs += ["pulseaudio",
+         "pulseaudio-alsa",
+         "pavucontrol",
+         "lib32-alsa-plugins",
+         "alsa-utils"]
 
 # web
 pkgs += ["firefox", "firefox-i18n-ru", "flashplugin"]
@@ -31,19 +79,37 @@ pkgs += ["python",
          "python-pylint",
          "python2-pylint",
          "flake8",
-         "python2-flake8"]
+         "python2-flake8",
+         "tk"]
 
 # text editors
 pkgs += ["emacs", "vim", "sublime-text-nightly"]
 
 # file managers
-pkgs += ["doublecmd-gtk2"]
+pkgs += ["doublecmd-gtk2", "transmission-remote-gui-bin", "dropbox"]
 
 # git
 pkgs += ["git", "meld"]
 
+# Messengers
+pkgs += ["skype"]
+
 # archive program
 pkgs += ["p7zip", "unzip", "unrar"]
+
+# media
+pkgs += ["shutter",     # screenshots
+         "byzanz-git",  # create gif from screen
+         "gimp",
+         "smplayer",
+         "deadbeef"]
+
+# office
+pkgs += ["libreoffice-fresh",
+         "llpp"]                # pdf viewer
+
+# spell checkers
+pkgs += ["enchant", "hunspell-en", "hunspell-ru-aot", "languagetool"]
 
 # android
 pkgs += ["adb"]
@@ -53,7 +119,12 @@ pkgs += ["xorg-xfontsel",  # font select
          "xorg-xprop",     # window info (xprop | grep WM_CLASS)
          "xorg-xev"]       # keypress info
 
+# VM
+pkgs += ["jre7-openjdk", "docker"]
+
+# game
+pkgs += ["playonlinux"]
 
 packages = pkgs
-ignore_packages = ["yaourt", "package-query"]
+ignore_packages = ["yaourt", "package-query", "ansible"]
 ignore_groups = ["base", "base-devel"]
