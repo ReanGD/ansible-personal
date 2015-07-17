@@ -1,6 +1,7 @@
 ---
 - name: Refresh package list
   yaourt: update_cache=yes
+  changed_when: false
 
 - name: Install packages
   yaourt: name={{ item }} state=present
