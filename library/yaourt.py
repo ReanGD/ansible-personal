@@ -44,16 +44,52 @@ EXAMPLES = '''
 - yaourt: update_cache=yes
 '''
 
+import os
 import os.path
 from ansible.module_utils.basic import *
 
 YAOURT_PATH = "/usr/bin/yaourt"
+PACMAN_PATH = "/usr/bin/pacman"
 
 
 def query_package(module, name):
     lcmd = "pacman -Qi %s" % (name)
     lrc, lstdout, lstderr = module.run_command(lcmd, check_rc=False)
     return lrc == 0
+
+
+def resolve_conflict(module, name):
+    lcmd = "yaourt -Si %s" % (name)
+    lrc, lstdout, lstderr = module.run_command(lcmd, check_rc=False)
+    if lrc != 0:
+        module.fail_json(msg="could not get package info")
+
+    find_line = "Conflicts With :"
+    conflicts = []
+    for line in lstdout.split(os.linesep):
+        if find_line in line:
+            conflicts = line[len(find_line):].split()
+        elif len(conflicts) != 0:
+            if ":" not in line:
+                conflicts += line.split()
+            else:
+                break
+
+    if len(conflicts) == 0:
+        return
+
+    lcmd = "pacman -T %s" % (" ".join(conflicts))
+    lrc, lstdout, lstderr = module.run_command(lcmd, check_rc=False)
+
+    conflicts = list(set(conflicts).difference(set(lstdout.split())))
+    if len(conflicts) == 0:
+        return
+
+    lcmd = "pacman -Rs %s --noconfirm" % (" ".join(conflicts))
+    lrc, lstdout, lstderr = module.run_command(lcmd, check_rc=False)
+    if lrc != 0:
+        msg = "could not remove packages (%s)" % (",".join(conflicts))
+        module.fail_json(msg=msg)
 
 
 def update_package_db(module):
@@ -74,7 +110,8 @@ def install_packages(module, packages):
             cmd = "yaourt -S %s --asexplicit --noconfirm" % (package)
             rc, stdout, stderr = module.run_command(cmd, check_rc=False)
             if rc != 0:
-                module.fail_json(msg="failed to install %s" % (package))
+                msg = "failed to install %s" % (package)
+                module.fail_json(stdout=stdout, stderr=stderr, msg=msg)
             install_c += 1
 
     if install_c != 0:
@@ -110,6 +147,10 @@ def main():
         msg = "cannot find yaourt, looking for %s" % (YAOURT_PATH)
         module.fail_json(msg=msg)
 
+    if not os.path.exists(PACMAN_PATH):
+        msg = "cannot find pacman, looking for %s" % (PACMAN_PATH)
+        module.fail_json(msg=msg)
+
     p = module.params
 
     if p["update_cache"] and not module.check_mode:
@@ -128,6 +169,8 @@ def main():
             check_packages(module, pkgs)
 
         if p['state'] in ['present']:
+            for pkg in pkgs:
+                resolve_conflict(module, pkg)
             install_packages(module, pkgs)
 
 
