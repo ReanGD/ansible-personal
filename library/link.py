@@ -47,6 +47,7 @@ def main():
 
     src = os.path.abspath(os.path.expanduser(module.params['src']))
     dst = os.path.abspath(os.path.expanduser(module.params['dst']))
+    module.params['path'] = dst
     file_args = module.load_file_common_arguments(module.params)
 
     if not os.path.exists(src):
