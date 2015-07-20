@@ -53,7 +53,7 @@ PACMAN_PATH = "/usr/bin/pacman"
 
 
 def query_package(module, name):
-    lcmd = "pacman -Qi %s" % (name)
+    lcmd = "pacman -Qie %s" % (name)
     lrc, lstdout, lstderr = module.run_command(lcmd, check_rc=False)
     return lrc == 0
 
