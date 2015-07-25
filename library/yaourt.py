@@ -52,8 +52,11 @@ YAOURT_PATH = "/usr/bin/yaourt"
 PACMAN_PATH = "/usr/bin/pacman"
 
 
-def query_package(module, name):
-    lcmd = "pacman -Qie %s" % (name)
+def query_package(module, name, asexplicit):
+    if asexplicit:
+        lcmd = "pacman -Qie %s" % (name)
+    else:
+        lcmd = "pacman -Qi %s" % (name)
     lrc, lstdout, lstderr = module.run_command(lcmd, check_rc=False)
     return lrc == 0
 
@@ -85,7 +88,7 @@ def resolve_conflict(module, name):
     if len(conflicts) == 0:
         return
 
-    lcmd = "pacman -Rs %s --noconfirm" % (" ".join(conflicts))
+    lcmd = "yaourt -Rs %s --noconfirm" % (" ".join(conflicts))
     lrc, lstdout, lstderr = module.run_command(lcmd, check_rc=False)
     if lrc != 0:
         msg = "could not remove packages (%s)" % (",".join(conflicts))
@@ -105,9 +108,13 @@ def install_packages(module, packages):
     install_c = 0
 
     for i, package in enumerate(packages):
-        installed = query_package(module, package)
+        param_explicit = " --asexplicit"
+        installed = query_package(module, package, False)
         if not installed:
-            cmd = "yaourt -S %s --asexplicit --noconfirm" % (package)
+            param_explicit = ""
+        installed = query_package(module, package, True)
+        if not installed:
+            cmd = "yaourt -S %s %s --noconfirm" % (package, param_explicit)
             rc, stdout, stderr = module.run_command(cmd, check_rc=False)
             if rc != 0:
                 msg = "failed to install %s" % (package)
@@ -124,7 +131,7 @@ def install_packages(module, packages):
 def check_packages(module, packages):
     would_be_changed = []
     for package in packages:
-        if not query_package(module, package):
+        if not query_package(module, package, True):
             would_be_changed.append(package)
     if would_be_changed:
         msg = "%s package(s) would be installed" % (len(would_be_changed))
