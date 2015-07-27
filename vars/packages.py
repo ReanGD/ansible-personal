@@ -9,9 +9,9 @@ if socket.gethostname() == "archhost":
 else:
     pkgs += ["mesa",
              "xf86-video-intel",
-             "lib32-intel-dri",
-             "xf86-input-synaptics",
-             "broadcom-wl"]     # wi-fi
+             "lib32-mesa",
+             "xf86-input-synaptics",  # touchpad
+             "broadcom-wl"]           # wi-fi
 
 # font packages
 pkgs += ["fontconfig-ubuntu",
@@ -75,7 +75,7 @@ pkgs += ["firefox", "firefox-i18n-ru", "flashplugin"]
 pkgs += ["boost", "clang", "gtest", "zeromq", "valgrind", "cmake"]
 
 # rust
-pkgs += ["rust-nightly-bin", "racer-git"]
+pkgs += ["rust", "cargo-bin", "racer-git"]
 # rust-doc-git
 
 # python
