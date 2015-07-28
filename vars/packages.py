@@ -133,8 +133,11 @@ pkgs += ["xorg-xfontsel",  # font select
 # VM
 pkgs += ["jre7-openjdk", "docker"]
 
+# 3D
+pkgs += ["sdl2", "sdl2_image"]
+
 # game
-pkgs += ["playonlinux"]
+pkgs += ["playonlinux", "minecraft"]
 
 packages = pkgs
 ignore_packages = ["yaourt", "package-query", "ansible"]
