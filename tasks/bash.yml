@@ -1,0 +1,8 @@
+---
+- name: Remove unused
+  file: path={{ item }} state=absent
+  with_items:
+    - ~/.bash_history
+    - ~/.bash_logout
+    - ~/.bash_profile
+    - ~/.bashrc

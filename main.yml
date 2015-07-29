@@ -17,3 +17,4 @@
     - include: tasks/packages.yml
     - include: tasks/dotfiles.yml
     - include: tasks/rust.yml
+    - include: tasks/bash.yml

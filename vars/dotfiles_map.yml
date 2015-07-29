@@ -9,5 +9,6 @@ dotfiles_path_map:
   - {src: ".config/zsh",         dst: "~/.config/zsh" }
   - {src: ".config/firefox",     dst: "~/.config/firefox" }
   - {src: ".config/git",         dst: "~/.config/git" }
+  - {src: ".config/bash",        dst: "~/.config/bash" }
   - {src: ".config/.Xresources", dst: "~/.config/.Xresources" }
   - {src: ".xinitrc",            dst: "~/.xinitrc" }
