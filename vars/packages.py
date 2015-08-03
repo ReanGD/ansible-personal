@@ -97,7 +97,10 @@ pkgs += ["python",
 pkgs += ["emacs", "vim", "sublime-text-nightly"]
 
 # file managers
-pkgs += ["doublecmd-gtk2", "transmission-remote-gui-bin", "dropbox"]
+pkgs += ["doublecmd-gtk2",
+         "transmission-remote-gui-bin",
+         "yandex-disk"  # yandex-disk setup/start
+         "dropbox"]
 
 # git
 pkgs += ["git", "meld"]
