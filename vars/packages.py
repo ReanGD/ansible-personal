@@ -99,7 +99,7 @@ pkgs += ["emacs", "vim", "sublime-text-nightly"]
 # file managers
 pkgs += ["doublecmd-gtk2",
          "transmission-remote-gui-bin",
-         "yandex-disk"  # yandex-disk setup/start
+         "yandex-disk",  # yandex-disk setup/start
          "dropbox"]
 
 # git
@@ -115,6 +115,7 @@ pkgs += ["p7zip", "unzip", "unrar"]
 pkgs += ["shutter",     # screenshots
          "byzanz-git",  # create gif from screen
          "gimp",
+         "blender",
          "smplayer",
          "deadbeef"]
 
