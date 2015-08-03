@@ -11,3 +11,7 @@
 - name: Create links for dotfiles
   link: src=~/projects/git/dotfiles/{{item.src}} dst={{item.dst}}
   with_items: dotfiles_path_map
+
+- name: Create links for documents
+  link: src={{item.src}} dst={{item.dst}}
+  with_items: documents_path_map
