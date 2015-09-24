@@ -127,7 +127,8 @@ pkgs += ["libreoffice-fresh",
 pkgs += ["enchant", "hunspell-en", "hunspell-ru-aot", "languagetool"]
 
 # android
-pkgs += ["adb"]
+if socket.gethostname() != "archhost":
+    pkgs += ["adb"]
 
 # xorg
 pkgs += ["xorg-xfontsel",  # font select
