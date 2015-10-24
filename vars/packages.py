@@ -75,7 +75,7 @@ pkgs += ["firefox", "firefox-i18n-ru", "flashplugin"]
 pkgs += ["boost", "clang", "gtest", "zeromq", "valgrind", "cmake"]
 
 # rust
-pkgs += ["rust", "cargo-bin", "racer-git"]
+pkgs += ["rust", "cargo-bin", "rust-racer-git", "rust-src"]
 # rust-doc-git
 
 # python
@@ -120,8 +120,9 @@ pkgs += ["shutter",     # screenshots
          "deadbeef"]
 
 # office
-pkgs += ["libreoffice-fresh",
-         "llpp"]                # pdf viewer
+pkgs += ["llpp"         # pdf viewer
+         # "libreoffice-fresh"
+         ]
 
 # spell checkers
 pkgs += ["enchant", "hunspell-en", "hunspell-ru-aot", "languagetool"]

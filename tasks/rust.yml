@@ -1,3 +1,0 @@
----
-- name: Clone rust repo
-  git: repo=https://github.com/rust-lang/rust.git dest=~/.local/share/rust_src depth=1 version=stable
