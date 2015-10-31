@@ -66,7 +66,8 @@ pkgs += ["pulseaudio",
          "pulseaudio-alsa",
          "pavucontrol",
          "lib32-alsa-plugins",
-         "alsa-utils"]
+         "alsa-utils",
+         "volumeicon"]
 
 # web
 pkgs += ["firefox", "firefox-i18n-ru", "flashplugin"]
@@ -75,7 +76,7 @@ pkgs += ["firefox", "firefox-i18n-ru", "flashplugin"]
 pkgs += ["boost", "clang", "gtest", "zeromq", "valgrind", "cmake"]
 
 # rust
-pkgs += ["rust", "cargo-bin", "rust-racer-git", "rust-src"]
+# pkgs += ["rust", "cargo-bin", "rust-racer-git", "rust-src"]
 # rust-doc-git
 
 # python

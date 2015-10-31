@@ -10,6 +10,7 @@ dotfiles_path_map:
   - {src: ".config/git",         dst: "~/.config/git" }
   - {src: ".config/bash",        dst: "~/.config/bash" }
   - {src: ".config/shutter",     dst: "~/.config/shutter" }
+  - {src: ".config/volumeicon",  dst: "~/.config/volumeicon" }
   - {src: ".config/yandex-disk", dst: "~/.config/yandex-disk" }
   - {src: ".config/.Xresources", dst: "~/.config/.Xresources" }
   - {src: ".xinitrc",            dst: "~/.xinitrc" }
