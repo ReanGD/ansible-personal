@@ -79,6 +79,9 @@ pkgs += ["boost", "clang", "gtest", "zeromq", "valgrind", "cmake"]
 # pkgs += ["rust", "cargo-bin", "rust-racer-git", "rust-src"]
 # rust-doc-git
 
+# go
+pkgs += ["go"]
+
 # python
 pkgs += ["python",
          "python2",
