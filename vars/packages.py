@@ -118,6 +118,7 @@ pkgs += ["p7zip", "unzip", "unrar"]
 # media
 pkgs += ["shutter",     # screenshots
          "byzanz-git",  # create gif from screen
+         "simplescreenrecorder"  # write video from screen
          "gimp",
          "blender",
          "smplayer",
