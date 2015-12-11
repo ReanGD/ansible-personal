@@ -34,6 +34,7 @@ pkgs += ["grub",
          "pkgfile",    # pkgfile makepkg (get package for makepkg)
          "rsync",
          "kbdd",       # daemon to make per window layout
+         "libnotify",  # create notifications message
          "autofs"]
 
 # WM
@@ -118,7 +119,7 @@ pkgs += ["p7zip", "unzip", "unrar"]
 # media
 pkgs += ["shutter",     # screenshots
          "byzanz-git",  # create gif from screen
-         "simplescreenrecorder"  # write video from screen
+         "simplescreenrecorder",  # write video from screen
          "gimp",
          "blender",
          "smplayer",
@@ -139,7 +140,8 @@ if socket.gethostname() != "archhost":
 # xorg
 pkgs += ["xorg-xfontsel",  # font select
          "xorg-xprop",     # window info (xprop | grep WM_CLASS)
-         "xorg-xev"]       # keypress info
+         "xorg-xev",       # keypress info
+         "xrectsel"]       # get select region
 
 # VM
 pkgs += ["jre7-openjdk", "docker"]
