@@ -1,0 +1,4 @@
+---
+
+- name: Install godef
+  command: go get github.com/rogpeppe/godef creates={{gopath}}/bin/godef
