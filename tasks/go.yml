@@ -1,4 +1,12 @@
 ---
-
 - name: Install godef
   command: go get github.com/rogpeppe/godef creates={{gopath}}/bin/godef
+
+- name: Update godef
+  command: "{{item}}"
+  with_items:
+    - go get -u github.com/rogpeppe/godef
+    - go clean -i github.com/rogpeppe/godef
+    - go install -v github.com/rogpeppe/godef
+  tags:
+    - update
