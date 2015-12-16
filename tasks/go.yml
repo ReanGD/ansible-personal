@@ -2,11 +2,17 @@
 - name: Install godef
   command: go get github.com/rogpeppe/godef creates={{gopath}}/bin/godef
 
-- name: Update godef
+- name: Install gocode
+  command: go get github.com/nsf/gocode creates={{gopath}}/bin/gocode
+
+- name: Update go utils
   command: "{{item}}"
   with_items:
     - go get -u github.com/rogpeppe/godef
     - go clean -i github.com/rogpeppe/godef
     - go install -v github.com/rogpeppe/godef
+    - go get -u github.com/nsf/gocode
+    - go clean -i github.com/nsf/gocode
+    - go install -v github.com/nsf/gocode
   tags:
     - update
