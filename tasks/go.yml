@@ -11,6 +11,9 @@
 - name: Install errcheck
   command: go get github.com/kisielk/errcheck creates={{gopath}}/bin/errcheck
 
+- name: Install goimports
+  command: go get golang.org/x/tools/cmd/goimports creates={{gopath}}/bin/goimports
+
 - name: Update go utils
   command: "{{item}}"
   with_items:
@@ -26,5 +29,8 @@
     - go get -u github.com/kisielk/errcheck
     - go clean -i github.com/kisielk/errcheck
     - go install -v github.com/kisielk/errcheck
+    - go get -u golang.org/x/tools/cmd/goimports
+    - go clean -i golang.org/x/tools/cmd/goimports
+    - go install -v golang.org/x/tools/cmd/goimports
   tags:
     - update
