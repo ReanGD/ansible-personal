@@ -17,6 +17,9 @@
 - name: Install gooracle
   command: go get golang.org/x/tools/cmd/oracle creates={{gopath}}/bin/oracle
 
+- name: Install gorename
+  command: go get golang.org/x/tools/cmd/gorename creates={{gopath}}/bin/gorename
+
 - name: Update go utils
   command: "{{item}}"
   with_items:
@@ -38,5 +41,8 @@
     - go get -u golang.org/x/tools/cmd/oracle
     - go clean -i golang.org/x/tools/cmd/oracle
     - go install -v golang.org/x/tools/cmd/oracle
+    - go get -u golang.org/x/tools/cmd/gorename
+    - go clean -i golang.org/x/tools/cmd/gorename
+    - go install -v golang.org/x/tools/cmd/gorename
   tags:
     - update
