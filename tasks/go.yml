@@ -1,24 +1,14 @@
 ---
-- name: Install godef
-  command: go get github.com/rogpeppe/godef creates={{gopath}}/bin/godef
-
-- name: Install gocode
-  command: go get github.com/nsf/gocode creates={{gopath}}/bin/gocode
-
-- name: Install golint
-  command: go get github.com/golang/lint/golint creates={{gopath}}/bin/golint
-
-- name: Install errcheck
-  command: go get github.com/kisielk/errcheck creates={{gopath}}/bin/errcheck
-
-- name: Install goimports
-  command: go get golang.org/x/tools/cmd/goimports creates={{gopath}}/bin/goimports
-
-- name: Install gooracle
-  command: go get golang.org/x/tools/cmd/oracle creates={{gopath}}/bin/oracle
-
-- name: Install gorename
-  command: go get golang.org/x/tools/cmd/gorename creates={{gopath}}/bin/gorename
+- name: Install go utils
+  command: go get {{item.url}} creates={{gopath}}/bin/{{item.name}}
+  with_items:
+    - { url: 'github.com/rogpeppe/godef', name: 'godef' }
+    - { url: 'github.com/nsf/gocode', name: 'gocode' }
+    - { url: 'github.com/golang/lint/golint', name: 'golint' }
+    - { url: 'github.com/kisielk/errcheck', name: 'errcheck' }
+    - { url: 'golang.org/x/tools/cmd/goimports', name: 'goimports' }
+    - { url: 'golang.org/x/tools/cmd/oracle', name: 'oracle' }
+    - { url: 'golang.org/x/tools/cmd/gorename', name: 'gorename' }
 
 - name: Update go utils
   command: "{{item}}"
