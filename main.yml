@@ -5,7 +5,7 @@
     ansible_connection: local
     ansible_python_interpreter: /usr/bin/python2
     user: rean
-    gopath: "{{lookup('env','GOPATH')}}"
+    gopath: "{{lookup('env','GOPATH_BASE')}}"
 
   vars_files:
     - vars/dotfiles_map.yml
