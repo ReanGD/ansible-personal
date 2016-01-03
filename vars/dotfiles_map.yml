@@ -5,7 +5,6 @@ dotfiles_path_map:
   - {src: ".config/doublecmd",   dst: "~/.config/doublecmd" }
   - {src: ".config/enchant",     dst: "~/.config/enchant" }
   - {src: ".config/emacs",       dst: "~/.config/emacs" }
-  - {src: ".config/pulse",       dst: "~/.config/pulse" }
   - {src: ".config/qtile",       dst: "~/.config/qtile" }
   - {src: ".config/zsh",         dst: "~/.config/zsh" }
   - {src: ".config/git",         dst: "~/.config/git" }
@@ -14,7 +13,8 @@ dotfiles_path_map:
   - {src: ".config/volumeicon",  dst: "~/.config/volumeicon" }
   - {src: ".config/yandex-disk", dst: "~/.config/yandex-disk" }
   - {src: ".config/.Xresources", dst: "~/.config/.Xresources" }
-  - {src: ".xinitrc",            dst: "~/.xinitrc" }
+  - {src: ".config/pulse/default.pa", dst: "~/.config/pulse/default.pa" }
+  - {src: ".xinitrc",                 dst: "~/.xinitrc" }
 
 documents_path_map:
   - {src: "~/cloud/Dropbox/doc/blog",    dst: "~/doc/blog" }

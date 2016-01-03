@@ -8,6 +8,11 @@
   git: repo=git@github.com:ReanGD/dotfiles.git dest=~/projects/git/dotfiles/
   when: output.stdout == "" and output.stderr == ""
 
+- name: Create cfg dirs
+  file: path={{item}} state=directory mode=0755
+  with_items:
+    - ~/.config/pulse
+
 - name: Create links for dotfiles
   link: src=~/projects/git/dotfiles/{{item.src}} dst={{item.dst}}
   with_items: dotfiles_path_map

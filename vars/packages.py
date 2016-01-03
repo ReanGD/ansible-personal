@@ -64,10 +64,7 @@ pkgs += ["teamviewer"]
 
 # audio
 pkgs += ["pulseaudio",
-         "pulseaudio-alsa",
          "pavucontrol",
-         "lib32-alsa-plugins",
-         "alsa-utils",
          "volumeicon"]
 
 # web
