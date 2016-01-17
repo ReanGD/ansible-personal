@@ -7,8 +7,9 @@
     - ~/.bash_profile
     - ~/.bashrc
 
-- name: Remove gnupg config
+- name: Remove others config
   file: path={{ item }} state=absent
   sudo: yes
   with_items:
     - ~/.gnupg
+    - ~/.nv
