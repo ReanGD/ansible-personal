@@ -133,6 +133,8 @@ pkgs += ["enchant", "hunspell-en", "hunspell-ru-aot", "languagetool"]
 # android
 if socket.gethostname() != "archhost":
     pkgs += ["adb"]
+else:
+    pkgs += ["android-studio"]
 
 # xorg
 pkgs += ["xorg-xfontsel",  # font select
