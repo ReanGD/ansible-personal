@@ -140,6 +140,7 @@ else:
 pkgs += ["xorg-xfontsel",  # font select
          "xorg-xprop",     # window info (xprop | grep WM_CLASS)
          "xorg-xev",       # keypress info
+         "xorg-xwininfo"   # select window
          "xrectsel"]       # get select region
 
 # VM
