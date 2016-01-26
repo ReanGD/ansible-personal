@@ -105,7 +105,9 @@ pkgs += ["doublecmd-gtk2",
          "dropbox"]
 
 # git
-pkgs += ["git", "meld"]
+pkgs += ["git",
+         "icdiff",  # console diff
+         "meld"]
 
 # Messengers
 pkgs += ["skype"]
@@ -140,7 +142,7 @@ else:
 pkgs += ["xorg-xfontsel",  # font select
          "xorg-xprop",     # window info (xprop | grep WM_CLASS)
          "xorg-xev",       # keypress info
-         "xorg-xwininfo"   # select window
+         "xorg-xwininfo",  # select window
          "xrectsel"]       # get select region
 
 # VM
