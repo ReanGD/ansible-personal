@@ -74,7 +74,7 @@ pkgs += ["firefox", "firefox-i18n-ru", "flashplugin"]
 pkgs += ["boost", "clang", "gtest", "zeromq", "valgrind", "cmake"]
 
 # rust
-# pkgs += ["rust", "cargo-bin", "rust-racer-git", "rust-src"]
+pkgs += ["rust", "cargo", "rust-src", "rust-racer"]
 # rust-doc-git
 
 # go
