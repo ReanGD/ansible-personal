@@ -3,7 +3,7 @@ import sys
 import os.path
 import subprocess
 from ansible.errors import *
-
+from ansible.plugins.lookup import LookupBase
 
 PACMAN_PATH = "/usr/bin/pacman"
 
@@ -50,13 +50,13 @@ class UserConfig:
         return set(self.config_data[item])
 
 
-class LookupModule:
+class LookupModule(LookupBase):
     def __init__(self, **kwargs):
         self.cfg = None
         self.mng = None
 
     def __parse_terms(self, terms):
-        params = terms.split()
+        params = terms[0].split()
         config_path = params[0]
         paramvals = {
             'action': "all",
