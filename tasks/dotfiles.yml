@@ -1,6 +1,6 @@
 ---
 - name: Check git repo
-  command: git -C ~/projects/git/dotfiles/ status --porcelain
+  command: git -C ~/projects/git/dotfiles/ status --porcelain warn=False
   changed_when: false
   register: output
 
