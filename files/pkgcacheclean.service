@@ -1,0 +1,6 @@
+[Unit]
+Description=Clean package cache timer (/var/cache/pacman)
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/pkgcacheclean 3

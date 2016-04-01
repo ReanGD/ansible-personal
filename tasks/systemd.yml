@@ -2,3 +2,15 @@
 - name: Configure logs
   template: src=files/journald.conf dest=/etc/systemd/journald.conf mode=0446 group=root owner=root
   become: yes
+
+- name: Timer pkgcacheclean
+  template: src=files/pkgcacheclean.timer dest=/etc/systemd/system/pkgcacheclean.timer mode=0644 group=root owner=root
+  become: yes
+
+- name: Service pkgcacheclean
+  template: src=files/pkgcacheclean.service dest=/etc/systemd/system/pkgcacheclean.service mode=0644 group=root owner=root
+  become: yes
+
+- name: Enable pkgcacheclean service
+  service: name=pkgcacheclean.timer enabled=yes
+  become: yes
