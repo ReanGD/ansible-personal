@@ -15,6 +15,7 @@
   tasks:
     - include: tasks/pacman.yml
     - include: tasks/user.yml
+    - include: tasks/systemd.yml
     - include: tasks/sudo.yml
     - include: tasks/yaourt.yml
     - include: tasks/git.yml
