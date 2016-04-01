@@ -1,0 +1,8 @@
+---
+- name: Create main user
+  user: name={{main_user}} uid=1000 group=users groups=games,video,audio,optical,storage,power password={{password}}
+  become: yes
+
+- name: Change root password
+  user: name=root password={{password}} update_password=always
+  become: yes

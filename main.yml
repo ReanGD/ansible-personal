@@ -4,7 +4,9 @@
   vars:
     ansible_connection: local
     ansible_python_interpreter: /usr/bin/python2
-    user: rean
+    main_user: rean
+    # python2 -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
+    password: Xa9ABykCX7ocU
     gopath: "{{lookup('env','GOPATH_BASE')}}"
 
   vars_files:
@@ -12,6 +14,7 @@
 
   tasks:
     - include: tasks/pacman.yml
+    - include: tasks/user.yml
     - include: tasks/sudo.yml
     - include: tasks/yaourt.yml
     - include: tasks/git.yml
