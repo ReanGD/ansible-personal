@@ -48,7 +48,7 @@ pkgs += ["xorg-server",
          "xcursor-aero"]
 
 # login manager
-pkgs += ["slim", "slim-themes", "archlinux-themes-slim"]
+pkgs += ["lightdm", "lightdm-gtk-greeter"]
 
 # net tools
 pkgs += ["wget",
@@ -142,10 +142,10 @@ pkgs += ["llpp"         # pdf viewer
 pkgs += ["enchant", "hunspell-en", "hunspell-ru-aot", "languagetool"]
 
 # android
-if socket.gethostname() != "archhost":
-    pkgs += ["adb"]
-else:
-    pkgs += ["android-studio"]
+# if socket.gethostname() != "archhost":
+#     pkgs += ["adb"]
+# else:
+#     pkgs += ["android-studio"]
 
 # xorg
 pkgs += ["xorg-xfontsel",  # font select
