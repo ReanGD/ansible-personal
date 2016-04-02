@@ -31,10 +31,11 @@ pkgs += ["grub",
          "polkit",
          "htop",
          "xcursor-aero",
-         "pkgfile",    # pkgfile makepkg (get package for makepkg)
+         "pkgfile",        # pkgfile makepkg (get package for makepkg)
+         "pkgcacheclean",  # clean the pacman cache
          "rsync",
-         "kbdd",       # daemon to make per window layout
-         "libnotify",  # create notifications message
+         "kbdd",           # daemon to make per window layout
+         "libnotify",      # create notifications message
          "autofs"]
 
 # WM
@@ -68,7 +69,11 @@ pkgs += ["pulseaudio",
          "volumeicon"]
 
 # web
-pkgs += ["firefox", "firefox-i18n-ru", "flashplugin"]
+pkgs += ["firefox",
+         "firefox-i18n-ru",
+         "flashplugin",
+         "google-chrome",
+         "tor-browser-ru"]
 
 # cpp
 pkgs += ["boost", "clang", "gtest", "zeromq", "valgrind", "cmake"]
@@ -76,6 +81,9 @@ pkgs += ["boost", "clang", "gtest", "zeromq", "valgrind", "cmake"]
 # rust
 pkgs += ["rust", "cargo", "rust-src", "rust-racer"]
 # rust-doc-git
+
+# sql
+pkgs += ["sqlitestudio", "sqlite-analyzer"]
 
 # go
 pkgs += ["go"]
@@ -109,7 +117,7 @@ pkgs += ["git",
          "icdiff",  # console diff
          "meld"]
 
-# Messengers
+# messengers
 pkgs += ["skype"]
 
 # archive program
@@ -118,6 +126,7 @@ pkgs += ["p7zip", "unzip", "unrar"]
 # media
 pkgs += ["shutter",     # screenshots
          "byzanz-git",  # create gif from screen
+         "viewnior",    # image viewer
          "simplescreenrecorder",  # write video from screen
          "gimp",
          "blender",
@@ -152,7 +161,9 @@ pkgs += ["jre7-openjdk", "docker"]
 pkgs += ["sdl2", "sdl2_image"]
 
 # game
-pkgs += ["playonlinux", "minecraft"]
+pkgs += ["playonlinux",
+         "lib32-libldap",  # for WOT ?
+         "minecraft"]
 
 packages = pkgs
 ignore_packages = ["yaourt", "package-query", "ansible"]
