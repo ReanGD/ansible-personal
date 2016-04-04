@@ -30,11 +30,11 @@ pkgs += ["rxvt-unicode-patched", "urxvt-perls-git", "zsh", "oh-my-zsh-git"]
 pkgs += ["grub",
          "polkit",
          "htop",
-         "xcursor-aero",
+         "xcursor-ize-vision",
          "pkgfile",        # pkgfile makepkg (get package for makepkg)
          "pkgcacheclean",  # clean the pacman cache
          "rsync",
-         "kbdd",           # daemon to make per window layout
+         "kbdd-git",       # daemon to make per window layout
          "libnotify",      # create notifications message
          "autofs"]
 
@@ -43,9 +43,8 @@ pkgs += ["xorg-server",
          "xorg-xinit",
          "xorg-server-utils",
          "awesome",
-         "vicious",
          "rofi-git",            # run app menu
-         "xcursor-aero"]
+         "vicious"]
 
 # login manager
 pkgs += ["lightdm", "lightdm-gtk-greeter"]
@@ -61,7 +60,7 @@ pkgs += ["wget",
          "openssh"]
 
 # remote access
-pkgs += ["teamviewer"]
+# pkgs += ["teamviewer"]
 
 # audio
 pkgs += ["pulseaudio",
