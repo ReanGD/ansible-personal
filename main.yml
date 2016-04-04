@@ -21,5 +21,6 @@
     - include: tasks/git.yml
     - include: tasks/packages.yml
     - include: tasks/dotfiles.yml
+    - include: tasks/xorg.yml
     - include: tasks/remove_cfg.yml
     - include: tasks/go.yml
