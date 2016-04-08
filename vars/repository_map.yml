@@ -1,0 +1,23 @@
+---
+repository_map:
+  - { repo: "web-work-fitnesse.git",     dest: "web-work-fitnesse" }
+  - { repo: "dotfiles.git",              dest: "dotfiles" }
+  - { repo: "go-web-search.git",         dest: "go/src/github.com/ReanGD/go-web-search" }
+  - { repo: "documents.git",             dest: "documents" }
+  - { repo: "rust-software-render.git",  dest: "rust-software-render" }
+  - { repo: "emacs-multi-compile.git",   dest: "emacs-multi-compile" }
+  - { repo: "rust-open3d.git",           dest: "rust-open3d" }
+  - { repo: "reangd.github.io.git",      dest: "reangd.github.io" }
+  - { repo: "cpp-coroutine.git",         dest: "cpp-coroutine" }
+  - { repo: "py-org-calendar.git",       dest: "py-org-calendar" }
+  - { repo: "sublime-powerslim.git",     dest: "sublime-powerslim" }
+  - { repo: "docker-btsync.git",         dest: "docker-btsync" }
+  - { repo: "web-home-manage.git",       dest: "web-home-manage" }
+  - { repo: "docker-home-manage.git",    dest: "docker-home-manage" }
+  - { repo: "zrpc.git",                  dest: "zrpc" }
+  - { repo: "LearningEnglish.git",       dest: "LearningEnglish" }
+  - { repo: "HabrArticle.git",           dest: "HabrArticle" }
+  - { repo: "cpp-simple-key-logger.git", dest: "cpp-simple-key-logger" }
+  - { repo: "SimpleLang.git",            dest: "SimpleLang" }
+  - { repo: "ansible-personal.git",      dest: "ansible-personal" }
+  - { repo: "docker-work.git",           dest: "docker-work" }

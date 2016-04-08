@@ -11,6 +11,7 @@
 
   vars_files:
     - vars/dotfiles_map.yml
+    - vars/repository_map.yml
 
   tasks:
     - include: tasks/pacman.yml
@@ -21,6 +22,7 @@
     - include: tasks/git.yml
     - include: tasks/packages.yml
     - include: tasks/dotfiles.yml
+    - include: tasks/repository.yml
     - include: tasks/xorg.yml
     - include: tasks/remove_cfg.yml
     - include: tasks/go.yml
