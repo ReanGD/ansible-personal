@@ -103,7 +103,7 @@ pkgs += ["python",
          "tk"]
 
 # text editors
-pkgs += ["emacs", "vim", "sublime-text-nightly"]
+pkgs += ["emacs", "vim", "sublime-text-dev"]
 
 # file managers
 pkgs += ["doublecmd-gtk2",
