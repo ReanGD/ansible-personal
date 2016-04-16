@@ -1,0 +1,8 @@
+---
+- name: Add psd template
+  template: src=files/firefox-my dest=/usr/share/psd/browsers/firefox-my mode=0644 group=root owner=root
+  become: yes
+
+- name: Enable psd service
+  command: systemctl --user enable psd
+  changed_when: false

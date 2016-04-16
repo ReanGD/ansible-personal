@@ -70,6 +70,7 @@ pkgs += ["pulseaudio",
 # web
 pkgs += ["firefox",
          "firefox-i18n-ru",
+         "profile-sync-daemon",
          "flashplugin",
          "google-chrome",
          "tor-browser-ru"]

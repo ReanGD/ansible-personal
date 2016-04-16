@@ -4,3 +4,4 @@ Defaults:{{ main_user }}	!env_reset
 Defaults:{{ main_user }}	timestamp_timeout=20
 
 {{ main_user }}	ALL = (ALL) ALL
+{{ main_user }}	ALL = NOPASSWD: /usr/bin/psd-overlay-helper
