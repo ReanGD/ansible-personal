@@ -25,5 +25,6 @@
     - include: tasks/firefox.yml
     - include: tasks/repository.yml
     - include: tasks/xorg.yml
+    - include: tasks/autofs.yml
     - include: tasks/remove_cfg.yml
     - include: tasks/go.yml

@@ -1,0 +1,1 @@
+NAS -fstype=cifs ://192.168.1.8/Volume_1
