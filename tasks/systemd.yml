@@ -18,3 +18,7 @@
 - name: Enable pkgcacheclean service
   service: name=pkgcacheclean.timer enabled=yes
   become: yes
+
+- name: Enable docker service
+  service: name=docker.service enabled=yes
+  become: yes

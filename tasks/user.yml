@@ -1,6 +1,6 @@
 ---
 - name: Create main user
-  user: name={{main_user}} uid=1000 group=users groups=games,video,audio,optical,storage,power password={{password}}
+  user: name={{main_user}} uid=1000 group=users groups=games,video,audio,optical,storage,power,docker password={{password}}
   become: yes
 
 - name: Change root password
