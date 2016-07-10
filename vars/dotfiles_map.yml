@@ -15,6 +15,7 @@ dotfiles_path_map:
   - {src: ".config/volumeicon",  dst: "~/.config/volumeicon" }
   - {src: ".config/yandex-disk", dst: "~/.config/yandex-disk" }
   - {src: ".config/.Xresources", dst: "~/.config/.Xresources" }
+  - {src: ".config/.Xmodmap",    dst: "~/.config/.Xmodmap" }
   - {src: ".xprofile",           dst: "~/.xprofile" }
   - {src: ".config/pulse/default.pa", dst: "~/.config/pulse/default.pa" }
 
