@@ -21,6 +21,7 @@
     - include: tasks/yaourt.yml
     - include: tasks/git.yml
     - include: tasks/packages.yml
+    - include: tasks/systemd_after.yml
     - include: tasks/dotfiles.yml
     - include: tasks/firefox.yml
     - include: tasks/repository.yml
