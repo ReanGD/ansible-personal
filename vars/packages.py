@@ -24,7 +24,7 @@ pkgs += ["fontconfig-ubuntu",
          "adobe-source-code-pro-fonts"]
 
 # terminal
-pkgs += ["rxvt-unicode-patched", "urxvt-perls-git", "zsh", "oh-my-zsh-git"]
+pkgs += ["rxvt-unicode-patched", "urxvt-perls-git", "zsh", "oh-my-zsh-git", "fzf"]
 
 # system
 pkgs += ["grub",
