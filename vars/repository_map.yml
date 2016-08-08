@@ -2,6 +2,7 @@
 repository_map:
   - { repo: "dotfiles.git",              dest: "dotfiles" }
   - { repo: "go-web-search.git",         dest: "go/src/github.com/ReanGD/go-web-search" }
+  - { repo: "go-morph.git",              dest: "go/src/github.com/ReanGD/go-morph" }
   - { repo: "documents.git",             dest: "documents" }
   - { repo: "emacs-multi-compile.git",   dest: "emacs-multi-compile" }
   - { repo: "reangd.github.io.git",      dest: "reangd.github.io" }
