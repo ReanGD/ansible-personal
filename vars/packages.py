@@ -100,10 +100,11 @@ pkgs += ["python",
          "python2-pylint",
          "flake8",
          "python2-flake8",
+         "python-pytest",
          "tk"]
 
 # text editors
-pkgs += ["emacs", "vim", "sublime-text-dev"]
+pkgs += ["emacs", "vim", "sublime-text-dev", "pycharm-community"]
 
 # file managers
 pkgs += ["doublecmd-gtk2",
@@ -154,7 +155,7 @@ pkgs += ["xorg-xfontsel",  # font select
          "xrectsel"]       # get select region
 
 # VM
-pkgs += ["jre7-openjdk", "docker"]
+pkgs += ["jre7-openjdk", "docker", "docker-compose"]
 
 # 3D
 pkgs += ["sdl2", "sdl2_image"]
