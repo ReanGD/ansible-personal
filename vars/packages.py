@@ -1,14 +1,25 @@
 import socket
+from uuid import getnode
 
 
 pkgs = []
 
+
+def is_archhost():
+   return getnode() == 211424061463276
+
+
+def is_archmini():
+   return socket.gethostname() == "archmini"
+
+
 # drivers
-if socket.gethostname() == "archhost":
-    pkgs += ["mesa", "nvidia"]
-else:
-    pkgs += ["mesa",
-             "xf86-video-intel",
+pkgs += ["mesa"]
+if is_archhost():
+    pkgs += ["nvidia"]
+
+if is_archmini():
+    pkgs += ["xf86-video-intel",
              "lib32-mesa",
              "xf86-input-synaptics",  # touchpad
              "broadcom-wl"]           # wi-fi
@@ -142,9 +153,9 @@ pkgs += ["llpp"         # pdf viewer
 pkgs += ["enchant", "hunspell-en", "hunspell-ru-aot", "languagetool"]
 
 # android
-# if socket.gethostname() != "archhost":
+# if is_archhost()::
 #     pkgs += ["adb"]
-# else:
+# if is_archmini():
 #     pkgs += ["android-studio"]
 
 # xorg
