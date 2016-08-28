@@ -1,0 +1,12 @@
+---
+- name: Install docker package
+  pacman: name=docker state=present
+  become: true
+
+- name: Configure docker service
+  template: src=files/archsrv/docker.service dest=/etc/systemd/system/docker.service mode=0644 group=root owner=root
+  become: yes
+
+- name: Start docker service
+  service: name=docker.service enabled=yes state=started
+  become: yes

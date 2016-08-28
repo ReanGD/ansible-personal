@@ -1,0 +1,5 @@
+---
+- hosts: archsrv
+
+  tasks:
+    - include: tasks/archsrv/docker.yml

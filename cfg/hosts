@@ -1,0 +1,2 @@
+[archsrv]
+archsrv ansible_connection=ssh ansible_port=2222 ansible_user=rean ansible_python_interpreter=/usr/bin/python2
