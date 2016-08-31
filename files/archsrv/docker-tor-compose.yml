@@ -1,0 +1,8 @@
+version: '2'
+services:
+  tor:
+    restart: unless-stopped
+    image: reangd/tor:latest
+    container_name: tor
+    ports:
+     - "192.168.1.100:9050:9050"
