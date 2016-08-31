@@ -1,0 +1,26 @@
+version: '2'
+services:
+  db:
+    restart: unless-stopped
+    image: postgres:9.4
+    container_name: manage-db
+    volumes:
+      - /home/rean/docker/data/manage/db:/var/lib/postgresql/data
+  web:
+    restart: unless-stopped
+    image: reangd/home-manage:latest
+    container_name: manage
+    ports:
+      - "192.168.1.100:80:80"
+    depends_on:
+      - db
+    links:
+      - db
+    environment:
+      - DB_PORT_5432_TCP_ADDR=db
+      - DB_PORT_5432_TCP_PORT=5432
+    volumes:
+      - /home/rean/media:/media
+      - /home/rean/docker/data/manage/tmp:/www/tmp
+      - /home/rean/docker/data/manage/git:/www/app
+
