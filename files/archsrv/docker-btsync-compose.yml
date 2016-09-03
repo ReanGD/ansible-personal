@@ -9,3 +9,4 @@ services:
     volumes:
       - /home/rean/docker/data/btsync:/btsync
       - /home/rean/media:/media
+      - /etc/localtime:/etc/localtime:ro
