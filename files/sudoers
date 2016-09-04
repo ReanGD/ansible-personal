@@ -1,3 +1,4 @@
+Defaults lecture=never
 root ALL=(ALL) ALL
 
 Defaults:{{ main_user }}	!env_reset
