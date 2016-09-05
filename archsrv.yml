@@ -1,5 +1,8 @@
 ---
 - hosts: archsrv
+  
+  vars:
+    docker_cfg: /home/rean/docker/
 
   tasks:
     - include: tasks/archsrv/docker.yml

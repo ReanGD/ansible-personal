@@ -1,7 +1,11 @@
 ---
-- name: Install docker package
-  pacman: name=docker state=present
-  become: true
+- name: Install packages
+  pacman: name=docker,docker-compose,python2-pip,python2-yaml,python2-docker-py state=present
+  become: yes
+
+- name: Install python dependensy
+  pip: name=docker-compose executable=pip2
+  become: yes
 
 - name: Configure docker service
   template: src=files/archsrv/docker.service dest=/etc/systemd/system/docker.service mode=0644 group=root owner=root
@@ -10,3 +14,37 @@
 - name: Start docker service
   service: name=docker.service enabled=yes state=started
   become: yes
+
+- name: Create media directory
+  file: path=/home/rean/media state=directory recurse=yes
+
+- name: Create data directories
+  file: path={{docker_cfg}}data/{{item}} state=directory recurse=yes
+  with_items:
+    - btsync
+    - manage
+    - jenkins
+
+- name: Create compose directories
+  file: path={{docker_cfg}}compose/{{item}} state=directory recurse=yes
+  with_items:
+    - tor
+    - btsync
+    - manage
+    - jenkins
+
+- name: Create compose files
+  copy: src=files/archsrv/docker-{{item}}-compose.yml dest={{docker_cfg}}compose/{{item}}/docker-compose.yml
+  with_items:
+    - tor
+    - btsync
+    - manage
+    - jenkins
+
+- name: Run containers
+  docker_service: project_src={{docker_cfg}}compose/{{item}} state=present
+  with_items:
+    - tor
+    - btsync
+    - manage
+    - jenkins
