@@ -10,6 +10,7 @@ dotfiles_path_map:
   - {src: ".config/qtile",       dst: "~/.config/qtile" }
   - {src: ".config/zsh",         dst: "~/.config/zsh" }
   - {src: ".config/git",         dst: "~/.config/git" }
+  - {src: ".config/proxy",       dst: "~/.config/proxy" }
   - {src: ".config/bash",        dst: "~/.config/bash" }
   - {src: ".config/shutter",     dst: "~/.config/shutter" }
   - {src: ".config/volumeicon",  dst: "~/.config/volumeicon" }
