@@ -22,5 +22,6 @@ repository_map:
   - { repo: "docker-work.git",           dest: "docker-work" }
   - { repo: "docker-x11-base.git",       dest: "docker-x11-base" }
   - { repo: "docker-x11-chrome.git",     dest: "docker-x11-chrome" }
+  - { repo: "docker-tor.git",            dest: "docker-tor" }
   - { repo: "web-home-manage.git",       dest: "web-home-manage" }
   - { repo: "web-work-fitnesse.git",     dest: "web-work-fitnesse" }
