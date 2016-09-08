@@ -82,8 +82,7 @@ pkgs += ["pulseaudio",
 pkgs += ["firefox",
          "firefox-i18n-ru",
          "profile-sync-daemon",
-         "flashplugin",
-         "tor-browser-ru"]
+         "flashplugin"]
 
 # cpp
 pkgs += ["boost", "clang", "gtest", "zeromq", "valgrind", "cmake"]
