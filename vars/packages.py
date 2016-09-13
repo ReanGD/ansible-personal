@@ -12,11 +12,11 @@ def is_archhost():
 def is_archmini():
    return socket.gethostname() == "archmini"
 
-
 # drivers
 pkgs += ["mesa"]
 if is_archhost():
-    pkgs += ["nvidia"]
+   pkgs += ["nvidia",
+            "apcupsd"]                # UPS
 
 if is_archmini():
     pkgs += ["xf86-video-intel",
