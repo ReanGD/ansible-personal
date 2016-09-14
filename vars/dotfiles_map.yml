@@ -4,6 +4,7 @@ dotfiles_path_map:
   - {src: ".config/awesome",     dst: "~/.config/awesome" }
   - {src: ".config/doublecmd",   dst: "~/.config/doublecmd" }
   - {src: ".config/enchant",     dst: "~/.config/enchant" }
+  - {src: ".config/fontconfig",  dst: "~/.config/fontconfig" }
   - {src: ".config/emacs",       dst: "~/.config/emacs" }
   - {src: ".config/psd",         dst: "~/.config/psd" }
   - {src: ".config/python",      dst: "~/.config/python" }
