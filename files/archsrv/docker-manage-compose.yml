@@ -7,6 +7,7 @@ services:
     volumes:
       - /home/rean/docker/data/manage/db:/var/lib/postgresql/data
   web:
+    privileged: true
     restart: unless-stopped
     image: reangd/home-manage:latest
     container_name: manage
