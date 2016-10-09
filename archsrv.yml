@@ -5,4 +5,5 @@
     docker_cfg: /home/rean/docker/
 
   tasks:
+    - include: tasks/common/systemd.yml
     - include: tasks/archsrv/docker.yml

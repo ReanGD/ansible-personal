@@ -1,0 +1,13 @@
+---
+- name: Configure logs
+  template: src=files/systemd/journald.conf dest=/etc/systemd/journald.conf mode=0446 group=root owner=root
+  become: yes
+
+- name: Configure ntp
+  template: src=files/systemd/timesyncd.conf dest=/etc/systemd/timesyncd.conf mode=0446 group=root owner=root
+  become: yes
+
+- name: Set ntp enabled
+  command: /usr/bin/timedatectl set-ntp true
+  changed_when: false
+  become: yes
