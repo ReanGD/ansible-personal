@@ -12,7 +12,7 @@ services:
     image: reangd/home-manage:latest
     container_name: manage
     ports:
-      - "192.168.1.100:80:80"
+      - "192.168.1.102:80:80"
     depends_on:
       - db
     links:
