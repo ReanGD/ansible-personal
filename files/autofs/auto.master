@@ -4,18 +4,18 @@
 # mount-point [map-type[,format]:]map [options]
 # For details of the format look at auto.master(5).
 #
-/misc	/etc/autofs/auto.misc
+#/misc	/etc/autofs/auto.misc
 #
 # NOTE: mounts done from a hosts map will be mounted with the
 #	"nosuid" and "nodev" options unless the "suid" and "dev"
 #	options are explicitly given.
 #
-/net	-hosts
+#/net	-hosts
 #
 # Include /etc/autofs/auto.master.d/*.autofs
 # The included files must conform to the format of this file.
 #
-+dir:/etc/autofs/auto.master.d
+#+dir:/etc/autofs/auto.master.d
 #
 # Include central master map if it can be found using
 # nsswitch sources.
@@ -28,4 +28,5 @@
 +auto.master
 
 # NAS
-/media /etc/autofs/auto.NAS --timeout=60 --ghost
+/net /etc/autofs/auto.NAS --timeout=60 --ghost
+
