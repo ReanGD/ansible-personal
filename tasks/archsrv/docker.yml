@@ -21,9 +21,29 @@
 - name: Create data directories
   file: path={{docker_cfg}}data/{{item}} state=directory recurse=yes
   with_items:
+    - consul
+    - dokuwiki
+    - jenkins
+    - proxy
     - btsync
     - manage
+
+- name: Create log directories
+  file: path={{docker_cfg}}log/{{item}} state=directory recurse=yes
+  with_items:
+    - consul
+    - registrator
+    - dokuwiki
     - jenkins
+    - proxy
+
+- name: Create backup directories
+  file: path=/net/backup/{{item}} state=directory recurse=yes
+  with_items:
+    - consul
+    - dokuwiki
+    - jenkins
+    - proxy
 
 - name: Create compose directories
   file: path={{docker_cfg}}compose/{{item}} state=directory recurse=yes
@@ -31,7 +51,7 @@
     - tor
     - btsync
     - manage
-    - jenkins
+    - base
 
 - name: Create compose files
   copy: src=files/archsrv/docker-{{item}}-compose.yml dest={{docker_cfg}}compose/{{item}}/docker-compose.yml
@@ -39,7 +59,7 @@
     - tor
     - btsync
     - manage
-    - jenkins
+    - base
 
 - name: Run containers
   docker_service: project_src={{docker_cfg}}compose/{{item}} state=present
@@ -47,4 +67,7 @@
     - tor
     - btsync
     - manage
-    - jenkins
+
+- name: Run container base
+  # docker_service: project_src={{docker_cfg}}compose/base state=present pull=yes
+  docker_service: project_src={{docker_cfg}}compose/base state=present
