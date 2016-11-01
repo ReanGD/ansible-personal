@@ -38,6 +38,7 @@ services:
   registrator:
     restart: unless-stopped
     container_name: registrator
+    hostname: registrator
     image: reangd/alpine-registrator:latest
     depends_on:
       - consul
@@ -61,6 +62,7 @@ services:
   dokuwiki:
     restart: unless-stopped
     container_name: dokuwiki
+    hostname: dokuwiki
     image: reangd/alpine-dokuwiki:latest
     depends_on:
       - consul
@@ -94,6 +96,7 @@ services:
   jenkins:
     restart: unless-stopped
     container_name: jenkins
+    hostname: jenkins
     image: reangd/alpine-jenkins:latest
     depends_on:
       - consul
@@ -130,6 +133,7 @@ services:
   proxy:
     restart: unless-stopped
     container_name: proxy
+    hostname: proxy
     image: reangd/alpine-proxy:latest
     depends_on:
       - consul
