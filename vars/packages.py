@@ -43,13 +43,15 @@ pkgs += ["rxvt-unicode-patched", "urxvt-perls-git", "zsh", "oh-my-zsh-git", "fzf
 pkgs += ["grub",
          "polkit",
          "htop",
+         "iotop",
          "xcursor-ize-vision",
          "pkgfile",        # pkgfile makepkg (get package for makepkg)
-         "pkgcacheclean",  # clean the pacman cache
-         "rsync",
+         "pkgcacheclean",  # clean the pacman cache         
          "kbdd-git",       # daemon to make per window layout
          "libnotify",      # create notifications message
-         "autofs"]
+         "autofs",         # automounter (nfs, samba, etc)
+         "pacaur",         # AUR package manager
+         "rsync"]
 
 # WM
 pkgs += ["xorg-server",
