@@ -19,7 +19,7 @@ repository_map:
   - { repo: "go-web-search.git",              dest: "go/src/github.com/ReanGD/go-web-search" }
   - { repo: "HabrArticle.git",                dest: "HabrArticle" }
   - { repo: "LearningEnglish.git",            dest: "LearningEnglish" }
-  - { repo: "py-org-calendar.git",            dest: "py-org-calendar" }
+  - { repo: "py-calendar.git",                dest: "py-calendar" }
   - { repo: "reangd.github.io.git",           dest: "reangd.github.io" }
   - { repo: "rust-open3d.git",                dest: "rust-open3d" }
   - { repo: "rust-software-render.git",       dest: "rust-software-render" }
