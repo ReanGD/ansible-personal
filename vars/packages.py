@@ -115,6 +115,7 @@ pkgs += ["python",
          "flake8",
          "python2-flake8",
          "python-pytest",
+         "python-virtualenv",
          "tk"]
 
 # text editors
