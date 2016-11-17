@@ -1,0 +1,4 @@
+---
+- name: Run hddtemp without sudo
+  file: path=/usr/bin/hddtemp state=file mode="u+s"
+  become: yes

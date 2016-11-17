@@ -24,6 +24,10 @@ if is_archmini():
              "xf86-input-synaptics",  # touchpad
              "broadcom-wl"]           # wi-fi
 
+# monitoring
+pkgs += ["hddtemp"]  # disk temperature
+
+
 # font packages
 pkgs += ["fontconfig-ubuntu",
          "cairo-ubuntu",

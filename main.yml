@@ -29,4 +29,6 @@
     - include: tasks/xorg.yml
     - include: tasks/common/autofs.yml
     - include: tasks/remove_cfg.yml
+    # after packages
+    - include: tasks/monitoring.yml
     - include: tasks/go.yml
