@@ -1,4 +1,17 @@
 ---
-- name: Run hddtemp without sudo
-  file: path=/usr/bin/hddtemp state=file mode="u+s"
+- name: Create hddtemp service directory
+  file: path=/etc/systemd/system/hddtemp.service.d state=directory recurse=yes
+  become: yes
+
+- name: Create hddtemp service file
+  shell: scripts/hddtemp/generate.sh > scripts/hddtemp/customexec.conf
+  become: yes
+  changed_when: false
+
+- name: Service hddtemp
+  template: src=scripts/hddtemp/customexec.conf dest=/etc/systemd/system/hddtemp.service.d/customexec.conf mode=0644 group=root owner=root
+  become: yes
+
+- name: Enable hddtemp service
+  service: name=hddtemp.service enabled=yes state=started
   become: yes

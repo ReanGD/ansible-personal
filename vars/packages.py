@@ -25,8 +25,8 @@ if is_archmini():
              "broadcom-wl"]           # wi-fi
 
 # monitoring
-pkgs += ["hddtemp"]  # disk temperature
-
+pkgs += ["hddtemp",       # disk temperature
+         "smartmontools"]
 
 # font packages
 pkgs += ["fontconfig-ubuntu",
