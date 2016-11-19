@@ -15,8 +15,7 @@ def is_archmini():
 # drivers
 pkgs += ["mesa"]
 if is_archhost():
-   pkgs += ["nvidia",
-            "apcupsd"]                # UPS
+   pkgs += ["nvidia"]
 
 if is_archmini():
     pkgs += ["xf86-video-intel",
@@ -24,9 +23,14 @@ if is_archmini():
              "xf86-input-synaptics",  # touchpad
              "broadcom-wl"]           # wi-fi
 
+
 # monitoring
 pkgs += ["hddtemp",       # disk temperature
          "smartmontools"]
+
+if is_archhost():
+   pkgs += ["apcupsd"]    # UPS
+
 
 # font packages
 pkgs += ["fontconfig-ubuntu",
