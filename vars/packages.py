@@ -25,7 +25,10 @@ if is_archmini():
 
 
 # monitoring
-pkgs += ["hddtemp",       # disk temperature
+pkgs += ["iftop",         # network monitor
+         "htop",          # process monitor
+         "iotop",         # disk monitor
+         "hddtemp",       # disk temperature
          "smartmontools"]
 
 if is_archhost():
@@ -50,8 +53,6 @@ pkgs += ["rxvt-unicode-patched", "urxvt-perls-git", "zsh", "oh-my-zsh-git", "fzf
 # system
 pkgs += ["grub",
          "polkit",
-         "htop",
-         "iotop",
          "xcursor-ize-vision",
          "pkgfile",        # pkgfile makepkg (get package for makepkg)
          "pkgcacheclean",  # clean the pacman cache         
