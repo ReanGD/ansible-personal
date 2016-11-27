@@ -36,9 +36,7 @@ if is_archhost():
 
 
 # font packages
-pkgs += ["fontconfig-ubuntu",
-         "cairo-ubuntu",
-         "ttf-ms-fonts",
+pkgs += ["ttf-ms-fonts",
          "ttf-tahoma",
          "ttf-vista-fonts",
          "ttf-fixedsys-excelsior-linux",
