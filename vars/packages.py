@@ -46,7 +46,7 @@ pkgs += ["ttf-ms-fonts",
          "adobe-source-code-pro-fonts"]
 
 # terminal
-pkgs += ["rxvt-unicode-patched", "urxvt-perls-git", "zsh", "oh-my-zsh-git", "fzf"]
+pkgs += ["rxvt-unicode-patched", "urxvt-perls", "zsh", "oh-my-zsh-git", "zsh-syntax-highlighting", "fzf"]
 
 # system
 pkgs += ["grub",
