@@ -140,7 +140,7 @@ pkgs += ["git",
          "meld"]
 
 # messengers
-pkgs += ["skype"]
+pkgs += ["skypeforlinux-bin"]
 
 # archive program
 pkgs += ["p7zip", "unzip", "unrar"]
