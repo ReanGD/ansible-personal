@@ -156,7 +156,8 @@ pkgs += ["shutter",     # screenshots
          "deadbeef"]
 
 # office
-pkgs += ["llpp"         # pdf viewer
+pkgs += ["mupdf"   # pdf viewer
+         #"llpp-git"  # pdf viewer
          # "libreoffice-fresh"
          ]
 
