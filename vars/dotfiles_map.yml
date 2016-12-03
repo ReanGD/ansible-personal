@@ -8,7 +8,6 @@ dotfiles_path_map:
   - {src: ".config/emacs",       dst: "~/.config/emacs" }
   - {src: ".config/psd",         dst: "~/.config/psd" }
   - {src: ".config/python",      dst: "~/.config/python" }
-  - {src: ".config/qtile",       dst: "~/.config/qtile" }
   - {src: ".config/zsh",         dst: "~/.config/zsh" }
   - {src: ".config/git",         dst: "~/.config/git" }
   - {src: ".config/proxy",       dst: "~/.config/proxy" }
