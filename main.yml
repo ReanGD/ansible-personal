@@ -8,6 +8,9 @@
     # python2 -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
     password: Xa9ABykCX7ocU
     gopath: "{{lookup('env','GOPATH_BASE')}}"
+  
+  environment:
+    GNUPGHOME: /home/rean/.config/gnupg
 
   vars_files:
     - vars/dotfiles_map.yml
@@ -21,6 +24,7 @@
     - include: tasks/sudo.yml
     - include: tasks/yaourt.yml
     - include: tasks/git.yml
+    - include: tasks/gpg.yml
     - include: tasks/packages.yml
     - include: tasks/systemd_after.yml
     - include: tasks/dotfiles.yml
