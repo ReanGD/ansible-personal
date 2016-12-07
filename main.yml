@@ -28,7 +28,6 @@
     - include: tasks/packages.yml
     - include: tasks/systemd_after.yml
     - include: tasks/dotfiles.yml
-    - include: tasks/firefox.yml
     - include: tasks/repository.yml
     - include: tasks/xorg.yml
     - include: tasks/common/autofs.yml
