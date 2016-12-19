@@ -6,7 +6,6 @@ repository_map:
   - { repo: "docker-alpine.git",              dest: "docker-alpine" }
   - { repo: "docker-btsync.git",              dest: "docker-btsync" }
   - { repo: "docker-home-manage.git",         dest: "docker-home-manage" }
-  - { repo: "docker-tor.git",                 dest: "docker-tor" }
   - { repo: "docker-work.git",                dest: "docker-work" }
   - { repo: "docker-x11-base.git",            dest: "docker-x11-base" }
   - { repo: "docker-x11-chrome.git",          dest: "docker-x11-chrome" }

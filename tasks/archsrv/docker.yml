@@ -36,6 +36,7 @@
     - dokuwiki
     - jenkins
     - proxy
+    - tor
 
 - name: Create backup directories
   file: path=/net/backup/{{item}} state=directory recurse=yes
@@ -48,7 +49,6 @@
 - name: Create compose directories
   file: path={{docker_cfg}}compose/{{item}} state=directory recurse=yes
   with_items:
-    - tor
     - btsync
     - manage
     - base
@@ -56,7 +56,6 @@
 - name: Create compose files
   copy: src=files/archsrv/docker-{{item}}-compose.yml dest={{docker_cfg}}compose/{{item}}/docker-compose.yml
   with_items:
-    - tor
     - btsync
     - manage
     - base
@@ -64,10 +63,8 @@
 - name: Run containers
   docker_service: project_src={{docker_cfg}}compose/{{item}} state=present
   with_items:
-    - tor
     - btsync
     - manage
 
 - name: Run container base
-  # docker_service: project_src={{docker_cfg}}compose/base state=present pull=yes
-  docker_service: project_src={{docker_cfg}}compose/base state=present
+  docker_service: project_src={{docker_cfg}}compose/base state=present pull=yes

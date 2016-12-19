@@ -172,6 +172,35 @@ services:
       - /net/backup/proxy:/backup:rw
       - /home/rean/docker/data/proxy:/data:rw
       - /etc/localtime:/etc/localtime:ro
+  tor:
+    restart: unless-stopped
+    container_name: tor
+    hostname: tor
+    image: reangd/alpine-tor:latest
+    depends_on:
+      - consul
+      - registrator
+    environment:
+      #
+      # base params:
+      #
+      - S6_LOGGING=1
+      - SERVICE_CRON=0
+      #
+      # registrator params:
+      #
+      - SERVICE_NAME=tor
+      - SERVICE_TAGS=hide
+      - SERVICE_CHECK_TCP=true
+      - SERVICE_CHECK_INTERVAL=15s
+      - SERVICE_CHECK_TIMEOUT=10s
+    ports:
+      - "9050:9050"
+    networks:
+      - base
+    volumes:
+      - /home/rean/docker/log/tor:/var/log:rw
+      - /etc/localtime:/etc/localtime:ro
 networks:
   base:
     driver: bridge
