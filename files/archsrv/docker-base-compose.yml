@@ -10,7 +10,7 @@ services:
       # base params:
       #
       - S6_LOGGING=1
-      # - SERVICE_CRON=1
+      - SERVICE_CRON=0
       # - RESTORE_NAME=daily.0
       #
       # registrator params:
@@ -32,8 +32,8 @@ services:
       - base
     volumes:
       - /home/rean/docker/log/consul:/var/log:rw
-      - /net/backup/consul:/backup:rw
-      - /home/rean/docker/data/consul:/data:rw
+      # - /net/backup/consul:/backup:rw
+      # - /home/rean/docker/data/consul:/data:rw
       - /etc/localtime:/etc/localtime:ro
   registrator:
     restart: unless-stopped

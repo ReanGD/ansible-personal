@@ -21,7 +21,6 @@
 - name: Create data directories
   file: path={{docker_cfg}}data/{{item}} state=directory recurse=yes
   with_items:
-    - consul
     - dokuwiki
     - jenkins
     - proxy
@@ -41,7 +40,6 @@
 - name: Create backup directories
   file: path=/net/backup/{{item}} state=directory recurse=yes
   with_items:
-    - consul
     - dokuwiki
     - jenkins
     - proxy
