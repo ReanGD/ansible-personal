@@ -10,3 +10,7 @@
 - name: locale.conf
   template: src=files/etc/locale.conf dest=/etc/locale.conf mode=644 group=root owner=root
   become: yes
+
+- name: vconsole.conf
+  template: src=files/etc/vconsole.conf dest=/etc/vconsole.conf mode=644 group=root owner=root
+  become: yes
