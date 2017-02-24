@@ -19,7 +19,7 @@
   tasks:
     - include: tasks/common/init.yml
     - include: tasks/common/locale.yml
-    - include: tasks/pacman.yml
+    - include: tasks/common/pacman.yml
     - include: tasks/user.yml
     - include: tasks/common/systemd.yml
     - include: tasks/services.yml

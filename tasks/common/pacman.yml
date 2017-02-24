@@ -4,6 +4,5 @@
   become: yes
 
 - name: Update pacman cache
-  shell: /usr/bin/pacman -Syy
+  pacman: force=yes update_cache=yes
   become: yes
-  changed_when: false
