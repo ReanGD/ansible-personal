@@ -1,8 +1,9 @@
 ---
 - name: Copy pacman configuration
-  copy: src=files/pacman.conf dest=/etc/pacman.conf owner=root group=root mode=0644
+  copy: src=files/etc/pacman.conf dest=/etc/pacman.conf owner=root group=root mode=0644
   become: yes
 
 - name: Update pacman cache
   pacman: force=yes update_cache=yes
   become: yes
+  changed_when: false
