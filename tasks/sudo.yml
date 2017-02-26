@@ -1,8 +1,0 @@
----
-- name: Install sudo
-  pacman: name=sudo state=present
-  become: yes
-
-- name: Configure sudoers
-  template: src=files/sudoers dest=/etc/sudoers mode=0440 group=root owner=root
-  become: yes

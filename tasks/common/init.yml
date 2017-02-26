@@ -8,6 +8,7 @@
   run_once: True
   shell: getent group docker
   register: init_docker_group
+  changed_when: false
   failed_when: init_docker_group.rc == 1
 
 - name: Set docker group exists

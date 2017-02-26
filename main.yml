@@ -23,7 +23,6 @@
     - include: tasks/common/user.yml
     - include: tasks/common/systemd.yml
     - include: tasks/services.yml
-    - include: tasks/sudo.yml
     - include: tasks/yaourt.yml
     - include: tasks/git.yml
     - include: tasks/gpg.yml

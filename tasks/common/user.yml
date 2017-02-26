@@ -6,3 +6,7 @@
 - name: Change root password
   user: name=root password={{password}} update_password=always
   become: yes
+
+- name: Configure sudoers
+  template: src=files/etc/sudoers dest=/etc/sudoers mode=0440 group=root owner=root
+  become: yes
