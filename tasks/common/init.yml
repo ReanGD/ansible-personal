@@ -3,3 +3,22 @@
   set_fact:
     ansible_local_user: "{{ lookup('pipe', 'id -un') | d(lookup('pipe', 'whoami'), True) | d(lookup('env', 'USER'), True) |  d(lookup('env', 'user'), True) |  d(lookup('env', 'LOGNAME'), True) }}"
   failed_when: ansible_local_user == ''
+
+- name: Find docker group
+  run_once: True
+  shell: getent group docker
+  register: init_docker_group
+  failed_when: init_docker_group.rc == 1
+
+- name: Set docker group exists
+  run_once: True
+  set_fact:
+    docker_group: ",docker"
+  when: init_docker_group.rc == 0
+
+- name: Set docker group not exists
+  run_once: True
+  set_fact:
+    docker_group: ""
+  when: init_docker_group.rc != 0
+
