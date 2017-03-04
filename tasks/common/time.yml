@@ -5,6 +5,11 @@
   changed_when: false
 
 - name: Set time zone
-  file: timedatectl set-timezone Europe/Moscow
+  shell: timedatectl set-timezone Europe/Moscow
   when: timedatectl_timezone.stdout != 'Europe/Moscow'
+  become: yes
+
+- name: Hwclock settings
+  shell: hwclock --systohc --utc
+  when: ansible_local_user == 'root'
   become: yes
