@@ -1,5 +1,5 @@
 ---
-- name: Is timezone init
+- name: Check is timezone init
   shell: timedatectl | grep Time | awk '{ print $3 }'
   register: timedatectl_timezone
   changed_when: false
@@ -9,7 +9,16 @@
   when: timedatectl_timezone.stdout != 'Europe/Moscow'
   become: yes
 
+- name: Copy ntp config file
+  template: src=files/etc/systemd/timesyncd.conf dest=/etc/systemd/timesyncd.conf mode=0446 group=root owner=root
+  become: yes
+
+- name: Set ntp enabled
+  command: timedatectl set-ntp true
+  changed_when: false
+  become: yes
+
 - name: Hwclock settings
   shell: hwclock --systohc --utc
-  when: ansible_local_user == 'root'
+  when: ansible_local_user != 'root'
   become: yes
