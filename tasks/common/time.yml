@@ -1,11 +1,16 @@
 ---
 - name: Check is timezone init
-  shell: timedatectl | grep Time | awk '{ print $3 }'
+  shell: timedatectl | grep "Time zone" | awk '{ print $3 }'
   register: timedatectl_timezone
   changed_when: false
 
+- name: Check is ntp enabled
+  shell: timedatectl | grep "Network time on" | awk '{ print $4 }'
+  register: timedatectl_ntp
+  changed_when: false
+
 - name: Set time zone
-  shell: timedatectl set-timezone Europe/Moscow
+  command: timedatectl set-timezone Europe/Moscow
   when: timedatectl_timezone.stdout != 'Europe/Moscow'
   become: yes
 
@@ -13,9 +18,9 @@
   template: src=files/etc/systemd/timesyncd.conf dest=/etc/systemd/timesyncd.conf mode=0446 group=root owner=root
   become: yes
 
-- name: Set ntp enabled
+- name: Enable ntp
   command: timedatectl set-ntp true
-  changed_when: false
+  when: timedatectl_ntp.stdout != 'yes'
   become: yes
 
 - name: Hwclock settings
