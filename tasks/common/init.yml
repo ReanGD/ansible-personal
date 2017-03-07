@@ -23,7 +23,7 @@
     docker_group: ""
   when: init_docker_group.rc != 0
 
-- name: Find board serial
+- name: Find board uuid
   run_once: True
   shell: cat /sys/class/dmi/id/product_uuid | sha256sum | awk '{ print $1 }'
   register: init_board_serial
