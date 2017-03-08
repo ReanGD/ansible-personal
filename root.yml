@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+
+  vars:
+    ansible_connection: local
+    ansible_python_interpreter: /usr/bin/python2
+  
+  environment:
+    GNUPGHOME: /home/rean/.config/gnupg
+
+  vars_files:
+    - vars/common.yml
+    - vars/dotfiles_map.yml
+    - vars/repository_map.yml
+
+  tasks:
+    - include: tasks/common/init.yml
+    - include: tasks/common/locale.yml
+    - include: tasks/common/pacman.yml
+    - include: tasks/common/user.yml
+    - include: tasks/common/systemd.yml

@@ -4,15 +4,12 @@
   vars:
     ansible_connection: local
     ansible_python_interpreter: /usr/bin/python2
-    main_user: rean
-    # python2 -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
-    password: Xa9ABykCX7ocU
-    gopath: "{{lookup('env','GOPATH_BASE')}}"
   
   environment:
     GNUPGHOME: /home/rean/.config/gnupg
 
   vars_files:
+    - vars/common.yml
     - vars/dotfiles_map.yml
     - vars/repository_map.yml
 

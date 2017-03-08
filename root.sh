@@ -62,4 +62,5 @@ fi
 
 pacstrap /mnt base base-devel git ansible efibootmgr
 genfstab -U -p /mnt >> /mnt/etc/fstab
+arch-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /mnt/etc/ansible-personal
 arch-chroot /mnt /bin/bash

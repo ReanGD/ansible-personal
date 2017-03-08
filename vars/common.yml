@@ -1,0 +1,5 @@
+---
+main_user: rean
+# python2 -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
+password: Xa9ABykCX7ocU
+gopath: "{{lookup('env','GOPATH_BASE')}}"
