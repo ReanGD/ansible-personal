@@ -18,4 +18,4 @@
     - include: tasks/common/locale.yml
     - include: tasks/common/pacman.yml
     - include: tasks/common/user.yml
-    - include: tasks/common/systemd.yml
+    - include: tasks/common/grub.yml
