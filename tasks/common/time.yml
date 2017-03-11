@@ -25,5 +25,4 @@
 
 - name: Hwclock settings
   shell: hwclock --systohc --utc
-  when: ansible_local_user != 'root'
   become: yes

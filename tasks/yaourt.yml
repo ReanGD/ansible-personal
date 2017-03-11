@@ -1,4 +1,0 @@
----
-- name: Install yaourt
-  pacman: name=yaourt state=present
-  become: yes
