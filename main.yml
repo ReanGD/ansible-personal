@@ -20,12 +20,12 @@
     - include: tasks/common/user.yml
     - include: tasks/common/grub.yml
     # after root
+    - include: tasks/packages.yml
     - include: tasks/common/time.yml
     - include: tasks/common/systemd.yml
     - include: tasks/services.yml
     - include: tasks/git.yml
     - include: tasks/gpg.yml
-    - include: tasks/packages.yml
     - include: tasks/systemd_after.yml
     - include: tasks/dotfiles.yml
     - include: tasks/repository.yml

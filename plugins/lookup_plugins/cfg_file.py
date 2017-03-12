@@ -35,19 +35,19 @@ class PacmanManager:
 
 
 class UserConfig:
-    def __init__(self, config_path):
-        self.config_data = {}
+    def __init__(self, config_path, host):
+        self.gvars = {'host': host}
         full_path = os.path.expanduser(config_path)
         if not os.path.exists(full_path):
             raise AnsibleError('config file "%s" not found' % full_path)
         try:
-            execfile(os.path.expanduser(full_path), self.config_data)
+            execfile(full_path, self.gvars)
         except:
             e = sys.exc_info()[1]
             raise AnsibleError(e)
 
     def __getitem__(self, item):
-        return set(self.config_data[item])
+        return set(self.gvars[item])
 
 
 class LookupModule(LookupBase):
@@ -59,6 +59,7 @@ class LookupModule(LookupBase):
         params = terms[0].split()
         config_path = params[0]
         paramvals = {
+            'host': '',
             'action': "all",
         }
         avaible_actions = ['all', 'not_installed', 'new']
@@ -108,7 +109,7 @@ class LookupModule(LookupBase):
     def run(self, terms, variables=None, **kwargs):
         params = self.__parse_terms(terms)
         action = params['action']
-        self.cfg = UserConfig(params['path'])
+        self.cfg = UserConfig(params['path'], params['host'])
         self.mng = PacmanManager()
 
         if action == "all":

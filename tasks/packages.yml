@@ -5,10 +5,10 @@
 
 - name: Install packages
   yaourt: name={{ item }} state=present
-  with_cfg_file: vars/packages.py action=not_installed
+  with_cfg_file: vars/packages.py action=not_installed host={{hostname_id}}
 
 - name: Get new packages
   shell: echo "{{ item }}"
-  with_cfg_file: vars/packages.py action=new
+  with_cfg_file: vars/packages.py action=new host={{hostname_id}}
   tags:
     - view_new

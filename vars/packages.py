@@ -1,23 +1,14 @@
-import socket
-from uuid import getnode
-
-
+# global host
 pkgs = []
 
 
-def is_archhost():
-   return getnode() == 211424061463276
-
-
-def is_archmini():
-   return socket.gethostname() == "archmini"
-
 # drivers
 pkgs += ["mesa"]
-if is_archhost():
+if host in ["archhost", "archnote"]:
    pkgs += ["nvidia"]
+   # sudo pacman -S lib32-nvidia-utils lib32-nvidia-libgl
 
-if is_archmini():
+if host == "archmini":
     pkgs += ["xf86-video-intel",
              "lib32-mesa",
              "xf86-input-synaptics",  # touchpad
@@ -31,7 +22,7 @@ pkgs += ["iftop",         # network monitor
          "hddtemp",       # disk temperature
          "smartmontools"]
 
-if is_archhost():
+if host == "archhost":
    pkgs += ["apcupsd"]    # UPS
 
 
@@ -102,7 +93,7 @@ pkgs += ["rust", "cargo", "rust-src", "rust-racer"]
 # rust-doc-git
 
 # sql
-pkgs += ["sqlitestudio", "sqlite-analyzer"]
+pkgs += ["sqlite-analyzer"]
 
 # go
 pkgs += ["go"]
@@ -164,9 +155,9 @@ pkgs += ["mupdf"   # pdf viewer
 pkgs += ["enchant", "hunspell-en", "hunspell-ru-aot", "languagetool"]
 
 # android
-# if is_archhost()::
+# if host == "archhost":
 #     pkgs += ["adb"]
-# if is_archmini():
+# if host == "archmini":
 #     pkgs += ["android-studio"]
 
 # xorg
