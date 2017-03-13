@@ -66,8 +66,7 @@ pkgs += ["lightdm", "lightdm-gtk-greeter"]
 pkgs += ["wget",
          "wpa_supplicant",
          "net-tools",
-         "dialog",              # ???
-         "wireless_tools",
+         "dialog",
          "smbclient",
          "nfs-utils",
          "openssh"]
