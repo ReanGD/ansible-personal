@@ -101,7 +101,8 @@ def update_package_db(module):
     if rc == 0:
         return True
     else:
-        module.fail_json(msg="could not update package db")
+        msg='Could not update package db. Command: {}, exit code: {}, stdout: {}. stderr: {}'
+        module.fail_json(msg=msg.format(cmd, rc, stdout, stderr))
 
 
 def install_packages(module, packages):

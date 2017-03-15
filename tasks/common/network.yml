@@ -8,4 +8,5 @@
 
 - name: Set hostname
   hostname: name={{hostname_id}}
+  when: ansible_local_user != "root"
   become: yes
