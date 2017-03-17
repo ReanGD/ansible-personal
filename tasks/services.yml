@@ -2,15 +2,3 @@
 - name: Configure swap
   template: src=files/40-swappiness.conf dest=/etc/sysctl.d/40-swappiness.conf mode=0644 group=root owner=root
   become: yes
-
-- name: Timer pkgcacheclean
-  template: src=files/pkgcacheclean.timer dest=/etc/systemd/system/pkgcacheclean.timer mode=0644 group=root owner=root
-  become: yes
-
-- name: Service pkgcacheclean
-  template: src=files/pkgcacheclean.service dest=/etc/systemd/system/pkgcacheclean.service mode=0644 group=root owner=root
-  become: yes
-
-- name: Enable pkgcacheclean service
-  service: name=pkgcacheclean.timer enabled=yes
-  become: yes

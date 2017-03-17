@@ -48,13 +48,13 @@ pkgs += ["grub",
          "kbdd-git",       # daemon to make per window layout
          "libnotify",      # create notifications message
          "autofs",         # automounter (nfs, samba, etc)
-         "pacaur",         # AUR package manager
+         # "pacaur",         # AUR package manager
          "rsync"]
 
 # WM
 pkgs += ["xorg-server",
          "xorg-xinit",
-         "xorg-server-utils",
+         # "xorg-server-utils", removed
          "awesome",
          "rofi-git",            # run app menu
          "vicious"]
