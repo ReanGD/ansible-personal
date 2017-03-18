@@ -54,9 +54,8 @@ pkgs += ["grub",
 # WM
 pkgs += ["xorg-server",
          "xorg-xinit",
-         # "xorg-server-utils", removed
          "awesome",
-         "rofi-git",            # run app menu
+         "rofi",            # run app menu
          "vicious"]
 
 # login manager
