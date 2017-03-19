@@ -25,4 +25,5 @@
 
 - name: Hwclock settings
   shell: hwclock --systohc --utc
+  changed_when: false
   become: yes

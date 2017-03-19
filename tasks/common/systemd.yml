@@ -1,4 +1,0 @@
----
-- name: Configure logs
-  template: src=files/systemd/journald.conf dest=/etc/systemd/journald.conf mode=0446 group=root owner=root
-  become: yes

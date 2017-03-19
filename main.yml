@@ -24,8 +24,8 @@
     - include: tasks/packages.yml
     - include: tasks/common/time.yml
     - include: tasks/common/pkgcacheclean.yml
+    - include: tasks/common/systemd_cfg.yml
     
-    - include: tasks/common/systemd.yml
     - include: tasks/services.yml
     - include: tasks/git.yml
     - include: tasks/gpg.yml
