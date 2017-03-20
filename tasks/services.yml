@@ -1,4 +1,0 @@
----
-- name: Configure swap
-  template: src=files/40-swappiness.conf dest=/etc/sysctl.d/40-swappiness.conf mode=0644 group=root owner=root
-  become: yes

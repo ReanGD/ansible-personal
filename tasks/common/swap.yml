@@ -1,0 +1,10 @@
+---
+- name: Configure swap for destop
+  template: src=files/etc/sysctl.d/99-sysctl.conf.destop dest=/etc/sysctl.d/99-sysctl.conf mode=0644 group=root owner=root
+  when: hostname_id == "archhost" or hostname_id == "archsrv"
+  become: yes
+
+- name: Configure swap for notebooks
+  template: src=files/etc/sysctl.d/99-sysctl.conf.notebook dest=/etc/sysctl.d/99-sysctl.conf mode=0644 group=root owner=root
+  when: hostname_id == "archmini" or hostname_id == "archnote"
+  become: yes
