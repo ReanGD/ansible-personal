@@ -26,6 +26,7 @@
     - include: tasks/common/pkgcacheclean.yml
     - include: tasks/common/systemd_cfg.yml
     - include: tasks/common/swap.yml
+    - include: tasks/lightdm.yml
     
     - include: tasks/git.yml
     - include: tasks/gpg.yml

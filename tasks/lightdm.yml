@@ -1,0 +1,8 @@
+---
+- name: Install package lightdm
+  pacman: name=lightdm state=present
+  become: yes
+
+- name: Enable lightdm service
+  service: name=lightdm.service enabled=yes
+  become: yes
