@@ -10,6 +10,7 @@
 
   vars_files:
     - vars/common.yml
+    - vars/secrets.yml
     - vars/dotfiles_map.yml
     - vars/repository_map.yml
 
@@ -26,9 +27,9 @@
     - include: tasks/common/pkgcacheclean.yml
     - include: tasks/common/systemd_cfg.yml
     - include: tasks/common/swap.yml
+    - include: tasks/git.yml
     - include: tasks/lightdm.yml
     
-    - include: tasks/git.yml
     - include: tasks/gpg.yml
     - include: tasks/systemd_after.yml
     - include: tasks/dotfiles.yml
