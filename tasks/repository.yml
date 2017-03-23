@@ -1,4 +1,4 @@
 ---
 - name: Clone or update repository
-  action: update_git repo=git@github.com:ReanGD/{{item.repo}} dest=~/projects/git/{{item.dest}}
+  action: update_git repo=git@github.com:ReanGD/{{item.repo}} dest=~/projects/git/{{item.dest}} key_file=~/.ssh/github
   with_items: "{{ repository_map }}"

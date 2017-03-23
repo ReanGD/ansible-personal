@@ -11,13 +11,17 @@ from helper import BaseActionModule
 
 class ActionModule(ActionBase, BaseActionModule):
     def run(self, tmp=None, task_vars=None):
-        return self.base_run(ActionModule, task_vars, ['repo', 'dest'])
+        return self.base_run(ActionModule, task_vars, ['repo', 'dest', 'key_file'])
 
-    def impl(self, repo, dest):
+    def impl(self, repo, dest, key_file):
         self.repo = repo
         self.dest = os.path.abspath(os.path.expanduser(dest))
         self.run_command_environ_update = dict(LANG='C', LC_ALL='C', LC_MESSAGES='C', LC_CTYPE='C')
         self.git = self.get_bin_path('git', True)
+
+        if os.environ.get("GIT_KEY"):
+            del os.environ["GIT_KEY"]
+        os.environ["GIT_KEY"] = os.path.abspath(os.path.expanduser(key_file))
 
         if self.try_clone():
             self.exit_changed()

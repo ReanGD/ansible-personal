@@ -28,12 +28,12 @@
     - include: tasks/common/systemd_cfg.yml
     - include: tasks/common/swap.yml
     - include: tasks/git.yml
+    - include: tasks/repository.yml
     - include: tasks/lightdm.yml
     
     - include: tasks/gpg.yml
     - include: tasks/systemd_after.yml
     - include: tasks/dotfiles.yml
-    - include: tasks/repository.yml
     - include: tasks/xorg.yml
     - include: tasks/common/autofs.yml
     - include: tasks/remove_cfg.yml
