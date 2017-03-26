@@ -1,17 +1,13 @@
 ---
-- name: Check git repo
-  command: git -C ~/projects/git/dotfiles/ status --porcelain warn=False
-  changed_when: false
-  register: output
-
-- name: Clone dotfiles repo
-  git: repo=git@github.com:ReanGD/dotfiles.git dest=~/projects/git/dotfiles/
-  when: output.stdout == "" and output.stderr == ""
-
 - name: Create cfg dirs
   file: path={{item}} state=directory mode=0755
   with_items:
     - ~/.config/pulse
+    - ~/cloud/Dropbox
+    - ~/tmp
+    - ~/downloads
+    - ~/doc
+    - ~/.cache
 
 - name: Create links for dotfiles
   link: src=~/projects/git/dotfiles/{{item.src}} dst={{item.dst}}
