@@ -7,7 +7,7 @@
   file: path=/home/{{main_user}}/.ssh state=directory mode=0700 group=users owner={{main_user}}
 
 - name: Copy git config
-  copy: src=files/home/.ssh/config dest=~/.ssh/github mode=0400 group=users owner={{main_user}}
+  copy: src=files/home/.ssh/config dest=~/.ssh/config mode=0400 group=users owner={{main_user}}
 
 # ansible-vault encrypt secrets.yml
 - name: Install ssh keys

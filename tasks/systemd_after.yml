@@ -1,4 +1,0 @@
----
-- name: Enable docker service
-  service: name=docker.service enabled=yes
-  become: yes

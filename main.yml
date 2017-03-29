@@ -31,9 +31,9 @@
     - include: tasks/repository.yml
     - include: tasks/dotfiles.yml
     - include: tasks/lightdm.yml
+    - include: tasks/docker.yml
     
     - include: tasks/gpg.yml
-    - include: tasks/systemd_after.yml
     - include: tasks/xorg.yml
     - include: tasks/common/autofs.yml
     - include: tasks/remove_cfg.yml

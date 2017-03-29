@@ -1,0 +1,9 @@
+---
+- name: Install package docker
+  pacman: name=docker state=present
+  become: yes
+
+- name: Enable docker service
+  service: name=docker.service enabled=yes
+  when: notebook == "no"
+  become: yes
