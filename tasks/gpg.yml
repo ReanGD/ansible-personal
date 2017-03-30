@@ -1,7 +1,0 @@
----
-- name: Create gpg dir
-  file: path=/home/rean/.config/gnupg state=directory mode=700
-
-- name: Add key for cower
-  command: gpg --keyserver pgp.mit.edu --recv-keys 1EB2638FF56C0C53
-  changed_when: false

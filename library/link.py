@@ -50,9 +50,6 @@ def main():
     module.params['path'] = dst
     file_args = module.load_file_common_arguments(module.params)
 
-    if not os.path.exists(src):
-        module.fail_json(msg="src file does not exist")
-
     exists = os.path.lexists(dst)
     changed = not (exists and os.path.islink(dst) and os.readlink(dst) == src)
     if not module.check_mode:

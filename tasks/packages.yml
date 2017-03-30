@@ -3,6 +3,14 @@
   yaourt: update_cache=yes
   changed_when: false
 
+- name: Install package gnupg
+  pacman: name=gnupg state=present
+  become: yes
+
+- name: Add key for cower
+  command: gpg --keyserver pgp.mit.edu --recv-keys 1EB2638FF56C0C53
+  changed_when: false
+
 - name: Install packages
   yaourt: name={{ item }} state=present
   with_cfg_file: vars/packages.py action=not_installed host={{hostname_id}}

@@ -42,13 +42,14 @@ pkgs += ["rxvt-unicode-patched", "urxvt-perls", "zsh", "oh-my-zsh-git", "zsh-syn
 # system
 pkgs += ["grub",
          "polkit",
+         "gnupg",
          "xcursor-ize-vision",
          "pkgfile",        # pkgfile makepkg (get package for makepkg)
          "pkgcacheclean",  # clean the pacman cache         
          "kbdd-git",       # daemon to make per window layout
          "libnotify",      # create notifications message
          "autofs",         # automounter (nfs, samba, etc)
-         # "pacaur",         # AUR package manager
+         "pacaur",         # AUR package manager
          "rsync"]
 
 # WM
