@@ -27,15 +27,14 @@
     - include: tasks/common/pkgcacheclean.yml
     - include: tasks/common/systemd_cfg.yml
     - include: tasks/common/swap.yml
+    - include: tasks/common/autofs.yml
     - include: tasks/git.yml
     - include: tasks/repository.yml
     - include: tasks/dotfiles.yml
     - include: tasks/lightdm.yml
     - include: tasks/docker.yml
-    
-    - include: tasks/gpg.yml
     - include: tasks/xorg.yml
-    - include: tasks/common/autofs.yml
-    - include: tasks/remove_cfg.yml
+    - include: tasks/clear.yml
+    
     - include: tasks/monitoring.yml
     - include: tasks/go.yml

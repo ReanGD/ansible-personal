@@ -4,13 +4,13 @@
   become: yes
 
 - name: Configure autofs (auto.master)
-  template: src=files/autofs/auto.master dest=/etc/autofs/auto.master mode=644 group=root owner=root
+  copy: src=files/etc/autofs/auto.master dest=/etc/autofs/auto.master mode=644 group=root owner=root
   become: yes
 
 - name: Configure autofs (auto.NAS)
-  template: src=files/autofs/auto.NAS dest=/etc/autofs/auto.NAS mode=644 group=root owner=root
+  copy: src=files/etc/autofs/auto.NAS dest=/etc/autofs/auto.NAS mode=644 group=root owner=root
   become: yes
 
-- name: Configure autofs (start services)
-  service: name=autofs.service enabled=yes state=started
+- name: Configure autofs service
+  service: name=autofs.service enabled=yes
   become: yes

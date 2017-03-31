@@ -1,0 +1,11 @@
+---
+- name: Remove old configs
+  file: path={{ item }} state=absent
+  with_items:
+    - ~/.bash_history
+    - ~/.bash_logout
+    - ~/.bash_profile
+    - ~/.bashrc
+    - ~/.gnupg
+    - ~/.nv
+  become: yes
