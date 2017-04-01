@@ -1,16 +1,12 @@
 ---
-- name: Check that the apcupsd.conf exists
-  stat: path=/etc/apcupsd/apcupsd.conf
-  register: apcupsd_exists
-
 - name: Configure apcupsd
-  template: src=files/apcupsd.conf dest=/etc/apcupsd/apcupsd.conf mode=0644 group=root owner=root
-  when: apcupsd_exists.stat.exists == True
+  template: src=files/etc/apcupsd/apcupsd.conf dest=/etc/apcupsd/apcupsd.conf mode=0644 group=root owner=root
+  when: hostname_id == "archhost"
   become: yes
 
 - name: Enable apcupsd service
-  service: name=apcupsd.service enabled=yes state=started
-  when: apcupsd_exists.stat.exists == True
+  service: name=apcupsd.service enabled=yes
+  when: hostname_id == "archhost"
   become: yes
 
 - name: Create hddtemp service directory
@@ -27,5 +23,5 @@
   become: yes
 
 - name: Enable hddtemp service
-  service: name=hddtemp.service enabled=yes state=started
+  service: name=hddtemp.service enabled=yes
   become: yes

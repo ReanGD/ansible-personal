@@ -34,7 +34,6 @@
     - include: tasks/lightdm.yml
     - include: tasks/docker.yml
     - include: tasks/xorg.yml
-    - include: tasks/clear.yml
-    
+    - include: tasks/clear.yml    
     - include: tasks/monitoring.yml
     - include: tasks/go.yml
