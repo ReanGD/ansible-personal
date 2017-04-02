@@ -4,9 +4,15 @@ pkgs = []
 
 # drivers
 pkgs += ["mesa"]
-if host in ["archhost", "archnote"]:
+if host == "archhost":
    pkgs += ["nvidia"]
    # sudo pacman -S lib32-nvidia-utils lib32-nvidia-libgl
+
+if host == "archnote":
+   pkgs += ["bumblebee",
+            "mesa",
+            "xf86-video-intel",
+            "nvidia"]
 
 if host == "archmini":
     pkgs += ["xf86-video-intel",
