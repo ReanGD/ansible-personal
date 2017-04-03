@@ -3,6 +3,9 @@
   yaourt: update_cache=yes
   changed_when: false
 
+- name: Create gpg dir
+  file: path=~/.config/gnupg state=directory mode=700
+
 - name: Install package gnupg
   pacman: name=gnupg state=present
   become: yes

@@ -9,9 +9,6 @@
     - ~/doc
     - ~/.cache
 
-- name: Create gpg dir
-  file: path=~/.config/gnupg state=directory mode=700
-
 - name: Create links for dotfiles
   link: src=~/projects/git/dotfiles/{{item.src}} dst={{item.dst}}
   with_items: "{{ dotfiles_path_map }}"
