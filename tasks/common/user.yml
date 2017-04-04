@@ -1,10 +1,14 @@
 ---
 - name: Create main user
-  user: name={{main_user}} uid=1000 group=users groups=games,video,audio,optical,storage,power{{docker_group}} password={{password}}
+  user: name={{main_user}} uid=1000 group=users groups=games,video,audio,optical,storage,power{{docker_group}} password={{main_password}}
+  become: yes
+
+- name: Create dop user
+  user: name={{dop_user}} uid=1000 group=users groups=games,video,audio,optical,storage,power password={{dop_password}}
   become: yes
 
 - name: Change root password
-  user: name=root password={{password}} update_password=always
+  user: name=root password={{main_password}} update_password=always
   become: yes
 
 - name: Configure sudoers
