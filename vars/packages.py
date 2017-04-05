@@ -4,13 +4,13 @@ pkgs = []
 
 # drivers
 pkgs += ["mesa"]
+
 if host == "archhost":
    pkgs += ["nvidia"]
    # sudo pacman -S lib32-nvidia-utils lib32-nvidia-libgl
 
 if host == "archnote":
    pkgs += ["bumblebee",
-            "mesa",
             "xf86-video-intel",
             "nvidia"]
 
@@ -61,6 +61,7 @@ pkgs += ["grub",
 # WM
 pkgs += ["xorg-server",
          "xorg-xinit",
+         "mate",
          "awesome",
          "rofi",            # run app menu
          "vicious"]
@@ -113,9 +114,7 @@ pkgs += ["python",
          "python-jedi",
          "python2-jedi",
          "python-pylint",
-         "python2-pylint",
          "flake8",
-         "python2-flake8",
          "python-pytest",
          "python-virtualenv",
          "tk"]

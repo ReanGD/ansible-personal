@@ -1,0 +1,7 @@
+Description='Profile for ArchNet_5'
+Interface=wlp2s0
+Connection=wireless
+Security=wpa
+ESSID=ArchNet_5
+IP=dhcp
+Key={{wifi_ArchNet_5_key}}

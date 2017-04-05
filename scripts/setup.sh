@@ -64,4 +64,3 @@ pacstrap /mnt base base-devel git ansible
 genfstab -U -p /mnt >> /mnt/etc/fstab
 arch-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /etc/ansible-personal
 arch-chroot /mnt /etc/ansible-personal/root.sh
-arch-chroot /mnt /bin/bash

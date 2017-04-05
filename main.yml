@@ -16,6 +16,7 @@
 
   tasks:
     - include: tasks/common/init.yml
+    - include: tasks/common/wifi.yml
     - include: tasks/common/locale.yml
     - include: tasks/common/pacman.yml
     - include: tasks/common/user.yml

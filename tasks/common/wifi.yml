@@ -1,0 +1,21 @@
+---
+- name: Check that wlp2s0-ArchNet_5 service exists
+  stat: path="/etc/systemd/system/multi-user.target.wants/netctl@wlp2s0\\x2dArchNet_5.service"
+  register: wifi_service_installed
+  become: yes
+
+# ansible-vault encrypt secrets.yml
+# ansible-vault decrypt secrets.yml
+- name: Copy pacman configuration
+  template: src=files/etc/netctl/wlp2s0-ArchNet_5 dest=/etc/netctl/wlp2s0-ArchNet_5 owner=root group=root mode=0600
+  become: yes
+
+- name: Enable wlp2s0-ArchNet_5
+  command: systemctl enable wlp2s0-ArchNet_5
+  when: ansible_local_user != "root" and wifi_service_installed.stat.exists == False
+  become: yes
+
+- name: Start wlp2s0-ArchNet_5
+  command: systemctl start wlp2s0-ArchNet_5
+  when: ansible_local_user != "root" and wifi_service_installed.stat.exists == False
+  become: yes
