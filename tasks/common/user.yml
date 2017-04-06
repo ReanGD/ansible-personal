@@ -4,7 +4,7 @@
   become: yes
 
 - name: Create dop user
-  user: name={{dop_user}} uid=1000 group=users groups=games,video,audio,optical,storage,power password={{dop_password}}
+  user: name={{dop_user}} uid=1001 group=users groups=games,video,audio,optical,storage,power password={{dop_password}}
   when: hostname_id == "archnote"
   become: yes
 
