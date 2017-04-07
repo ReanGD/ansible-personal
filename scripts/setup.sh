@@ -26,10 +26,10 @@ BOARD_UUID=$(cat /sys/class/dmi/id/product_uuid | sha256sum | awk '{ print $1 }'
 
 case $BOARD_UUID in
 '2d4ac2d6ec3acf216141eff067c66c66b0b5c777234763456b4f8a4d219e8043')
-    FUNC=$(archhost)
+    FUNC="archhost"
     ;;
 '7fdc78b0e186c3f5247f7c20518e9f1ad1903ad95d49fe2d8b7662945741a597')
-    FUNC=$(archnote)    
+    FUNC="archnote"
     ;;
 *)
     echo 'Unknown product id'
@@ -41,11 +41,11 @@ dialog --title 'Install' --clear --defaultno --yesno 'Recreate partition table?'
 case "$?" in
 '0')
     clear
-    $FUNC 'full'
+    eval ${FUNC} 'full'
     ;;
 '1')
     clear
-    $FUNC 'part'
+    eval ${FUNC} 'part'
     ;;
 '-1')
     clear
@@ -62,6 +62,7 @@ else
     wifi-menu
 fi
 
+echo "Server = http://mirror.yandex.ru/archlinux/$repo/os/$arch" > /etc/pacman.d/mirrorlist
 pacstrap /mnt base base-devel git ansible
 genfstab -U -p /mnt >> /mnt/etc/fstab
 arch-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /etc/ansible-personal
