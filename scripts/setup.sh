@@ -23,7 +23,6 @@ function archnote {
 
 
 BOARD_UUID=$(cat /sys/class/dmi/id/product_uuid | sha256sum | awk '{ print $1 }')
-
 case $BOARD_UUID in
 '2d4ac2d6ec3acf216141eff067c66c66b0b5c777234763456b4f8a4d219e8043')
     FUNC="archhost"
@@ -37,6 +36,7 @@ case $BOARD_UUID in
     ;;
 esac
 
+umount -R /mnt
 dialog --title 'Install' --clear --defaultno --yesno 'Recreate partition table?' 10 40
 case "$?" in
 '0')
@@ -56,14 +56,9 @@ esac
 
 read -n 1 -s -p "Press any key to continue"
 
-if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
-    echo "IPv4 is up"
-else
-    wifi-menu
-fi
-
-echo "Server = http://mirror.yandex.ru/archlinux/$repo/os/$arch" > /etc/pacman.d/mirrorlist
+echo 'Server = http://mirror.yandex.ru/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
 pacstrap /mnt base base-devel git ansible
 genfstab -U -p /mnt >> /mnt/etc/fstab
 arch-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /etc/ansible-personal
 arch-chroot /mnt /etc/ansible-personal/root.sh
+umount -R /mnt

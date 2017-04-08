@@ -11,11 +11,11 @@
   become: yes
 
 - name: Enable wlp2s0-ArchNet_5
-  command: systemctl enable wlp2s0-ArchNet_5
+  command: netctl enable wlp2s0-ArchNet_5
   when: ansible_local_user != "root" and wifi_service_installed.stat.exists == False
   become: yes
 
 - name: Start wlp2s0-ArchNet_5
-  command: systemctl start wlp2s0-ArchNet_5
+  command: netctl start wlp2s0-ArchNet_5
   when: ansible_local_user != "root" and wifi_service_installed.stat.exists == False
   become: yes
