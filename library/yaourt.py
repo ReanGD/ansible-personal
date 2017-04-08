@@ -46,103 +46,111 @@ EXAMPLES = '''
 
 import os
 import os.path
-from ansible.module_utils.basic import *
-
-YAOURT_PATH = "/usr/bin/yaourt"
-PACMAN_PATH = "/usr/bin/pacman"
+import ansible.module_utils.basic
 
 
-def query_package(module, name, asexplicit):
-    if asexplicit:
-        lcmd = "pacman -Qie %s" % (name)
-    else:
-        lcmd = "pacman -Qi %s" % (name)
-    lrc, lstdout, lstderr = module.run_command(lcmd, check_rc=False)
-    return lrc == 0
+# ansible.module_utils.basic._ANSIBLE_ARGS = '{"ANSIBLE_MODULE_ARGS":{}}'.encode('utf-8')
 
+class PackageManager:
+    YAOURT_PATH = "/usr/bin/yaourt"
+    PACMAN_PATH = "/usr/bin/pacman"
 
-def resolve_conflict(module, name):
-    lcmd = "yaourt -Si %s" % (name)
-    lrc, lstdout, lstderr = module.run_command(lcmd, check_rc=False)
-    if lrc != 0:
-        module.fail_json(msg="could not get package info")
+    def __init__(self, ansible_module):
+        self.module = ansible_module
+        self._check_path()
 
-    find_line = "Conflicts With :"
-    conflicts = []
-    for line in lstdout.split(os.linesep):
-        if find_line in line:
-            conflicts = line[len(find_line):].split()
-        elif len(conflicts) != 0:
-            if ":" not in line:
-                conflicts += line.split()
+    def fail(self, msg):
+        self.module.fail_json(msg=msg)
+
+    def _run(self, cmd, raise_msg):
+        rc, stdout, stderr = module.run_command(cmd, check_rc=False)
+        lines = [it for it in stdout.split(os.linesep) if it.strip()]
+        if rc != 0:
+            if raise_msg:
+                msg = "Command: {}, exit code: {}, stdout: {}. stderr: {}"
+                self.fail(msg.format(cmd, rc, stdout, stderr))
             else:
-                break
+                return lines, False
 
-    if len(conflicts) == 0:
-        return
+        if raise_msg:
+            return lines
+        else:
+            return lines, True
 
-    lcmd = "pacman -T %s" % (" ".join(conflicts))
-    lrc, lstdout, lstderr = module.run_command(lcmd, check_rc=False)
+    def yaourt(self, params, raise_msg=True):
+        return self._run(PackageManager.YAOURT_PATH + " " + params, raise_msg)
 
-    conflicts = list(set(conflicts).difference(set(lstdout.split())))
-    if len(conflicts) == 0:
-        return
+    def pacman(self, params, raise_msg=True):
+        return self._run(PackageManager.PACMAN_PATH + " " + params, raise_msg)
 
-    lcmd = "yaourt -Rs %s --noconfirm" % (" ".join(conflicts))
-    lrc, lstdout, lstderr = module.run_command(lcmd, check_rc=False)
-    if lrc != 0:
-        msg = "could not remove packages (%s)" % (",".join(conflicts))
-        module.fail_json(msg=msg)
+    def _check_path(self):
+        if not os.path.exists(PackageManager.YAOURT_PATH):
+            self.fail("cannot find yaourt, looking for %s" % PackageManager.YAOURT_PATH)
 
+        if not os.path.exists(PackageManager.PACMAN_PATH):
+            self.fail("cannot find pacman, looking for %s" % PackageManager.PACMAN_PATH)
 
-def update_package_db(module):
-    cmd = "yaourt -Sya"
-    rc, stdout, stderr = module.run_command(cmd, check_rc=False)
-    if rc == 0:
-        return True
-    else:
-        msg='Could not update package db. Command: {}, exit code: {}, stdout: {}. stderr: {}'
-        module.fail_json(msg=msg.format(cmd, rc, stdout, stderr))
+    def update_package_db(self):
+        self.yaourt("-Syua")
 
+    def _remove_conflict(self, name):
+        find_line = "Conflicts With :"
+        conflicts = []
+        for line in self.yaourt("-Si " + name):
+            if find_line in line:
+                conflicts = line[len(find_line):].split()
+            elif len(conflicts) != 0:
+                if ":" not in line:
+                    conflicts += line.split()
+                else:
+                    break
 
-def install_packages(module, packages):
-    install_c = 0
+        if len(conflicts) == 0:
+            return
 
-    for i, package in enumerate(packages):
-        param_explicit = " --asexplicit"
-        installed = query_package(module, package, False)
-        if not installed:
-            param_explicit = ""
-        installed = query_package(module, package, True)
-        if not installed:
-            cmd = "yaourt -S %s %s --noconfirm" % (package, param_explicit)
-            rc, stdout, stderr = module.run_command(cmd, check_rc=False)
-            if rc != 0:
-                msg = "failed to install %s" % (package)
-                module.fail_json(stdout=stdout, stderr=stderr, msg=msg)
-            install_c += 1
+        lines = self.pacman("-T " + " ".join(conflicts))
+        if len(lines) != 0:
+            not_installed_conflicts = set(lines[0].split())
+        else:
+            not_installed_conflicts = set()
+        for_remove = list(set(conflicts).difference(not_installed_conflicts))
+        if len(conflicts) != 0:
+            self.pacman("-Rs %s --noconfirm" % (" ".join(for_remove)))
 
-    if install_c != 0:
-        msg = "installed %s package(s)" % (install_c)
-        module.exit_json(changed=True, msg=msg)
+    def group_packages(self, group_name):
+        return [it.split()[0].split('/')[1] for it in self.yaourt("-Sg " + group_name[1:])]
 
-    module.exit_json(changed=False, msg="package(s) already installed")
+    def is_group(self, name):
+        return name.startswith(":")
 
+    def is_installed_asexplicit(self, name):
+        _, success = self.pacman("-Qie " + name, raise_msg=False)
+        return success
 
-def check_packages(module, packages):
-    would_be_changed = []
-    for package in packages:
-        if not query_package(module, package, True):
-            would_be_changed.append(package)
-    if would_be_changed:
-        msg = "%s package(s) would be installed" % (len(would_be_changed))
-        module.exit_json(changed=True, msg=msg)
-    else:
-        module.exit_json(change=False, msg="package(s) already installed")
+    def install_packages(self, raw_packages):
+        packages = []
+        for package in raw_packages:
+            if self.is_group(package):
+                packages += group_packages(package)
+            else:
+                packages.append(package)
+
+        for package in packages:
+            self._remove_conflict(package)
+
+        for_install = [it for it in packages if not self.is_installed_asexplicit(it)]
+        for package in for_install:
+            self.yaourt("-S %s --asexplicit --noconfirm" % package)
+
+        if len(for_install) != 0:
+            msg = "installed %s package(s)" % (len(for_install))
+            self.module.exit_json(changed=True, msg=msg)
+
+        self.module.exit_json(changed=False, msg="package(s) already installed")
 
 
 def main():
-    module = AnsibleModule(
+    ansible_module = ansible.module_utils.basic.AnsibleModule(
         argument_spec=dict(
             name=dict(aliases=['pkg']),
             state=dict(default='present', choices=['present']),
@@ -151,35 +159,12 @@ def main():
         required_one_of=[['name', 'update_cache']],
         supports_check_mode=True)
 
-    if not os.path.exists(YAOURT_PATH):
-        msg = "cannot find yaourt, looking for %s" % (YAOURT_PATH)
-        module.fail_json(msg=msg)
-
-    if not os.path.exists(PACMAN_PATH):
-        msg = "cannot find pacman, looking for %s" % (PACMAN_PATH)
-        module.fail_json(msg=msg)
-
     p = module.params
-
-    if p["update_cache"] and not module.check_mode:
-        update_package_db(module)
-        if not p['name']:
-            module.exit_json(changed=True,
-                             msg='updated the package master lists')
-
-    if p['update_cache'] and module.check_mode and not p['name']:
-        module.exit_json(changed=True,
-                         msg='Would have updated the package cache')
-
-    if p['name']:
-        pkgs = p['name'].split(',')
-        if module.check_mode:
-            check_packages(module, pkgs)
-
-        if p['state'] in ['present']:
-            for pkg in pkgs:
-                resolve_conflict(module, pkg)
-            install_packages(module, pkgs)
+    pm = PackageManager(ansible_module)
+    if p["update_cache"]:
+        pm.update_package_db()
+    elif p['name'] and p['state'] in ['present']:
+        pm.install_packages(p['name'].split(','))
 
 
 if __name__ == '__main__':

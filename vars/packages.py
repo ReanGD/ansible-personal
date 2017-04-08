@@ -61,7 +61,7 @@ pkgs += ["grub",
 # WM
 pkgs += ["xorg-server",
          "xorg-xinit",
-         "mate",
+         ":mate",
          "awesome",
          "rofi",            # run app menu
          "vicious"]
@@ -183,5 +183,5 @@ pkgs += ["playonlinux",
          "minecraft"]
 
 packages = pkgs
-ignore_packages = ["yaourt", "package-query", "ansible"]
+ignore_packages = ["yaourt", "ansible"]
 ignore_groups = ["base", "base-devel"]
