@@ -5,13 +5,16 @@ import subprocess
 from ansible.errors import *
 from ansible.plugins.lookup import LookupBase
 
-PACMAN_PATH = "/usr/bin/pacman"
 
-
-class PacmanManager:
+class PackageManager:
+    PACMAN_PATH = "/usr/bin/pacman"
+    
     def __init__(self):
-        if not os.path.exists(PACMAN_PATH):
-            raise AnsibleError('not fount pacman package')
+        self._check_path()
+
+    def _check_path(self):
+        if not os.path.exists(PackageManager.PACMAN_PATH):
+            raise AnsibleError("cannot find pacman, looking for %s" % PackageManager.PACMAN_PATH)
 
     def __parse(self, cmd):
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
@@ -19,18 +22,22 @@ class PacmanManager:
         return set(out.decode("UTF-8").split())
 
     def all_installed_packages(self):
-        return self.__parse([PACMAN_PATH, "-Qq"])
+        return self.__parse([PackageManager.PACMAN_PATH, "-Qq"])
 
     def explicit_installed_packages(self):
-        return self.__parse([PACMAN_PATH, "-Qeq"])
+        return self.__parse([PackageManager.PACMAN_PATH, "-Qeq"])
 
-    def group_members(self, group):
-        return self.__parse([PACMAN_PATH, "-Qgq", group])
+    def group_members(self, group, local):
+        if local:
+            params = "-Qgq"
+        else:
+            params = "-Sgq"
+        return self.__parse([PackageManager.PACMAN_PATH, params, group])
 
-    def groups_members(self, groups):
+    def groups_members(self, groups, local):
         pkgs = set()
         for it in groups:
-            pkgs.update(self.group_members(it))
+            pkgs.update(self.group_members(it, local))
         return pkgs
 
 
@@ -76,47 +83,52 @@ class LookupModule(LookupBase):
         paramvals['path'] = config_path
         return paramvals
 
-    def __ignored(self):
-        ignore_groups = self.cfg["ignore_groups"]
-        ignore_packages = self.mng.groups_members(ignore_groups)
-        ignore_packages.update(self.cfg["ignore_packages"])
+    def __installed(self):
+        groups = self.cfg["groups"]
+        packages = self.mng.groups_members(groups, False)
+        packages.update(self.cfg["packages"])
 
-        return ignore_packages
+        return packages
+
+    def __ignored(self):
+        groups = self.cfg["ignore_groups"]
+        packages = self.mng.groups_members(groups, True)
+        packages.update(self.cfg["ignore_packages"])
+
+        return packages
 
     def action_all(self):
-        packages = self.cfg["packages"]
+        packages = self.__installed()
         ignored_packages = self.__ignored()
-        ret = packages.difference(ignored_packages)
+        result = packages.difference(ignored_packages)
 
-        return list(ret)
+        return result
 
     def action_not_installed(self):
-        packages = self.cfg["packages"]
-        ignored_packages = self.__ignored()
+        packages = self.action_all()
         explicit_packages = self.mng.explicit_installed_packages()
-        ret = packages.difference(ignored_packages, explicit_packages)
+        result = packages.difference(explicit_packages)
 
-        return list(ret)
+        return result
 
     def action_new(self):
-        packages = self.cfg["packages"]
-        ignored_packages = self.__ignored()
+        packages = self.action_all()
         explicit_packages = self.mng.explicit_installed_packages()
-        ret = explicit_packages.difference(packages, ignored_packages)
+        result = explicit_packages.difference(packages)
 
-        return list(ret)
+        return result
 
     def run(self, terms, variables=None, **kwargs):
         params = self.__parse_terms(terms)
         action = params['action']
         self.cfg = UserConfig(params['path'], params['host'])
-        self.mng = PacmanManager()
+        self.mng = PackageManager()
 
         if action == "all":
-            return self.action_all()
+            return list(self.action_all())
         elif action == "not_installed":
-            return self.action_not_installed()
+            return list(self.action_not_installed())
         elif action == "new":
-            return self.action_new()
+            return list(self.action_new())
         else:
             raise AnsibleError("error action (%s)" % action)

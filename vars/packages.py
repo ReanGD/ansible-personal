@@ -1,5 +1,6 @@
 # global host
 pkgs = []
+grps = []
 
 
 # drivers
@@ -61,10 +62,12 @@ pkgs += ["grub",
 # WM
 pkgs += ["xorg-server",
          "xorg-xinit",
-         ":mate",
          "awesome",
          "rofi",            # run app menu
          "vicious"]
+
+if host == "archnote":
+   grps += ["mate"]
 
 # login manager
 pkgs += ["lightdm", "lightdm-gtk-greeter"]
@@ -120,7 +123,7 @@ pkgs += ["python",
          "tk"]
 
 # text editors
-pkgs += ["emacs", "vim", "sublime-text-dev", "pycharm-community"]
+pkgs += ["emacs", "vim", "sublime-text-dev"]
 
 # file managers
 pkgs += ["doublecmd-gtk2",
@@ -183,5 +186,6 @@ pkgs += ["playonlinux",
          "minecraft"]
 
 packages = pkgs
+groups = grps
 ignore_packages = ["yaourt", "ansible"]
 ignore_groups = ["base", "base-devel"]
