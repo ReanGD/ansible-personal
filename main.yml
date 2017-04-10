@@ -29,6 +29,7 @@
     - include: tasks/common/systemd_cfg.yml
     - include: tasks/common/swap.yml
     - include: tasks/common/autofs.yml
+    - include: tasks/trim.yml
     - include: tasks/git.yml
     - include: tasks/repository.yml
     - include: tasks/dotfiles.yml
