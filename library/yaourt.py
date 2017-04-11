@@ -70,7 +70,7 @@ class PackageManager:
     def fail(self, msg):
         self.module.fail_json(msg=msg)
 
-    def _run(self, args, raise_msg):        
+    def _run(self, args, raise_msg):
         rc, stdout, stderr = self.module.run_command(args, check_rc=False)
         lines = [it for it in stdout.split(os.linesep) if it.strip()]
         if rc != 0:

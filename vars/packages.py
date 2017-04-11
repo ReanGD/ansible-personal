@@ -2,36 +2,33 @@
 pkgs = []
 grps = []
 
-
 # drivers
 pkgs += ["mesa"]
 
 if host == "archhost":
-   pkgs += ["nvidia"]
-   # sudo pacman -S lib32-nvidia-utils lib32-nvidia-libgl
+    pkgs += ["nvidia"]
+    # sudo pacman -S lib32-nvidia-utils lib32-nvidia-libgl
 
 if host == "archnote":
-   pkgs += ["bumblebee",
-            "xf86-video-intel",
-            "nvidia"]
+    pkgs += ["bumblebee",
+             "xf86-video-intel",
+             "nvidia"]
 
 if host == "archmini":
     pkgs += ["xf86-video-intel",
              "lib32-mesa",
              "xf86-input-synaptics",  # touchpad
-             "broadcom-wl"]           # wi-fi
-
+             "broadcom-wl"]  # wi-fi
 
 # monitoring
-pkgs += ["iftop",         # network monitor
-         "htop",          # process monitor
-         "iotop",         # disk monitor
-         "hddtemp",       # disk temperature
+pkgs += ["iftop",  # network monitor
+         "htop",  # process monitor
+         "iotop",  # disk monitor
+         "hddtemp",  # disk temperature
          "smartmontools"]
 
 if host == "archhost":
-   pkgs += ["apcupsd"]    # UPS
-
+    pkgs += ["apcupsd"]  # UPS
 
 # font packages
 pkgs += ["ttf-ms-fonts",
@@ -44,30 +41,35 @@ pkgs += ["ttf-ms-fonts",
          "adobe-source-code-pro-fonts"]
 
 # terminal
-pkgs += ["rxvt-unicode-patched", "urxvt-perls", "zsh", "oh-my-zsh-git", "zsh-syntax-highlighting", "fzf"]
+pkgs += ["rxvt-unicode-patched",
+         "urxvt-perls",
+         "zsh",
+         "oh-my-zsh-git",
+         "zsh-syntax-highlighting",
+         "fzf"]
 
 # system
 pkgs += ["grub",
          "polkit",
          "gnupg",
          "xcursor-ize-vision",
-         "pkgfile",        # pkgfile makepkg (get package for makepkg)
-         "pkgcacheclean",  # clean the pacman cache         
-         "kbdd-git",       # daemon to make per window layout
-         "libnotify",      # create notifications message
-         "autofs",         # automounter (nfs, samba, etc)
-         "pacaur",         # AUR package manager
+         "pkgfile",  # pkgfile makepkg (get package for makepkg)
+         "pkgcacheclean",  # clean the pacman cache
+         "kbdd-git",  # daemon to make per window layout
+         "libnotify",  # create notifications message
+         "autofs",  # automounter (nfs, samba, etc)
+         "pacaur",  # AUR package manager
          "rsync"]
 
 # WM
 pkgs += ["xorg-server",
          "xorg-xinit",
          "awesome",
-         "rofi",            # run app menu
+         "rofi",  # run app menu
          "vicious"]
 
 if host == "archnote":
-   grps += ["mate"]
+    grps += ["mate"]
 
 # login manager
 pkgs += ["lightdm", "lightdm-gtk-greeter"]
@@ -143,9 +145,9 @@ pkgs += ["skypeforlinux-bin"]
 pkgs += ["p7zip", "unzip", "unrar"]
 
 # media
-pkgs += ["shutter",     # screenshots
+pkgs += ["shutter",  # screenshots
          "byzanz-git",  # create gif from screen
-         "viewnior",    # image viewer
+         "viewnior",  # image viewer
          "simplescreenrecorder",  # write video from screen
          "gimp",
          "blender",
@@ -153,8 +155,8 @@ pkgs += ["shutter",     # screenshots
          "deadbeef"]
 
 # office
-pkgs += ["mupdf"   # pdf viewer
-         #"llpp-git"  # pdf viewer
+pkgs += ["mupdf"  # pdf viewer
+         # "llpp-git"  # pdf viewer
          # "libreoffice-fresh"
          ]
 
@@ -169,10 +171,10 @@ pkgs += ["enchant", "hunspell-en", "hunspell-ru-aot", "languagetool"]
 
 # xorg
 pkgs += ["xorg-xfontsel",  # font select
-         "xorg-xprop",     # window info (xprop | grep WM_CLASS)
-         "xorg-xev",       # keypress info
+         "xorg-xprop",  # window info (xprop | grep WM_CLASS)
+         "xorg-xev",  # keypress info
          "xorg-xwininfo",  # select window
-         "xrectsel"]       # get select region
+         "xrectsel"]  # get select region
 
 # VM
 pkgs += ["jre7-openjdk", "docker", "docker-compose"]
