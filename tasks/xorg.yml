@@ -2,3 +2,8 @@
 - name: Configure keyboard
   copy: src=files/etc/X11/xorg.conf.d/20-keyboard.conf dest=/etc/X11/xorg.conf.d/20-keyboard.conf mode=0755 group=root owner=root
   become: yes
+
+- name: Configure touchpad
+  copy: src=files/etc/X11/xorg.conf.d/20-keyboard.conf dest=/etc/X11/xorg.conf.d/20-touchpad.conf mode=0755 group=root owner=root
+  when: hostname_id == "archnote"
+  become: yes

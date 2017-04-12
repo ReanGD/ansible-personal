@@ -12,7 +12,8 @@ if host == "archhost":
 if host == "archnote":
     pkgs += ["bumblebee",
              "xf86-video-intel",
-             "nvidia"]
+             "nvidia",
+             "xf86-input-libinput"]  # touchpad
 
 if host == "archmini":
     pkgs += ["xf86-video-intel",
@@ -72,7 +73,7 @@ if host == "archnote":
     grps += ["mate"]
 
 # login manager
-pkgs += ["lightdm", "lightdm-gtk-greeter"]
+pkgs += ["lightdm", "lightdm-webkit2-greeter"]
 
 # net tools
 pkgs += ["wget",
