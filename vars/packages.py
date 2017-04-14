@@ -6,16 +6,14 @@ grps = []
 pkgs += ["mesa"]
 
 if host == "archhost":
-    pkgs += ["nvidia"]
-    # sudo pacman -S lib32-nvidia-utils lib32-nvidia-libgl
-
-if host == "archnote":
-    pkgs += ["bumblebee",
+    pkgs += ["nvidia"]  # lib32-nvidia-utils lib32-nvidia-libgl
+elif host == "archnote":
+    pkgs += ["bbswitch",
+             # "bumblebee",
+             # "nvidia",
              "xf86-video-intel",
-             "nvidia",
              "xf86-input-libinput"]  # touchpad
-
-if host == "archmini":
+elif host == "archmini":
     pkgs += ["xf86-video-intel",
              "lib32-mesa",
              "xf86-input-synaptics",  # touchpad
@@ -30,6 +28,8 @@ pkgs += ["iftop",  # network monitor
 
 if host == "archhost":
     pkgs += ["apcupsd"]  # UPS
+elif host == "archnote":
+    pkgs += ["powertop"]
 
 # font packages
 pkgs += ["ttf-ms-fonts",

@@ -6,7 +6,7 @@
 
 # ansible-vault encrypt secrets.yml
 # ansible-vault decrypt secrets.yml
-- name: Copy pacman configuration
+- name: Copy netctl configuration
   template: src=files/etc/netctl/wlp2s0-ArchNet_5 dest=/etc/netctl/wlp2s0-ArchNet_5 owner=root group=root mode=0600
   become: yes
 

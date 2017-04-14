@@ -70,10 +70,10 @@ class PackageManager:
     def fail(self, msg):
         self.module.fail_json(msg=msg)
 
-    def _run(self, args, raise_msg):
+    def _run(self, args, raise_msg, success_codes):
         rc, stdout, stderr = self.module.run_command(args, check_rc=False)
-        lines = [it for it in stdout.split(os.linesep) if it.strip()]
-        if rc != 0:
+        lines = [it.strip() for it in stdout.split(os.linesep) if it.strip()]
+        if rc not in success_codes:
             if raise_msg:
                 args = " ".join([pipes.quote(x) for x in args])
                 msg = 'Command: "{}", exit code: {}, stdout: "{}", stderr: "{}"'
@@ -86,11 +86,11 @@ class PackageManager:
         else:
             return lines, True
 
-    def yaourt(self, args, raise_msg=True):
-        return self._run([PackageManager.YAOURT_PATH] + args, raise_msg)
+    def yaourt(self, args, raise_msg=True, success_codes=[0]):
+        return self._run([PackageManager.YAOURT_PATH] + args, raise_msg, success_codes)
 
-    def pacman(self, args, raise_msg=True):
-        return self._run([PackageManager.PACMAN_PATH] + args, raise_msg)
+    def pacman(self, args, raise_msg=True, success_codes=[0]):
+        return self._run([PackageManager.PACMAN_PATH] + args, raise_msg, success_codes)
 
     def update_package_db(self):
         self.yaourt(["-Syua"])
@@ -111,15 +111,14 @@ class PackageManager:
         if len(conflicts) == 0:
             return
 
-        lines = self.pacman(["-T"] + conflicts)
-        if len(lines) != 0:
-            not_installed_conflicts = set(lines[0].split())
-        else:
-            not_installed_conflicts = set()
-
+        not_installed_conflicts = set(self.pacman(["-T"] + conflicts, success_codes=[0, 127]))
         for_remove = list(set(conflicts).difference(not_installed_conflicts))
-        if len(conflicts) != 0:
+        if len(for_remove) != 0:
             self.pacman(["-Rs", "--noconfirm"] + for_remove)
+
+    def is_installed(self, name):
+        _, success = self.pacman(["-Qi", name], raise_msg=False)
+        return success
 
     def is_installed_asexplicit(self, name):
         _, success = self.pacman(["-Qie", name], raise_msg=False)
@@ -131,7 +130,10 @@ class PackageManager:
 
         for_install = [it for it in packages if not self.is_installed_asexplicit(it)]
         for package in for_install:
-            self.yaourt(["-S", package, "--asexplicit", "--noconfirm"])
+            if self.is_installed(package):
+                self.yaourt(["-S", package, "--asexplicit", "--noconfirm"])
+            else:
+                self.yaourt(["-S", package, "--noconfirm"])
 
         if len(for_install) != 0:
             msg = "installed %s package(s)" % (len(for_install))
