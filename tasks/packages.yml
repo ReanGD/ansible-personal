@@ -21,5 +21,9 @@
 - name: Get new packages
   shell: echo "{{ item }}"
   with_cfg_file: vars/packages.py action=new host={{hostname_id}}
-  tags:
-    - view_new
+  tags: view_new
+
+- name: Get error packages
+  shell: echo "{{ item }}"
+  with_cfg_file: vars/packages.py action=error host={{hostname_id}}
+  tags: view_new

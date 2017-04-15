@@ -29,6 +29,7 @@
   register: init_board_serial
   changed_when: false
   become: yes
+  tags: init
 
 - name: Set archhost hostname
   run_once: True
@@ -36,6 +37,7 @@
     notebook: "no"
     hostname_id: "archhost"
   when: init_board_serial.stdout == '2d4ac2d6ec3acf216141eff067c66c66b0b5c777234763456b4f8a4d219e8043'
+  tags: init
 
 - name: Set archmini hostname
   run_once: True
@@ -43,6 +45,7 @@
     notebook: "yes"
     hostname_id: "archmini"
   when: init_board_serial.stdout == '93507fdfe172eea26bfb5bc957a12f41fc36859d2ecfa1131f723d0398dc6868'
+  tags: init
 
 - name: Set archsrv hostname
   run_once: True
@@ -50,6 +53,7 @@
     notebook: "no"
     hostname_id: "archsrv"
   when: init_board_serial.stdout == '7053bd838a745311203438c58dcb92661d68b1d55c169f46b58706c1d95c69a9'
+  tags: init
 
 - name: Set archnote hostname
   run_once: True
@@ -57,3 +61,4 @@
     notebook: "yes"
     hostname_id: "archnote"
   when: init_board_serial.stdout == '7fdc78b0e186c3f5247f7c20518e9f1ad1903ad95d49fe2d8b7662945741a597'
+  tags: init

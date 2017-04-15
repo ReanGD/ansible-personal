@@ -8,17 +8,26 @@ from ansible.plugins.lookup import LookupBase
 
 class PackageManager:
     PACMAN_PATH = "/usr/bin/pacman"
+    YAOURT_PATH = "/usr/bin/yaourt"
     
     def __init__(self):
         self._check_path()
+        self._rc = 0
 
     def _check_path(self):
         if not os.path.exists(PackageManager.PACMAN_PATH):
             raise AnsibleError("cannot find pacman, looking for %s" % PackageManager.PACMAN_PATH)
+        if not os.path.exists(PackageManager.YAOURT_PATH):
+            raise AnsibleError("cannot find yaourt, looking for %s" % PackageManager.YAOURT_PATH)
 
-    def __parse(self, cmd):
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+    def __parse(self, cmd, hide_stderr = False):
+        if hide_stderr:
+            stderr = subprocess.PIPE
+        else:
+            stderr = None
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=stderr)
         out, err = p.communicate()
+        self._rc = p.returncode
         return set(out.decode("UTF-8").split())
 
     def all_installed_packages(self):
@@ -26,6 +35,10 @@ class PackageManager:
 
     def explicit_installed_packages(self):
         return self.__parse([PackageManager.PACMAN_PATH, "-Qeq"])
+
+    def is_exists_package(self, name):
+        self.__parse([PackageManager.YAOURT_PATH, "-Si", name], hide_stderr=True)
+        return self._rc == 0
 
     def group_members(self, group, local):
         if local:
@@ -67,9 +80,9 @@ class LookupModule(LookupBase):
         config_path = params[0]
         paramvals = {
             'host': '',
-            'action': "all",
+            'action': "not_installed",
         }
-        avaible_actions = ['all', 'not_installed', 'new']
+        avaible_actions = ["not_installed", "new", "error"]
 
         try:
             for param in params[1:]:
@@ -97,26 +110,24 @@ class LookupModule(LookupBase):
 
         return packages
 
-    def action_all(self):
-        packages = self.__installed()
-        ignored_packages = self.__ignored()
-        result = packages.difference(ignored_packages)
-
-        return result
-
     def action_not_installed(self):
-        packages = self.action_all()
+        installed_packages = self.__installed()
+        ignored_packages = self.__ignored()
+        packages = installed_packages.difference(ignored_packages)
         explicit_packages = self.mng.explicit_installed_packages()
         result = packages.difference(explicit_packages)
 
-        return result
+        return list(result)
 
-    def action_new(self):
-        packages = self.action_all()
+    def action_new(self, existing):
+        installed_packages = self.__installed()
+        ignored_packages = self.__ignored()
         explicit_packages = self.mng.explicit_installed_packages()
-        result = explicit_packages.difference(packages)
+        result = explicit_packages.difference(installed_packages, ignored_packages)
+        result = [it for it in result if self.mng.is_exists_package(it) == existing]
 
         return result
+
 
     def run(self, terms, variables=None, **kwargs):
         params = self.__parse_terms(terms)
@@ -124,11 +135,11 @@ class LookupModule(LookupBase):
         self.cfg = UserConfig(params['path'], params['host'])
         self.mng = PackageManager()
 
-        if action == "all":
-            return list(self.action_all())
-        elif action == "not_installed":
-            return list(self.action_not_installed())
+        if action == "not_installed":
+            return self.action_not_installed()
         elif action == "new":
-            return list(self.action_new())
+            return self.action_new(True)
+        elif action == "error":
+            return self.action_new(False)
         else:
             raise AnsibleError("error action (%s)" % action)

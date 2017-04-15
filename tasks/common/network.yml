@@ -3,8 +3,9 @@
   pacman: name={{item}} state=present
   become: yes
   with_items:
-    - wpa_supplicant
     - dialog
+    - connman
+    - wpa_supplicant
 
 - name: Set hostname
   hostname: name={{hostname_id}}

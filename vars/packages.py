@@ -73,13 +73,14 @@ if host == "archnote":
     grps += ["mate"]
 
 # login manager
-pkgs += ["lightdm", "lightdm-webkit2-greeter"]
+pkgs += ["lightdm", "lightdm-webkit2-greeter", "lightdm-webkit2-theme-material2"]
 
 # net tools
 pkgs += ["wget",
          "wpa_supplicant",
          "net-tools",
          "dialog",
+         "connman",
          "smbclient",
          "nfs-utils",
          "openssh"]
