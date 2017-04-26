@@ -1,6 +1,7 @@
 ---
 repository_map:
   - { repo: "ansible-personal.git",           dest: "ansible-personal" }
+  - { repo: "cpp-network.git",                dest: "cpp-network" }
   - { repo: "cpp-coroutine.git",              dest: "cpp-coroutine" }
   - { repo: "cpp-simple-key-logger.git",      dest: "cpp-simple-key-logger" }
   - { repo: "docker-alpine.git",              dest: "docker-alpine" }
