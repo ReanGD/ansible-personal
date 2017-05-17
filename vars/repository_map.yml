@@ -1,5 +1,6 @@
 ---
 repository_map:
+  - { repo: "bot-platform.git",               dest: "bot-platform" }
   - { repo: "ansible-personal.git",           dest: "ansible-personal" }
   - { repo: "cpp-network.git",                dest: "cpp-network" }
   - { repo: "cpp-coroutine.git",              dest: "cpp-coroutine" }
