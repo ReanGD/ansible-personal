@@ -22,6 +22,7 @@
     - include: tasks/common/network.yml
     - include: tasks/common/grub.yml
     # under no root user
+    - include: tasks/common/ssh.yml
     - include: tasks/common/wifi.yml
     - include: tasks/packages.yml
     - include: tasks/common/time.yml
@@ -30,7 +31,6 @@
     - include: tasks/common/swap.yml
     - include: tasks/common/autofs.yml
     - include: tasks/trim.yml
-    - include: tasks/git.yml
     - include: tasks/repository.yml
     - include: tasks/dotfiles.yml
     - include: tasks/lightdm.yml

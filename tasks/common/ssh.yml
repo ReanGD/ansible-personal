@@ -1,7 +1,5 @@
 ---
-- name: Install git
-  pacman: name=git state=present
-  become: yes
+# After user.yml
 
 - name: Create ssh direcory
   file: path=/home/{{main_user}}/.ssh state=directory mode=0700 group=users owner={{main_user}}
@@ -10,5 +8,9 @@
   copy: src=files/home/.ssh/config dest=~/.ssh/config mode=0400 group=users owner={{main_user}}
 
 # ansible-vault encrypt secrets.yml
-- name: Install ssh keys
+# ansible-vault decrypt secrets.yml
+- name: Install ssh keys for github
   copy: content="{{ github_private_key }}" dest=/home/{{main_user}}/.ssh/github mode=0400 group=users owner={{main_user}}
+
+- name: Install ssh keys for work
+  copy: content="{{ work_private_key }}" dest=/home/{{main_user}}/.ssh/id_rsa mode=0400 group=users owner={{main_user}}
