@@ -1,72 +1,10 @@
 version: '2'
 services:
-  consul:
-    restart: unless-stopped
-    container_name: consul
-    hostname: consul
-    image: reangd/alpine-consul:latest
-    environment:
-      #
-      # base params:
-      #
-      - S6_LOGGING=1
-      - SERVICE_CRON=0
-      # - RESTORE_NAME=daily.0
-      #
-      # registrator params:
-      #
-      - SERVICE_IGNORE=true
-      #
-      # consul params:
-      #
-      # - CONSUL_OPTIONS=-server -bootstrap -client 0.0.0.0 -ui
-    ports:
-      # - "8300:8300"      # server RPC      
-      # - "8301:8301"      # serf LAN
-      # - "8302:8302"      # serf WAN
-      # - "8400:8400"      # CLI RPC
-      - "8500:8500"      # HTTP
-      - "8600:8600"      # DNS
-      - "8600:8600/udp"  # DNS
-    networks:
-      - base
-    volumes:
-      - /home/rean/docker/log/consul:/var/log:rw
-      # - /net/backup/consul:/backup:rw
-      # - /home/rean/docker/data/consul:/data:rw
-      - /etc/localtime:/etc/localtime:ro
-  registrator:
-    restart: unless-stopped
-    container_name: registrator
-    hostname: registrator
-    image: reangd/alpine-registrator:latest
-    depends_on:
-      - consul
-    environment:
-      #
-      # base params:
-      #
-      - S6_LOGGING=1
-      #
-      # registrator registrator:
-      #
-      - CONSUL_IP=192.168.1.100
-      # - CONSUL_PORT=8500
-      # - REGISTRATOR_OPTIONS=-internal -resync 600
-    networks:
-      - base
-    volumes:
-      - /home/rean/docker/log/registrator:/var/log:rw
-      - /var/run/docker.sock:/tmp/docker.sock
-      - /etc/localtime:/etc/localtime:ro
   dokuwiki:
     restart: unless-stopped
     container_name: dokuwiki
     hostname: dokuwiki
     image: reangd/alpine-dokuwiki:latest
-    depends_on:
-      - consul
-      - registrator
     environment:
       #
       # base params:
@@ -75,15 +13,6 @@ services:
       # - SERVICE_CRON=1
       # - RESTORE_NAME=daily.0
       # - NGINX_OPTIONS=...
-      #
-      # registrator params:
-      #
-      - SERVICE_443_IGNORE=true
-      - SERVICE_80_NAME=dokuwiki
-      - SERVICE_80_TAGS=public
-      - SERVICE_80_CHECK_TCP=true
-      - SERVICE_80_CHECK_INTERVAL=15s
-      - SERVICE_80_CHECK_TIMEOUT=10s
     # ports:
     #   - "80:80"      # HTTP
     networks:
@@ -98,9 +27,6 @@ services:
     container_name: jenkins
     hostname: jenkins
     image: reangd/alpine-jenkins:latest
-    depends_on:
-      - consul
-      - registrator
     environment:
       #
       # base params:
@@ -108,14 +34,6 @@ services:
       - S6_LOGGING=1
       # - SERVICE_CRON=1
       # - RESTORE_NAME=daily.0
-      #
-      # registrator params:
-      #
-      - SERVICE_NAME=jenkins
-      - SERVICE_TAGS=private
-      - SERVICE_CHECK_TCP=true
-      - SERVICE_CHECK_INTERVAL=15s
-      - SERVICE_CHECK_TIMEOUT=10s
       #
       # jenkins params:
       #
@@ -135,9 +53,6 @@ services:
     container_name: proxy
     hostname: proxy
     image: reangd/alpine-proxy:latest
-    depends_on:
-      - consul
-      - registrator
     environment:
       #
       # base params:
@@ -147,20 +62,11 @@ services:
       # - RESTORE_NAME=daily.0
       # - NGINX_OPTIONS=...
       #
-      # registrator params:
-      #
-      - SERVICE_NAME=proxy
-      - SERVICE_TAGS=
-      - SERVICE_CHECK_TCP=true
-      - SERVICE_CHECK_INTERVAL=15s
-      - SERVICE_CHECK_TIMEOUT=10s
-      #
       # proxy params:
       #
       - CERT_EMAIL=reangd@yandex.ru
       - CERT_DOMAIN=reangd.fr.to
       - CERT_PRODACTION=1
-      - CONSUL_IP=192.168.1.100
       # - CONSUL_PORT=8500
     ports:
       - "80:80"      # HTTP
@@ -177,23 +83,12 @@ services:
     container_name: tor
     hostname: tor
     image: reangd/alpine-tor:latest
-    depends_on:
-      - consul
-      - registrator
     environment:
       #
       # base params:
       #
       - S6_LOGGING=1
       - SERVICE_CRON=0
-      #
-      # registrator params:
-      #
-      - SERVICE_NAME=tor
-      - SERVICE_TAGS=hide
-      - SERVICE_CHECK_TCP=true
-      - SERVICE_CHECK_INTERVAL=15s
-      - SERVICE_CHECK_TIMEOUT=10s
     ports:
       - "9050:9050"
     networks:

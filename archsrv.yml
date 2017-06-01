@@ -6,6 +6,5 @@
 
   tasks:
     - include: tasks/archsrv/init.yml
-    - include: tasks/common/systemd.yml
     - include: tasks/common/autofs.yml
     - include: tasks/archsrv/docker.yml

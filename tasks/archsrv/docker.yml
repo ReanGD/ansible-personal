@@ -1,6 +1,6 @@
 ---
 - name: Install packages
-  pacman: name=docker,docker-compose,python2-pip,python2-yaml,python2-docker-py state=present
+  pacman: name=docker,docker-compose,python2-pip,python2-yaml state=present
   become: yes
 
 - name: Install python dependensy
@@ -16,10 +16,10 @@
   become: yes
 
 - name: Create media directory
-  file: path=/home/rean/media state=directory recurse=yes
+  file: path=/home/rean/media state=directory
 
 - name: Create data directories
-  file: path={{docker_cfg}}data/{{item}} state=directory recurse=yes
+  file: path={{docker_cfg}}data/{{item}} state=directory
   with_items:
     - dokuwiki
     - jenkins
@@ -28,24 +28,22 @@
     - manage
 
 - name: Create log directories
-  file: path={{docker_cfg}}log/{{item}} state=directory recurse=yes
+  file: path={{docker_cfg}}log/{{item}} state=directory
   with_items:
-    - consul
-    - registrator
     - dokuwiki
     - jenkins
     - proxy
     - tor
 
 - name: Create backup directories
-  file: path=/net/backup/{{item}} state=directory recurse=yes
+  file: path=/net/backup/{{item}} state=directory
   with_items:
     - dokuwiki
     - jenkins
     - proxy
 
 - name: Create compose directories
-  file: path={{docker_cfg}}compose/{{item}} state=directory recurse=yes
+  file: path={{docker_cfg}}compose/{{item}} state=directory
   with_items:
     - btsync
     - manage
