@@ -1,5 +1,36 @@
 version: '2'
 services:
+  proxy:
+    restart: unless-stopped
+    container_name: proxy
+    hostname: proxy
+    image: reangd/alpine-proxy:latest
+    environment:
+      #
+      # base params:
+      #
+      - S6_LOGGING=1
+      # - SERVICE_CRON=0
+      # - RESTORE_NAME=daily.0
+      # - NGINX_OPTIONS=...
+      #
+      # proxy params:
+      #
+      - CERT_EMAIL=reangd@yandex.ru
+      - CERT_DOMAIN=reangd.fr.to
+      - CERT_PRODACTION=1
+      # - CONSUL_PORT=8500
+    ports:
+      - "80:80"      # HTTP
+      - "443:443"    # HTTPS
+    networks:
+      base:
+        ipv4_address: 10.10.0.2
+    volumes:
+      - /home/rean/docker/log/proxy:/var/log:rw
+      - /net/backup/proxy:/backup:rw
+      - /home/rean/docker/data/proxy:/data:rw
+      - /etc/localtime:/etc/localtime:ro
   dokuwiki:
     restart: unless-stopped
     container_name: dokuwiki
@@ -16,7 +47,8 @@ services:
     # ports:
     #   - "80:80"      # HTTP
     networks:
-      - base
+      base:
+        ipv4_address: 10.10.0.10
     volumes:
       - /home/rean/docker/log/dokuwiki:/var/log:rw
       - /net/backup/dokuwiki:/backup:rw
@@ -42,41 +74,12 @@ services:
     # ports:
       # - "80:8080"      # HTTP
     networks:
-      - base
+      base:
+        ipv4_address: 10.10.0.11
     volumes:
       - /home/rean/docker/log/jenkins:/var/log:rw
       - /net/backup/jenkins:/backup:rw
       - /home/rean/docker/data/jenkins:/data:rw
-      - /etc/localtime:/etc/localtime:ro
-  proxy:
-    restart: unless-stopped
-    container_name: proxy
-    hostname: proxy
-    image: reangd/alpine-proxy:latest
-    environment:
-      #
-      # base params:
-      #
-      - S6_LOGGING=1
-      # - SERVICE_CRON=0
-      # - RESTORE_NAME=daily.0
-      # - NGINX_OPTIONS=...
-      #
-      # proxy params:
-      #
-      - CERT_EMAIL=reangd@yandex.ru
-      - CERT_DOMAIN=reangd.fr.to
-      - CERT_PRODACTION=1
-      # - CONSUL_PORT=8500
-    ports:
-      - "80:80"      # HTTP
-      - "443:443"    # HTTPS
-    networks:
-      - base
-    volumes:
-      - /home/rean/docker/log/proxy:/var/log:rw
-      - /net/backup/proxy:/backup:rw
-      - /home/rean/docker/data/proxy:/data:rw
       - /etc/localtime:/etc/localtime:ro
   tor:
     restart: unless-stopped
@@ -92,12 +95,17 @@ services:
     ports:
       - "9050:9050"
     networks:
-      - base
+      base:
+        ipv4_address: 10.10.0.12
     volumes:
       - /home/rean/docker/log/tor:/var/log:rw
       - /etc/localtime:/etc/localtime:ro
 networks:
   base:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.0.0/16
+          gateway: 10.10.0.1
     driver_opts:
       com.docker.network.bridge.host_binding_ipv4: "192.168.1.100"
