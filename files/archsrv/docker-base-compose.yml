@@ -31,6 +31,34 @@ services:
       - /net/backup/proxy:/backup:rw
       - /home/rean/docker/data/proxy:/data:rw
       - /etc/localtime:/etc/localtime:ro
+  cadvisor:
+    restart: unless-stopped
+    container_name: cadvisor
+    hostname: cadvisor
+    image: reangd/alpine-cadvisor:latest
+    environment:
+      #
+      # base params:
+      #
+      - S6_LOGGING=1
+      - SERVICE_CRON=0
+      #
+      # cadvisor params:
+      #
+      - CADVISOR_OPTIONS=-log_dir /var/log/
+    ports:
+      - "8080:8080"      # HTTP
+    networks:
+      base:
+        ipv4_address: 10.10.0.3
+    volumes:
+      - /home/rean/docker/log/cadvisor:/var/log:rw
+      - /etc/localtime:/etc/localtime:ro
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /home/rean/docker/cache:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
   dokuwiki:
     restart: unless-stopped
     container_name: dokuwiki
