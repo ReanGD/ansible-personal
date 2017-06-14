@@ -57,11 +57,15 @@
     - manage
     - base
 
-- name: Run containers
+- name: Stop and remove containers base
+  docker_service: project_src={{docker_cfg}}compose/base state=absent
+
+- name: Run containers base
+  docker_service: project_src={{docker_cfg}}compose/base state=present pull=yes
+
+- name: Run other containers
   docker_service: project_src={{docker_cfg}}compose/{{item}} state=present
   with_items:
     - btsync
     - manage
 
-- name: Run container base
-  docker_service: project_src={{docker_cfg}}compose/base state=present pull=yes
