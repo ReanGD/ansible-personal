@@ -69,3 +69,5 @@
     - btsync
     - manage
 
+- name: Remove old images
+  command: docker image prune --force
