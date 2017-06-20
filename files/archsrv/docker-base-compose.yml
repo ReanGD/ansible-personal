@@ -46,8 +46,8 @@ services:
       # cadvisor params:
       #
       - CADVISOR_OPTIONS=-log_dir /var/log/
-    ports:
-      - "8080:8080"      # HTTP
+    # ports:
+    #   - "8080:8080"      # HTTP
     networks:
       base:
         ipv4_address: 10.10.0.3
@@ -81,33 +81,6 @@ services:
       - /home/rean/docker/log/dokuwiki:/var/log:rw
       - /net/backup/dokuwiki:/backup:rw
       - /home/rean/docker/data/dokuwiki:/data:rw
-      - /etc/localtime:/etc/localtime:ro
-  jenkins:
-    restart: unless-stopped
-    container_name: jenkins
-    hostname: jenkins
-    image: reangd/alpine-jenkins:latest
-    environment:
-      #
-      # base params:
-      #
-      - S6_LOGGING=1
-      # - SERVICE_CRON=1
-      # - RESTORE_NAME=daily.0
-      #
-      # jenkins params:
-      #
-      # - JAVA_OPTS=...
-      # - JENKINS_OPTS=...
-    # ports:
-      # - "80:8080"      # HTTP
-    networks:
-      base:
-        ipv4_address: 10.10.0.11
-    volumes:
-      - /home/rean/docker/log/jenkins:/var/log:rw
-      - /net/backup/jenkins:/backup:rw
-      - /home/rean/docker/data/jenkins:/data:rw
       - /etc/localtime:/etc/localtime:ro
   tor:
     restart: unless-stopped

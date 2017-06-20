@@ -22,7 +22,6 @@
   file: path={{docker_cfg}}data/{{item}} state=directory
   with_items:
     - dokuwiki
-    - jenkins
     - proxy
     - btsync
     - manage
@@ -31,7 +30,6 @@
   file: path={{docker_cfg}}log/{{item}} state=directory
   with_items:
     - dokuwiki
-    - jenkins
     - proxy
     - tor
     - cadvisor
@@ -40,7 +38,6 @@
   file: path=/net/backup/{{item}} state=directory
   with_items:
     - dokuwiki
-    - jenkins
     - proxy
 
 - name: Create compose directories
