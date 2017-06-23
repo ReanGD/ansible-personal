@@ -6,23 +6,14 @@ services:
     hostname: proxy
     image: reangd/alpine-proxy:latest
     environment:
-      #
-      # base params:
-      #
       - S6_LOGGING=1
-      # - SERVICE_CRON=0
-      # - RESTORE_NAME=daily.0
-      # - NGINX_OPTIONS=...
-      #
-      # proxy params:
-      #
+      - SERVICE_CRON=1
       - CERT_EMAIL=reangd@yandex.ru
       - CERT_DOMAIN=reangd.fr.to
       - CERT_PRODACTION=1
-      # - CONSUL_PORT=8500
     ports:
-      - "80:80"      # HTTP
-      - "443:443"    # HTTPS
+      - "80:80"
+      - "443:443"
     networks:
       base:
         ipv4_address: 10.10.0.2
@@ -37,17 +28,9 @@ services:
     hostname: cadvisor
     image: reangd/alpine-cadvisor:latest
     environment:
-      #
-      # base params:
-      #
       - S6_LOGGING=1
       - SERVICE_CRON=0
-      #
-      # cadvisor params:
-      #
       - CADVISOR_OPTIONS=-log_dir /var/log/
-    # ports:
-    #   - "8080:8080"      # HTTP
     networks:
       base:
         ipv4_address: 10.10.0.3
@@ -65,15 +48,8 @@ services:
     hostname: dokuwiki
     image: reangd/alpine-dokuwiki:latest
     environment:
-      #
-      # base params:
-      #
       - S6_LOGGING=1
-      # - SERVICE_CRON=1
-      # - RESTORE_NAME=daily.0
-      # - NGINX_OPTIONS=...
-    # ports:
-    #   - "80:80"      # HTTP
+      - SERVICE_CRON=1
     networks:
       base:
         ipv4_address: 10.10.0.10
@@ -82,15 +58,29 @@ services:
       - /net/backup/dokuwiki:/backup:rw
       - /home/rean/docker/data/dokuwiki:/data:rw
       - /etc/localtime:/etc/localtime:ro
+  sync:
+    restart: unless-stopped
+    container_name: sync
+    hostname: sync
+    image: reangd/alpine-sync:latest
+    environment:
+      - S6_LOGGING=1
+      - SERVICE_CRON=1
+    networks:
+      base:
+        ipv4_address: 10.10.0.11
+    volumes:
+      - /home/rean/docker/log/sync:/var/log:rw
+      - /net/backup/sync:/backup:rw
+      - /home/rean/docker/data/sync:/data:rw
+      - /home/rean/media:/storage:rw
+      - /etc/localtime:/etc/localtime:ro
   tor:
     restart: unless-stopped
     container_name: tor
     hostname: tor
     image: reangd/alpine-tor:latest
     environment:
-      #
-      # base params:
-      #
       - S6_LOGGING=1
       - SERVICE_CRON=0
     ports:
