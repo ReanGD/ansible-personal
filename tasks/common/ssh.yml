@@ -14,3 +14,6 @@
 
 - name: Install ssh keys for work
   copy: content="{{ work_private_key }}" dest=/home/{{main_user}}/.ssh/id_rsa mode=0400 group=users owner={{main_user}}
+
+- name: Install ssh keys for vscale
+  copy: content="{{ vscale_private_key }}" dest=/home/{{main_user}}/.ssh/vscale mode=0400 group=users owner={{main_user}}
