@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "==> Start restore $1"
+
+/usr/bin/restore_impl $1 \
+&& echo "==> Restore succeed" \
+|| echo "==> Restore failure"

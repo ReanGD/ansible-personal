@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd /
+
+rm --force /tmp/backup.tar.xz
+tar -Jcf /tmp/backup.tar.xz rsnapshot
+
+ydcmd --quiet ls --short disk:/dokuwiki || ydcmd mkdir dokuwiki
+ydcmd put /tmp/backup.tar.xz disk:/dokuwiki/

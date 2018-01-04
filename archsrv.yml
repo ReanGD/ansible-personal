@@ -1,5 +1,5 @@
 ---
-- hosts: archsrv
+- hosts: local_srv
   
   vars:
     docker_cfg: /home/rean/docker/

@@ -1,2 +1,5 @@
-[archsrv]
+[local_srv]
 archsrv ansible_connection=paramiko ansible_port=2222 ansible_user=rean ansible_python_interpreter=/usr/bin/python2
+
+[vscale]
+82.202.236.207

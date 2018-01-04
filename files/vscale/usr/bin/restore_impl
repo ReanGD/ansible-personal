@@ -1,0 +1,12 @@
+#!/bin/bash
+
+rm -rf /dokuwiki/conf/ && \
+rm -rf /dokuwiki/data/ && \
+rm -rf /dokuwiki/lib/plugins/ && \
+rm -rf /dokuwiki/lib/tpl/ && \
+/usr/bin/rsync -av "/rsnapshot/$1/backup/" "/" && \
+chown -R www-data:www-data /dokuwiki && \
+chmod -R 644 /dokuwiki && \
+find /dokuwiki/ -type d -exec chmod 0755 {} ';' && \
+service php7.0-fpm reload && \
+service nginx reload

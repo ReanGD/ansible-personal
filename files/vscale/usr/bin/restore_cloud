@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ydcmd get disk:/dokuwiki/backup.tar.xz /tmp/backup.tar.xz && \
+rm -rf /rsnapshot/ && \
+tar -xf /tmp/backup.tar.xz -C /
