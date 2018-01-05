@@ -26,12 +26,14 @@
     - name: Install packages
       apt: name={{item}} state=present
       with_items:
+        - htop
+        - lego
         - ydcmd
-        - rsnapshot
         - nginx
+        - rsnapshot
+        - php7.0-gd
         - php7.0-fpm
         - php7.0-xml
-        - php7.0-gd
         - php7.0-sqlite3
 
     - name: Copy nginx config
@@ -58,6 +60,7 @@
         group: root
         mode: 0755
       with_items:
+        - renew
         - backup
         - restore
         - restore_impl
@@ -98,6 +101,23 @@
 
     - name: Move dokuwiki
       command: mv /tmp/dokuwiki-{{dokuwiki_version}} /dokuwiki
+
+    - name: Check ssl certificates dir
+      stat: path=/etc/letsencrypt/certificates
+      register: ssl_dir
+
+    - name: Stop nginx for generate ssl certificates
+      service: name=nginx state=stopped
+      when: ssl_dir.stat.isdir is not defined 
+
+    - name: Generate dhparam
+      command: openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+      when: ssl_dir.stat.isdir is not defined
+
+    # for testing: --server=https://acme-staging.api.letsencrypt.org/directory
+    - name: Generate ssl certificates
+      command: lego --email=reangd@yandex.ru --domains=wiki.fr.to --accept-tos --path=/etc/letsencrypt/ --webroot=/dokuwiki --http=:80 --tls=:443 run
+      when: ssl_dir.stat.isdir is not defined
 
     - name: Restore dokuwiki rsnapshot backup
       command: /usr/bin/restore_cloud
