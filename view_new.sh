@@ -1,3 +1,3 @@
 #!/bin/bash
 cd "$(dirname "$0")"
-/usr/bin/ansible-playbook -i localhost, main.yml --ask-sudo-pass --ask-vault-pass --tags "view_new,init" $@
+/usr/bin/ansible-playbook -i localhost, main.yml --ask-sudo-pass --ask-vault-pass --tags "view_new,init" $@ $1

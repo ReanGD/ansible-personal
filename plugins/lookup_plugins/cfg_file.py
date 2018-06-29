@@ -61,7 +61,10 @@ class UserConfig:
         if not os.path.exists(full_path):
             raise AnsibleError('config file "%s" not found' % full_path)
         try:
-            execfile(full_path, self.gvars)
+            if sys.version_info[0] == 3:
+                exec(open(full_path).read(), self.gvars)
+            else:
+                execfile(full_path, self.gvars)
         except:
             e = sys.exc_info()[1]
             raise AnsibleError(e)
