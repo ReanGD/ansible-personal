@@ -1,4 +1,4 @@
----
+--- # packages.yml?
 - name: Check is timezone init
   shell: timedatectl | grep "Time zone" | awk '{ print $3 }'
   register: timedatectl_timezone

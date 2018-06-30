@@ -15,7 +15,6 @@
     - vars/repository_map.yml
 
   tasks:
-    - include: tasks/common/init.yml
     - include: tasks/common/locale.yml
     - include: tasks/common/pacman.yml
     - include: tasks/common/host.yml
@@ -24,18 +23,17 @@
     # under no root user
     - include: tasks/common/ssh.yml
     - include: tasks/common/wifi.yml
-    - include: tasks/packages.yml
-    - include: tasks/common/time.yml
     - include: tasks/common/pkgcacheclean.yml
     - include: tasks/common/systemd_cfg.yml
     - include: tasks/common/swap.yml
-    - include: tasks/common/autofs.yml
-    - include: tasks/trim.yml
+    # - include: tasks/common/autofs.yml
+    - include: tasks/packages.yml
+    - include: tasks/common/time.yml
     - include: tasks/repository.yml
     - include: tasks/dotfiles.yml
     - include: tasks/lightdm.yml
     - include: tasks/docker.yml
     - include: tasks/xorg.yml
-    - include: tasks/clear.yml    
+    - include: tasks/clear.yml
     - include: tasks/monitoring.yml
     - include: tasks/go.yml

@@ -1,4 +1,4 @@
----
+--- # without dependencies
 - name: Install package docker
   pacman: name=docker state=present
   become: yes

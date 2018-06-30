@@ -1,4 +1,4 @@
----
+--- # without dependencies + after init dropbox
 - name: Create cfg dirs
   file: path={{item}} state=directory mode=0755
   with_items:

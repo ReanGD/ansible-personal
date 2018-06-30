@@ -1,4 +1,4 @@
----
+--- # without dependencies
 - name: Configure autofs (install packages)
   pacman: name=autofs state=present
   become: yes

@@ -1,29 +1,32 @@
 ---
 repository_map:
-  - { repo: "bot-platform.git",               dest: "bot-platform" }
   - { repo: "ansible-personal.git",           dest: "ansible-personal" }
-  - { repo: "cpp-network.git",                dest: "cpp-network" }
+  - { repo: "bot-platform.git",               dest: "bot-platform" }
   - { repo: "cpp-coroutine.git",              dest: "cpp-coroutine" }
+  - { repo: "cpp-network.git",                dest: "cpp-network" }
   - { repo: "cpp-simple-key-logger.git",      dest: "cpp-simple-key-logger" }
   - { repo: "docker-alpine.git",              dest: "docker-alpine" }
   - { repo: "docker-home-manage.git",         dest: "docker-home-manage" }
   - { repo: "docker-x11-base.git",            dest: "docker-x11-base" }
-  - { repo: "neural-network.git",             dest: "neural-network" }
   - { repo: "documents.git",                  dest: "documents" }
   - { repo: "dokuwiki-plugin-addnewpage.git", dest: "dokuwiki-plugin-addnewpage" }
   - { repo: "dokuwiki-tablecalc.git",         dest: "dokuwiki-tablecalc" }
-  - { repo: "evolution.git",                  dest: "evolution" }
+  - { repo: "dotfiles-jetbrains.git",         dest: "dotfiles-jetbrains" }
+  - { repo: "dotfiles-pycharm.git",           dest: "dotfiles-pycharm" }
   - { repo: "dotfiles.git",                   dest: "dotfiles" }
   - { repo: "emacs-multi-compile.git",        dest: "emacs-multi-compile" }
-  - { repo: "go-morph.git",                   dest: "go/src/github.com/ReanGD/go-morph" }
+  - { repo: "evolution.git",                  dest: "evolution" }
+  - { repo: "go-morphy.git",                  dest: "go/src/github.com/ReanGD/go-morphy" }
   - { repo: "go-web-search.git",              dest: "go/src/github.com/ReanGD/go-web-search" }
   - { repo: "HabrArticle.git",                dest: "HabrArticle" }
   - { repo: "LearningEnglish.git",            dest: "LearningEnglish" }
+  - { repo: "neural-network.git",             dest: "neural-network" }
   - { repo: "py-calendar.git",                dest: "py-calendar" }
   - { repo: "reangd.github.io.git",           dest: "reangd.github.io" }
   - { repo: "rust-open3d.git",                dest: "rust-open3d" }
   - { repo: "rust-software-render.git",       dest: "rust-software-render" }
   - { repo: "SimpleLang.git",                 dest: "SimpleLang" }
+  - { repo: "smart-home.git",                 dest: "smart-home" }
   - { repo: "sublime-powerslim.git",          dest: "sublime-powerslim" }
   - { repo: "web-home-manage.git",            dest: "web-home-manage" }
   - { repo: "zrpc.git",                       dest: "zrpc" }

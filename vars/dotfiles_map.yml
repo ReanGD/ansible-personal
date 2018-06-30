@@ -25,4 +25,5 @@ documents_path_map:
   - {src: "~/cloud/Dropbox/doc/develop", dst: "~/doc/develop" }
   - {src: "~/cloud/Dropbox/doc/other",   dst: "~/doc/other" }
   - {src: "~/cloud/Dropbox/doc/task",    dst: "~/doc/task" }
+  - {src: "~/cloud/Dropbox/doc/work",    dst: "~/doc/work" }
   - {src: "~/cloud/Dropbox/projects",    dst: "~/projects/old" }

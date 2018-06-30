@@ -1,5 +1,0 @@
----
-- name: Enable auto trim timer
-  service: name=fstrim.timer enabled=yes
-  when: hostname_id == "archnote"
-  become: yes

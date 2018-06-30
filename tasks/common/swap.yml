@@ -1,37 +1,41 @@
----
+--- # host.yml
 - name: Check swapfile
   stat: path=/swapfile
   register: swapfile
-  when: hostname_id == "archnote"
   become: yes
 
-- name: Write swapfile
+- name: Write swapfile for notebook
   command: fallocate -l 8G /swapfile
-  when: hostname_id == "archnote" and swapfile.stat.exists == False
+  when: notebook == "yes" and swapfile.stat.exists == False
+  become: yes
+
+- name: Write swapfile for desktop
+  command: fallocate -l 35G /swapfile
+  when: notebook == "no" and swapfile.stat.exists == False
   become: yes
 
 - name: Set swapfile permissions
   file: path=/swapfile mode=600
-  when: hostname_id == "archnote" and swapfile.stat.exists == False
+  when: and swapfile.stat.exists == False
   become: yes
 
 - name: Create swapfile
   command: mkswap /swapfile
-  when: hostname_id == "archnote" and swapfile.stat.exists == False
+  when: swapfile.stat.exists == False
   become: yes
 
 - name: Enable swapfile
   command: swapon /swapfile
-  when: hostname_id == "archnote" and swapfile.stat.exists == False
+  when: swapfile.stat.exists == False
   become: yes
 
 - name: Add swapfile to /etc/fstab
   lineinfile: dest=/etc/fstab line="/swapfile none swap defaults 0 0" state=present
-  when: hostname_id == "archnote" and swapfile.stat.exists == False
+  when: swapfile.stat.exists == False
   become: yes
 
 - name: Configure swap for destop
-  template: src=files/etc/sysctl.d/99-sysctl.conf.destop dest=/etc/sysctl.d/99-sysctl.conf mode=0644 group=root owner=root
+  template: src=files/etc/sysctl.d/99-sysctl.conf.desktop dest=/etc/sysctl.d/99-sysctl.conf mode=0644 group=root owner=root
   when: notebook == "no"
   become: yes
 

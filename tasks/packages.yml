@@ -1,4 +1,4 @@
----
+--- # host.yml
 - name: Refresh package list
   yaourt: update_cache=yes
   changed_when: false
@@ -10,7 +10,7 @@
   pacman: name=gnupg state=present
   become: yes
 
-- name: Add key for cower
+- name: Add key for cower (part of pacaur)
   command: gpg --keyserver pgp.mit.edu --recv-keys 1EB2638FF56C0C53
   changed_when: false
 

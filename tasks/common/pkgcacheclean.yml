@@ -1,4 +1,4 @@
----
+--- # without dependencies
 - name: Install package pkgcacheclean
   yaourt: name=pkgcacheclean state=present
 
