@@ -1,0 +1,7 @@
+Description='Profile for Arch2'
+Interface=wlp2s0
+Connection=wireless
+Security=wpa
+ESSID=Arch2
+IP=dhcp
+Key={{wifi_home_key}}

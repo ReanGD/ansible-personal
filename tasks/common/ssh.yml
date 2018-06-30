@@ -1,6 +1,4 @@
----
-# After user.yml
-
+--- # user.yml
 - name: Create ssh direcory
   file: path=/home/{{main_user}}/.ssh state=directory mode=0700 group=users owner={{main_user}}
 

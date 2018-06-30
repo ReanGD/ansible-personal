@@ -1,5 +1,6 @@
 #!/bin/bash
 
+service nginx stop
 # for test add: --server=https://acme-staging.api.letsencrypt.org/directory
 lego --email="reangd@yandex.ru" --domains="wiki.fr.to" --accept-tos --path="/etc/letsencrypt/" --webroot="/dokuwiki" --http=":80" --tls=":443" renew --days 30 && \
-service nginx restart
+service nginx start

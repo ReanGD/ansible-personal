@@ -100,6 +100,7 @@ pkgs += ["pulseaudio",
 pkgs += ["firefox",
          "firefox-i18n-ru",
          "flashplugin",
+         "tor-browser-ru",
          "google-chrome",
          ]
 

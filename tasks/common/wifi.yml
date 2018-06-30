@@ -1,21 +1,24 @@
----
-- name: Check that wlp2s0-ArchNet_5 service exists
-  stat: path="/etc/systemd/system/multi-user.target.wants/netctl@wlp2s0\\x2dArchNet_5.service"
-  register: wifi_service_installed
+--- # init.yml
+- name: Check that wlp1s0-Arch5 service exists
+  stat: path="/etc/systemd/system/multi-user.target.wants/netctl@wlp1s0\x2dArch5.service"
+  register: wifi5_service_installed
   become: yes
 
 # ansible-vault encrypt secrets.yml
 # ansible-vault decrypt secrets.yml
 - name: Copy netctl configuration
-  template: src=files/etc/netctl/wlp2s0-ArchNet_5 dest=/etc/netctl/wlp2s0-ArchNet_5 owner=root group=root mode=0600
+  template: src=files/etc/netctl/{{item}} dest=/etc/netctl/{{item}} owner=root group=root mode=0600
   become: yes
+  with_items:
+    - wlp1s0-Arch5
+    - wlp2s0-Arch2
 
-- name: Enable wlp2s0-ArchNet_5
-  command: netctl enable wlp2s0-ArchNet_5
+- name: Enable wlp1s0-Arch5
+  command: netctl enable wlp1s0-Arch5
   when: ansible_local_user != "root" and wifi_service_installed.stat.exists == False
   become: yes
 
-- name: Start wlp2s0-ArchNet_5
-  command: netctl start wlp2s0-ArchNet_5
+- name: Start wlp1s0-Arch5
+  command: netctl start wlp1s0-Arch5
   when: ansible_local_user != "root" and wifi_service_installed.stat.exists == False
   become: yes

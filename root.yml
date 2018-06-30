@@ -17,6 +17,6 @@
     - include: tasks/common/init.yml
     - include: tasks/common/locale.yml
     - include: tasks/common/pacman.yml
+    - include: tasks/common/host.yml
     - include: tasks/common/user.yml
-    - include: tasks/common/network.yml
     - include: tasks/common/grub.yml

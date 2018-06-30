@@ -1,4 +1,23 @@
----
+--- # host.yml
+- name: Find docker group
+  run_once: True
+  shell: getent group docker
+  register: init_docker_group
+  changed_when: false
+  failed_when: init_docker_group.rc == 1
+
+- name: Set docker group exists
+  run_once: True
+  set_fact:
+    docker_group: ",docker"
+  when: init_docker_group.rc == 0
+
+- name: Set docker group not exists
+  run_once: True
+  set_fact:
+    docker_group: ""
+  when: init_docker_group.rc != 0
+
 - name: Create main user
   user: name={{main_user}} uid=1000 group=users groups=games,video,audio,optical,storage,power{{docker_group}} password={{main_password}}
   become: yes

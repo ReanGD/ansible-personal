@@ -1,4 +1,4 @@
----
+--- # without dependencies
 - name: Install package grub
   pacman: name=grub state=present
   become: yes
