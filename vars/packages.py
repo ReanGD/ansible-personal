@@ -2,6 +2,7 @@
 pkgs = []
 grps = []
 
+is_notebook = host in ["archmini", "archnote"]
 # drivers
 pkgs += ["mesa"]
 
@@ -28,7 +29,7 @@ pkgs += ["iftop",  # network monitor
 
 if host == "archhost":
     pkgs += ["apcupsd"]  # UPS
-elif host == "archnote":
+elif is_notebook:
     pkgs += ["powertop"]
 
 # font packages
@@ -42,8 +43,7 @@ pkgs += ["ttf-ms-fonts",
          "adobe-source-code-pro-fonts"]
 
 # terminal
-pkgs += ["rxvt-unicode-patched",
-         "urxvt-perls",
+pkgs += ["urxvt-perls",
          "zsh",
          "oh-my-zsh-git",
          "zsh-syntax-highlighting",
@@ -69,7 +69,7 @@ pkgs += ["xorg-server",
          "rofi",  # run app menu
          "vicious"]
 
-if host == "archnote":
+if is_notebook:
     grps += ["mate"]
 
 # login manager
@@ -83,7 +83,10 @@ pkgs += ["wget",
          "connman",
          "smbclient",
          "nfs-utils",
-         "openssh"]
+         "httpie",
+         "openssh",
+         "openvpn",
+         ]
 
 # remote access
 # pkgs += ["teamviewer"]
@@ -96,14 +99,19 @@ pkgs += ["pulseaudio",
 # web
 pkgs += ["firefox",
          "firefox-i18n-ru",
-         "flashplugin"]
+         "flashplugin",
+         "google-chrome",
+         ]
 
 # cpp
-pkgs += ["boost", "clang", "gtest", "zeromq", "valgrind", "cmake"]
+pkgs += ["boost", "clang", "gtest", "zeromq", "valgrind", "cmake", "gdb"]
 
 # rust
-pkgs += ["rust", "cargo", "rust-src", "rust-racer"]
+# pkgs += ["rust", "cargo", "rust-src", "rust-racer"]
 # rust-doc-git
+
+# 3D for rust
+# pkgs += ["sdl2", "sdl2_image"]
 
 # sql
 pkgs += ["sqlite-analyzer"]
@@ -124,13 +132,15 @@ pkgs += ["python",
          "flake8",
          "python-pytest",
          "python-virtualenv",
-         "tk"]
+         "tk",
+         ]
 
-# text editors
-pkgs += ["emacs", "vim", "sublime-text-dev"]
+# text editors & ide
+pkgs += ["emacs", "vim", "sublime-text-dev", "clion", "pycharm-professional"]
 
 # file managers
 pkgs += ["doublecmd-gtk2",
+         "fsearch-git",
          "transmission-remote-gui-bin",
          "yandex-disk",  # yandex-disk setup/start
          "dropbox"]
@@ -178,16 +188,17 @@ pkgs += ["xorg-xfontsel",  # font select
          "xorg-xwininfo",  # select window
          "xrectsel"]  # get select region
 
+if is_notebook:
+    pkgs += ["xorg-xbacklight"]  # backlight control application (xbacklight -set 40)
+
 # VM
 pkgs += ["jre7-openjdk", "docker", "docker-compose"]
 
-# 3D
-pkgs += ["sdl2", "sdl2_image"]
-
 # game
 pkgs += ["playonlinux",
-         "lib32-libldap",  # for WOT ?
-         "minecraft"]
+        "steam",
+        "lib32-libldap",  # for WOT ?
+        "minecraft"]
 
 packages = pkgs
 groups = grps
