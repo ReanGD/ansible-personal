@@ -13,6 +13,13 @@
   when: init_board_serial.stdout == '2d4ac2d6ec3acf216141eff067c66c66b0b5c777234763456b4f8a4d219e8043'
   tags: init
 
+- name: Set archhost hostname after reboot
+  set_fact:
+    notebook: False
+    hostname_id: "archhost"
+  when: init_board_serial.stdout == 'cc51600a296daf34f53d6feb589b1dcc4f30d0bd32ff09f5779ff11c8998ebf7'
+  tags: init
+
 - name: Set archmini hostname
   set_fact:
     notebook: True

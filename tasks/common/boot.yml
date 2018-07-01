@@ -1,0 +1,32 @@
+--- # without dependencies
+- name: Install package refind-efi
+  pacman: name=refind-efi state=present
+  become: yes
+
+- name: Check that the /boot/efi/EFI exists
+  stat: path=/boot/efi/EFI
+  register: efi_installed
+  become: yes
+
+- name: UEFI install
+  shell: refind-install --userdefault /dev/sda1 --alldrivers
+  when: efi_installed.stat.exists == False
+  become: yes
+
+- name: Find root uuid
+  shell: findmnt -o UUID --noheadings /
+  register: root_partition_uuid_reg
+  changed_when: false
+
+- name: Set archhost hostname
+  set_fact:
+    root_partition_uuid: "{{ root_partition_uuid_reg.stdout }}"
+
+- name: Copy refind_linux configuration
+  template: src=files/boot/refind_linux.conf dest=/boot/refind_linux.conf owner=root group=root mode=0644
+  become: yes
+
+# - name: Update GRUB timeout
+#   lineinfile: regexp='^GRUB_TIMEOUT=.*$' line="GRUB_TIMEOUT=1" path=/etc/default/grub
+#   when: efi_installed.stat.exists == False
+#   become: yes

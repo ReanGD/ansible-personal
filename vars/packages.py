@@ -35,7 +35,7 @@ elif is_notebook:
 # font packages
 pkgs += ["ttf-ms-fonts",
          "ttf-tahoma",
-         "ttf-vista-fonts",
+         # "ttf-vista-fonts",
          "ttf-fixedsys-excelsior-linux",
          "ttf-droid",
          "ttf-dejavu",
@@ -50,7 +50,7 @@ pkgs += ["urxvt-perls",
          "fzf"]
 
 # system
-pkgs += ["grub",
+pkgs += ["refind-efi",
          "polkit",
          "gnupg",
          "xcursor-ize-vision",
@@ -151,15 +151,11 @@ pkgs += ["git",
          "icdiff",  # console diff
          "meld"]
 
-# messengers
-pkgs += ["skypeforlinux-bin"]
-
 # archive program
 pkgs += ["p7zip", "unzip", "unrar"]
 
 # media
-pkgs += ["shutter",  # screenshots
-         "byzanz-git",  # create gif from screen
+pkgs += ["byzanz-git",  # create gif from screen
          "viewnior",  # image viewer
          "simplescreenrecorder",  # write video from screen
          "gimp",

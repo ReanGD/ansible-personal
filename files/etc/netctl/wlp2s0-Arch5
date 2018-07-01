@@ -1,5 +1,5 @@
 Description='Profile for Arch5'
-Interface=wlp1s0
+Interface=wlp2s0
 Connection=wireless
 Security=wpa
 ESSID=Arch5
