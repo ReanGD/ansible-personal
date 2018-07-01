@@ -70,7 +70,7 @@ esac
 read -n 1 -s -p "Press any key to continue"
 
 echo 'Server = http://mirror.yandex.ru/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
-pacstrap /mnt base base-devel git ansible
+pacstrap /mnt base base-devel git ansible python2
 genfstab -U -p /mnt >> /mnt/etc/fstab
 arch-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /etc/ansible-personal
 arch-chroot /mnt /etc/ansible-personal/root.sh
