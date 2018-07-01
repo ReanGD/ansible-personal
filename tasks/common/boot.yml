@@ -9,7 +9,7 @@
   become: yes
 
 - name: UEFI install
-  shell: refind-install --userdefault /dev/sda1 --alldrivers
+  shell: refind-install --usedefault /dev/sda1 --alldrivers
   when: efi_installed.stat.exists == False
   become: yes
 
