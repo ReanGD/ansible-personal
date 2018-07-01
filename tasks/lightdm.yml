@@ -1,4 +1,4 @@
---- # without dependencies
+--- # network.yml
 - name: Install package lightdm
   pacman: name=lightdm state=present
   become: yes

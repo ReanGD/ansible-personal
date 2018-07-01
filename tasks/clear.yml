@@ -1,4 +1,4 @@
----
+--- # without dependencies
 - name: Remove old configs
   file: path={{ item }} state=absent
   with_items:

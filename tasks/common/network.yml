@@ -1,6 +1,10 @@
---- # without dependencies + not working under root
+--- # init.yml + not working under root
+- name: Set hostname
+  hostname: name={{hostname_id}}
+  become: yes
+
 - name: Check that wlp1s0-Arch5 service exists
-  stat: path="/etc/systemd/system/multi-user.target.wants/netctl@wlp1s0\x2dArch5.service"
+  stat: path="/etc/systemd/system/multi-user.target.wants/netctl@wlp1s0\\x2dArch5.service"
   register: wifi5_service_installed
   become: yes
 
@@ -15,10 +19,10 @@
 
 - name: Enable wlp1s0-Arch5
   command: netctl enable wlp1s0-Arch5
-  when: wifi_service_installed.stat.exists == False
+  when: wifi5_service_installed.stat.exists == False
   become: yes
 
 - name: Start wlp1s0-Arch5
   command: netctl start wlp1s0-Arch5
-  when: wifi_service_installed.stat.exists == False
+  when: wifi5_service_installed.stat.exists == False
   become: yes

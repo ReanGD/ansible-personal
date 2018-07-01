@@ -15,14 +15,14 @@
     - vars/repository_map.yml
 
   tasks:
+    - include: tasks/common/init.yml
     - include: tasks/common/locale.yml
     - include: tasks/common/pacman.yml
-    - include: tasks/common/host.yml
     - include: tasks/common/user.yml
     - include: tasks/common/grub.yml
     # under no root user
     - include: tasks/common/ssh.yml
-    - include: tasks/common/wifi.yml
+    - include: tasks/common/network.yml
     - include: tasks/common/pkgcacheclean.yml
     - include: tasks/common/systemd_cfg.yml
     - include: tasks/common/swap.yml

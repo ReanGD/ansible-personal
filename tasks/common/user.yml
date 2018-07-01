@@ -1,4 +1,4 @@
---- # host.yml
+--- # init.yml
 - name: Find docker group
   run_once: True
   shell: getent group docker

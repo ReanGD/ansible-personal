@@ -1,4 +1,4 @@
----
+--- # packages.yml + network.yml
 - name: Configure apcupsd
   template: src=files/etc/apcupsd/apcupsd.conf dest=/etc/apcupsd/apcupsd.conf mode=0644 group=root owner=root
   when: hostname_id == "archhost"

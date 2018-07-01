@@ -147,8 +147,7 @@ def main():
         argument_spec=dict(
             name=dict(aliases=['pkg']),
             state=dict(default='present', choices=['present']),
-            update_cache=dict(default='no', aliases=['update-cache'],
-                              choices=BOOLEANS, type='bool')),
+            update_cache=dict(default='no', aliases=['update-cache'], type='bool')),
         required_one_of=[['name', 'update_cache']],
         supports_check_mode=True)
 

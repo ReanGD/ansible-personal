@@ -1,4 +1,4 @@
---- # host.yml
+--- # init.yml + network.yml
 - name: Refresh package list
   yaourt: update_cache=yes
   changed_when: false

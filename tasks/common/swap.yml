@@ -1,4 +1,4 @@
---- # host.yml
+--- # init.yml
 - name: Check swapfile
   stat: path=/swapfile
   register: swapfile
@@ -6,17 +6,17 @@
 
 - name: Write swapfile for notebook
   command: fallocate -l 8G /swapfile
-  when: notebook == "yes" and swapfile.stat.exists == False
+  when: notebook == True and swapfile.stat.exists == False
   become: yes
 
 - name: Write swapfile for desktop
   command: fallocate -l 35G /swapfile
-  when: notebook == "no" and swapfile.stat.exists == False
+  when: notebook == False and swapfile.stat.exists == False
   become: yes
 
 - name: Set swapfile permissions
   file: path=/swapfile mode=600
-  when: and swapfile.stat.exists == False
+  when: swapfile.stat.exists == False
   become: yes
 
 - name: Create swapfile
@@ -36,10 +36,10 @@
 
 - name: Configure swap for destop
   template: src=files/etc/sysctl.d/99-sysctl.conf.desktop dest=/etc/sysctl.d/99-sysctl.conf mode=0644 group=root owner=root
-  when: notebook == "no"
+  when: notebook == False
   become: yes
 
 - name: Configure swap for notebooks
   template: src=files/etc/sysctl.d/99-sysctl.conf.notebook dest=/etc/sysctl.d/99-sysctl.conf mode=0644 group=root owner=root
-  when: notebook == "yes"
+  when: notebook == True
   become: yes
