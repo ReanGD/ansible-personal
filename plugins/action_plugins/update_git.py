@@ -40,7 +40,7 @@ class ActionModule(ActionBase, BaseActionModule):
         cmd = '%s status -s' % (self.git)
         rc, stdout, stderr = self.run_command(cmd, cwd=self.dest)
         lines = stdout.splitlines()
-        lines = filter(lambda c: not re.search('^\\?\\?.*$', c), lines)
+        lines = list(filter(lambda c: not re.search('^\\?\\?.*$', c), lines))
 
         return len(lines) > 0
 

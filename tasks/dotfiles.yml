@@ -1,4 +1,4 @@
---- # network.yml + after init dropbox
+--- # network.yml + repository.yml + after init dropbox
 - name: Create cfg dirs
   file: path={{item}} state=directory mode=0755
   with_items:
@@ -10,7 +10,7 @@
     - ~/.cache
 
 - name: Create links for dotfiles
-  link: src=~/projects/git/dotfiles/{{item.src}} dst={{item.dst}}
+  link: src=~/projects/home/dotfiles/{{item.src}} dst={{item.dst}}
   with_items: "{{ dotfiles_path_map }}"
 
 - name: Create links for documents
