@@ -5,8 +5,8 @@ function archhost {
     if [[ $1 = "full" ]]
     then
         sgdisk -Z /dev/sda
-        sgdisk -n 0:0:+512M --t 0:ef00 -c 0:"boot" /dev/sda
-        sgdisk -n 0:0:0 --t 0:8300 -c 0:"root" /dev/sda
+        sgdisk -n 0:0:+512M -t 0:ef00 -c 0:"boot" /dev/sda
+        sgdisk -n 0:0:0 -t 0:8300 -c 0:"root" /dev/sda
     fi
 
     mkfs.fat -F32 /dev/sda1
@@ -22,8 +22,8 @@ function archnote {
     if [[ $1 = "full" ]]
     then
         sgdisk -Z /dev/nvme0n1
-        sgdisk -n 0:0:+512M --t 0:ef00 -c 0:"boot" /dev/nvme0n1
-        sgdisk -n 0:0:0 --t 0:8300 -c 0:"root" /dev/nvme0n1
+        sgdisk -n 0:0:+512M -t 0:ef00 -c 0:"boot" /dev/nvme0n1
+        sgdisk -n 0:0:0 -t 0:8300 -c 0:"root" /dev/nvme0n1
     fi
 
     mkfs.fat -F32 /dev/nvme0n1p1
