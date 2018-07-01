@@ -2,6 +2,19 @@
 
 function archhost {
     echo "archhost" $1
+    if [[ $1 = "full" ]]
+    then
+        sgdisk -Z /dev/sda
+        sgdisk -n 0:0:+512M --t 0:ef00 -c 0:"boot" /dev/sda
+        sgdisk -n 0:0:0 --t 0:8300 -c 0:"root" /dev/sda
+    fi
+
+    mkfs.fat -F32 /dev/sda1
+    mkfs.ext4 /dev/sda2
+
+    mount /dev/sda2 /mnt
+    mkdir -p /mnt/boot/efi
+    mount /dev/sda1 /mnt/boot/efi
 }
 
 function archnote {
@@ -24,7 +37,7 @@ function archnote {
 
 BOARD_UUID=$(cat /sys/class/dmi/id/product_uuid | sha256sum | awk '{ print $1 }')
 case $BOARD_UUID in
-'2d4ac2d6ec3acf216141eff067c66c66b0b5c777234763456b4f8a4d219e8043')
+'cc51600a296daf34f53d6feb589b1dcc4f30d0bd32ff09f5779ff11c8998ebf7')
     FUNC="archhost"
     ;;
 '7fdc78b0e186c3f5247f7c20518e9f1ad1903ad95d49fe2d8b7662945741a597')
