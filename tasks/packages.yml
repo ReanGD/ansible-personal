@@ -10,10 +10,6 @@
   pacman: name=gnupg state=present
   become: yes
 
-- name: Add key for cower (part of pacaur)
-  command: gpg --keyserver pgp.mit.edu --recv-keys 1EB2638FF56C0C53
-  changed_when: false
-
 - name: Add key for tor-browser-ru
   command: gpg --keyserver pool.sks-keyservers.net --recv-keys D1483FA6C3C07136
   changed_when: false

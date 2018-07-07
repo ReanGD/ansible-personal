@@ -1,5 +1,5 @@
 --- # user.yml
-- name: Create ssh direcory
+- name: Create ssh directory
   file: path=/home/{{main_user}}/.ssh state=directory mode=0700 group=users owner={{main_user}}
 
 - name: Copy git config

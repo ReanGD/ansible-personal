@@ -59,7 +59,7 @@ pkgs += ["refind-efi",
          "kbdd-git",  # daemon to make per window layout
          "libnotify",  # create notifications message
          "autofs",  # automounter (nfs, samba, etc)
-         "pacaur",  # AUR package manager
+         "aurman",  # AUR package manager
          "rsync"]
 
 # WM
