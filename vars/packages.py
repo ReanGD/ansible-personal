@@ -56,7 +56,7 @@ pkgs += ["refind-efi",
          "xcursor-ize-vision",
          "pkgfile",  # pkgfile makepkg (get package for makepkg)
          "pkgcacheclean",  # clean the pacman cache
-         "kbdd-git",  # daemon to make per window layout
+         "perwindowlayoutd",  # daemon to make per window layout (also exists "kbdd-git")
          "libnotify",  # create notifications message
          "autofs",  # automounter (nfs, samba, etc)
          "aurman",  # AUR package manager
