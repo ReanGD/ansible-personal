@@ -18,7 +18,7 @@
   register: root_partition_uuid_reg
   changed_when: false
 
-- name: Set archhost hostname
+- name: Set partition uuid
   set_fact:
     root_partition_uuid: "{{ root_partition_uuid_reg.stdout }}"
 
@@ -26,7 +26,6 @@
   template: src=files/boot/refind_linux.conf dest=/boot/refind_linux.conf owner=root group=root mode=0644
   become: yes
 
-# - name: Update GRUB timeout
-#   lineinfile: regexp='^GRUB_TIMEOUT=.*$' line="GRUB_TIMEOUT=1" path=/etc/default/grub
-#   when: efi_installed.stat.exists == False
-#   become: yes
+- name: Update refind timeout
+  lineinfile: regexp='^timeout .*$' line="timeout 1" path=/boot/efi/EFI/BOOT/refind.conf
+  become: yes
