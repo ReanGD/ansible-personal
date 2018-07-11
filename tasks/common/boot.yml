@@ -8,19 +8,25 @@
   register: efi_installed
   become: yes
 
-- name: UEFI install
-  shell: refind-install --usedefault /dev/sda1 --alldrivers
-  when: efi_installed.stat.exists == False
-  become: yes
+- name: Find efi partition name
+  shell: findmnt -o SOURCE --noheadings /boot/efi
+  register: efi_partition_name_reg
+  changed_when: false
 
-- name: Find root uuid
+- name: Find root partition uuid
   shell: findmnt -o UUID --noheadings /
   register: root_partition_uuid_reg
   changed_when: false
 
-- name: Set partition uuid
+- name: Set partitions facts
   set_fact:
+    efi_partition_name: "{{ efi_partition_name_reg.stdout }}"
     root_partition_uuid: "{{ root_partition_uuid_reg.stdout }}"
+
+- name: UEFI install
+  shell: refind-install --usedefault {{ efi_partition_name }} --alldrivers
+  when: efi_installed.stat.exists == False
+  become: yes
 
 - name: Copy refind_linux configuration
   template: src=files/boot/refind_linux.conf dest=/boot/refind_linux.conf owner=root group=root mode=0644
