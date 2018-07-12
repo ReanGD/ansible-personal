@@ -13,7 +13,7 @@
     - wlp2s0-Arch2
 
 - name: Check that wlp2s0-Arch5 service exists
-  stat: path="/etc/systemd/system/multi-user.target.wants/netctl@wlp2s0\\x2dArch5.service"
+  stat: path="/etc/systemd/system/multi-user.target.wants/netctl@wlp2s0\\x2dArch5.service" get_checksum=no get_mime=no
   register: wifi5_service_installed
   become: yes
 

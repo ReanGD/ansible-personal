@@ -4,7 +4,7 @@
   become: yes
 
 - name: Check that the /boot/efi/EFI exists
-  stat: path=/boot/efi/EFI
+  stat: path=/boot/efi/EFI get_checksum=no get_mime=no
   register: efi_installed
   become: yes
 

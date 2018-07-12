@@ -103,7 +103,7 @@
       command: mv /tmp/dokuwiki-{{dokuwiki_version}} /dokuwiki
 
     - name: Check ssl certificates dir
-      stat: path=/etc/letsencrypt/certificates
+      stat: path=/etc/letsencrypt/certificates get_checksum=no get_mime=no
       register: ssl_dir
 
     - name: Stop nginx for generate ssl certificates

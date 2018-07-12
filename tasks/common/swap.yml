@@ -1,6 +1,6 @@
 --- # init.yml
 - name: Check swapfile
-  stat: path=/swapfile
+  stat: path=/swapfile get_checksum=no get_mime=no
   register: swapfile
   become: yes
 
