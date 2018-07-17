@@ -22,7 +22,7 @@ function archnote {
     if [[ $1 = "full" ]]
     then
         sgdisk -Z /dev/nvme0n1
-        sgdisk -n 0:0:+550M -t 0:ef00 -c 0:"boot" /dev/nvme0n1
+        sgdisk -n 0:0:+450M -t 0:ef00 -c 0:"boot" /dev/nvme0n1
         sgdisk -n 0:0:0 -t 0:8300 -c 0:"root" /dev/nvme0n1
     fi
 
