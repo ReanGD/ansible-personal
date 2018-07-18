@@ -73,7 +73,7 @@ if is_notebook:
     grps += ["mate"]
 
 # login manager
-pkgs += ["lightdm", "lightdm-webkit2-greeter", "lightdm-webkit2-theme-material2", "lightdm-gtk-greeter"]
+pkgs += ["lightdm", "lightdm-gtk-greeter"]
 
 # net tools
 pkgs += ["wget",
@@ -132,6 +132,7 @@ pkgs += ["python",
          "python-pylint",
          "flake8",
          "python-pytest",
+         "python-termcolor",
          "python-virtualenv",
          "tk",
          ]
