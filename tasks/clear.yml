@@ -1,11 +1,19 @@
 --- # without dependencies
 - name: Remove old configs
-  file: path={{ item }} state=absent
+  file: path=/home/{{ main_user }}{{ item }} state=absent
   with_items:
-    - ~/.bash_history
-    - ~/.bash_logout
-    - ~/.bash_profile
-    - ~/.bashrc
-    - ~/.gnupg
-    - ~/.nv
+    - /.bash_history
+    - /.bash_logout
+    - /.bash_profile
+    - /.bashrc
+    - /.gnupg
+    - /.nv
+    - /Видео
+    - /Документы
+    - /Загрузки
+    - /Изображения
+    - /Музыка
+    - /Общедоступные
+    - /Рабочий стол
+    - /Шаблоны
   become: yes
