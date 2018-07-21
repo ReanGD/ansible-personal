@@ -3,11 +3,14 @@
   file: path={{item}} state=directory mode=0755
   with_items:
     - ~/.config/pulse
-    - ~/cloud/Dropbox
+    - ~/cloud
     - ~/tmp
     - ~/downloads
     - ~/doc
     - ~/.cache
+    - ~/projects/test
+    - ~/projects/work
+    - ~/projects/external
 
 - name: Create links for dotfiles
   link: src=~/projects/home/dotfiles/{{item.src}} dst={{item.dst}}
