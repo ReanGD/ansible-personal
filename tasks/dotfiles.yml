@@ -11,6 +11,7 @@
     - ~/projects/test
     - ~/projects/work
     - ~/projects/external
+    - ~/projects/venv
 
 - name: Create links for dotfiles
   link: src=~/projects/home/dotfiles/{{item.src}} dst={{item.dst}}
