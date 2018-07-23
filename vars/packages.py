@@ -7,7 +7,9 @@ is_notebook = host in ["archmini", "archnote"]
 pkgs += ["mesa"]
 
 if host == "archhost":
-    pkgs += ["nvidia"]  # lib32-nvidia-utils lib32-nvidia-libgl
+    pkgs += ["nvidia",
+             "lib32-nvidia-utils"  # for steam
+             ]
 elif host == "archnote":
     pkgs += ["bbswitch",
              # "bumblebee",
@@ -104,6 +106,9 @@ pkgs += ["firefox",
          "google-chrome",
          ]
 
+# programming
+pkgs += ["protobuf"]
+
 # cpp
 pkgs += ["boost", "clang", "gtest", "zeromq", "valgrind", "cmake", "gdb"]
 
@@ -135,6 +140,8 @@ pkgs += ["python",
          "python-termcolor",
          "python-virtualenv",
          "tk",
+         "swig",
+         "portaudio",  # for pyaudio and my audio-lib
          ]
 
 # text editors & ide
