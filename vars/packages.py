@@ -72,7 +72,7 @@ pkgs += ["xorg-server",
          "vicious"]
 
 if is_notebook:
-    grps += ["mate"]
+    grps += ["gnome"]
 
 # login manager
 pkgs += ["lightdm", "lightdm-gtk-greeter"]
