@@ -22,7 +22,7 @@
   shell: makepkg -sci --noconfirm --skippgpcheck chdir=/tmp/aurman
   when: check_aurman.rc != 0
   become: yes
-  become_user: {{main_user}}
+  become_user: "{{main_user}}"
 
 - name: Remove aurman repo
   file: path=/tmp/aurman state=absent
