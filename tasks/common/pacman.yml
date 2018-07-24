@@ -19,7 +19,7 @@
   when: check_aurman.rc != 0
 
 - name: Install aurman
-  shell: makepkg -sci --noconfirm --skippgpcheck chdir=/tmp/aurman
+  shell: sudo -u {{main_user}} makepkg -sci --noconfirm --skippgpcheck chdir=/tmp/aurman
   when: check_aurman.rc != 0
 
 - name: Remove aurman repo
