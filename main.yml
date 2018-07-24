@@ -18,8 +18,8 @@
     - include: tasks/common/init.yml
     - include: tasks/common/locale.yml
     - include: tasks/common/network.yml
-    - include: tasks/common/pacman.yml
     - include: tasks/common/user.yml
+    - include: tasks/common/pacman.yml
     - include: tasks/common/boot.yml
     - include: tasks/common/ssh.yml
     - include: tasks/common/pkgcacheclean.yml

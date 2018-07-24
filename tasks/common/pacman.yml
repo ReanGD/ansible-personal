@@ -1,4 +1,4 @@
---- # network.yml (after reboot)
+--- # user.yml + network.yml (after reboot)
 - name: Copy pacman configuration
   copy: src=files/etc/pacman.conf dest=/etc/pacman.conf owner=root group=root mode=0644
   become: yes
