@@ -17,6 +17,8 @@
 - name: Clone aurman repo
   git: repo=https://aur.archlinux.org/aurman.git dest=/tmp/aurman
   when: check_aurman.rc != 0
+  become: yes
+  become_user: "{{main_user}}"
 
 - name: Install aurman
   shell: makepkg -sci --noconfirm --skippgpcheck chdir=/tmp/aurman
