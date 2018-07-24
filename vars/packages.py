@@ -72,7 +72,7 @@ pkgs += ["xorg-server",
          "vicious"]
 
 if is_notebook:
-    grps += ["gnome"]
+    grps += ["cinnamon"]
 
 # login manager
 pkgs += ["lightdm", "lightdm-gtk-greeter"]
@@ -145,7 +145,11 @@ pkgs += ["python",
          ]
 
 # text editors & ide
-pkgs += ["emacs", "vim", "sublime-text-dev", "clion", "pycharm-professional"]
+pkgs += ["emacs", "vim", "sublime-text-dev", "clion"]
+if is_notebook:
+    grps += ["pycharm-community-edition"]
+else:
+    grps += ["pycharm-professional"]
 
 # file managers
 pkgs += ["doublecmd-gtk2",
