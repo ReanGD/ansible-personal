@@ -24,7 +24,7 @@
   set_fact:
     notebook: True
     hostname_id: "archnote"
-  when: init_product_name.stdout == 'TM613'
+  when: init_product_name.stdout == 'TM1613'
   tags: init
 
 - name: Set archmini hostname

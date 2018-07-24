@@ -40,11 +40,11 @@ case $BOARD_NAME in
 'MS-7978')
     FUNC="archhost"
     ;;
-'TM613')
+'TM1613')
     FUNC="archnote"
     ;;
 *)
-    echo 'Unknown product id'
+    echo 'Unknown product name'
     exit 1
     ;;
 esac
