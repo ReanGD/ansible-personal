@@ -1,7 +1,14 @@
 --- # without dependencies
-- name: Find board uuid
+- name: Find board sha uuid
   shell: cat /sys/class/dmi/id/product_uuid | sha256sum | awk '{ print $1 }'
-  register: init_board_serial
+  register: init_board_serial_sha
+  changed_when: false
+  become: yes
+  tags: init
+
+- name: Find board uuid
+  shell: cat /sys/class/dmi/id/product_name
+  register: init_product_name
   changed_when: false
   become: yes
   tags: init
@@ -10,33 +17,26 @@
   set_fact:
     notebook: False
     hostname_id: "archhost"
-  when: init_board_serial.stdout == '2d4ac2d6ec3acf216141eff067c66c66b0b5c777234763456b4f8a4d219e8043'
+  when: init_product_name.stdout == 'MS-7978'
   tags: init
 
-- name: Set archhost hostname after reboot
+- name: Set archnote hostname (xiaomi)
   set_fact:
-    notebook: False
-    hostname_id: "archhost"
-  when: init_board_serial.stdout == 'cc51600a296daf34f53d6feb589b1dcc4f30d0bd32ff09f5779ff11c8998ebf7'
+    notebook: True
+    hostname_id: "archnote"
+  when: init_product_name.stdout == 'TM613'
   tags: init
 
 - name: Set archmini hostname
   set_fact:
     notebook: True
     hostname_id: "archmini"
-  when: init_board_serial.stdout == '93507fdfe172eea26bfb5bc957a12f41fc36859d2ecfa1131f723d0398dc6868'
+  when: init_board_serial_sha.stdout == '93507fdfe172eea26bfb5bc957a12f41fc36859d2ecfa1131f723d0398dc6868'
   tags: init
 
 - name: Set archsrv hostname
   set_fact:
     notebook: False
     hostname_id: "archsrv"
-  when: init_board_serial.stdout == '7053bd838a745311203438c58dcb92661d68b1d55c169f46b58706c1d95c69a9'
-  tags: init
-
-- name: Set archnote hostname
-  set_fact:
-    notebook: True
-    hostname_id: "archnote"
-  when: init_board_serial.stdout == '7fdc78b0e186c3f5247f7c20518e9f1ad1903ad95d49fe2d8b7662945741a597'
+  when: init_board_serial_sha.stdout == '7053bd838a745311203438c58dcb92661d68b1d55c169f46b58706c1d95c69a9'
   tags: init
