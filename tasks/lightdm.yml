@@ -3,6 +3,11 @@
   pacman: name=lightdm state=present
   become: yes
 
+- name: Configure lightdm
+  template: src=files/etc/lightdm/lightdm.conf dest=/etc/lightdm/lightdm.conf mode=0644 group=root owner=root
+  when: hostname_id == "archhost"
+  become: yes
+
 - name: Enable lightdm service
   service: name=lightdm.service enabled=yes
   become: yes
