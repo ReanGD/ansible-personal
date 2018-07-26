@@ -5,8 +5,8 @@
 - name: Copy git config
   copy: src=files/home/.ssh/config dest=~/.ssh/config mode=0400 group=users owner={{main_user}}
 
-# ansible-vault encrypt secrets.yml
 # ansible-vault decrypt secrets.yml
+# ansible-vault encrypt secrets.yml
 - name: Install ssh keys for github
   copy: content="{{ github_private_key }}" dest=/home/{{main_user}}/.ssh/github mode=0400 group=users owner={{main_user}}
 
@@ -15,3 +15,6 @@
 
 - name: Install ssh keys for vscale
   copy: content="{{ vscale_private_key }}" dest=/home/{{main_user}}/.ssh/vscale mode=0400 group=users owner={{main_user}}
+
+- name: Install ssh keys for hass
+  copy: content="{{ hass_private_key }}" dest=/home/{{main_user}}/.ssh/hass mode=0400 group=users owner={{main_user}}
