@@ -1,0 +1,19 @@
+#!/bin/bash
+
+pacman-key --init
+pacman-key --populate archlinuxarm
+pacman -Suy --noconfirm 
+pacman -S --noconfirm sudo python
+
+useradd -m -g users -p "Xa9ABykCX7ocU" -G wheel,audio,power,video,storage,audio -s /bin/bash rean
+
+mkdir /home/rean/.ssh
+chmod 0700 /home/rean/.ssh
+chown rean:users /home/rean/.ssh
+mv /root/.ssh/authorized_keys /home/rean/.ssh/
+chown rean:users /home/rean/.ssh/authorized_keys
+
+echo 'PasswordAuthentication no' > /etc/ssh/sshd_config
+systemctl restart sshd
+
+rm /bin/install

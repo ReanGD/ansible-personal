@@ -1,0 +1,7 @@
+Defaults lecture=never
+root ALL=(ALL) ALL
+
+Defaults:rean	!env_reset
+Defaults:rean	timestamp_timeout=20
+
+rean	ALL = (ALL) ALL

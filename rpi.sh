@@ -1,14 +1,17 @@
 #!/bin/bash	
 
+ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+
 BASEURL=http://os.archlinuxarm.org/os/
 RPI2=ArchLinuxARM-rpi-2-latest.tar.gz
 RPI3=ArchLinuxARM-rpi-3-latest.tar.gz
-ARMV7IMG=arch-linux-armv7-$(date +%Y%m%d).img
-ARMV8IMG=arch-linux-armv8-$(date +%Y%m%d).img
+ARMV7IMG=arch-linux-armv7.img
+ARMV8IMG=arch-linux-armv8.img
 
 create_image(){
 	NAME=$1
 	IMG=$2
+	cd ~/tmp
 	losetup /dev/loop0 && exit 1 || true
 	wget -N $BASEURL$NAME
 	truncate -s 1300M $IMG
@@ -25,35 +28,35 @@ create_image(){
 	mkdir -p arch-root
 	mount /dev/loop0p2 arch-root
 	bsdtar -xpf $NAME -C arch-root
-	sed -i "s/ defaults / defaults,noatime /" arch-root/etc/fstab
-	sed -i "s/mmcblk0p1/sda1/" arch-root/etc/fstab
 	mv arch-root/boot/* arch-boot/
 	
-	sed -i 's/gpu_mem=64/gpu_mem=16/' arch-boot/config.txt
+	# fix boot
+	sed -i 's/gpu_mem=64/gpu_mem=16/' arch-boot/config.txt	
+	sed -i "s/ defaults / defaults,noatime /" arch-root/etc/fstab
+	sed -i "s/mmcblk0p1/sda1/" arch-root/etc/fstab
 	if [ $NAME = $RPI2 ]; then
 		sed -i "s/mmcblk0p2/sda2/" arch-boot/cmdline.txt
 	fi
 
+	# ssh config
 	echo 'PermitRootLogin yes' > arch-root/etc/ssh/sshd_config
 	echo 'PasswordAuthentication no' >> arch-root/etc/ssh/sshd_config
 	mkdir arch-root/root/.ssh/
 	ssh-keygen -y -f ~/.ssh/hass > arch-root/root/.ssh/authorized_keys
 	chmod 0600 arch-root/root/.ssh/authorized_keys
 
-	echo 'LANG=ru_RU.UTF-8' > arch-root/etc/locale.conf
-	echo 'en_US.UTF-8 UTF-8' > arch-root/etc/locale.gen
-	echo 'ru_RU.UTF-8 UTF-8' >> arch-root/etc/locale.gen
+	# sudo config
+	cp $ROOT_DIR/files/hass/etc/sudoers arch-root/etc/sudoers
+	chmod 0440 arch-root/etc/sudoers
 
-	echo 'Defaults lecture=never' > arch-root/etc/sudoers
-	echo 'root ALL=(ALL) ALL' >> arch-root/etc/sudoers
-	echo 'Defaults:rean   !env_reset' >> arch-root/etc/sudoers
-	echo 'Defaults:rean   timestamp_timeout=20' >> arch-root/etc/sudoers
-	echo 'rean    ALL = (ALL) ALL' >> arch-root/etc/sudoers
-	chmod 0440 arch-root/etc/sudoers	
+	# install script
+	cp $ROOT_DIR/files/hass/bin/install arch-root/bin/install
+	chmod +x arch-root/bin/install
 
 	umount arch-boot arch-root
 	rm -rf arch-boot arch-root
 	losetup -d /dev/loop0
+	echo "Finish. Image path = ~/tmp/$IMG"
 }
 
 if [ $EUID != 0 ]; then
@@ -61,10 +64,10 @@ if [ $EUID != 0 ]; then
     exit $?
 fi
 
-retval=$(whiptail --clear --title 'Arch Linux ARM image creator for Raspberry Pi 3'\
+retval=$(whiptail --clear --title 'Scenarios for raspberry Pi 3'\
 	--menu "Enter your choice:" 15 60 3 \
-		"1" "Raspberry Pi 3 (ARMv7)" \
-		"2" "Raspberry Pi 3 (ARMv8)" \
+		"1" "Create image for ARMv7" \
+		"2" "Create image for ARMv8" \
 		"3" "Quit" \
 		3>&1 1>&2 2>&3)
 
@@ -74,16 +77,14 @@ fi
 
 case $retval in
   "1")
-	NAME=$RPI2
-	IMG=$ARMV7IMG
+	create_image "$RPI2" "$ARMV7IMG"
 	;;
   "2")
-	NAME=$RPI3
-	IMG=$ARMV8IMG
+	create_image "$RPI3" "$ARMV8IMG"
 	;;
   "3")
 	exit 1
 	;;
 esac
 
-create_image $NAME $IMG
+
