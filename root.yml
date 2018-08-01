@@ -9,6 +9,7 @@
     GNUPGHOME: /home/rean/.config/gnupg
 
   vars_files:
+    - vars/path.yml
     - vars/common.yml
     - vars/dotfiles_map.yml
     - vars/repository_map.yml
