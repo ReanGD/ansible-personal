@@ -1,6 +1,7 @@
 #!/bin/bash	
 
 ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+MENU_ID=$1
 
 BASEURL=http://os.archlinuxarm.org/os/
 RPI2=ArchLinuxARM-rpi-2-latest.tar.gz
@@ -8,7 +9,14 @@ RPI3=ArchLinuxARM-rpi-3-latest.tar.gz
 ARMV7IMG=arch-linux-armv7.img
 ARMV8IMG=arch-linux-armv8.img
 
-create_image(){
+run_with_sudo(){
+	if [ $EUID != 0 ]; then
+	    sudo "$0" "$MENU_ID"
+	    exit $?
+	fi
+}
+
+create_image(){	
 	NAME=$1
 	IMG=$2
 	cd ~/tmp
@@ -59,32 +67,42 @@ create_image(){
 	echo "Finish. Image path = ~/tmp/$IMG"
 }
 
-if [ $EUID != 0 ]; then
-    sudo "$0" "$@"
-    exit $?
-fi
+ansible_install(){
+	cd $ROOT_DIR
+	/usr/bin/ansible-playbook tasks/hass/install.yml --ask-become-pass
+}
 
-retval=$(whiptail --clear --title 'Scenarios for raspberry Pi 3'\
-	--menu "Enter your choice:" 15 60 3 \
+main_menu(){
+	MENU_ID=$(whiptail --clear --title 'Scenarios for raspberry Pi 3'\
+	--menu "Enter your choice:" 15 60 4 \
 		"1" "Create image for ARMv7" \
 		"2" "Create image for ARMv8" \
-		"3" "Quit" \
+		"3" "Ansible install" \
+		"4" "Quit" \
 		3>&1 1>&2 2>&3)
 
-if [ $? != 0 ]; then
-	exit 1
+	if [ $? != 0 ]; then
+		exit 1
+	fi
+}
+
+if [ -z "$MENU_ID" ]; then
+   main_menu
 fi
 
-case $retval in
+case $MENU_ID in
   "1")
+	run_with_sudo
 	create_image "$RPI2" "$ARMV7IMG"
 	;;
   "2")
+	run_with_sudo
 	create_image "$RPI3" "$ARMV8IMG"
 	;;
   "3")
+	ansible_install
+	;;
+  "4")
 	exit 1
 	;;
 esac
-
-

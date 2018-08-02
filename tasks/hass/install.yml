@@ -1,0 +1,10 @@
+---
+- name: Install hass
+
+  hosts: hass
+
+  vars_files:
+    - ../../vars/path.yml
+
+  tasks:
+    - include: "{{tasks_dir}}/common/time.yml"
