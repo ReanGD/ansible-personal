@@ -1,4 +1,4 @@
---- # network.yml + packages.yml?
+--- # abs_path, network.yml + packages.yml?
 - name: Set timezone to Europe/Moscow
   timezone:
     hwclock: 'UTC'
@@ -11,7 +11,7 @@
   changed_when: false
 
 - name: Copy ntp config file
-  template: src=files/etc/systemd/timesyncd.conf dest=/etc/systemd/timesyncd.conf mode=0446 group=root owner=root
+  template: src="{{files_dir}}/etc/systemd/timesyncd.conf" dest=/etc/systemd/timesyncd.conf mode=0446 group=root owner=root
   become: yes
 
 - name: Enable ntp

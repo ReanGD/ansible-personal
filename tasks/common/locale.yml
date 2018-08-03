@@ -1,4 +1,4 @@
---- # without dependencies
+--- # abs_path, without dependencies
 - name: Add en_US.UTF-8 locale
   locale_gen: name=en_US.UTF-8 state=present
   become: yes
@@ -8,9 +8,9 @@
   become: yes
 
 - name: locale.conf
-  template: src=files/etc/locale.conf dest=/etc/locale.conf mode=644 group=root owner=root
+  template: src="{{files_dir}}/etc/locale.conf" dest=/etc/locale.conf mode=644 group=root owner=root
   become: yes
 
 - name: vconsole.conf
-  template: src=files/etc/vconsole.conf dest=/etc/vconsole.conf mode=644 group=root owner=root
+  template: src="{{files_dir}}/etc/vconsole.conf" dest=/etc/vconsole.conf mode=644 group=root owner=root
   become: yes
