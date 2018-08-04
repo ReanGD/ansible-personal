@@ -1,4 +1,4 @@
---- # without dependencies
+--- # abs_path, without dependencies
 - name: Configure log size
-  template: src=files/etc/systemd/journald.conf dest=/etc/systemd/journald.conf mode=0446 group=root owner=root
+  template: src="{{files_dir}}/etc/systemd/journald.conf" dest=/etc/systemd/journald.conf mode=0446 group=root owner=root
   become: yes
