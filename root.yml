@@ -1,9 +1,7 @@
 ---
-- hosts: localhost
+- name: Root install local mashine
 
-  vars:
-    ansible_connection: local
-    ansible_python_interpreter: /usr/bin/python2
+  hosts: local
   
   environment:
     GNUPGHOME: /home/rean/.config/gnupg
