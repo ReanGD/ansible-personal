@@ -1,5 +1,5 @@
 ---
-- name: Install hass
+- name: Base install home assistant
 
   hosts: hass
 
@@ -11,3 +11,4 @@
     - include: "{{tasks_dir}}/common/time.yml"
     - include: "{{tasks_dir}}/common/systemd_cfg.yml"
     - include: "{{tasks_dir}}/hass/user.yml"
+    - include: "{{tasks_dir}}/hass/hass_install.yml"    

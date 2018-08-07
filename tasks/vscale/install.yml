@@ -75,8 +75,8 @@
         group: root
         mode: 0644
 
-# ansible-vault encrypt .ydcmd.cfg
 # ansible-vault decrypt .ydcmd.cfg
+# ansible-vault encrypt .ydcmd.cfg
 # https://moonback.ru/page/vestacp-backup-to-yandex-disk#more-5320
     - name: Copy ydcmd config
       copy:

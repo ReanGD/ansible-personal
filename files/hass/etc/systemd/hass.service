@@ -1,0 +1,11 @@
+[Unit]
+Description=Home Assistant
+After=network.target
+
+[Service]
+Type=simple
+User=rean
+ExecStart=/hass/venv/bin/hass --config "/hass/dotfiles-hass"
+
+[Install]
+WantedBy=multi-user.target

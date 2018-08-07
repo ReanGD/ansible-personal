@@ -67,17 +67,12 @@ create_image(){
 	echo "Finish. Image path = ~/tmp/$IMG"
 }
 
-ansible_install(){
-	cd $ROOT_DIR
-	/usr/bin/ansible-playbook tasks/hass/install.yml --ask-become-pass
-}
-
 main_menu(){
 	MENU_ID=$(whiptail --clear --title 'Scenarios for raspberry Pi 3'\
 	--menu "Enter your choice:" 15 60 4 \
 		"1" "Create image for ARMv7" \
 		"2" "Create image for ARMv8" \
-		"3" "Ansible install" \
+		"3" "Base ansible install" \
 		"4" "Quit" \
 		3>&1 1>&2 2>&3)
 
@@ -100,7 +95,8 @@ case $MENU_ID in
 	create_image "$RPI3" "$ARMV8IMG"
 	;;
   "3")
-	ansible_install
+	cd $ROOT_DIR
+	/usr/bin/ansible-playbook tasks/hass/install.yml --ask-become-pass --ask-vault-pass
 	;;
   "4")
 	exit 1

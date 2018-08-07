@@ -3,8 +3,8 @@
   hostname: name={{hostname_id}}
   become: yes
 
-# ansible-vault encrypt secrets.yml
 # ansible-vault decrypt secrets.yml
+# ansible-vault encrypt secrets.yml
 - name: Copy netctl configuration
   template: src=files/etc/netctl/{{item}} dest=/etc/netctl/{{item}} owner=root group=root mode=0600
   become: yes
