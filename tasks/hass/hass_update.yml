@@ -1,0 +1,27 @@
+--- # abs_path, hass_install.yml
+
+# ansible-vault decrypt secrets.yaml
+# ansible-vault encrypt secrets.yaml
+- name: Copy secrets.yaml for hass
+  copy:
+    src: "{{files_dir}}/hass/hass/dotfiles-hass/secrets.yaml"
+    dest: /hass/dotfiles-hass
+    decrypt: yes
+    owner: rean
+    group: users
+    mode: 0644
+
+- name: Synchronization smart-home
+  synchronize:
+    src: /home/rean/projects/home/smart-home
+    dest: /hass
+    delete: true
+
+- name: Synchronization dotfiles-hass
+  synchronize:
+    src: /home/rean/projects/home/dotfiles-hass
+    dest: /hass 
+
+- name: Restart homeassistant service
+  service: name=hass.service state=restarted
+  become: yes

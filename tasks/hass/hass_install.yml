@@ -21,17 +21,6 @@
     virtualenv: /hass/venv
     virtualenv_site_packages: yes
 
-# ansible-vault decrypt secrets.yaml
-# ansible-vault encrypt secrets.yaml
-- name: Copy secrets.yaml for hass
-  copy:
-    src: "{{files_dir}}/hass/hass/dotfiles-hass/secrets.yaml"
-    dest: /hass/dotfiles-hass
-    decrypt: yes
-    owner: rean
-    group: users
-    mode: 0644
-
 - name: Enable port 80 for hass
   capabilities:
     path: /hass/venv/bin/python

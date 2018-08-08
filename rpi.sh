@@ -69,11 +69,12 @@ create_image(){
 
 main_menu(){
 	MENU_ID=$(whiptail --clear --title 'Scenarios for raspberry Pi 3'\
-	--menu "Enter your choice:" 15 60 4 \
+	--menu "Enter your choice:" 15 60 5 \
 		"1" "Create image for ARMv7" \
 		"2" "Create image for ARMv8" \
-		"3" "Base ansible install" \
-		"4" "Quit" \
+		"3" "Ansible base install" \
+		"4" "Ansible update" \
+		"5" "Quit" \
 		3>&1 1>&2 2>&3)
 
 	if [ $? != 0 ]; then
@@ -96,9 +97,13 @@ case $MENU_ID in
 	;;
   "3")
 	cd $ROOT_DIR
-	/usr/bin/ansible-playbook tasks/hass/install.yml --ask-become-pass --ask-vault-pass
+	/usr/bin/ansible-playbook tasks/hass/main_base.yml --ask-become-pass --ask-vault-pass
 	;;
   "4")
+	cd $ROOT_DIR
+	/usr/bin/ansible-playbook tasks/hass/main_update.yml --ask-become-pass --ask-vault-pass
+	;;
+  "5")
 	exit 1
 	;;
 esac
