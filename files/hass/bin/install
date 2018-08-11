@@ -5,7 +5,7 @@ pacman-key --populate archlinuxarm
 pacman -Suy --noconfirm 
 pacman -S --noconfirm sudo python
 
-useradd -m -g users -p "Xa9ABykCX7ocU" -G wheel,audio,power,video,storage,audio -s /bin/bash rean
+useradd -m -g users -p "Xa9ABykCX7ocU" -G wheel,audio,power,video,storage,audio,uucp -s /bin/bash rean
 
 mkdir /home/rean/.ssh
 chmod 0700 /home/rean/.ssh
