@@ -8,6 +8,10 @@
   service: name=rsyncd.service enabled=yes state=started
   become: yes
 
+- name: Udev rule for Z-Wave stick
+  template: src="{{files_dir}}/hass/etc/udev/rules.d/99-usb-serial.rules" dest=/etc/udev/rules.d/99-usb-serial.rules mode=644 group=root owner=root
+  become: yes
+
 - name: Create dirs for homeassistant
   file: path={{item}} state=directory mode=0755 group=users owner=rean recurse=yes
   with_items:
