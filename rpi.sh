@@ -11,8 +11,8 @@ ARMV8IMG=arch-linux-armv8.img
 
 run_with_sudo(){
 	if [ $EUID != 0 ]; then
-	    sudo "$0" "$MENU_ID"
-	    exit $?
+		sudo "$0" "$MENU_ID"
+		exit $?
 	fi
 }
 
@@ -69,12 +69,13 @@ create_image(){
 
 main_menu(){
 	MENU_ID=$(whiptail --clear --title 'Scenarios for raspberry Pi 3'\
-	--menu "Enter your choice:" 15 60 5 \
+	--menu "Enter your choice:" 15 60 6 \
 		"1" "Create image for ARMv7" \
 		"2" "Create image for ARMv8" \
 		"3" "Ansible base install" \
 		"4" "Ansible update" \
-		"5" "Quit" \
+		"5" "Ansible copy settings to local" \
+		"6" "Quit" \
 		3>&1 1>&2 2>&3)
 
 	if [ $? != 0 ]; then
@@ -104,6 +105,10 @@ case $MENU_ID in
 	/usr/bin/ansible-playbook tasks/hass/main_update.yml --ask-become-pass --ask-vault-pass
 	;;
   "5")
+	cd $ROOT_DIR
+	/usr/bin/ansible-playbook tasks/hass/main_copy.yml
+	;;	
+  "6")
 	exit 1
 	;;
 esac

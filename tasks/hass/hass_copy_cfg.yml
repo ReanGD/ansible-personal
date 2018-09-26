@@ -1,0 +1,7 @@
+--- # abs_path, hass_install.yml
+
+- name: Synchronization dotfiles-hass from remote to host
+  synchronize:
+    mode: pull
+    src: /hass/dotfiles-hass
+    dest: /home/rean/projects/home

@@ -1,0 +1,10 @@
+---
+- name: Copy settings from home assistant to local host
+
+  hosts: hass
+
+  vars_files:
+    - ../../vars/path.yml
+
+  tasks:
+    - include: "{{tasks_dir}}/hass/hass_copy_cfg.yml"
