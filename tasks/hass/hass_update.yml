@@ -22,6 +22,9 @@
     src: /home/rean/projects/home/dotfiles-hass
     dest: /hass 
 
+- name: Generate protobuf
+  shell: /hass/smart-home/generate_proto.sh
+
 - name: Restart homeassistant service
   service: name=hass.service state=restarted
   become: yes
