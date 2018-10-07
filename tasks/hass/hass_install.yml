@@ -1,7 +1,7 @@
 --- # abs_path, without dependencies
 
 - name: Install packages for install homeassistant
-  pacman: name=python-virtualenv,libffi,protobuf,python-pip,gcc,make,pkg-config,rsync,libudev0-shim state=present
+  pacman: name=python-virtualenv,libffi,protobuf,python-pip,gcc,make,pkg-config,rsync,libudev0-shim,mosquitto state=present
   become: yes
 
 - name: Enable and start rsyncd service for sync settings
@@ -38,4 +38,8 @@
 
 - name: Enable homeassistant service
   service: name=hass.service enabled=yes
+  become: yes
+
+- name: Enable and start mosquitto service
+  service: name=mosquitto.service enabled=yes state=started
   become: yes
