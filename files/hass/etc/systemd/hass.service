@@ -1,6 +1,7 @@
 [Unit]
 Description=Home Assistant
-After=network.target
+Requires=mosquitto.service
+After=network.target mosquitto.service
 
 [Service]
 Type=simple
