@@ -39,7 +39,7 @@ create_image(){
 	mv arch-root/boot/* arch-boot/
 	
 	# fix boot
-	sed -i 's/gpu_mem=64/gpu_mem=16/' arch-boot/config.txt	
+	sed -i 's/gpu_mem=64/gpu_mem=16/' arch-boot/config.txt
 	sed -i "s/ defaults / defaults,noatime /" arch-root/etc/fstab
 	sed -i "s/mmcblk0p1/sda1/" arch-root/etc/fstab
 	if [ $NAME = $RPI2 ]; then
