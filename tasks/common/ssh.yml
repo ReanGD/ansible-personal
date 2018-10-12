@@ -20,4 +20,4 @@
   copy: content="{{ hass_private_key }}" dest=/home/{{main_user}}/.ssh/hass mode=0400 group=users owner={{main_user}}
 
 - name: Install ssh keys for respeaker
-  copy: content="{{ hass_private_key }}" dest=/home/{{main_user}}/.ssh/respeaker mode=0400 group=users owner={{main_user}}
+  copy: content="{{ respeaker_private_key }}" dest=/home/{{main_user}}/.ssh/respeaker mode=0400 group=users owner={{main_user}}

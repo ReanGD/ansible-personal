@@ -1,0 +1,8 @@
+[Match]
+Name=eth0
+
+[Network]
+DHCP=ipv4
+
+[Link]
+MACAddress=7e:d9:02:b8:56:07
