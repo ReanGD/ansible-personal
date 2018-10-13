@@ -1,0 +1,10 @@
+---
+- name: Base install respeaker
+
+  hosts: respeaker
+
+  vars_files:
+    - ../../vars/path.yml
+
+  tasks:
+    - include: "{{tasks_dir}}/common/locale.yml"

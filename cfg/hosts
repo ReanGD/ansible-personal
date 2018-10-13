@@ -9,3 +9,6 @@ archsrv ansible_connection=paramiko ansible_port=2222 ansible_user=rean ansible_
 
 [hass]
 192.168.1.3 ansible_user=rean
+
+[respeaker]
+192.168.1.50 ansible_user=rean ansible_python_interpreter=/usr/bin/python3

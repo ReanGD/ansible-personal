@@ -1,4 +1,6 @@
 Defaults lecture=never
+Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 root ALL=(ALL) ALL
 
 Defaults:rean	!env_reset
