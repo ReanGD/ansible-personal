@@ -1,0 +1,27 @@
+--- # abs_path, without dependencies
+- name: Remove unused packages
+  apt:
+    name: "{{ packages }}"
+    state: absent
+    purge: yes
+  vars:
+    packages:
+      - vim
+      - vim-runtime
+      - vim-tiny
+      - vim-common
+      - python
+      - python-minimal
+      - libpython-dev
+      - libpython-stdlib
+      - libpython2.7
+      - python2.7
+      - python2.7-minimal
+      - libpython2.7-stdlib
+      - libpython2.7-minimal
+      - pulseaudio-module-bluetooth
+  become: yes
+
+- name: Disable bluetooth service
+  service: name=bluetooth.service enabled=no
+  become: yes

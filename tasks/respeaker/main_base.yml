@@ -11,3 +11,7 @@
     - include: "{{tasks_dir}}/common/time.yml"
     - include: "{{tasks_dir}}/common/systemd_cfg.yml"
     - include: "{{tasks_dir}}/respeaker/user.yml"
+    - include: "{{tasks_dir}}/respeaker/logger.yml"
+    - include: "{{tasks_dir}}/respeaker/remove_unused.yml"
+    - include: "{{tasks_dir}}/respeaker/rsync.yml"
+
