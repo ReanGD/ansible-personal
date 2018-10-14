@@ -6,7 +6,7 @@
   become: yes
 
 - name: Check is ntp enabled
-  shell: timedatectl | grep "System clock synchronized" | awk '{ print $4 }'
+  shell: timedatectl | grep "System clock synchronized\|NTP synchronized" | awk '{ print $NF }'
   register: timedatectl_ntp
   changed_when: false
 
