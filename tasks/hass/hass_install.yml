@@ -1,11 +1,7 @@
 --- # abs_path, without dependencies
 
 - name: Install packages for install homeassistant
-  pacman: name=python-virtualenv,libffi,protobuf,python-pip,gcc,make,pkg-config,rsync,libudev0-shim,mosquitto state=present
-  become: yes
-
-- name: Enable and start rsyncd service for sync settings
-  service: name=rsyncd.service enabled=yes state=started
+  pacman: name=python-virtualenv,libffi,protobuf,python-pip,gcc,make,pkg-config,libudev0-shim,mosquitto state=present
   become: yes
 
 - name: Udev rule for Z-Wave stick

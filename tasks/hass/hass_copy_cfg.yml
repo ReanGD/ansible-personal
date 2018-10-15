@@ -1,4 +1,4 @@
---- # abs_path, hass_install.yml
+--- # abs_path, rsync.yml, hass_install.yml
 
 - name: Synchronization dotfiles-hass from remote to host
   synchronize:

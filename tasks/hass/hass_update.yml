@@ -1,4 +1,4 @@
---- # abs_path, hass_install.yml
+--- # abs_path, rsync.yml, hass_install.yml
 
 # ansible-vault decrypt secrets.yaml
 # ansible-vault encrypt secrets.yaml
