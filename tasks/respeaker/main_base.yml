@@ -3,6 +3,10 @@
 
   hosts: respeaker
 
+  environment:
+    PATH: "/pyenv/bin:/pyenv/shims:{{ ansible_env.PATH }}"
+    PYENV_ROOT: /pyenv
+
   vars_files:
     - ../../vars/path.yml
 
@@ -14,4 +18,4 @@
     - include: "{{tasks_dir}}/respeaker/logger.yml"
     - include: "{{tasks_dir}}/respeaker/remove_unused.yml"
     - include: "{{tasks_dir}}/respeaker/rsync.yml"
-
+    - include: "{{tasks_dir}}/respeaker/pyenv.yml"
