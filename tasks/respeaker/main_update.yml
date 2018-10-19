@@ -1,0 +1,10 @@
+---
+- name: Sync settings to respeaker
+
+  hosts: respeaker
+
+  vars_files:
+    - ../../vars/path.yml
+
+  tasks:
+    - include: "{{tasks_dir}}/respeaker/smart_home_update.yml"
