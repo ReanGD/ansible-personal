@@ -34,8 +34,8 @@
   stat: path="/pyenv/versions/3.7.0" get_checksum=no get_mime=no
   register: python_installed
 
-- name: Install python 3.7.0
-  command: pyenv install 3.7.0
+- name: Install python 3.6.6
+  command: pyenv install 3.6.6
   when: python_installed.stat.exists == False
 
 - name: add pyenv to bash_profile
