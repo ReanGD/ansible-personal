@@ -1,13 +1,45 @@
---- # init.yml + not working under root
+--- # abs_path, init.yml + not working under root
 - name: Set hostname
   hostname: name={{hostname_id}}
+  become: yes
+
+- name: Copy systemd-networkd configuration
+  template:
+    src: "{{files_dir}}/common/etc/systemd/network/wired.network"
+    dest: /etc/systemd/network/wired.network
+    owner: root
+    group: root
+    mode: 0644
+  when: notebook == False
+  become: yes
+
+- name: Enable and start service systemd-networkd
+  service:
+    name: systemd-networkd.service
+    enabled: yes
+    state: started
+  when: notebook == False
+  become: yes
+
+- name: Enable and start service systemd-resolved
+  service:
+    name: systemd-resolved.service
+    enabled: yes
+    state: started
+  when: notebook == False
   become: yes
 
 # ansible-vault decrypt secrets.yml
 # ansible-vault encrypt secrets.yml
 - name: Copy netctl configuration
-  template: src=files/etc/netctl/{{item}} dest=/etc/netctl/{{item}} owner=root group=root mode=0600
-  become: yes
+  template:
+    src: "{{files_dir}}/etc/netctl/{{item}}"
+    dest: /etc/netctl/{{item}}
+    owner: root
+    group: root
+    mode: 0600
+  when: notebook == True
+  become: yes  
   with_items:
     - wlp2s0-Arch5
     - wlp2s0-Arch2
@@ -15,14 +47,15 @@
 - name: Check that wlp2s0-Arch5 service exists
   stat: path="/etc/systemd/system/multi-user.target.wants/netctl@wlp2s0\\x2dArch5.service" get_checksum=no get_mime=no
   register: wifi5_service_installed
+  when: notebook == True
   become: yes
 
 - name: Enable wlp2s0-Arch5
   command: netctl enable wlp2s0-Arch5
-  when: wifi5_service_installed.stat.exists == False
+  when: notebook == True and wifi5_service_installed.stat.exists == False
   become: yes
 
 - name: Start wlp2s0-Arch5
   command: netctl start wlp2s0-Arch5
-  when: wifi5_service_installed.stat.exists == False
+  when: notebook == True and wifi5_service_installed.stat.exists == False
   become: yes
