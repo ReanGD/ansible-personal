@@ -13,6 +13,11 @@
   when: notebook == False
   become: yes
 
+- name: Create symbolic links for /etc/resolv.conf
+  file: src=/run/systemd/resolve/resolv.conf dest=/etc/resolv.conf state=link force=yes
+  when: notebook == False
+  become: yes
+
 - name: Enable and start service systemd-networkd
   service:
     name: systemd-networkd.service
