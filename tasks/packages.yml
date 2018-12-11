@@ -11,7 +11,7 @@
   become: yes
 
 - name: Add key for tor-browser-ru
-  command: gpg --keyserver pool.sks-keyservers.net --recv-keys D1483FA6C3C07136
+  command: gpg --keyserver hkp://pgp.mit.edu:11371 --recv-keys 0x4E2C6E8793298290
   changed_when: false
 
 - name: Install packages
