@@ -34,9 +34,5 @@
   become: yes
 
 - name: Install base packages for wifi
-  pacman: name={{item}} state=present
+  pacman: name=dialog,connman,wpa_supplicant state=present
   become: yes
-  with_items:
-    - dialog
-    - connman
-    - wpa_supplicant
