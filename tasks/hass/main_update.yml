@@ -1,4 +1,4 @@
----
+--- # abs_path
 - name: Update home assistant
 
   hosts: hass

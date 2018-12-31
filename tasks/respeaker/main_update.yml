@@ -1,4 +1,4 @@
----
+--- # abs_path
 - name: Sync settings to respeaker
 
   hosts: respeaker

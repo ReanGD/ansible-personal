@@ -42,5 +42,3 @@ chmod -R 644 /dokuwiki
 find /dokuwiki/ -type d -exec chmod 0755 {} ';'
 
 service php7.0-fpm reload && service nginx reload 
-
-Дипроспан для блокады + шприц на 5

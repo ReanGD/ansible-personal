@@ -1,4 +1,4 @@
----
+--- # abs_path
 - name: Base install home assistant
 
   hosts: hass

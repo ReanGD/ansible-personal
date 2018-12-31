@@ -1,4 +1,4 @@
----
+--- # abs_path
 - name: Copy settings from home assistant to local host
 
   hosts: hass
