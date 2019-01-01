@@ -1,4 +1,4 @@
---- # init.yml
+--- # abs_path, init.yml
 - name: Find docker group
   run_once: True
   shell: getent group docker
@@ -32,5 +32,5 @@
   become: yes
 
 - name: Configure sudoers
-  template: src=files/etc/sudoers dest=/etc/sudoers mode=0440 group=root owner=root
+  template: src="{{files_dir}}/etc/sudoers" dest=/etc/sudoers mode=0440 group=root owner=root
   become: yes

@@ -1,5 +1,5 @@
 [local]
-localhost ansible_connection=local
+localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python3
 
 [local_srv]
 archsrv ansible_connection=paramiko ansible_port=2222 ansible_user=rean ansible_python_interpreter=/usr/bin/python2

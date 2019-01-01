@@ -1,11 +1,4 @@
---- # without dependencies
-- name: Find board sha uuid
-  shell: cat /sys/class/dmi/id/product_uuid | sha256sum | awk '{ print $1 }'
-  register: init_board_serial_sha
-  changed_when: false
-  become: yes
-  tags: init
-
+--- # abs_path, without dependencies
 - name: Find board uuid
   shell: cat /sys/class/dmi/id/product_name
   register: init_product_name
@@ -27,16 +20,9 @@
   when: init_product_name.stdout == 'TM1613'
   tags: init
 
-- name: Set archmini hostname
-  set_fact:
-    notebook: True
-    hostname_id: "archmini"
-  when: init_board_serial_sha.stdout == '93507fdfe172eea26bfb5bc957a12f41fc36859d2ecfa1131f723d0398dc6868'
-  tags: init
-
 - name: Set archsrv hostname
   set_fact:
     notebook: False
     hostname_id: "archsrv"
-  when: init_board_serial_sha.stdout == '7053bd838a745311203438c58dcb92661d68b1d55c169f46b58706c1d95c69a9'
+  when: init_product_name.stdout == 'System Product Name'
   tags: init

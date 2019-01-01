@@ -34,6 +34,23 @@ function archnote {
     mount /dev/nvme0n1p1 /mnt/boot/efi
 }
 
+function archsrv {
+    echo "archsrv" $1
+    if [[ $1 = "full" ]]
+    then
+        sgdisk -Z /dev/sda
+        sgdisk -n 0:0:+550M -t 0:ef00 -c 0:"boot" /dev/sda
+        sgdisk -n 0:0:0 -t 0:8300 -c 0:"root" /dev/sda
+    fi
+
+    mkfs.fat -F32 /dev/sda1
+    mkfs.ext4 /dev/sda2
+
+    mount /dev/sda2 /mnt
+    mkdir -p /mnt/boot/efi
+    mount /dev/sda1 /mnt/boot/efi
+}
+
 
 BOARD_NAME=$(cat /sys/class/dmi/id/product_name)
 case $BOARD_NAME in
@@ -42,6 +59,9 @@ case $BOARD_NAME in
     ;;
 'TM1613')
     FUNC="archnote"
+    ;;
+'System Product Name')
+    FUNC="archsrv"
     ;;
 *)
     echo 'Unknown product name'
@@ -70,7 +90,7 @@ esac
 read -n 1 -s -p "Press any key to continue"
 
 echo 'Server = http://mirror.yandex.ru/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
-pacstrap /mnt base base-devel git ansible python2
+pacstrap /mnt base base-devel git ansible
 genfstab -U -p /mnt >> /mnt/etc/fstab
 arch-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /etc/ansible-personal
 arch-chroot /mnt /etc/ansible-personal/root.sh

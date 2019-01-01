@@ -1,6 +1,6 @@
---- # user.yml + network.yml (after reboot)
+--- # abs_path, user.yml + network.yml (after reboot)
 - name: Copy pacman configuration
-  copy: src=files/etc/pacman.conf dest=/etc/pacman.conf owner=root group=root mode=0644
+  copy: src="{{files_dir}}/etc/pacman.conf" dest=/etc/pacman.conf owner=root group=root mode=0644
   become: yes
 
 - name: Update pacman cache
@@ -35,4 +35,5 @@
 
 - name: Install base packages for wifi
   pacman: name=dialog,connman,wpa_supplicant state=present
+  when: hostname_id == "archnote"
   become: yes

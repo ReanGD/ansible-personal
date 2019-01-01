@@ -1,0 +1,18 @@
+--- # abs_path
+- name: Root install local mashine
+
+  hosts: local
+
+  environment:
+    GNUPGHOME: /home/rean/.config/gnupg
+  
+  vars_files:
+    - ../../vars/path.yml
+    - ../../vars/common.yml
+
+  tasks:
+    - include: "{{tasks_dir}}/common/init.yml"
+    - include: "{{tasks_dir}}/common/locale.yml"
+    - include: "{{tasks_dir}}/common/user.yml"
+    - include: "{{tasks_dir}}/common/pacman.yml"
+    - include: "{{tasks_dir}}/common/boot.yml"
