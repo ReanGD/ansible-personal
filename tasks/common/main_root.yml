@@ -2,6 +2,13 @@
 - name: Root install local mashine
 
   hosts: local
+  gather_facts: false
+  pre_tasks:
+    - name: Custom setup
+      setup:
+        gather_subset:
+          - '!all'
+          - '!any'
 
   environment:
     GNUPGHOME: /home/rean/.config/gnupg
