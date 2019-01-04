@@ -6,23 +6,26 @@
   become: yes
   tags: init
 
-- name: Set archhost hostname
+- name: Set archhost facts
   set_fact:
     notebook: False
+    install_wifi: False
     hostname_id: "archhost"
   when: init_product_name.stdout == 'MS-7978'
   tags: init
 
-- name: Set archnote hostname (xiaomi)
+- name: Set archnote facts (xiaomi)
   set_fact:
     notebook: True
+    install_wifi: True
     hostname_id: "archnote"
   when: init_product_name.stdout == 'TM1613'
   tags: init
 
-- name: Set archsrv hostname
+- name: Set archsrv facts
   set_fact:
     notebook: False
+    install_wifi: False
     hostname_id: "archsrv"
   when: init_product_name.stdout == 'System Product Name'
   tags: init

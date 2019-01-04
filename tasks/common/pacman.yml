@@ -35,5 +35,5 @@
 
 - name: Install base packages for wifi
   pacman: name=dialog,connman,wpa_supplicant state=present
-  when: hostname_id == "archnote"
+  when: install_wifi == True
   become: yes
