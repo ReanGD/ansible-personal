@@ -22,10 +22,16 @@
   set_fact:
     efi_partition_name: "{{ efi_partition_name_reg.stdout }}"
     root_partition_uuid: "{{ root_partition_uuid_reg.stdout }}"
+    conf_path: "{% if boot_ssd == True %}/boot/efi/EFI/BOOT/refind.conf{% else %}/boot/efi/EFI/refind/refind.conf{% endif %}"
 
-- name: UEFI install
+- name: UEFI install to SSD
   shell: refind-install --usedefault {{ efi_partition_name }} --alldrivers
-  when: efi_installed.stat.exists == False
+  when: boot_ssd == True and efi_installed.stat.exists == False
+  become: yes
+
+- name: UEFI install to HDD
+  shell: refind-install
+  when: boot_ssd == False and efi_installed.stat.exists == False
   become: yes
 
 - name: Copy refind_linux configuration
@@ -33,5 +39,5 @@
   become: yes
 
 - name: Update refind timeout
-  lineinfile: regexp='^timeout .*$' line="timeout 1" path=/boot/efi/EFI/BOOT/refind.conf
+  lineinfile: regexp='^timeout .*$' line="timeout 1" path={{conf_path}}
   become: yes
