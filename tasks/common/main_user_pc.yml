@@ -1,0 +1,45 @@
+--- # abs_path
+- name: Install local mashine
+
+  hosts: local
+  gather_facts: false
+  pre_tasks:
+    - name: Custom setup
+      setup:
+        gather_subset:
+          - '!all'
+          - '!any'
+
+  environment:
+    GNUPGHOME: /home/rean/.config/gnupg
+
+  vars_files:
+    - ../../vars/path.yml
+    - ../../vars/common.yml
+    - ../../vars/secrets.yml
+    - ../../vars/dotfiles_map.yml
+    - ../../vars/repository_map.yml
+
+  tasks:
+    - include: "{{tasks_dir}}tasks/common/init.yml"
+    - include: "{{tasks_dir}}tasks/common/locale.yml"    
+    - include: "{{tasks_dir}}tasks/common/network.yml"
+    - include: "{{tasks_dir}}tasks/common/user.yml"
+    - include: "{{tasks_dir}}tasks/common/pacman.yml"
+    - include: "{{tasks_dir}}tasks/common/boot.yml"
+    
+    - include: "{{tasks_dir}}tasks/common/ssh.yml"
+    - include: "{{tasks_dir}}tasks/common/pkgcacheclean.yml"
+    - include: "{{tasks_dir}}tasks/common/systemd_cfg.yml"
+    - include: "{{tasks_dir}}tasks/common/swap.yml"
+    - include: "{{tasks_dir}}tasks/common/time.yml"
+    # - include: "{{tasks_dir}}tasks/common/autofs.yml"
+    - include: "{{tasks_dir}}tasks/packages.yml"
+    - include: "{{tasks_dir}}tasks/repository.yml"
+    - include: "{{tasks_dir}}tasks/dotfiles.yml"
+    - include: "{{tasks_dir}}tasks/lightdm.yml"
+    - include: "{{tasks_dir}}tasks/docker.yml"
+    - include: "{{tasks_dir}}tasks/xorg.yml"
+    - include: "{{tasks_dir}}tasks/clear.yml"
+    - include: "{{tasks_dir}}tasks/monitoring.yml"
+    - include: "{{tasks_dir}}tasks/go.yml"

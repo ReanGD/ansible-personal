@@ -10,12 +10,12 @@
     owner: root
     group: root
     mode: 0644
-  when: notebook == False
+  when: install_wifi == False
   become: yes
 
 - name: Create symbolic links for /etc/resolv.conf
   file: src=/run/systemd/resolve/resolv.conf dest=/etc/resolv.conf state=link force=yes
-  when: notebook == False
+  when: install_wifi == False
   become: yes
 
 - name: Enable and start service systemd-networkd
@@ -23,7 +23,7 @@
     name: systemd-networkd.service
     enabled: yes
     state: started
-  when: notebook == False
+  when: install_wifi == False
   become: yes
 
 - name: Enable and start service systemd-resolved
@@ -31,7 +31,7 @@
     name: systemd-resolved.service
     enabled: yes
     state: started
-  when: notebook == False
+  when: install_wifi == False
   become: yes
 
 # ansible-vault decrypt secrets.yml
@@ -43,7 +43,7 @@
     owner: root
     group: root
     mode: 0600
-  when: notebook == True
+  when: install_wifi == True
   become: yes  
   with_items:
     - wlp2s0-Arch5
@@ -52,15 +52,15 @@
 - name: Check that wlp2s0-Arch5 service exists
   stat: path="/etc/systemd/system/multi-user.target.wants/netctl@wlp2s0\\x2dArch5.service" get_checksum=no get_mime=no
   register: wifi5_service_installed
-  when: notebook == True
+  when: install_wifi == True
   become: yes
 
 - name: Enable wlp2s0-Arch5
   command: netctl enable wlp2s0-Arch5
-  when: notebook == True and wifi5_service_installed.stat.exists == False
+  when: install_wifi == True and wifi5_service_installed.stat.exists == False
   become: yes
 
 - name: Start wlp2s0-Arch5
   command: netctl start wlp2s0-Arch5
-  when: notebook == True and wifi5_service_installed.stat.exists == False
+  when: install_wifi == True and wifi5_service_installed.stat.exists == False
   become: yes

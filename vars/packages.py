@@ -2,7 +2,7 @@
 pkgs = []
 grps = []
 
-is_notebook = host in ["archmini", "archnote"]
+is_notebook = host in ["archnote"]
 # drivers
 pkgs += ["mesa"]
 
@@ -182,7 +182,7 @@ pkgs += ["mupdf"  # pdf viewer
          ]
 
 # spell checkers
-pkgs += ["enchant", "hunspell-en", "hunspell-ru-aot", "languagetool"]
+pkgs += ["enchant", "hunspell-en_US", "hunspell-ru-aot", "languagetool"]
 
 # android
 # if host == "archhost":

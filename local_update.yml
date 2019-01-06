@@ -1,0 +1,13 @@
+---
+- name: Update local mashine
+  hosts: local
+  connection: local
+  gather_facts: false
+  pre_tasks:
+    - name: Custom setup
+      setup:
+        gather_subset:
+          - '!all'
+          - '!any'
+  roles:
+    - locale
