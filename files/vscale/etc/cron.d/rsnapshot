@@ -1,6 +1,6 @@
 # do daily/weekly/monthly maintenance
 # min	hour	day	month	weekday	user	command
 0	5	*	*	*	root	/usr/bin/rsnapshot daily
-0	6	*	*	7	root	/usr/bin/rsnapshot weekly
+0	6	*	*	0	root	/usr/bin/rsnapshot weekly
 0	7	1	*	*	root	/usr/bin/rsnapshot monthly
 0	8	*	*	1	root	/usr/bin/renew

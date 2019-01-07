@@ -1,34 +1,43 @@
---- # abs_path, without dependencies
+---
+- name: Custom setup
+  setup:
+    gather_subset:
+      - '!all'
+      - '!any'
+
+- name: Set common facts
+  set_fact:
+    main_user: rean
+
 - name: Find board uuid
   shell: cat /sys/class/dmi/id/product_name
-  register: init_product_name
+  register: reg_product_name
   changed_when: false
   become: yes
-  tags: init
 
 - name: Set archhost facts
   set_fact:
+    add_dop_user: False
     notebook: False
     boot_ssd: True
     install_wifi: False
     hostname_id: "archhost"
-  when: init_product_name.stdout == 'MS-7978'
-  tags: init
+  when: reg_product_name.stdout == 'MS-7978'
 
 - name: Set archnote facts (xiaomi)
   set_fact:
+    add_dop_user: True
     notebook: True
     boot_ssd: True
     install_wifi: True
     hostname_id: "archnote"
-  when: init_product_name.stdout == 'TM1613'
-  tags: init
+  when: reg_product_name.stdout == 'TM1613'
 
 - name: Set archsrv facts
   set_fact:
+    add_dop_user: False
     notebook: False
     boot_ssd: False
     install_wifi: False
     hostname_id: "archsrv"
-  when: init_product_name.stdout == 'System Product Name'
-  tags: init
+  when: reg_product_name.stdout == 'System Product Name'

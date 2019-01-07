@@ -1,0 +1,55 @@
+---
+- name: Find docker group
+  shell: getent group docker
+  register: reg_exists_docker_group
+  changed_when: false
+  failed_when: reg_exists_docker_group.rc == 1
+
+- name: Set docker group exists
+  set_fact:
+    docker_group: ",docker"
+  when: reg_exists_docker_group.rc == 0
+
+- name: Set docker group not exists
+  set_fact:
+    docker_group: ""
+  when: reg_exists_docker_group.rc != 0
+
+- name: Change root password
+  user:
+    name: root
+    append: no
+    password: "{{root_user_password}}"
+  become: yes
+
+- name: Create main user
+  user:
+    name: "{{main_user}}"
+    append: no
+    create_home: yes
+    group: users
+    groups: games,video,audio,optical,storage,power{{docker_group}}
+    password: "{{main_user_password}}"
+    uid: 1000
+  become: yes
+
+- name: Create dop user
+  user:
+    name: "{{dop_user}}"
+    append: no
+    create_home: yes
+    group: users
+    groups: games,video,audio,optical,storage,power
+    password: "{{dop_user_password}}"
+    uid: 1001
+  when: add_dop_user == True
+  become: yes
+
+- name: Configure sudoers
+  template:
+    src: sudoers
+    dest: /etc/sudoers
+    mode: 0440
+    group: root
+    owner: root
+  become: yes

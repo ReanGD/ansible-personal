@@ -4,10 +4,7 @@
   connection: local
   gather_facts: false
   pre_tasks:
-    - name: Custom setup
-      setup:
-        gather_subset:
-          - '!all'
-          - '!any'
+    - include: common/init_facts.yml
   roles:
     - locale
+    - users
