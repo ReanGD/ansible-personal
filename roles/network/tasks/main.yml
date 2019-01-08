@@ -1,0 +1,39 @@
+---
+- name: Set hostname
+  hostname: name={{hostname_id}}
+  become: yes
+
+- name: Copy systemd-networkd configuration
+  copy:
+    src: wired.network
+    dest: /etc/systemd/network/wired.network
+    owner: root
+    group: root
+    mode: 0644
+  when: install_lan == True
+  become: yes
+
+- name: Create symbolic links for /etc/resolv.conf
+  file:
+    src: /run/systemd/resolve/resolv.conf
+    dest: /etc/resolv.conf
+    state: link
+    force: yes
+  when: install_lan == True
+  become: yes
+
+- name: Enable and start service systemd-networkd
+  service:
+    name: systemd-networkd.service
+    enabled: yes
+    state: started
+  when: install_lan == True
+  become: yes
+
+- name: Enable and start service systemd-resolved
+  service:
+    name: systemd-resolved.service
+    enabled: yes
+    state: started
+  when: install_lan == True
+  become: yes

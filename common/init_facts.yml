@@ -17,27 +17,30 @@
 
 - name: Set archhost facts
   set_fact:
-    add_dop_user: False
     notebook: False
-    boot_ssd: True
+    add_dop_user: False
+    install_lan: True
     install_wifi: False
+    boot_ssd: True
     hostname_id: "archhost"
   when: reg_product_name.stdout == 'MS-7978'
 
 - name: Set archnote facts (xiaomi)
   set_fact:
-    add_dop_user: True
     notebook: True
-    boot_ssd: True
+    add_dop_user: True
+    install_lan: False
     install_wifi: True
+    boot_ssd: True
     hostname_id: "archnote"
   when: reg_product_name.stdout == 'TM1613'
 
 - name: Set archsrv facts
   set_fact:
-    add_dop_user: False
     notebook: False
-    boot_ssd: False
+    add_dop_user: False
+    install_lan: True
     install_wifi: False
+    boot_ssd: False
     hostname_id: "archsrv"
   when: reg_product_name.stdout == 'System Product Name'
