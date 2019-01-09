@@ -8,6 +8,7 @@
 - name: Set common facts
   set_fact:
     main_user: rean
+    is_chroot: "{{is_chroot_param}}"
 
 - name: Find board uuid
   shell: cat /sys/class/dmi/id/product_name

@@ -1,10 +1,10 @@
 ---
-- name: Update local mashine
+- name: Install local mashine
   hosts: local
   connection: local
   gather_facts: false
   pre_tasks:
-    - include: common/init_facts.yml is_chroot_param=False
+    - include: common/init_facts.yml is_chroot_param=True
   roles:
     - locale
     - users
