@@ -21,7 +21,6 @@
     - ../../vars/repository_map.yml
 
   tasks:
-    - include: "{{tasks_dir}}tasks/common/pacman.yml"
     - include: "{{tasks_dir}}tasks/common/boot.yml"
     
     - include: "{{tasks_dir}}tasks/common/ssh.yml"

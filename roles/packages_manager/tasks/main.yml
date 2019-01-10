@@ -1,0 +1,54 @@
+---
+- name: Copy pacman configuration
+  copy:
+    src=pacman.conf
+    dest=/etc/pacman.conf
+    mode=0644
+    owner=root
+    group=root
+  become: yes
+
+- name: Update pacman cache
+  pacman:
+    force: yes
+    update_cache: yes
+  become: yes
+  changed_when: false
+
+- name: Check is aurman installed
+  shell: pacman -Qq aurman
+  register: reg_check_aurman
+  failed_when: reg_check_aurman.rc not in [0, 1]
+  changed_when: false
+
+- name: Clone aurman repo
+  git:
+    repo: https://aur.archlinux.org/aurman.git
+    dest: /tmp/aurman
+  when: reg_check_aurman.rc != 0
+  become: yes
+  become_user: "{{main_user}}"
+
+- name: Install aurman
+  shell: makepkg -sci --noconfirm --skippgpcheck chdir=/tmp/aurman
+  when: reg_check_aurman.rc != 0
+  become: yes
+  become_user: "{{main_user}}"
+
+- name: Remove aurman repo
+  file:
+    path: /tmp/aurman
+    state: absent
+
+- name: Install yaourt
+  pacman:
+    name: yaourt
+    state: present
+  become: yes
+
+- name: Install base packages for wifi
+  pacman:
+    name: dialog,connman,wpa_supplicant
+    state: present
+  when: install_wifi == True
+  become: yes
