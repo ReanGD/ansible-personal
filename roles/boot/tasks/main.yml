@@ -1,11 +1,16 @@
---- # abs_path, without dependencies
+---
 - name: Install package refind-efi
-  pacman: name=refind-efi state=present
+  pacman:
+    name: refind-efi
+    state: present
   become: yes
 
 - name: Check that the /boot/efi/EFI exists
-  stat: path=/boot/efi/EFI get_checksum=no get_mime=no
-  register: efi_installed
+  stat:
+    path: /boot/efi/EFI
+    get_checksum: no
+    get_mime: no
+  register: reg_efi_installed
   become: yes
 
 - name: Find efi partition name
@@ -26,18 +31,26 @@
 
 - name: UEFI install to SSD
   shell: refind-install --usedefault {{ efi_partition_name }} --alldrivers
-  when: boot_ssd == True and efi_installed.stat.exists == False
+  when: boot_ssd == True and reg_efi_installed.stat.exists == False
   become: yes
 
 - name: UEFI install to HDD
   shell: refind-install
-  when: boot_ssd == False and efi_installed.stat.exists == False
+  when: boot_ssd == False and reg_efi_installed.stat.exists == False
   become: yes
 
-- name: Copy refind_linux configuration
-  template: src="{{files_dir}}/boot/refind_linux.conf" dest=/boot/refind_linux.conf owner=root group=root mode=0644
+- name: Create refind_linux config
+  template:
+    src: refind_linux.conf
+    dest: /boot/refind_linux.conf
+    mode: 0644
+    owner: root
+    group: root
   become: yes
 
 - name: Update refind timeout
-  lineinfile: regexp='^timeout .*$' line="timeout 1" path={{conf_path}}
+  lineinfile:
+    regexp: "^timeout .*$"
+    line: "timeout 1"
+    path: "{{conf_path}}"
   become: yes
