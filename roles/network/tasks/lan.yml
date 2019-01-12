@@ -1,0 +1,31 @@
+---
+- name: Copy systemd-networkd configuration
+  copy:
+    src: wired.network
+    dest: /etc/systemd/network/wired.network
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+
+- name: Create symbolic links for /etc/resolv.conf
+  file:
+    src: /run/systemd/resolve/resolv.conf
+    dest: /etc/resolv.conf
+    state: link
+    force: yes
+  become: yes
+
+- name: Enable and start service systemd-networkd
+  service:
+    name: systemd-networkd.service
+    enabled: yes
+    state: started
+  become: yes
+
+- name: Enable and start service systemd-resolved
+  service:
+    name: systemd-resolved.service
+    enabled: yes
+    state: started
+  become: yes
