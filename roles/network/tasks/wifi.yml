@@ -4,7 +4,6 @@
 - name: Include vars for wifi configuration
   include_vars:
     file: secrets.yml
-  when: install_wifi == True and is_chroot == False
 
 - name: Copy netctl configuration
   template:

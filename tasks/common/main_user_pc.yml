@@ -16,12 +16,10 @@
   vars_files:
     - ../../vars/path.yml
     - ../../vars/common.yml
-    - ../../vars/secrets.yml
     - ../../vars/dotfiles_map.yml
     - ../../vars/repository_map.yml
 
   tasks:
-    - include: "{{tasks_dir}}tasks/common/ssh.yml"
     - include: "{{tasks_dir}}tasks/common/pkgcacheclean.yml"
     - include: "{{tasks_dir}}tasks/common/systemd_cfg.yml"
     - include: "{{tasks_dir}}tasks/common/swap.yml"
