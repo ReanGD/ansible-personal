@@ -14,6 +14,7 @@
     mode: 0400
     group: users
     owner: "{{main_user}}"
+  when: set_ssh_access_keys == True
 
 # ansible-vault decrypt secrets.yml
 # ansible-vault encrypt secrets.yml
@@ -34,6 +35,9 @@
     - { key: "{{ vscale_private_key }}", name: "vscale" }
     - { key: "{{ hass_private_key }}", name: "hass" }
     - { key: "{{ respeaker_private_key }}", name: "respeaker" }
+    - { key: "{{ archhost_private_key }}", name: "archhost" }
+    - { key: "{{ archnote_private_key }}", name: "archnote" }
+    - { key: "{{ archsrv_private_key }}", name: "archsrv" }
   loop_control:
     label: "{{ item.name }}"
   when: set_ssh_access_keys == True
