@@ -1,0 +1,29 @@
+---
+- name: Copy ssh config
+  copy:
+    src: config
+    dest: "/home/{{main_user}}/.ssh/config"
+    mode: 0400
+    group: users
+    owner: "{{main_user}}"
+  when: set_ssh_access_keys == True
+
+- name: Install ssh keys
+  copy:
+    content: "{{item.key}}"
+    dest: "/home/{{main_user}}/.ssh/{{item.name}}"
+    mode: 0400
+    group: users
+    owner: "{{main_user}}"
+  loop:
+    - { key: "{{ github_private_key }}", name: "github" }
+    - { key: "{{ work_private_key }}", name: "id_rsa" }
+    - { key: "{{ vscale_private_key }}", name: "vscale" }
+    - { key: "{{ hass_private_key }}", name: "hass" }
+    - { key: "{{ respeaker_private_key }}", name: "respeaker" }
+    - { key: "{{ archhost_private_key }}", name: "archhost" }
+    - { key: "{{ archnote_private_key }}", name: "archnote" }
+    - { key: "{{ archsrv_private_key }}", name: "archsrv" }
+  loop_control:
+    label: "{{ item.name }}"
+  when: set_ssh_access_keys == True
