@@ -1,11 +1,11 @@
 ---
 - name: Set hostname
   hostname: name={{hostname_id}}
-  when: is_chroot == False
   become: yes
+  when: is_chroot == False
 
 - include: lan.yml
-  when: install_lan == True and is_chroot == False
+  when: install_lan == True
 
 - include: wifi.yml
   when: install_wifi == True and is_chroot == False

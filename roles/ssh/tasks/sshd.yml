@@ -42,7 +42,7 @@
     state: present
   become: yes
 
-- name: Enable service sshd
+- name: Enable service sshd for chroot
   service:
     name: sshd.service
     enabled: yes

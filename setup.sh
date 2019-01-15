@@ -1,5 +1,8 @@
 #!/bin/bash
 
+ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+MENU_ID=$1
+
 function archhost {
     echo "archhost" $1
     if [[ $1 = "full" ]]
@@ -51,47 +54,58 @@ function archsrv {
     mount /dev/sda1 /mnt/boot/efi
 }
 
+function setup_base {
+    BOARD_NAME=$(cat /sys/class/dmi/id/product_name)
+    case $BOARD_NAME in
+    'MS-7978')
+        FUNC="archhost"
+        ;;
+    'TM1613')
+        FUNC="archnote"
+        ;;
+    'System Product Name')
+        FUNC="archsrv"
+        ;;
+    *)
+        echo 'Unknown product name'
+        exit 1
+        ;;
+    esac
+    
+    umount -R /mnt
+    dialog --title 'Install' --clear --defaultno --yesno 'Recreate partition table?' 10 40
+    case "$?" in
+    '0')
+        clear
+        eval ${FUNC} 'full'
+        ;;
+    '1')
+        clear
+        eval ${FUNC} 'part'
+        ;;
+    '-1')
+        clear
+        echo 'Unknown choice'
+        exit 1
+        ;;
+    esac
+    
+    read -n 1 -s -p "Press any key to continue"
+    
+    echo 'Server = http://mirror.yandex.ru/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
+    pacstrap /mnt base base-devel git ansible
+    genfstab -U -p /mnt >> /mnt/etc/fstab
+    arch-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /etc/ansible-personal
+    arch-chroot /mnt /etc/ansible-personal/setup.sh ansible
+    # umount -R /mnt
+}
 
-BOARD_NAME=$(cat /sys/class/dmi/id/product_name)
-case $BOARD_NAME in
-'MS-7978')
-    FUNC="archhost"
-    ;;
-'TM1613')
-    FUNC="archnote"
-    ;;
-'System Product Name')
-    FUNC="archsrv"
-    ;;
-*)
-    echo 'Unknown product name'
-    exit 1
-    ;;
+case $MENU_ID in
+  "ansible")
+    cd $ROOT_DIR
+    /usr/bin/ansible-playbook setup.yml --ask-become-pass --ask-vault-pass
+	;;
+  * )
+	setup_base
+	;;
 esac
-
-umount -R /mnt
-dialog --title 'Install' --clear --defaultno --yesno 'Recreate partition table?' 10 40
-case "$?" in
-'0')
-    clear
-    eval ${FUNC} 'full'
-    ;;
-'1')
-    clear
-    eval ${FUNC} 'part'
-    ;;
-'-1')
-    clear
-    echo 'Unknown choice'
-    exit 1
-    ;;
-esac
-
-read -n 1 -s -p "Press any key to continue"
-
-echo 'Server = http://mirror.yandex.ru/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
-pacstrap /mnt base base-devel git ansible
-genfstab -U -p /mnt >> /mnt/etc/fstab
-arch-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /etc/ansible-personal
-arch-chroot /mnt /etc/ansible-personal/local_install.sh
-# umount -R /mnt

@@ -15,6 +15,14 @@
     state: link
     force: yes
   become: yes
+  when: is_chroot == False
+
+- name: Enable service systemd-networkd for chroot
+  service:
+    name: systemd-networkd.service
+    enabled: yes
+  become: yes
+  when: is_chroot == True
 
 - name: Enable and start service systemd-networkd
   service:
@@ -22,6 +30,14 @@
     enabled: yes
     state: started
   become: yes
+  when: is_chroot == False
+
+- name: Enable service systemd-resolved for chroot
+  service:
+    name: systemd-resolved.service
+    enabled: yes
+  become: yes
+  when: is_chroot == True
 
 - name: Enable and start service systemd-resolved
   service:
@@ -29,3 +45,4 @@
     enabled: yes
     state: started
   become: yes
+  when: is_chroot == False

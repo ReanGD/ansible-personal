@@ -26,12 +26,24 @@ host 192.168.1.50
  IdentityFile ~/.ssh/respeaker
  User rean
 
+host archhost
+ IdentityFile ~/.ssh/archhost
+ User rean
+
 host 192.168.1.20
  IdentityFile ~/.ssh/archhost
  User rean
 
+host archnote
+ IdentityFile ~/.ssh/archnote
+ User rean
+
 host 192.168.1.21
  IdentityFile ~/.ssh/archnote
+ User rean
+
+host archsrv
+ IdentityFile ~/.ssh/archsrv
  User rean
 
 host 192.168.1.4
