@@ -25,6 +25,8 @@
     hostname_id: "archhost"
     set_ssh_access_keys: True
     boot_ssd: True
+    swap_size: 35
+    swappiness: 1
   when: reg_product_name.stdout == 'MS-7978'
 
 - name: Set archnote facts (xiaomi)
@@ -36,6 +38,8 @@
     hostname_id: "archnote"
     set_ssh_access_keys: True
     boot_ssd: True
+    swap_size: 8
+    swappiness: 20
   when: reg_product_name.stdout == 'TM1613'
 
 - name: Set archsrv facts
@@ -47,4 +51,6 @@
     hostname_id: "archsrv"
     set_ssh_access_keys: False
     boot_ssd: False
+    swap_size: 35
+    swappiness: 1
   when: reg_product_name.stdout == 'System Product Name'

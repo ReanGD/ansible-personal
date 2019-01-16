@@ -12,3 +12,4 @@
     - packages_manager
     - ssh
     - boot
+    - swap

@@ -13,7 +13,7 @@
     group: root
     mode: 0600
   become: yes  
-  with_items:
+  loop:
     - wlp2s0-Arch5
     - wlp2s0-Arch2
 
