@@ -22,7 +22,6 @@
   tasks:
     - include: "{{tasks_dir}}tasks/common/pkgcacheclean.yml"
     - include: "{{tasks_dir}}tasks/common/systemd_cfg.yml"
-    - include: "{{tasks_dir}}tasks/common/time.yml"
     # - include: "{{tasks_dir}}tasks/common/autofs.yml"
     - include: "{{tasks_dir}}tasks/packages.yml"
     - include: "{{tasks_dir}}tasks/repository.yml"

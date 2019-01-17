@@ -1,4 +1,4 @@
---- # abs_path, network.yml + packages.yml?
+---
 - name: Set timezone to Europe/Moscow
   timezone:
     hwclock: 'UTC'
@@ -7,14 +7,19 @@
 
 - name: Check is ntp enabled
   shell: timedatectl | grep "System clock synchronized\|NTP synchronized" | awk '{ print $NF }'
-  register: timedatectl_ntp
+  register: reg_timedatectl_ntp
   changed_when: false
 
 - name: Copy ntp config file
-  template: src="{{files_dir}}/etc/systemd/timesyncd.conf" dest=/etc/systemd/timesyncd.conf mode=0446 group=root owner=root
+  copy:
+    src: timesyncd.conf
+    dest: /etc/systemd/timesyncd.conf
+    mode: 0446
+    group: root
+    owner: root
   become: yes
 
 - name: Enable ntp
   command: timedatectl set-ntp true
-  when: timedatectl_ntp.stdout != 'yes'
+  when: reg_timedatectl_ntp.stdout != 'yes'
   become: yes
