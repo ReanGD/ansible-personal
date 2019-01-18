@@ -1,6 +1,2 @@
 ---
-  # ansible all -i localhost, -m debug -a "msg={{ 'mypassword' | password_hash('sha512', 'mysecretsalt') }}"
-  root_user_password: $6$rotsaltpass$95WrMlbVIivigLFjIIGYusIYzTb.peVEL.Vd.Vey0/tbOJedQItGMfuwS3IxVqxsUkYGIAgmDkxa/xMM5Pu0D0
-  main_user_password: $6$salt$7nTb26gWc0xA2PjGHV3sOUitpg38/t5qXdVqRIeYQivJcTcvrLl4VD7lxpk3KlGFOkbU/dIfkki.N6SfiwV/q1
   dop_user: masha
-  dop_user_password: $6$passsalt123$.PJfyyWh2eSSyK8RFA.I0PYlVl/3PqYIds56n4sbCtX4Lz.KR1KXT.J46brZEKK6sQTVo7FzI6.Imb5SqJuST0

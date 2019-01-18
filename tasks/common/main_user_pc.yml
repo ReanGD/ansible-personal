@@ -20,7 +20,6 @@
     - ../../vars/repository_map.yml
 
   tasks:
-    - include: "{{tasks_dir}}tasks/common/pkgcacheclean.yml"
     - include: "{{tasks_dir}}tasks/common/systemd_cfg.yml"
     # - include: "{{tasks_dir}}tasks/common/autofs.yml"
     - include: "{{tasks_dir}}tasks/packages.yml"

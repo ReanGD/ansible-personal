@@ -1,0 +1,29 @@
+---
+- name: Install package pkgcacheclean
+  yaourt:
+    name: pkgcacheclean
+    state: present
+
+- name: Timer pkgcacheclean
+  copy:
+    src: pkgcacheclean.timer
+    dest: /etc/systemd/system/pkgcacheclean.timer
+    mode: 0644
+    group: root
+    owner: root
+  become: yes
+
+- name: Service pkgcacheclean
+  copy:
+    src: pkgcacheclean.service
+    dest: /etc/systemd/system/pkgcacheclean.service
+    mode: 0644
+    group: root
+    owner: root
+  become: yes
+
+- name: Enable pkgcacheclean service
+  service:
+    name: pkgcacheclean.timer
+    enabled: yes
+  become: yes

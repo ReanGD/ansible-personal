@@ -1,4 +1,10 @@
 ---
+# ansible-vault decrypt secrets.yml
+# ansible-vault encrypt secrets.yml
+- name: Include vars passwords
+  include_vars:
+    file: secrets.yml
+
 - name: Find docker group
   shell: getent group docker
   register: reg_exists_docker_group
