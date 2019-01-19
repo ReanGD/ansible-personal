@@ -1,9 +1,17 @@
 ---
-- hosts: local_srv
-  
-  vars:
-    docker_cfg: /home/rean/docker/
-
-  tasks:
-    - include: tasks/common/autofs.yml
-    - include: tasks/archsrv/docker.yml
+- name: Update archsrv mashine
+  hosts: archsrv
+  gather_facts: false
+  pre_tasks:
+    - include: common/init_facts.yml is_chroot_param=False
+  roles:
+    - locale
+    - users
+    - network
+    - packages_manager
+    - ssh
+    - boot
+    - swap
+    - time
+    # - pkgcacheclean
+    - systemd_configure

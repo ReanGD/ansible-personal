@@ -1,0 +1,9 @@
+---
+- name: Configure log size
+  copy:
+    src: journald.conf
+    dest: /etc/systemd/journald.conf
+    mode: 446
+    group: root
+    owner: root
+  become: yes
