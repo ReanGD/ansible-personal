@@ -1,0 +1,21 @@
+---
+- name: Install package docker
+  pacman:
+    name: docker, docker-compose
+    state: present
+  become: yes
+
+- name: Enable and start docker service
+  service:
+    name: docker.service
+    enabled: yes
+    state: started
+  become: yes
+  when: hostname_id == "archsrv"
+
+- name: Add group user
+  user:
+    name: "{{main_user}}"
+    append: yes
+    groups: docker
+  become: yes

@@ -18,7 +18,6 @@
 
 - name: Set archhost facts
   set_fact:
-    notebook: False
     add_dop_user: False
     install_lan: True
     install_wifi: False
@@ -31,7 +30,6 @@
 
 - name: Set archnote facts (xiaomi)
   set_fact:
-    notebook: True
     add_dop_user: True
     install_lan: False
     install_wifi: True
@@ -44,7 +42,6 @@
 
 - name: Set archsrv facts
   set_fact:
-    notebook: False
     add_dop_user: False
     install_lan: True
     install_wifi: False

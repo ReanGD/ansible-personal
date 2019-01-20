@@ -16,3 +16,4 @@
     - time
     - pkgcacheclean
     - systemd_configure
+    - docker

@@ -25,7 +25,6 @@
     - include: "{{tasks_dir}}tasks/repository.yml"
     - include: "{{tasks_dir}}tasks/dotfiles.yml"
     - include: "{{tasks_dir}}tasks/lightdm.yml"
-    - include: "{{tasks_dir}}tasks/docker.yml"
     - include: "{{tasks_dir}}tasks/xorg.yml"
     - include: "{{tasks_dir}}tasks/clear.yml"
     - include: "{{tasks_dir}}tasks/monitoring.yml"
