@@ -1,0 +1,12 @@
+[Unit]
+Description=NFS share NAS:Multimedia
+
+[Mount]
+What=192.168.1.2:/Multimedia
+Where=/mnt/nas/multimedia
+Type=nfs
+Options=ro
+DirectoryMode=0555
+
+[Install]
+WantedBy=multi-user.target

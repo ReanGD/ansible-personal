@@ -2,16 +2,6 @@
 - name: Install local mashine
 
   hosts: local
-  gather_facts: false
-  pre_tasks:
-    - name: Custom setup
-      setup:
-        gather_subset:
-          - '!all'
-          - '!any'
-
-  environment:
-    GNUPGHOME: /home/rean/.config/gnupg
 
   vars_files:
     - ../../vars/path.yml
@@ -20,7 +10,6 @@
     - ../../vars/repository_map.yml
 
   tasks:
-    # - include: "{{tasks_dir}}tasks/common/autofs.yml"
     - include: "{{tasks_dir}}tasks/packages.yml"
     - include: "{{tasks_dir}}tasks/repository.yml"
     - include: "{{tasks_dir}}tasks/dotfiles.yml"

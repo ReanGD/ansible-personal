@@ -1,0 +1,10 @@
+[Unit]
+Description=NFS share NAS:Multimedia
+Requires=network-online.target
+
+[Automount]
+Where=/mnt/nas/multimedia
+TimeoutIdleSec=301
+
+[Install]
+WantedBy=multi-user.target

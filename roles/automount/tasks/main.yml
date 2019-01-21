@@ -1,0 +1,24 @@
+---
+- name: Install servicies for nfs mount
+  copy:
+    src: "{{item}}"
+    dest: /etc/systemd/system/{{item}}
+    mode: 0644
+    group: root
+    owner: root
+  become: yes
+  loop:
+    - mnt-nas-backup.mount
+    - mnt-nas-backup.automount
+    - mnt-nas-multimedia.mount
+    - mnt-nas-multimedia.automount
+
+- name: Enable and start servicies for nfs mount
+  service:
+    name: "{{item}}"
+    enabled: yes
+    state: started
+  become: yes
+  loop:
+    - mnt-nas-backup.automount
+    - mnt-nas-multimedia.automount

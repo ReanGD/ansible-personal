@@ -1,0 +1,10 @@
+[Unit]
+Description=NFS share NAS:Backup
+Requires=network-online.target
+
+[Automount]
+Where=/mnt/nas/backup
+TimeoutIdleSec=301
+
+[Install]
+WantedBy=multi-user.target
