@@ -51,6 +51,15 @@
   when: add_dop_user == True
   become: yes
 
+- name: Create aur_builder user
+  user:
+    name: aur_builder
+    append: no
+    create_home: no
+    group: wheel
+    uid: 1002
+  become: yes
+
 - name: Configure sudoers
   template:
     src: sudoers

@@ -3,6 +3,8 @@
   yaourt:
     name: pkgcacheclean
     state: present
+  become: yes
+  become_user: aur_builder
 
 - name: Timer pkgcacheclean
   copy:

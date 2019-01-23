@@ -15,7 +15,7 @@
     - boot
     - swap
     - time
-    # - pkgcacheclean
+    - pkgcacheclean
     - systemd_configure
     - docker
     - automount
