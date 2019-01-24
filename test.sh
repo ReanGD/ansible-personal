@@ -1,3 +1,6 @@
 #!/bin/bash
-cd "$(dirname "$0")"
-/usr/bin/ansible-playbook -i localhost, main.yml --ask-become-pass --ask-vault-pass --tags "test,init" $@ $1
+
+ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+
+cd $ROOT_DIR
+/usr/bin/ansible-playbook test.yml --ask-become-pass $@

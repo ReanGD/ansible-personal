@@ -5,5 +5,4 @@
     docker_cfg: /home/rean/docker/
 
   tasks:
-    - include: tasks/common/autofs.yml
     - include: tasks/archsrv/docker.yml

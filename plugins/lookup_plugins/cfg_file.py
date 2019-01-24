@@ -57,14 +57,14 @@ class PackageManager:
 class UserConfig:
     def __init__(self, config_path, host):
         self.gvars = {'host': host}
-        full_path = os.path.expanduser(config_path)
-        if not os.path.exists(full_path):
-            raise AnsibleError('config file "%s" not found' % full_path)
+
+        if not os.path.exists(config_path):
+            raise AnsibleError('config file "%s" not found' % config_path)
         try:
             if sys.version_info[0] == 3:
-                exec(open(full_path).read(), self.gvars)
+                exec(open(config_path).read(), self.gvars)
             else:
-                execfile(full_path, self.gvars)
+                execfile(config_path, self.gvars)
         except:
             e = sys.exc_info()[1]
             raise AnsibleError(e)
@@ -135,7 +135,9 @@ class LookupModule(LookupBase):
     def run(self, terms, variables=None, **kwargs):
         params = self.__parse_terms(terms)
         action = params['action']
-        self.cfg = UserConfig(params['path'], params['host'])
+        basedir = self.get_basedir(variables)
+        full_path = os.path.join(basedir, "vars", params["path"])
+        self.cfg = UserConfig(full_path, params["host"])
         self.mng = PackageManager()
 
         if action == "not_installed":

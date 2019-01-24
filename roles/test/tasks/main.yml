@@ -1,0 +1,4 @@
+---
+- name: View new packages
+  shell: echo "{{ item }}"
+  with_cfg_file: packages.py action=not_installed host={{hostname_id}}
