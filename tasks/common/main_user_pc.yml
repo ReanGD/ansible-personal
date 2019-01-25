@@ -10,7 +10,6 @@
     - ../../vars/repository_map.yml
 
   tasks:
-    - include: "{{tasks_dir}}tasks/packages.yml"
     - include: "{{tasks_dir}}tasks/repository.yml"
     - include: "{{tasks_dir}}tasks/dotfiles.yml"
     - include: "{{tasks_dir}}tasks/lightdm.yml"

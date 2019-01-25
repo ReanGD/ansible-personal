@@ -15,7 +15,7 @@
   copy:
     src: locale.conf
     dest: /etc/locale.conf
-    mode: 644
+    mode: 0644
     group: root
     owner: root
   become: yes
@@ -24,7 +24,7 @@
   copy:
     src: vconsole.conf
     dest: /etc/vconsole.conf
-    mode: 644
+    mode: 0644
     group: root
     owner: root
   become: yes

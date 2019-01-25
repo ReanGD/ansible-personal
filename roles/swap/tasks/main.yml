@@ -15,7 +15,7 @@
 - name: Set swapfile permissions
   file:
     path: /swapfile
-    mode: 600
+    mode: 0600
     group: root
     owner: root
   become: yes

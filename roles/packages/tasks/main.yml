@@ -1,0 +1,54 @@
+---
+- name: Refresh package list
+  yaourt:
+    update_cache: yes
+  changed_when: false
+
+- name: Create gpg dir
+  file:
+    path: "/home/{{main_user}}/.config/gnupg"
+    state: directory
+    mode: 0700
+    group: users
+    owner: "{{main_user}}"
+
+- name: Install package gnupg
+  pacman:
+    name: gnupg
+    state: present
+  become: yes
+
+- name: Add key for tor-browser-ru
+  command: pacman-key --recv-keys 0x4E2C6E8793298290
+  changed_when: false
+  when: hostname_id in ["archhost", "archnote"]
+  become: yes
+
+- name: Install packages for desktop
+  yaourt:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  become_user: aur_builder
+  with_cfg_file: packages_desktop.py action=not_installed host={{hostname_id}}
+  when: hostname_id in ["archhost", "archnote"]
+
+- name: Install packages for archsrv
+  yaourt:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  become_user: aur_builder
+  with_cfg_file: packages_archsrv.py action=not_installed host={{hostname_id}}
+  when: hostname_id == "archsrv"
+
+# --- # init.yml + network.yml
+# - name: Get new packages
+#   shell: echo "{{ item }}"
+#   with_cfg_file: packages.py action=new host={{hostname_id}}
+#   tags: view_new
+
+# - name: Get error packages
+#   shell: echo "{{ item }}"
+#   with_cfg_file: packages.py action=error host={{hostname_id}}
+#   tags: view_new

@@ -20,3 +20,4 @@
     - systemd_configure
     - docker
     - automount
+    - packages

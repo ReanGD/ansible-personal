@@ -30,7 +30,7 @@
   copy:
     src: sshd_config
     dest: "/etc/ssh/sshd_config"
-    mode: 644
+    mode: 0644
     group: root
     owner: root
   become: yes
