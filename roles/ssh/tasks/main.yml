@@ -15,3 +15,4 @@
 
 - include: keys.yml
 - include: sshd.yml
+- include: known_hosts.yml

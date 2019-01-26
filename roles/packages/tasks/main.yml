@@ -18,11 +18,11 @@
     state: present
   become: yes
 
-- name: Add key for tor-browser-ru
-  command: pacman-key --recv-keys 0x4E2C6E8793298290
-  changed_when: false
-  when: hostname_id in ["archhost", "archnote"]
-  become: yes
+# - name: Add key for tor-browser-ru
+#   command: pacman-key --recv-keys 0x4E2C6E8793298290
+#   changed_when: false
+#   when: hostname_id in ["archhost", "archnote"]
+#   become: yes
 
 - name: Install packages for desktop
   yaourt:

@@ -7,10 +7,8 @@
     - ../../vars/path.yml
     - ../../vars/common.yml
     - ../../vars/dotfiles_map.yml
-    - ../../vars/repository_map.yml
 
   tasks:
-    - include: "{{tasks_dir}}tasks/repository.yml"
     - include: "{{tasks_dir}}tasks/dotfiles.yml"
     - include: "{{tasks_dir}}tasks/lightdm.yml"
     - include: "{{tasks_dir}}tasks/xorg.yml"

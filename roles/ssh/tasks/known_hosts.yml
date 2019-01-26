@@ -1,0 +1,12 @@
+---
+- name: Get public ssh key for github.com
+  shell: ssh-keyscan -t rsa github.com
+  register: reg_github_pub_key
+  changed_when: false
+
+- name: Add github.com to known_hosts
+  known_hosts:
+    path: $HOME/.ssh/known_hosts
+    name: github.com
+    state: present
+    key: "{{ reg_github_pub_key.stdout }}"

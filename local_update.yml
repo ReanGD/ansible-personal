@@ -21,3 +21,4 @@
     - docker
     - automount
     - packages
+    - repository
