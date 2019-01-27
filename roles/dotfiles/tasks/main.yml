@@ -1,0 +1,31 @@
+---
+- name: Create cfg dirs
+  file:
+    path: "{{item}}"
+    state: directory
+    mode: 0755
+    group: users
+    owner: "{{main_user}}"
+  loop:
+    - ~/.config/pulse
+    - ~/cloud
+    - ~/tmp
+    - ~/downloads
+    - ~/doc
+    - ~/.cache
+    - ~/projects/test
+    - ~/projects/work
+    - ~/projects/external
+    - ~/projects/venv
+
+- name: Create links for dotfiles
+  link:
+    src: ~/projects/home/dotfiles/{{item.src}}
+    dst: "{{item.dst}}"
+  loop: "{{ dotfiles_path_map }}"
+
+- name: Create links for documents
+  link:
+    src: "{{item.src}}"
+    dst: "{{item.dst}}"
+  loop: "{{ documents_path_map }}"

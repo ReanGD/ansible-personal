@@ -4,12 +4,9 @@
   hosts: local
 
   vars_files:
-    - ../../vars/path.yml
     - ../../vars/common.yml
-    - ../../vars/dotfiles_map.yml
 
   tasks:
-    - include: "{{tasks_dir}}tasks/dotfiles.yml"
     - include: "{{tasks_dir}}tasks/lightdm.yml"
     - include: "{{tasks_dir}}tasks/xorg.yml"
     - include: "{{tasks_dir}}tasks/clear.yml"

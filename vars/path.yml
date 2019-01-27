@@ -1,5 +1,0 @@
----
-root_dir: "{{ inventory_dir | dirname }}"
-vars_dir: "{{ root_dir }}/vars"
-files_dir: "{{ root_dir }}/files"
-tasks_dir: "{{ root_dir }}/tasks"
