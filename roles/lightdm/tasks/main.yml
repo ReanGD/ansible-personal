@@ -1,0 +1,21 @@
+---
+- name: Install package lightdm
+  pacman:
+    name: lightdm
+    state: present
+  become: yes
+
+- name: Configure lightdm
+  copy:
+    src: lightdm.conf
+    dest: /etc/lightdm/lightdm.conf
+    mode: 0644
+    group: root
+    owner: root
+  become: yes
+
+- name: Enable lightdm service
+  service:
+    name: lightdm.service
+    enabled: yes
+  become: yes
