@@ -1,0 +1,29 @@
+---
+- name: Configure keyboard
+  copy:
+    src: 20-keyboard.conf
+    dest: /etc/X11/xorg.conf.d/20-keyboard.conf
+    mode: 0755
+    group: root
+    owner: root
+  become: yes
+
+- name: Configure touchpad
+  copy:
+    src: 20-touchpad.conf
+    dest: /etc/X11/xorg.conf.d/20-touchpad.conf
+    mode: 0755
+    group: root
+    owner: root
+  become: yes
+  when: hostname_id == "archnote"
+
+- name: Configure monitor
+  copy:
+    src: 90-monitor.conf
+    dest: /etc/X11/xorg.conf.d/90-monitor.conf
+    mode: 0755
+    group: root
+    owner: root
+  become: yes
+  when: hostname_id == "archhost"

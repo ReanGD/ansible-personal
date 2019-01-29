@@ -23,4 +23,5 @@
     - packages
     - repository
     - dotfiles
+    - xorg
     - lightdm
