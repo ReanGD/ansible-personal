@@ -29,7 +29,7 @@
     name: "{{ item }}"
     state: present
   become: yes
-  become_user: aur_builder
+  become_user: "{{install_user}}"
   with_cfg_file: packages_desktop.py action=not_installed host={{hostname_id}}
   when: hostname_id in ["archhost", "archnote"]
 
@@ -38,7 +38,7 @@
     name: "{{ item }}"
     state: present
   become: yes
-  become_user: aur_builder
+  become_user: "{{install_user}}"
   with_cfg_file: packages_archsrv.py action=not_installed host={{hostname_id}}
   when: hostname_id == "archsrv"
 

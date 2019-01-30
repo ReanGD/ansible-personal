@@ -4,6 +4,6 @@ root ALL=(ALL) ALL
 Defaults:{{ main_user }}	!env_reset
 Defaults:{{ main_user }}	timestamp_timeout=20
 
-{{ main_user }}	ALL = (ALL) ALL
-{{ main_user }}	ALL = NOPASSWD: /usr/bin/psd-overlay-helper
-aur_builder		ALL = (ALL) NOPASSWD: /usr/bin/pacman
+{{ main_user }}		ALL = (ALL) ALL
+{{ main_user }}		ALL = NOPASSWD: /usr/bin/psd-overlay-helper
+{{ install_user }}	ALL = (ALL) NOPASSWD: /usr/bin/pacman

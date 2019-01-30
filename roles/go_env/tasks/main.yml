@@ -1,7 +1,9 @@
---- # packages.yml + network.yml
+---
 - name: Install go utils without sudo
   command: go get -u {{item}}
-  with_items:
+  environment:
+    GOPATH: /home/{{main_user}}/.local/share/go
+  loop:
     - 'github.com/nsf/gocode'
     - 'github.com/rogpeppe/godef'
     - 'github.com/jstemmer/gotags'
@@ -9,14 +11,12 @@
     - 'golang.org/x/tools/cmd/guru'
     - 'github.com/golang/lint/golint'
     - 'golang.org/x/tools/cmd/gorename'
-    - 'golang.org/x/tools/cmd/goimports'
-  tags:
-    - update
+    - 'golang.org/x/tools/cmd/goimports'  
 
 - name: Install go utils with sudo
   command: go get -u {{item}}
   become: yes
-  with_items:
+  environment:
+    GOPATH: /home/{{main_user}}/.local/share/go
+  loop:
     - 'golang.org/x/tools/cmd/godoc'
-  tags:
-    - update

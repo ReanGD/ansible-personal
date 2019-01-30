@@ -1,4 +1,0 @@
---- # network.yml
-- name: Clone or update repository
-  action: update_git repo=git@github.com:ReanGD/{{item.repo}} dest=~/projects/home/{{item.dest}}
-  with_items: "{{ repository_map }}"

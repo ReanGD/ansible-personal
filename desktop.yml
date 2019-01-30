@@ -25,3 +25,4 @@
     - dotfiles
     - xorg
     - lightdm
+    - go_env

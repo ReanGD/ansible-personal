@@ -51,9 +51,9 @@
   when: add_dop_user == True
   become: yes
 
-- name: Create aur_builder user
+- name: Create install_user user
   user:
-    name: aur_builder
+    name: "{{install_user}}"
     append: no
     create_home: no
     group: wheel
