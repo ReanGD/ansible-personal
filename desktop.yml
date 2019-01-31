@@ -26,3 +26,5 @@
     - xorg
     - lightdm
     - go_env
+    - ups
+    - hddtemp

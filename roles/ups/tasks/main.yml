@@ -1,0 +1,24 @@
+---
+- name: Install package apcupsd
+  pacman:
+    name: apcupsd
+    state: present
+  become: yes
+  when: hostname_id == "archhost"
+
+- name: Configure apcupsd
+  copy:
+    src: apcupsd.conf
+    dest: /etc/apcupsd/apcupsd.conf
+    mode: 0644
+    group: root
+    owner: root
+  become: yes
+  when: hostname_id == "archhost"
+
+- name: Enable apcupsd service
+  service:
+    name: apcupsd.service
+    enabled: yes
+  become: yes
+  when: hostname_id == "archhost"

@@ -1,8 +1,5 @@
---- # abs_path
+---
 - name: Install local mashine
-
   hosts: local
-
   tasks:
     - include: "{{tasks_dir}}tasks/clear.yml"
-    - include: "{{tasks_dir}}tasks/monitoring.yml"

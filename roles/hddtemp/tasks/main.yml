@@ -1,0 +1,44 @@
+---
+- name: Install packages for hddtemp
+  pacman:
+    name: hddtemp, smartmontools
+    state: present
+  become: yes
+
+- name: Create hddtemp service directory
+  file:
+    path: /etc/systemd/system/hddtemp.service.d
+    state: directory
+    recurse: yes
+    mode: 0755
+    group: root
+    owner: root
+  become: yes
+
+- name: Remove old hddtemp settings file
+  file:
+    path: /tmp/customexec.conf
+    state: absent
+  become: yes
+  changed_when: false
+
+- name: Create hddtemp settings file
+  script: generate.sh > /tmp/customexec.conf
+  become: yes
+  changed_when: false
+
+- name: Install hddtemp settings file
+  copy:
+    src: /tmp/customexec.conf
+    dest: /etc/systemd/system/hddtemp.service.d/customexec.conf
+    mode: 0644
+    group: root
+    owner: root
+  become: yes
+
+- name: Enable and start hddtemp service
+  service:
+    name: hddtemp.service
+    enabled: yes
+    state: restarted
+  become: yes
