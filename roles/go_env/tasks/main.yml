@@ -1,4 +1,10 @@
 ---
+- name: Install package go
+  pacman:
+    name: gp
+    state: present
+  become: yes
+
 - name: Install go utils without sudo
   command: go get -u {{item}}
   environment:

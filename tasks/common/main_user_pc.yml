@@ -1,5 +1,0 @@
----
-- name: Install local mashine
-  hosts: local
-  tasks:
-    - include: "{{tasks_dir}}tasks/clear.yml"

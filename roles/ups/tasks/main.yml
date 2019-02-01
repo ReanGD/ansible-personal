@@ -16,9 +16,10 @@
   become: yes
   when: hostname_id == "archhost"
 
-- name: Enable apcupsd service
+- name: Enable and start apcupsd service
   service:
     name: apcupsd.service
     enabled: yes
+    state: started
   become: yes
   when: hostname_id == "archhost"

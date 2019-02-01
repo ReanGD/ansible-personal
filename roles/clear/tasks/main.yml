@@ -1,7 +1,9 @@
---- # without dependencies
+---
 - name: Remove old configs
-  file: path=/home/{{ main_user }}{{ item }} state=absent
-  with_items:
+  file:
+    path: /home/{{ main_user }}{{ item }}
+    state: absent
+  loop:
     - /.bash_history
     - /.bash_logout
     - /.bash_profile

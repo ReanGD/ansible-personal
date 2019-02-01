@@ -14,3 +14,5 @@
     - packages_manager
     - ssh
     - boot
+    - swap
+    - systemd_configure

@@ -1,9 +1,4 @@
 ---
-- name: Refresh package list
-  yaourt:
-    update_cache: yes
-  changed_when: false
-
 - name: Create gpg dir
   file:
     path: "/home/{{main_user}}/.config/gnupg"

@@ -15,16 +15,17 @@
     - ssh
     - boot
     - swap
+    - systemd_configure
     - time
     - pkgcacheclean
-    - systemd_configure
     - docker
     - automount
-    - packages
+    - hddtemp
     - repository
     - dotfiles
     - xorg
     - lightdm
     - go_env
     - ups
-    - hddtemp
+    - packages
+    - clear

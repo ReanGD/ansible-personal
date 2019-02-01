@@ -14,10 +14,10 @@
     - ssh
     - boot
     - swap
+    - systemd_configure
     - time
     - pkgcacheclean
-    - systemd_configure
     - docker
     - automount
-    - packages
     - hddtemp
+    - packages
