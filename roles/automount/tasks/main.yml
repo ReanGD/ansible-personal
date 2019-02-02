@@ -1,4 +1,10 @@
 ---
+- name: Install package nfs-utils
+  pacman:
+    name: nfs-utils
+    state: present
+  become: yes
+
 - name: Install servicies for nfs mount
   copy:
     src: "{{item}}"

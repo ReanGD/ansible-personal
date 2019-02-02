@@ -8,6 +8,13 @@
     group=root
   become: yes
 
+- name: Update pacman cache
+  pacman:
+    force: yes
+    update_cache: yes
+  become: yes
+  changed_when: false
+
 - name: Check is aurman installed
   shell: pacman -Qq aurman
   register: reg_check_aurman
@@ -39,10 +46,10 @@
     state: present
   become: yes
 
-- name: Refresh package list
-  yaourt:
-    update_cache: yes
-  changed_when: false
+# - name: Update all packages list
+#   yaourt:
+#     update_cache: yes
+#   changed_when: false
 
 - name: Install base packages for wifi
   pacman:

@@ -1,3 +1,4 @@
 ---
 dependencies:
   - role: network
+  - role: packages_manager

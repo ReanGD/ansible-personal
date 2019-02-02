@@ -55,7 +55,6 @@ pkgs += ["refind-efi",
          "pkgcacheclean",  # clean the pacman cache
          "perwindowlayoutd",  # daemon to make per window layout (also exists "kbdd-git")
          "libnotify",  # create notifications message
-         "autofs",  # automounter (nfs, samba, etc)
          "aurman",  # AUR package manager
          "rsync"]
 

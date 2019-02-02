@@ -18,10 +18,11 @@ pkgs += ["refind-efi",
          "rsync"]
 
 # net tools
-pkgs += ["wget"]
+pkgs += ["wget", "nfs-utils"]
 
 # python
 pkgs += ["python"]
+
 # git
 pkgs += ["git"]
 
