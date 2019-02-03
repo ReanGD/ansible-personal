@@ -27,6 +27,7 @@
     boot_ssd: True
     swap_size: 35
     swappiness: 1
+    packages_file: "packages_desktop.py"
   when: reg_product_name.stdout == 'MS-7978'
 
 - name: Set archnote facts (xiaomi)
@@ -39,6 +40,7 @@
     boot_ssd: True
     swap_size: 8
     swappiness: 20
+    packages_file: "packages_desktop.py"
   when: reg_product_name.stdout == 'TM1613'
 
 - name: Set archsrv facts
@@ -51,4 +53,5 @@
     boot_ssd: False
     swap_size: 35
     swappiness: 1
+    packages_file: "packages_archsrv.py"
   when: reg_product_name.stdout == 'System Product Name'

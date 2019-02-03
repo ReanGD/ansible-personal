@@ -1,12 +1,11 @@
 ---
 - name: Install local mashine
   hosts: local
-  connection: local
   gather_facts: false
   environment:
     GNUPGHOME: /home/rean/.config/gnupg
   pre_tasks:
-    - include: common/init_facts.yml is_chroot_param=True
+    - include: common/tasks/init_facts.yml is_chroot_param=True
   roles:
     - locale
     - users

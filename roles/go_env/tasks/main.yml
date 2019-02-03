@@ -1,7 +1,7 @@
 ---
 - name: Install package go
   pacman:
-    name: gp
+    name: go
     state: present
   become: yes
 

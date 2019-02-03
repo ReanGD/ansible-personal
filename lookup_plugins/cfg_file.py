@@ -135,8 +135,8 @@ class LookupModule(LookupBase):
     def run(self, terms, variables=None, **kwargs):
         params = self.__parse_terms(terms)
         action = params['action']
-        basedir = self.get_basedir(variables)
-        full_path = os.path.join(basedir, "vars", params["path"])
+        rootdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        full_path = os.path.join(rootdir, "common", "files", params["path"])
         self.cfg = UserConfig(full_path, params["host"])
         self.mng = PackageManager()
 
