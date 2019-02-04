@@ -10,6 +10,8 @@
     main_user: rean
     install_user: aur_builder
     is_chroot: "{{is_chroot_param}}"
+    root_dir: "{{ inventory_dir }}"
+    packages_dir: "{{ inventory_dir }}/common/files"
 
 - name: Find board uuid
   shell: cat /sys/class/dmi/id/product_name
@@ -27,7 +29,7 @@
     boot_ssd: True
     swap_size: 35
     swappiness: 1
-    packages_file: "packages_desktop.py"
+    packages_file: "{{packages_dir}}/packages_desktop.py"
   when: reg_product_name.stdout == 'MS-7978'
 
 - name: Set archnote facts (xiaomi)
@@ -40,7 +42,7 @@
     boot_ssd: True
     swap_size: 8
     swappiness: 20
-    packages_file: "packages_desktop.py"
+    packages_file: "{{packages_dir}}/packages_desktop.py"
   when: reg_product_name.stdout == 'TM1613'
 
 - name: Set archsrv facts
@@ -53,5 +55,5 @@
     boot_ssd: False
     swap_size: 35
     swappiness: 1
-    packages_file: "packages_archsrv.py"
+    packages_file: "{{packages_dir}}/packages_archsrv.py"
   when: reg_product_name.stdout == 'System Product Name'
