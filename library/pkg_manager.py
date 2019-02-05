@@ -1,9 +1,11 @@
 import os
-import requests
+import zlib
 import traceback
 from subprocess import run
-from ansible.module_utils.basic import AnsibleModule
+from ansible.module_utils.urls import open_url
 from ansible.module_utils._text import to_native
+from ansible.module_utils.basic import AnsibleModule
+import ansible.module_utils.six.moves.urllib.error as urllib_error
 from ansible.module_utils.urls import fetch_url, url_argument_spec
 
 
@@ -25,10 +27,12 @@ class PkgManager:
 
     def get_aur_packages(self):
         url = "https://aur.archlinux.org/packages.gz"
-        res = requests.get(url)
-        if res.status_code != 200:
-            raise RuntimeError("Error connect to '{}', error code = {}".format(url, res.status_code))
-        return {it.strip() for it in res.text.split() if it.strip() != ""}
+        try:
+            text_gz = open_url(url).read()
+            text = zlib.decompress(text_gz, 16 + zlib.MAX_WBITS).decode("utf-8")
+            return {it.strip() for it in text.split() if it.strip() != ""}
+        except urllib_error.HTTPError as e:
+            raise RuntimeError("Error connect to '{}', error = {}".format(url, to_native(e)))        
 
     def get_local_packages(self):
         return self.run(["-Qq"])
@@ -49,7 +53,21 @@ class PkgManager:
         return { line.split()[1] for line in self.run(["-Qg"] + list(group_names)) }
 
 
-def install_pkg(pkg_name):
+def install_makepkg(pkg_name):
+    pkg_name = pkg_name.strip()
+
+    msg = "{}: success".format(pkg_name)
+    return msg, True
+
+
+def install_pacman(pkg_name):
+    pkg_name = pkg_name.strip()
+
+    msg = "{}: success".format(pkg_name)
+    return msg, True
+
+
+def install_yay(pkg_name):
     pkg_name = pkg_name.strip()
 
     msg = "{}: success".format(pkg_name)
@@ -98,13 +116,16 @@ def get_info(packages, groups):
         "packages_not_installed_in_group": list(packages_not_installed_in_group),
     }
 
-# pkg_manager: command=install name=python2
+# pkg_manager: command=install name=yay use=makepkg
+# pkg_manager: command=install name=python use=pacman
+# pkg_manager: command=install name=dropbox use=yay
 # pkg_manager: command=get_info packages=python2,python groups=base
 def main():
     module = AnsibleModule(
         argument_spec=dict(
             command=dict(default=None, choices=["install", "get_info"], required=True, type="str"),
             name=dict(default=None, required=False, type="str"),
+            use=dict(default="yay", choices=["makepkg", "pacman", "yay"], required=False, type="str"),
             packages=dict(default=None, required=False, type="list"),
             groups=dict(default=None, required=False, type="list")
             ),
@@ -113,12 +134,21 @@ def main():
 
     if command == "install":
         name = module.params.get("name", None)
+        use = module.params.get("use", "yay").strip()
         if name is None or name.strip() == "":
-            module.fail_json(msg="Not found param 'name' for command 'install'")
+            module.fail_json(msg="Not found required param 'name' for command 'install'")
+        elif use not in ["makepkg", "pacman", "yay"]:
+            module.fail_json(msg="Param 'use' has unexpected value '{}' for command 'install'".format(use))
         else:
             try:
-                msg, changed = install_pkg(name)
-                module.exit_json(msg=msg, changed=changed, command=command, package=name)
+                name = name.strip()
+                if use == "makepkg":
+                    msg, changed = install_makepkg(name)
+                elif use == "pacman":
+                    msg, changed = install_pacman(name)
+                else:
+                    msg, changed = install_yay(name)
+                module.exit_json(msg=msg, changed=changed, package=name)
             except Exception as e:
                 module.fail_json(msg=to_native(e), exception=traceback.format_exc())
     elif command == "get_info":
