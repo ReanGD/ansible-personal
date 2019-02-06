@@ -1,15 +1,20 @@
 import os
 import zlib
-import traceback
+import json
+import tarfile
+import tempfile
+from traceback import format_exc
 from subprocess import run
+from urllib.error import HTTPError
 from ansible.module_utils.urls import open_url
-from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import AnsibleModule
-import ansible.module_utils.six.moves.urllib.error as urllib_error
-from ansible.module_utils.urls import fetch_url, url_argument_spec
 
 
-class PkgManager:
+class StrError(RuntimeError):
+    pass
+
+
+class Pacman:
     def run(self, params):
         res = run(["/usr/bin/pacman"] + params, capture_output=True)
         res.check_returncode()
@@ -24,15 +29,6 @@ class PkgManager:
 
     def get_db_packages(self):
         return self.run(["-Slq"])
-
-    def get_aur_packages(self):
-        url = "https://aur.archlinux.org/packages.gz"
-        try:
-            text_gz = open_url(url).read()
-            text = zlib.decompress(text_gz, 16 + zlib.MAX_WBITS).decode("utf-8")
-            return {it.strip() for it in text.split() if it.strip() != ""}
-        except urllib_error.HTTPError as e:
-            raise RuntimeError("Error connect to '{}', error = {}".format(url, to_native(e)))        
 
     def get_local_packages(self):
         return self.run(["-Qq"])
@@ -53,23 +49,60 @@ class PkgManager:
         return { line.split()[1] for line in self.run(["-Qg"] + list(group_names)) }
 
 
-def install_makepkg(pkg_name):
-    pkg_name = pkg_name.strip()
+class Aur:
+    def open_url(self, url):
+        try:
+            return open_url(url)
+        except HTTPError as e:
+            e.msg = "{} (url = {})".format(e.msg, url)
+            raise e
+
+    def get_db_packages(self):
+        url = "https://aur.archlinux.org/packages.gz"
+        text = zlib.decompress(self.open_url(url).read(), 16 + zlib.MAX_WBITS).decode("utf-8")
+        return {it.strip() for it in text.split() if it.strip() != ""}
+
+    def get_package_load_url(self, name):
+        url = "https://aur.archlinux.org/rpc/?v=5&type=info&arg={}".format(name)
+        result = json.loads(self.open_url(url).read().decode("utf-8"))
+        if result["resultcount"] != 1:
+            raise StrError("Package '{}' not found".format(name))
+        return "https://aur.archlinux.org/{}".format(result["results"][0]["URLPath"])
+
+    def install_by_makepkg(self, module, name):
+        url = Aur().get_package_load_url(name)
+        f = self.open_url(url)
+        current_path = os.getcwd()
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tar_file_path = os.path.join(tmpdir, "{}.tar.gz".format(name))            
+            with open(tar_file_path, 'wb') as out:
+                out.write(f.read())
+            tar = tarfile.open(tar_file_path)
+            tar.extractall(tmpdir)
+            tar.close()            
+            try:
+                os.chdir(os.path.join(tmpdir, name))
+                params = ["makepkg", "--syncdeps", "--install", "--noconfirm", "--skippgpcheck", "--needed"]
+                rc, out, err = module.run_command(params, check_rc=True)
+                return rc, out, err
+            finally:
+                os.chdir(current_path)        
+
+        
+def install_makepkg(module, pkg_name):
+    module.get_bin_path('fakeroot', required=True)
+    rc, out, err = Aur().install_by_makepkg(module, pkg_name)
 
     msg = "{}: success".format(pkg_name)
     return msg, True
 
 
 def install_pacman(pkg_name):
-    pkg_name = pkg_name.strip()
-
     msg = "{}: success".format(pkg_name)
     return msg, True
 
 
 def install_yay(pkg_name):
-    pkg_name = pkg_name.strip()
-
     msg = "{}: success".format(pkg_name)
     return msg, True
 
@@ -86,15 +119,16 @@ def get_info(packages, groups):
 
     packages = {it.strip() for it in packages}
     groups = {it.strip() for it in groups}
-    mng = PkgManager()
+    pacman = Pacman()
+    aur = Aur()
 
-    db_groups = mng.get_db_groups()
-    db_packages = mng.get_db_packages()
-    aur_packages = mng.get_aur_packages()
-    local_packages = mng.get_local_packages()
-    local_explicit_packages = mng.get_local_explicit_packages()
-    db_packages_for_groups = mng.get_db_packages_for_groups(groups)
-    local_packages_for_groups = mng.get_local_packages_for_groups(groups)
+    db_groups = pacman.get_db_groups()
+    db_packages = pacman.get_db_packages()
+    aur_packages = aur.get_db_packages()
+    local_packages = pacman.get_local_packages()
+    local_explicit_packages = pacman.get_local_explicit_packages()
+    db_packages_for_groups = pacman.get_db_packages_for_groups(groups)
+    local_packages_for_groups = pacman.get_local_packages_for_groups(groups)
 
     groups_name_wrong = groups.difference(db_groups)
     packages_name_wrong = packages.difference(db_packages, aur_packages)
@@ -114,7 +148,46 @@ def get_info(packages, groups):
         "packages_aur": list(packages_aur),
         "packages_in_group": list(packages_in_group),
         "packages_not_installed_in_group": list(packages_not_installed_in_group),
+        "changed": False
     }
+
+
+def run_module(module):
+    command = module.params["command"].strip()
+
+    if command == "install":
+        name = module.params.get("name", None)
+        use = module.params.get("use", "yay").strip()
+        if name is None or name.strip() == "":
+            raise StrError("Not found required param 'name' for command 'install'")
+        elif use not in ["makepkg", "pacman", "yay"]:
+            raise StrError("Param 'use' has unexpected value '{}' for command 'install'".format(use))
+        else:
+            name = name.strip()
+            if use == "makepkg":
+                msg, changed = install_makepkg(name)
+            elif use == "pacman":
+                msg, changed = install_pacman(name)
+            else:
+                msg, changed = install_yay(name)
+
+            return {
+                "msg": msg,
+                "changed": changed,
+                "package": name
+            }
+    elif command == "get_info":
+        packages = module.params.get("packages", None)
+        groups = module.params.get("groups", None)
+        if packages is None:
+            raise StrError("Not found required param 'packages' for command '{}'".format(command))
+        elif groups is None:
+            raise StrError("Not found required param 'groups' for command '{}'".format(command))
+        else:
+            return get_info(packages, groups)
+    else:
+        raise StrError("Param 'command' has unexpected value '{}'".format(command))
+
 
 # pkg_manager: command=install name=yay use=makepkg
 # pkg_manager: command=install name=python use=pacman
@@ -130,42 +203,16 @@ def main():
             groups=dict(default=None, required=False, type="list")
             ),
         supports_check_mode=False)
-    command = module.params["command"].strip()
 
-    if command == "install":
-        name = module.params.get("name", None)
-        use = module.params.get("use", "yay").strip()
-        if name is None or name.strip() == "":
-            module.fail_json(msg="Not found required param 'name' for command 'install'")
-        elif use not in ["makepkg", "pacman", "yay"]:
-            module.fail_json(msg="Param 'use' has unexpected value '{}' for command 'install'".format(use))
-        else:
-            try:
-                name = name.strip()
-                if use == "makepkg":
-                    msg, changed = install_makepkg(name)
-                elif use == "pacman":
-                    msg, changed = install_pacman(name)
-                else:
-                    msg, changed = install_yay(name)
-                module.exit_json(msg=msg, changed=changed, package=name)
-            except Exception as e:
-                module.fail_json(msg=to_native(e), exception=traceback.format_exc())
-    elif command == "get_info":
-        packages = module.params.get("packages", None)
-        groups = module.params.get("groups", None)
-        if packages is None:
-            module.fail_json(msg="Not found required param 'packages' for command '{}'".format(command))
-        elif groups is None:
-            module.fail_json(msg="Not found required param 'groups' for command '{}'".format(command))
-        else:
-            try:
-                result = get_info(packages, groups)
-                module.exit_json(**result)
-            except Exception as e:
-                module.fail_json(msg=to_native(e), exception=traceback.format_exc())
-    else:
-        module.fail_json(msg="Param 'command' has unexpected value '{}'".format(command))
+    result = {}
+    try:
+        result = run_module(module)
+    except StrError as e:
+        module.fail_json(msg="Error in library/pkg_manager: " + str(e))
+    except Exception:
+        module.fail_json(msg="Error in library/pkg_manager", exception=format_exc())
+
+    module.exit_json(**result)
 
 
 if __name__ == '__main__':
