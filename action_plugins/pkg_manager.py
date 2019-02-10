@@ -15,27 +15,8 @@ class StrError(RuntimeError):
 
 
 # pkg_manager: command=get_info config={{packages_file}} host={{hostname_id}}
+# pkg_manager: command=install config=yay
 class ActionModule(ActionBase):
-    # COLOR_HIGHLIGHT = 'white'
-    # COLOR_VERBOSE = 'blue'
-    # COLOR_WARN = 'bright purple'
-    # COLOR_ERROR = 'red'
-    # COLOR_DEBUG = 'dark gray'
-    # COLOR_DEPRECATE = 'purple'
-    # COLOR_SKIP = 'cyan'
-    # COLOR_UNREACHABLE = 'bright red'
-    # COLOR_OK = 'green'
-    # COLOR_CHANGED = 'yellow'
-    # def _install_pkg(self, pkg_name):
-    #     module_args = {"command": "install", "name": pkg_name}
-    #     module_return = self._execute_module(module_name="pkg_manager",
-    #                                          module_args=module_args)
-
-    #     if not module_return.get("failed"):
-    #         display.display(module_return.get("msg"), color=C.COLOR_WARN)
-
-    #     return module_return
-
     def _get_param_command(self):
         command = self._task.args.get("command", None)
         if command is None or command.strip() == "":
@@ -64,6 +45,13 @@ class ActionModule(ActionBase):
         packages = [it.strip() for it in gvars["packages"]]
         groups = [it.strip() for it in gvars["groups"]]
         return {"packages": packages, "groups": groups}
+
+    def _get_param_name(self, command):
+        name = self._task.args.get("name", None)
+        if name is None:
+            raise StrError("Not found required param 'name' for command '{}'.".format(command))
+
+        return name
 
     @staticmethod
     def _print_section(text, values):
@@ -104,11 +92,20 @@ class ActionModule(ActionBase):
 
         return result
 
+    def _install(self, name):
+        args = {"command": "install", "name": name}
+        result = self._call_module(name="pkg_manager", args=args)
+
+        return result
+
     def _run(self):
         command = self._get_param_command()
         if command == "get_info":
             config = self._get_param_config_value(command)
             return self._get_info(config["packages"], config["groups"])
+        elif command == "install":
+            name = self._get_param_name(command)
+            return self._install(name)
         else:
             raise StrError("Param 'command' has unexpected value '{}'.".format(command))
 
@@ -118,10 +115,10 @@ class ActionModule(ActionBase):
             result.update(self._run())
         except StrError as e:
             result['failed'] = True
-            result['msg'] = "Error in action_plugin/pkg_manager" + str(e)
+            result['msg'] = "Error in action_plugin/pkg_manager: " + str(e)
         except Exception:
             ActionModule._print_exception(format_exc())
             result['failed'] = True
-            result['msg'] = "Error in action_plugin/pkg_manager"
+            result['msg'] = "Error in action_plugin/pkg_manager: "
 
         return result

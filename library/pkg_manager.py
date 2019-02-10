@@ -1,10 +1,7 @@
 import os
-import zlib
 import json
-import tarfile
-import tempfile
-from traceback import format_exc
 from subprocess import run
+from traceback import format_exc
 from urllib.error import HTTPError
 from ansible.module_utils.urls import open_url
 from ansible.module_utils.basic import AnsibleModule
@@ -58,6 +55,8 @@ class Aur:
             raise e
 
     def get_db_packages(self):
+        import zlib
+
         url = "https://aur.archlinux.org/packages.gz"
         text = zlib.decompress(self.open_url(url).read(), 16 + zlib.MAX_WBITS).decode("utf-8")
         return {it.strip() for it in text.split() if it.strip() != ""}
@@ -69,42 +68,58 @@ class Aur:
             raise StrError("Package '{}' not found".format(name))
         return "https://aur.archlinux.org/{}".format(result["results"][0]["URLPath"])
 
-    def install_by_makepkg(self, module, name):
-        url = Aur().get_package_load_url(name)
-        f = self.open_url(url)
-        current_path = os.getcwd()
+
+class InstallManager:
+    def __init__(self, aur, module):
+        self._aur = aur
+        self._module = module
+
+    def install_by_makepkg(self, name):
+        import tarfile
+        import tempfile
+
+        url = self._aur.get_package_load_url(name)
+        f = self._aur.open_url(url)
         with tempfile.TemporaryDirectory() as tmpdir:
-            tar_file_path = os.path.join(tmpdir, "{}.tar.gz".format(name))            
+            install_dir = os.path.join(tmpdir, name)
+            tar_file_path = os.path.join(tmpdir, "{}.tar.gz".format(name))
             with open(tar_file_path, 'wb') as out:
                 out.write(f.read())
             tar = tarfile.open(tar_file_path)
             tar.extractall(tmpdir)
-            tar.close()            
-            try:
-                os.chdir(os.path.join(tmpdir, name))
-                params = ["makepkg", "--syncdeps", "--install", "--noconfirm", "--skippgpcheck", "--needed"]
-                rc, out, err = module.run_command(params, check_rc=True)
-                return rc, out, err
-            finally:
-                os.chdir(current_path)        
+            tar.close()
 
-        
-def install_makepkg(module, pkg_name):
-    module.get_bin_path('fakeroot', required=True)
-    rc, out, err = Aur().install_by_makepkg(module, pkg_name)
-
-    msg = "{}: success".format(pkg_name)
-    return msg, True
+            params = ["makepkg", "--syncdeps", "--install", "--noconfirm", "--skippgpcheck",
+                      "--needed"]
+            rc, _, stderr = self._module.run_command(params, cwd=install_dir)
+            if rc != 0:
+                msg = "Failed to install '{}', error: {}".format(name, stderr)
+                raise StrError(msg)
 
 
-def install_pacman(pkg_name):
-    msg = "{}: success".format(pkg_name)
-    return msg, True
+def install(module, packages):
+    aur = Aur()
+    pacman = Pacman()
 
+    packages = {it.strip() for it in packages}
+    packages.difference_update(pacman.get_local_explicit_packages())
 
-def install_yay(pkg_name):
-    msg = "{}: success".format(pkg_name)
-    return msg, True
+    mng = InstallManager(aur, module)
+    installed_pakages = []
+    for name in packages:
+        if name == "yay":
+            mng.install_by_makepkg(name)
+            installed_pakages.append(name)
+
+    cnt = len(installed_pakages)
+    if cnt != 0:
+        msg = "Installed {} package(s): {}".format(cnt, ",".join(installed_pakages))
+        changed = True
+    else:
+        msg = "Package(s) already installed"
+        changed = False
+
+    return msg, changed
 
 
 def get_info(packages, groups):
@@ -157,24 +172,13 @@ def run_module(module):
 
     if command == "install":
         name = module.params.get("name", None)
-        use = module.params.get("use", "yay").strip()
-        if name is None or name.strip() == "":
+        if name is None:
             raise StrError("Not found required param 'name' for command 'install'")
-        elif use not in ["makepkg", "pacman", "yay"]:
-            raise StrError("Param 'use' has unexpected value '{}' for command 'install'".format(use))
         else:
-            name = name.strip()
-            if use == "makepkg":
-                msg, changed = install_makepkg(name)
-            elif use == "pacman":
-                msg, changed = install_pacman(name)
-            else:
-                msg, changed = install_yay(name)
-
+            msg, changed = install(module, name)
             return {
                 "msg": msg,
                 "changed": changed,
-                "package": name
             }
     elif command == "get_info":
         packages = module.params.get("packages", None)
@@ -189,16 +193,14 @@ def run_module(module):
         raise StrError("Param 'command' has unexpected value '{}'".format(command))
 
 
-# pkg_manager: command=install name=yay use=makepkg
-# pkg_manager: command=install name=python use=pacman
-# pkg_manager: command=install name=dropbox use=yay
+# pkg_manager: command=install name=dropbox
+# pkg_manager: command=install name=yay, python
 # pkg_manager: command=get_info packages=python2,python groups=base
 def main():
     module = AnsibleModule(
         argument_spec=dict(
             command=dict(default=None, choices=["install", "get_info"], required=True, type="str"),
-            name=dict(default=None, required=False, type="str"),
-            use=dict(default="yay", choices=["makepkg", "pacman", "yay"], required=False, type="str"),
+            name=dict(default=None, required=False, type="list"),
             packages=dict(default=None, required=False, type="list"),
             groups=dict(default=None, required=False, type="list")
             ),
