@@ -18,10 +18,10 @@ class StrError(RuntimeError):
 # pkg_manager: command=install config=yay
 class ActionModule(ActionBase):
     def _get_param_command(self):
-        command = self._task.args.get("command", None)
+        command = self._task.args.get("command", "install")
         if command is None or command.strip() == "":
             raise StrError("Not found required param 'command'.")
-        
+
         return command.strip()
 
     def _get_param_host(self, command):
@@ -67,15 +67,27 @@ class ActionModule(ActionBase):
         display.error(text, wrap_text=False)
 
     def _call_module(self, name, args):
-        result = self._execute_module(module_name=name, module_args=args)
-        if result.get("failed"):
-            exception = result.get("exception", None)
-            if exception is not None:
-                display.error(exception, wrap_text=False)
+        orig_become = self._play_context.become
+        orig_become_user = self._play_context.become_user
 
-            raise StrError(result.get("msg", "Unknown error in module {}".format(name)))
+        if orig_become is None or orig_become is False:
+            self._play_context.become = True
+        if orig_become_user is None or orig_become_user != self._install_user:
+            self._play_context.become_user = self._install_user
 
-        return result
+        try:
+            result = self._execute_module(module_name=name, module_args=args)
+            if result.get("failed"):
+                exception = result.get("exception", None)
+                if exception is not None:
+                    display.error(exception, wrap_text=False)
+
+                raise StrError(result.get("msg", "Unknown error in module {}".format(name)))
+
+            return result
+        finally:
+            self._play_context.become = orig_become
+            self._play_context.become_user = orig_become_user
 
     def _get_info(self, packages, groups):
         args = {"command": "get_info", "packages": packages, "groups": groups}
@@ -110,8 +122,15 @@ class ActionModule(ActionBase):
             raise StrError("Param 'command' has unexpected value '{}'.".format(command))
 
     def run(self, tmp=None, task_vars=None):
-        result = super(ActionModule, self).run(tmp, task_vars)        
+        if task_vars is None:
+            task_vars = dict()
+
+        result = super(ActionModule, self).run(tmp, task_vars)
         try:
+            if "install_user" not in task_vars:
+                StrError("Not install fact 'install_user")
+
+            self._install_user = task_vars["install_user"]
             result.update(self._run())
         except StrError as e:
             result['failed'] = True

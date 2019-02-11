@@ -55,7 +55,7 @@
   user:
     name: "{{install_user}}"
     append: no
-    create_home: no
+    create_home: yes
     group: wheel
     uid: 1002
   become: yes

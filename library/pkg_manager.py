@@ -91,9 +91,9 @@ class InstallManager:
 
             params = ["makepkg", "--syncdeps", "--install", "--noconfirm", "--skippgpcheck",
                       "--needed"]
-            rc, _, stderr = self._module.run_command(params, cwd=install_dir)
+            rc, stdout, stderr = self._module.run_command(params, cwd=install_dir)
             if rc != 0:
-                msg = "Failed to install '{}', error: {}".format(name, stderr)
+                msg = "Failed to install '{}', stdout: {}, stderr: {}".format(name, stdout, stderr)
                 raise StrError(msg)
 
 
@@ -212,7 +212,7 @@ def main():
     except StrError as e:
         module.fail_json(msg="Error in library/pkg_manager: " + str(e))
     except Exception:
-        module.fail_json(msg="Error in library/pkg_manager", exception=format_exc())
+        module.fail_json(msg="Exception in library/pkg_manager", exception=format_exc())
 
     module.exit_json(**result)
 
