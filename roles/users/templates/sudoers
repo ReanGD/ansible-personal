@@ -1,9 +1,12 @@
 Defaults lecture=never
-root ALL=(ALL) ALL
+Defaults env_reset
 
-Defaults:{{ main_user }}	!env_reset
 Defaults:{{ main_user }}	timestamp_timeout=20
 
+root		ALL = (ALL) ALL
 {{ main_user }}		ALL = (ALL) ALL
+{% if add_dop_user == True %}
+{{ dop_user }}		ALL = (ALL) ALL
+{% endif %}
 {{ main_user }}		ALL = NOPASSWD: /usr/bin/psd-overlay-helper
 {{ install_user }}	ALL = (ALL) NOPASSWD: /usr/bin/pacman
