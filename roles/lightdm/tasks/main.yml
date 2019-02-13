@@ -1,9 +1,7 @@
 ---
 - name: Install package lightdm
-  pacman:
+  pkg_manager:
     name: lightdm
-    state: present
-  become: yes
 
 - name: Configure lightdm
   copy:

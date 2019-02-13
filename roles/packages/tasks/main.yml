@@ -8,10 +8,8 @@
     owner: "{{main_user}}"
 
 - name: Install package gnupg
-  pacman:
+  pkg_manager:
     name: gnupg
-    state: present
-  become: yes
 
 # - name: Add key for tor-browser-ru
 #   command: pacman-key --recv-keys 0x4E2C6E8793298290

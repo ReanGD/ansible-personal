@@ -1,9 +1,7 @@
 ---
 - name: Install package nfs-utils
-  pacman:
+  pkg_manager:
     name: nfs-utils
-    state: present
-  become: yes
 
 - name: Install servicies for nfs mount
   copy:

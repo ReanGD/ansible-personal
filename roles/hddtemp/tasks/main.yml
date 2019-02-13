@@ -1,9 +1,7 @@
 ---
 - name: Install packages for hddtemp
-  pacman:
+  pkg_manager:
     name: hddtemp, smartmontools
-    state: present
-  become: yes
 
 - name: Create hddtemp service directory
   file:

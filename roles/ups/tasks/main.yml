@@ -1,9 +1,7 @@
 ---
 - name: Install package apcupsd
-  pacman:
+  pkg_manager:
     name: apcupsd
-    state: present
-  become: yes
   when: hostname_id == "archhost"
 
 - name: Configure apcupsd

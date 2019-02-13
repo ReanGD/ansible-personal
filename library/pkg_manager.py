@@ -73,6 +73,11 @@ class InstallManager:
     def __init__(self, aur, module):
         self._aur = aur
         self._module = module
+        self._installed_packages = []
+
+    @property
+    def installed_packages(self):
+        return self._installed_packages
 
     def install_by_makepkg(self, name):
         import tarfile
@@ -96,24 +101,42 @@ class InstallManager:
                 msg = "Failed to install '{}', stdout: {}, stderr: {}".format(name, stdout, stderr)
                 raise StrError(msg)
 
+            self._installed_packages.append(name)
+
+    def install_by_yay(self, name, as_explicitly):
+        params = ["env", "LC_ALL=C", "yay", "-S", "--noconfirm"]
+        if as_explicitly is not None:
+            if as_explicitly:
+                params += ["--asexplicit"]
+            else:
+                params += ["--asdeps"]
+
+        rc, stdout, stderr = self._module.run_command(params + [name])
+        if rc != 0:
+            msg = "Failed to install '{}', stdout: {}, stderr: {}".format(name, stdout, stderr)
+            raise StrError(msg)
+
+        self._installed_packages.append(name)
+
 
 def install(module, packages):
     aur = Aur()
     pacman = Pacman()
+    mng = InstallManager(aur, module)
 
     packages = {it.strip() for it in packages}
     packages.difference_update(pacman.get_local_explicit_packages())
 
-    mng = InstallManager(aur, module)
-    installed_pakages = []
-    for name in packages:
-        if name == "yay":
-            mng.install_by_makepkg(name)
-            installed_pakages.append(name)
+    if "yay" in packages:
+        mng.install_by_makepkg("yay")
+        packages.discard("yay")
 
-    cnt = len(installed_pakages)
+    for name in packages:
+        mng.install_by_yay(name, True)
+
+    cnt = len(mng.installed_packages)
     if cnt != 0:
-        msg = "Installed {} package(s): {}".format(cnt, ",".join(installed_pakages))
+        msg = "Installed {} package(s): {}".format(cnt, ",".join(mng.installed_packages))
         changed = True
     else:
         msg = "Package(s) already installed"

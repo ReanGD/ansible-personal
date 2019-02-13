@@ -20,8 +20,6 @@
     name: yay
 
 - name: Install base packages for wifi
-  pacman:
+  pkg_manager:
     name: dialog,connman,wpa_supplicant
-    state: present
   when: install_wifi == True
-  become: yes

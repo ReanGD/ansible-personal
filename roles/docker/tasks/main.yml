@@ -1,9 +1,7 @@
 ---
 - name: Install package docker
-  pacman:
+  pkg_manager:
     name: docker, docker-compose
-    state: present
-  become: yes
 
 - name: Enable and start docker service
   service:

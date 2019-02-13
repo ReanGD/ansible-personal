@@ -1,9 +1,7 @@
 ---
 - name: Install package refind-efi
-  pacman:
+  pkg_manager:
     name: refind-efi
-    state: present
-  become: yes
 
 - name: Check that the /boot/efi/EFI exists
   stat:

@@ -37,10 +37,8 @@
   when: set_ssh_access_keys == True
 
 - name: Install package for ssh server
-  pacman:
+  pkg_manager:
     name: openssh
-    state: present
-  become: yes
 
 - name: Enable service sshd for chroot
   service:
