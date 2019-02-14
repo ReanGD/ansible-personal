@@ -14,22 +14,35 @@ class StrError(RuntimeError):
     pass
 
 
-# pkg_manager: command=get_info config={{packages_file}} host={{hostname_id}}
-# pkg_manager: command=install config=yay
+# pkg_manager: command=install name=yay
+# pkg_manager: command=install name=yay, python
+# pkg_manager: command=install_config config={{packages_file}}
+# pkg_manager: command=get_info config={{packages_file}}
 class ActionModule(ActionBase):
+    def _get_var_install_user(self):
+        if "install_user" not in self._task_vars:
+            StrError("Not install fact 'install_user'")
+        result = self._task_vars["install_user"].strip()
+        if result == "":
+            StrError("Fact 'install_user' is empty")
+
+        return result
+
+    def _get_var_hostname_id(self):
+        if "hostname_id" not in self._task_vars:
+            StrError("Not install fact 'hostname_id'")
+        result = self._task_vars["hostname_id"].strip()
+        if result == "":
+            StrError("Fact 'hostname_id' is empty")
+
+        return result
+
     def _get_param_command(self):
         command = self._task.args.get("command", "install")
         if command is None or command.strip() == "":
             raise StrError("Not found required param 'command'.")
 
         return command.strip()
-
-    def _get_param_host(self, command):
-        host = self._task.args.get("host", None)
-        if host is None or host.strip() == "":
-            raise StrError("Not found required param 'host' for command '{}'.".format(command))
-        
-        return host.strip()
 
     def _get_param_config_value(self, command):
         config = self._task.args.get("config", None)
@@ -40,7 +53,7 @@ class ActionModule(ActionBase):
         if not os.path.exists(config):
             raise StrError("Config file '{}' not found".format(config))
 
-        gvars = {"host": self._get_param_host(command)}
+        gvars = {"host": self._get_var_hostname_id()}
         exec(open(config).read(), gvars)
         packages = [it.strip() for it in gvars["packages"]]
         groups = [it.strip() for it in gvars["groups"]]
@@ -67,13 +80,14 @@ class ActionModule(ActionBase):
         display.error(text, wrap_text=False)
 
     def _call_module(self, name, args):
+        install_user = self._get_var_install_user()
         orig_become = self._play_context.become
         orig_become_user = self._play_context.become_user
 
         if orig_become is None or orig_become is False:
             self._play_context.become = True
-        if orig_become_user is None or orig_become_user != self._install_user:
-            self._play_context.become_user = self._install_user
+        if orig_become_user is None or orig_become_user != install_user:
+            self._play_context.become_user = install_user
 
         try:
             result = self._execute_module(module_name=name, module_args=args)
@@ -118,6 +132,9 @@ class ActionModule(ActionBase):
         elif command == "install":
             name = self._get_param_name(command)
             return self._install(name)
+        elif command == "install_config":
+            config = self._get_param_config_value(command)
+            return self._install(config["packages"])
         else:
             raise StrError("Param 'command' has unexpected value '{}'.".format(command))
 
@@ -126,11 +143,8 @@ class ActionModule(ActionBase):
             task_vars = dict()
 
         result = super(ActionModule, self).run(tmp, task_vars)
+        self._task_vars = task_vars
         try:
-            if "install_user" not in task_vars:
-                StrError("Not install fact 'install_user")
-
-            self._install_user = task_vars["install_user"]
             result.update(self._run())
         except StrError as e:
             result['failed'] = True

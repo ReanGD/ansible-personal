@@ -18,20 +18,6 @@
 #   become: yes
 
 - name: Install packages
-  yaourt:
-    name: "{{ item }}"
-    state: present
-  become: yes
-  become_user: "{{install_user}}"
-  with_cfg_file: "{{packages_file}} action=not_installed host={{hostname_id}}"
-
-# --- # init.yml + network.yml
-# - name: Get new packages
-#   shell: echo "{{ item }}"
-#   with_cfg_file: packages.py action=new host={{hostname_id}}
-#   tags: view_new
-
-# - name: Get error packages
-#   shell: echo "{{ item }}"
-#   with_cfg_file: packages.py action=error host={{hostname_id}}
-#   tags: view_new
+  pkg_manager:
+    command: install_config
+    config: "{{packages_file}}"

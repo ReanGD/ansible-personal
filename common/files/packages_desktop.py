@@ -50,12 +50,13 @@ pkgs += ["urxvt-perls",
 pkgs += ["refind-efi",
          "polkit",
          "gnupg",
-         "xcursor-ize-vision",
+         "xcursor-ize-vision",  # a couple of X cursor that similar to Windows 7 cursor.
          "pkgfile",  # pkgfile makepkg (get package for makepkg)
          "pkgcacheclean",  # clean the pacman cache
          "perwindowlayoutd",  # daemon to make per window layout (also exists "kbdd-git")
          "libnotify",  # create notifications message
-         "aurman",  # AUR package manager
+         "yay",  # AUR package manager
+         "ansible",
          "rsync"]
 
 # WM
@@ -72,20 +73,19 @@ if is_notebook:
 pkgs += ["lightdm", "lightdm-gtk-greeter"]
 
 # net tools
-pkgs += ["wget",
-         "wpa_supplicant",
+pkgs += ["wget",         
          "net-tools",
          "dialog",
-         "connman",
          "smbclient",
          "nfs-utils",
          "httpie",
          "openssh",
          "openvpn",
+         "openconnect", # for vpn to work
          ]
 
-# remote access
-# pkgs += ["teamviewer"]
+if is_notebook:
+    pkgs += ["connman", "wpa_supplicant"]
 
 # audio
 pkgs += ["pulseaudio",
@@ -170,8 +170,7 @@ pkgs += ["byzanz-git",  # create gif from screen
          "deadbeef"]
 
 # office
-pkgs += ["mupdf"  # pdf viewer
-         # "llpp-git"  # pdf viewer
+pkgs += ["mupdf"  # pdf viewer (analog: llpp-git)
          # "libreoffice-fresh"
          ]
 
@@ -195,7 +194,7 @@ if is_notebook:
     pkgs += ["xorg-xbacklight"]  # backlight control application (xbacklight -set 40)
 
 # VM
-pkgs += ["jre7-openjdk", "docker", "docker-compose"]
+pkgs += ["docker", "docker-compose"]
 
 # game
 pkgs += ["playonlinux",
@@ -203,7 +202,8 @@ pkgs += ["playonlinux",
         "lib32-libldap",  # for WOT ?
         "minecraft"]
 
+# groups
+grps += ["base", "base-devel"]
+
 packages = pkgs
 groups = grps
-ignore_packages = ["yaourt", "ansible"]
-ignore_groups = ["base", "base-devel"]

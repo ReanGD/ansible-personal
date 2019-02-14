@@ -1,10 +1,7 @@
 ---
 - name: Install package pkgcacheclean
-  yaourt:
+  pkg_manager:
     name: pkgcacheclean
-    state: present
-  become: yes
-  become_user: "{{install_user}}"
 
 - name: Timer pkgcacheclean
   copy:
