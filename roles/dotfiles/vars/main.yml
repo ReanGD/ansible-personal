@@ -1,28 +1,28 @@
 ---
 dotfiles_path_map:
-  - {src: ".config/bin",         dst: "~/.config/bin" }
-  - {src: ".config/awesome",     dst: "~/.config/awesome" }
-  - {src: ".config/doublecmd",   dst: "~/.config/doublecmd" }
-  - {src: ".config/enchant",     dst: "~/.config/enchant" }
-  - {src: ".config/fontconfig",  dst: "~/.config/fontconfig" }
-  - {src: ".config/emacs",       dst: "~/.config/emacs" }
-  - {src: ".config/python",      dst: "~/.config/python" }
-  - {src: ".config/zsh",         dst: "~/.config/zsh" }
-  - {src: ".config/git",         dst: "~/.config/git" }
-  - {src: ".config/proxy",       dst: "~/.config/proxy" }
-  - {src: ".config/bash",        dst: "~/.config/bash" }
-  - {src: ".config/shutter",     dst: "~/.config/shutter" }
-  - {src: ".config/volumeicon",  dst: "~/.config/volumeicon" }
-  - {src: ".config/yandex-disk", dst: "~/.config/yandex-disk" }
-  - {src: ".config/.Xresources", dst: "~/.config/.Xresources" }
-  - {src: ".xprofile",           dst: "~/.xprofile" }
-  - {src: ".config/pulse/default.pa", dst: "~/.config/pulse/default.pa" }
+  - {src: ".config/bin",         dst: ".config/bin" }
+  - {src: ".config/awesome",     dst: ".config/awesome" }
+  - {src: ".config/doublecmd",   dst: ".config/doublecmd" }
+  - {src: ".config/enchant",     dst: ".config/enchant" }
+  - {src: ".config/fontconfig",  dst: ".config/fontconfig" }
+  - {src: ".config/emacs",       dst: ".config/emacs" }
+  - {src: ".config/python",      dst: ".config/python" }
+  - {src: ".config/zsh",         dst: ".config/zsh" }
+  - {src: ".config/git",         dst: ".config/git" }
+  - {src: ".config/proxy",       dst: ".config/proxy" }
+  - {src: ".config/bash",        dst: ".config/bash" }
+  - {src: ".config/shutter",     dst: ".config/shutter" }
+  - {src: ".config/volumeicon",  dst: ".config/volumeicon" }
+  - {src: ".config/yandex-disk", dst: ".config/yandex-disk" }
+  - {src: ".config/.Xresources", dst: ".config/.Xresources" }
+  - {src: ".xprofile",           dst: ".xprofile" }
+  - {src: ".config/pulse/default.pa", dst: ".config/pulse/default.pa" }
 
 documents_path_map:
-  - {src: "~/cloud/Dropbox/Doc/blog",    dst: "~/doc/blog" }
-  - {src: "~/cloud/Dropbox/Doc/books",   dst: "~/doc/books" }
-  - {src: "~/cloud/Dropbox/Doc/develop", dst: "~/doc/develop" }
-  - {src: "~/cloud/Dropbox/Doc/other",   dst: "~/doc/other" }
-  - {src: "~/cloud/Dropbox/Doc/task",    dst: "~/doc/task" }
-  - {src: "~/cloud/Dropbox/Doc/work",    dst: "~/doc/work" }
-  - {src: "~/cloud/Dropbox/Projects",    dst: "~/projects/old" }
+  - {src: "Doc/blog",    dst: "doc/blog" }
+  - {src: "Doc/books",   dst: "doc/books" }
+  - {src: "Doc/develop", dst: "doc/develop" }
+  - {src: "Doc/other",   dst: "doc/other" }
+  - {src: "Doc/task",    dst: "doc/task" }
+  - {src: "Doc/work",    dst: "doc/work" }
+  - {src: "Projects",    dst: "projects/old" }
