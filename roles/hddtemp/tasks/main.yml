@@ -7,7 +7,6 @@
   file:
     path: /etc/systemd/system/hddtemp.service.d
     state: directory
-    recurse: yes
     mode: 0755
     group: root
     owner: root
@@ -33,10 +32,19 @@
     group: root
     owner: root
   become: yes
+  register: reg_settings
 
 - name: Enable and start hddtemp service
   service:
     name: hddtemp.service
     enabled: yes
+    state: started
+  become: yes
+
+- name: Restart hddtemp service if config changed
+  service:
+    name: hddtemp.service
+    enabled: yes
     state: restarted
+  when: reg_settings.changed
   become: yes

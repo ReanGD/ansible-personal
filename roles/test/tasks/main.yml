@@ -1,4 +1,5 @@
 ---
-- name: View new packages
-  shell: echo "{{ item }}"
-  with_cfg_file: "{{packages_file}} action=new host={{hostname_id}}"
+- name: get package info
+  pkg_manager:
+    command: get_info
+    config: "{{packages_file}}"

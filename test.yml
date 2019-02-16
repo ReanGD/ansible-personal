@@ -1,6 +1,7 @@
 ---
 - name: Test playbook
-  hosts: archsrv
+  # hosts: archsrv
+  hosts: local
   gather_facts: false
   environment:
     GNUPGHOME: /home/rean/.config/gnupg

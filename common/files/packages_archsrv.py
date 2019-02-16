@@ -35,5 +35,3 @@ grps += ["base", "base-devel"]
 
 packages = pkgs
 groups = grps
-ignore_packages = ["yaourt", "ansible"]
-ignore_groups = ["base", "base-devel"]
