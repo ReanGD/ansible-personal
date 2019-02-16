@@ -19,6 +19,8 @@ class StrError(RuntimeError):
 # pkg_manager: command=install_config config={{packages_file}}
 # pkg_manager: command=get_info config={{packages_file}}
 class ActionModule(ActionBase):
+    TRANSFERS_FILES = False
+
     def _get_var_install_user(self):
         if "install_user" not in self._task_vars:
             StrError("Not install fact 'install_user'")
@@ -38,11 +40,12 @@ class ActionModule(ActionBase):
         return result
 
     def _get_param_command(self):
-        command = self._task.args.get("command", "install")
-        if command is None or command.strip() == "":
-            raise StrError("Not found required param 'command'.")
+        param_name = "command"
+        result = self._task.args.get(param_name, "install")
+        if result is None or result.strip() == "":
+            raise StrError("Not found required param '{}'.".format(param_name))
 
-        return command.strip()
+        return result.strip()
 
     def _get_param_config_value(self, command):
         config = self._task.args.get("config", None)
@@ -60,11 +63,13 @@ class ActionModule(ActionBase):
         return {"packages": packages, "groups": groups}
 
     def _get_param_name(self, command):
-        name = self._task.args.get("name", None)
-        if name is None:
-            raise StrError("Not found required param 'name' for command '{}'.".format(command))
+        param_name = "name"
+        result = self._task.args.get(param_name, None)
+        if result is None:
+            raise StrError("Not found required param '{}' for command '{}'.".format(param_name,
+                                                                                    command))
 
-        return name
+        return result
 
     @staticmethod
     def _print_section(text, values):
