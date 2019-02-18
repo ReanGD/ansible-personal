@@ -95,7 +95,8 @@ class ActionModule(ActionBase):
             self._play_context.become_user = install_user
 
         try:
-            result = self._execute_module(module_name=name, module_args=args)
+            result = self._execute_module(module_name=name, module_args=args,
+                                          task_vars=self._task_vars)
             if result.get("failed"):
                 exception = result.get("exception", None)
                 if exception is not None:
@@ -147,7 +148,11 @@ class ActionModule(ActionBase):
         if task_vars is None:
             task_vars = dict()
 
+        self._supports_async = False
+        self._supports_check_mode = False
         result = super(ActionModule, self).run(tmp, task_vars)
+        del tmp  # tmp no longer has any effect
+
         self._task_vars = task_vars
         try:
             result.update(self._run())

@@ -62,7 +62,12 @@ class ActionModule(ActionBase):
         if task_vars is None:
             task_vars = dict()
 
+        self._supports_async = False
+        self._supports_check_mode = False
         result = super(ActionModule, self).run(tmp, task_vars)
+        del tmp  # tmp no longer has any effect
+
+        self._task_vars = task_vars
         try:
             result.update(self._run())
         except StrError as e:
