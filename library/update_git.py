@@ -98,7 +98,7 @@ def main():
         argument_spec=dict(
             dest=dict(default=None, required=True, type="path"),
             repo=dict(default=None, required=True, type="str"),
-        ),
+            ),
         supports_check_mode=False
     )
 
