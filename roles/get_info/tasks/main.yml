@@ -1,0 +1,5 @@
+---
+- name: get package info
+  pkg_manager:
+    command: get_info
+    config: "{{packages_file}}"

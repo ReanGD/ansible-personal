@@ -1,3 +1,6 @@
-#!/bin/bash
-cd "$(dirname "$0")"
-/usr/bin/python scripts/system/file_info.py
+#!/bin/bash	
+
+ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+
+cd $ROOT_DIR
+/usr/bin/ansible-playbook info.yml --ask-become-pass $@
