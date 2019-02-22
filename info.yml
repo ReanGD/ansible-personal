@@ -1,6 +1,6 @@
 ---
-- name: Update local mashine
-  hosts: local
+- name: Get info about "{{ variable_host }}"
+  hosts: "{{ variable_host }}"
   gather_facts: false
   pre_tasks:
     - include: common/tasks/init_facts.yml is_chroot_param=False

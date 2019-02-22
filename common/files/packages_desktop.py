@@ -42,6 +42,7 @@ pkgs += ["ttf-ms-fonts",
 # terminal
 pkgs += ["urxvt-perls",
          "zsh",
+         "libnewt",  # external dialog
          "oh-my-zsh-git",
          "zsh-syntax-highlighting",
          "fzf"]
