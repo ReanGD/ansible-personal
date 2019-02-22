@@ -118,6 +118,7 @@ class ActionModule(ActionBase):
         ActionModule._print_section("package, not installed", result.get("packages_not_installed"))
         ActionModule._print_section("package, not explicit", result.get("packages_not_explicit"))
         ActionModule._print_section("package, new", result.get("packages_new"))
+        ActionModule._print_section("package, new (required)", result.get("packages_new_required"))
         ActionModule._print_section("package, aur", result.get("packages_aur"))
         ActionModule._print_section("package, in group", result.get("packages_in_group"))
         ActionModule._print_section("package, not installed in group", result.get("packages_not_installed_in_group"))

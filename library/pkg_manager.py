@@ -13,12 +13,12 @@ class StrError(RuntimeError):
 
 class Pacman:
     def run(self, params):
-        res = run(["/usr/bin/pacman"] + params, capture_output=True)
+        res = run(["env", "LC_ALL=C", "/usr/bin/pacman"] + params, capture_output=True)
         res.check_returncode()
         return {it.strip() for it in res.stdout.decode("utf-8").split('\n') if it.strip() != ""}
 
     def is_run_success(self, params):
-        res = run(["/usr/bin/pacman"] + params, capture_output=True)
+        res = run(["env", "LC_ALL=C", "/usr/bin/pacman"] + params, capture_output=True)
         return not res.returncode
 
     def get_db_groups(self):
@@ -29,6 +29,18 @@ class Pacman:
 
     def get_local_packages(self):
         return self.run(["-Qq"])
+
+    def get_local_package_info(self, package_name):
+        return self.run(["-Qi", package_name])
+
+    def get_is_local_package_has_reverse_dependency(self, package_name):
+        for line in self.get_local_package_info(package_name):
+            if line.startswith("Required By") or line.startswith("Optional For"):
+                val = line.split(":", 1)[1].strip()
+                if val != "None":
+                    return True
+
+        return False
 
     def get_local_explicit_packages(self):
         return self.run(["-Qeq"])
@@ -150,7 +162,10 @@ def get_info(packages, groups):
     # ошибочные названия среди packages (packages_name_wrong)
     # неустановленные среди packages (packages_not_installed)
     # установленные как не explicit среди packages (packages_not_explicit)
-    # новые explicit пакеты, которых нет среди packages и пакетов groups (packages_new)
+    # новые explicit пакеты, которых нет среди packages и пакетов groups,
+    #   которые никому не требуются (packages_new)
+    # новые explicit пакеты, которых нет среди packages и пакетов groups,
+    #   которые кому-то нужны (packages_new_required)
     # пакеты среди packages, которые находятся в aur (packages_aur)
     # пакеты среди packages, которые относятся к пакетам в groups (packages_in_group)
     # пакеты входящие в groups, но не установленные (packages_not_installed_in_group)
@@ -172,10 +187,17 @@ def get_info(packages, groups):
     packages_name_wrong = packages.difference(db_packages, aur_packages)
     packages_not_installed = packages.difference(local_packages)
     packages_not_explicit = packages.difference(local_explicit_packages)
-    packages_new = local_explicit_packages.difference(packages, local_packages_for_groups)
     packages_aur = aur_packages.intersection(packages)
     packages_in_group = local_packages_for_groups.intersection(packages)
     packages_not_installed_in_group = db_packages_for_groups.difference(local_packages_for_groups)
+
+    packages_new = set()
+    packages_new_required = set()
+    for pkg_name in local_explicit_packages.difference(packages, local_packages_for_groups):
+        if pacman.get_is_local_package_has_reverse_dependency(pkg_name):
+            packages_new_required.add(pkg_name)
+        else:
+            packages_new.add(pkg_name)
 
     return {
         "groups_name_wrong": list(groups_name_wrong),
@@ -183,6 +205,7 @@ def get_info(packages, groups):
         "packages_not_installed": list(packages_not_installed),
         "packages_not_explicit": list(packages_not_explicit),
         "packages_new": list(packages_new),
+        "packages_new_required": list(packages_new_required),
         "packages_aur": list(packages_aur),
         "packages_in_group": list(packages_in_group),
         "packages_not_installed_in_group": list(packages_not_installed_in_group),
