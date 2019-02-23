@@ -49,13 +49,13 @@ class Pacman:
         if len(group_names) == 0:
             return set()
 
-        return { line.split()[1] for line in self.run(["-Sg"] + list(group_names)) }
+        return {line.split()[1] for line in self.run(["-Sg"] + list(group_names))}
 
     def get_local_packages_for_groups(self, group_names):
         if len(group_names) == 0:
             return set()
 
-        return { line.split()[1] for line in self.run(["-Qg"] + list(group_names)) }
+        return {line.split()[1] for line in self.run(["-Qg"] + list(group_names))}
 
 
 class Aur:
@@ -186,7 +186,8 @@ def get_info(packages, groups):
     groups_name_wrong = groups.difference(db_groups)
     packages_name_wrong = packages.difference(db_packages, aur_packages)
     packages_not_installed = packages.difference(local_packages)
-    packages_not_explicit = packages.difference(local_explicit_packages)
+    packages_not_explicit = packages.difference(local_explicit_packages).intersection(
+        local_packages)
     packages_aur = aur_packages.intersection(packages)
     packages_in_group = local_packages_for_groups.intersection(packages)
     packages_not_installed_in_group = db_packages_for_groups.difference(local_packages_for_groups)
