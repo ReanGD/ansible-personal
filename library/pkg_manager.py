@@ -115,10 +115,10 @@ class InstallManager:
 
             self._installed_packages.append(name)
 
-    def install_by_yay(self, name, as_explicitly):
+    def install_by_yay(self, name, as_explicit):
         params = ["env", "LC_ALL=C", "yay", "-S", "--noconfirm"]
-        if as_explicitly is not None:
-            if as_explicitly:
+        if as_explicit is not None:
+            if as_explicit:
                 params += ["--asexplicit"]
             else:
                 params += ["--asdeps"]
@@ -143,7 +143,10 @@ def install(module, packages):
         mng.install_by_makepkg("yay")
         packages.discard("yay")
 
-    for name in packages:
+    for name in packages.difference(pacman.get_local_packages()):
+        mng.install_by_yay(name, None)
+
+    for name in packages.difference(pacman.get_local_explicit_packages()):
         mng.install_by_yay(name, True)
 
     cnt = len(mng.installed_packages)
