@@ -31,8 +31,16 @@
     mode: 0644
     group: root
     owner: root
+    remote_src: yes
   become: yes
   register: reg_settings
+
+- name: Remove new hddtemp settings file
+  file:
+    path: /tmp/customexec.conf
+    state: absent
+  become: yes
+  changed_when: false
 
 - name: Enable and start hddtemp service
   service:
