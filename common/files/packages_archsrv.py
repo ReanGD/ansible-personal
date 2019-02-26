@@ -30,6 +30,9 @@ pkgs += ["git"]
 # VM
 pkgs += ["docker", "docker-compose"]
 
+# media
+pkgs += ["plex-media-server"]
+
 # groups
 grps += ["base", "base-devel"]
 

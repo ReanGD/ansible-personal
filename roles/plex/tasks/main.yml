@@ -1,0 +1,28 @@
+---
+- name: Install plex media server
+  pkg_manager:
+    name: plex-media-server
+
+- name: Enable and start service plex media server
+  service:
+    name: plexmediaserver.service
+    enabled: yes
+    state: started
+  become: yes
+
+- name: Install kinopoisk plugin
+  git:
+    repo: https://github.com/amirotin/Kinopoisk.bundle.git
+    dest: /opt/plexmediaserver/Resources/Plug-ins-cc260c476/Kinopoisk.bundle
+    clone: yes
+    update: yes
+  become: yes
+  register: reg_kinopoisk
+
+- name: Restart plexmediaserver service if plugin changed
+  service:
+    name: plexmediaserver.service
+    enabled: yes
+    state: restarted
+  when: reg_kinopoisk.changed
+  become: yes

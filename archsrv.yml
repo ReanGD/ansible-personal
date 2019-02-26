@@ -19,5 +19,6 @@
     - pkgcacheclean
     - docker
     - automount
+    - plex
     - hddtemp
     - packages
