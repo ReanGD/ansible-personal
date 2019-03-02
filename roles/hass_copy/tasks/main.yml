@@ -1,0 +1,6 @@
+---
+- name: Synchronization dotfiles-hass from remote to local host
+  synchronize:
+    mode: pull
+    src: /hass/dotfiles-hass
+    dest: /home/{{main_user}}/projects/home

@@ -9,15 +9,22 @@
   set_fact:
     main_user: rean
     install_user: aur_builder
-    is_chroot: "{{is_chroot_param}}"
+    is_chroot: "{{ is_chroot_param }}"
     root_dir: "{{ inventory_dir }}"
     packages_dir: "{{ inventory_dir }}/common/files"
 
-- name: Find board uuid
+- name: Find board uuid for x86_64
   shell: cat /sys/class/dmi/id/product_name
   register: reg_product_name
   changed_when: false
   become: yes
+  when: ansible_facts['architecture'] == 'x86_64'
+
+- name: Find board uuid for armv7l
+  shell: grep -Po '^Serial\s*:\s*\K[[:xdigit:]]{16}' /proc/cpuinfo
+  register: reg_product_name
+  changed_when: false
+  when: ansible_facts['architecture'] == 'armv7l'
 
 - name: Set archhost facts
   set_fact:
@@ -57,3 +64,16 @@
     swappiness: 1
     packages_file: "{{packages_dir}}/packages_archsrv.py"
   when: reg_product_name.stdout == 'System Product Name'
+
+- name: Set hass facts
+  set_fact:
+    add_dop_user: False
+    install_lan: True
+    install_wifi: False
+    hostname_id: "hass"
+    set_ssh_access_keys: False
+    boot_ssd: False
+    swap_size: 1
+    swappiness: 1
+    packages_file: "{{packages_dir}}/packages_hass.py"
+  when: reg_product_name.stdout == '00000000bed57e85'

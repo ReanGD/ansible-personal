@@ -98,15 +98,15 @@ case $MENU_ID in
 	;;
   "3")
 	cd $ROOT_DIR
-	echo "Not implement"
+	/usr/bin/ansible-playbook tasks/hass/main_base.yml --ask-become-pass --ask-vault-pass
 	;;
   "4")
 	cd $ROOT_DIR
-	echo "Not implement"
+	/usr/bin/ansible-playbook tasks/hass/main_update.yml --ask-become-pass --ask-vault-pass
 	;;
   "5")
 	cd $ROOT_DIR
-	/usr/bin/ansible-playbook hass_copy.yml
+	ehco "Not implement"
 	;;	
   "6")
 	exit 1
