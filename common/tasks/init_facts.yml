@@ -15,14 +15,14 @@
 
 - name: Find board uuid for x86_64
   shell: cat /sys/class/dmi/id/product_name
-  register: reg_product_name
+  register: reg_product_name_x86_64
   changed_when: false
   become: yes
   when: ansible_facts['architecture'] == 'x86_64'
 
 - name: Find board uuid for armv7l
   shell: grep -Po '^Serial\s*:\s*\K[[:xdigit:]]{16}' /proc/cpuinfo
-  register: reg_product_name
+  register: reg_product_name_armv7l
   changed_when: false
   when: ansible_facts['architecture'] == 'armv7l'
 
@@ -37,7 +37,7 @@
     swap_size: 35
     swappiness: 1
     packages_file: "{{packages_dir}}/packages_desktop.py"
-  when: reg_product_name.stdout == 'MS-7978'
+  when: ansible_facts['architecture'] == 'x86_64' and reg_product_name_x86_64.stdout == 'MS-7978'
 
 - name: Set archnote facts (xiaomi)
   set_fact:
@@ -50,7 +50,7 @@
     swap_size: 8
     swappiness: 20
     packages_file: "{{packages_dir}}/packages_desktop.py"
-  when: reg_product_name.stdout == 'TM1613'
+  when: ansible_facts['architecture'] == 'x86_64' and reg_product_name_x86_64.stdout == 'TM1613'
 
 - name: Set archsrv facts
   set_fact:
@@ -63,7 +63,7 @@
     swap_size: 35
     swappiness: 1
     packages_file: "{{packages_dir}}/packages_archsrv.py"
-  when: reg_product_name.stdout == 'System Product Name'
+  when: ansible_facts['architecture'] == 'x86_64' and reg_product_name_x86_64.stdout == 'System Product Name'
 
 - name: Set hass facts
   set_fact:
@@ -76,4 +76,4 @@
     swap_size: 1
     swappiness: 1
     packages_file: "{{packages_dir}}/packages_hass.py"
-  when: reg_product_name.stdout == '00000000bed57e85'
+  when: ansible_facts['architecture'] == 'armv7l' and reg_product_name_armv7l.stdout == '00000000bed57e85'

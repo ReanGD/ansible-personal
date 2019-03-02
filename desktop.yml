@@ -24,7 +24,7 @@
     - dotfiles
     - xorg
     - lightdm
-    - go_env
+    # - go_env
     - ups
     - packages
     - clear
