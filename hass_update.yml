@@ -1,5 +1,5 @@
 ---
-- name: Copy settings from home assistant to local host
+- name: Update home assistant
   hosts: hass
   gather_facts: false
   pre_tasks:

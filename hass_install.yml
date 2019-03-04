@@ -1,0 +1,15 @@
+---
+- name: Base install home assistant
+  hosts: hass
+  gather_facts: false
+  pre_tasks:
+    - include: common/tasks/init_facts.yml is_chroot_param=False
+  roles:
+    - locale
+    - users
+    # - include: "{{tasks_dir}}/common/time.yml"
+    # - include: "{{tasks_dir}}/common/systemd_cfg.yml"
+    # - include: "{{tasks_dir}}/hass/rsync.yml"
+    # - include: "{{tasks_dir}}/hass/mosquitto.yml"
+    # - include: "{{tasks_dir}}/hass/hass_install.yml"
+    # - include: "{{tasks_dir}}/hass/hass_update.yml"

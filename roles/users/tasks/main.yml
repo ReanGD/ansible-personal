@@ -34,9 +34,8 @@
     append: no
     create_home: yes
     group: users
-    groups: games,video,audio,optical,storage,power{{docker_group}}
+    groups: video,audio,storage,power,uucp{{docker_group}}
     password: "{{main_user_password}}"
-    uid: 1000
   become: yes
 
 - name: Create dop user
@@ -45,7 +44,7 @@
     append: no
     create_home: yes
     group: users
-    groups: games,video,audio,optical,storage,power
+    groups: video,audio,storage,power
     password: "{{dop_user_password}}"
     uid: 1001
   when: add_dop_user == True
@@ -67,4 +66,11 @@
     mode: 0440
     group: root
     owner: root
+  become: yes
+
+- name: Remove the user 'alarm'
+  user:
+    name: alarm
+    state: absent
+    remove: yes
   become: yes

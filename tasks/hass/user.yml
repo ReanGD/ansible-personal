@@ -1,7 +1,0 @@
---- # abs_path, without dependencies
-- name: Remove the user 'alarm'
-  user:
-    name: alarm
-    state: absent
-    remove: yes
-  become: yes

@@ -98,7 +98,7 @@ case $MENU_ID in
 	;;
   "3")
 	cd $ROOT_DIR
-	echo "Not implement"
+	/usr/bin/ansible-playbook hass_install.yml --ask-become-pass --ask-vault-pass
 	;;
   "4")
 	cd $ROOT_DIR
