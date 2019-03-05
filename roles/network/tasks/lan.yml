@@ -1,5 +1,5 @@
 ---
-- name: Copy systemd-networkd configuration
+- name: Copy systemd-networkd configuration for new interface
   copy:
     src: wired.network
     dest: /etc/systemd/network/wired.network
@@ -7,6 +7,17 @@
     group: root
     mode: 0644
   become: yes
+  when: network_type == "lan"
+
+- name: Copy systemd-networkd configuration for old interface
+  copy:
+    src: eth0.network
+    dest: /etc/systemd/network/eth0.network
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  when: network_type == "lan_old"
 
 - name: Create symbolic links for /etc/resolv.conf
   file:

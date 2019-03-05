@@ -1,0 +1,8 @@
+[Match]
+Name=eth0
+
+[Network]
+DHCP=ipv4
+# disable ipv6
+LinkLocalAddressing=no
+IPv6AcceptRA=no

@@ -5,7 +5,7 @@
   when: is_chroot == False
 
 - include: lan.yml
-  when: install_lan == True
+  when: network_type == "lan" or network_type == "lan_old"
 
 - include: wifi.yml
-  when: install_wifi == True and is_chroot == False
+  when: network_type == "wifi" and is_chroot == False

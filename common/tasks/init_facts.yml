@@ -29,8 +29,7 @@
 - name: Set archhost facts
   set_fact:
     add_dop_user: False
-    install_lan: True
-    install_wifi: False
+    network_type: "lan"
     hostname_id: "archhost"
     set_ssh_access_keys: True
     boot_ssd: True
@@ -42,8 +41,7 @@
 - name: Set archnote facts (xiaomi)
   set_fact:
     add_dop_user: True
-    install_lan: False
-    install_wifi: True
+    network_type: "wifi"
     hostname_id: "archnote"
     set_ssh_access_keys: True
     boot_ssd: True
@@ -55,8 +53,7 @@
 - name: Set archsrv facts
   set_fact:
     add_dop_user: False
-    install_lan: True
-    install_wifi: False
+    network_type: "lan"
     hostname_id: "archsrv"
     set_ssh_access_keys: False
     boot_ssd: False
@@ -68,8 +65,7 @@
 - name: Set hass facts
   set_fact:
     add_dop_user: False
-    install_lan: True
-    install_wifi: False
+    network_type: "lan_old"
     hostname_id: "hass"
     set_ssh_access_keys: False
     boot_ssd: False
