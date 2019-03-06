@@ -1,11 +1,11 @@
 ---
 - name: Copy pacman configuration
   copy:
-    src=pacman.conf
-    dest=/etc/pacman.conf
-    mode=0644
-    owner=root
-    group=root
+    src: "{% if x86_64 %}pacman.conf{% else %}pacman_arm.conf{% endif %}"
+    dest: /etc/pacman.conf
+    mode: 0644
+    owner: root
+    group: root
   become: yes
 
 - name: Update pacman cache
@@ -18,6 +18,7 @@
 - name: install yay
   pkg_manager:
     name: yay
+  when: x86_64
 
 - name: Install base packages for wifi
   pkg_manager:

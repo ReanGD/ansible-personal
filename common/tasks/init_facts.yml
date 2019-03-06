@@ -12,19 +12,21 @@
     is_chroot: "{{ is_chroot_param }}"
     root_dir: "{{ inventory_dir }}"
     packages_dir: "{{ inventory_dir }}/common/files"
+    x86_64: "{{ ansible_facts['architecture'] == 'x86_64' }}"
+    arm: "{{ansible_facts['architecture'] == 'armv7l'}}"
 
 - name: Find board uuid for x86_64
   shell: cat /sys/class/dmi/id/product_name
   register: reg_product_name_x86_64
   changed_when: false
   become: yes
-  when: ansible_facts['architecture'] == 'x86_64'
+  when: x86_64
 
 - name: Find board uuid for armv7l
   shell: grep -Po '^Serial\s*:\s*\K[[:xdigit:]]{16}' /proc/cpuinfo
   register: reg_product_name_armv7l
   changed_when: false
-  when: ansible_facts['architecture'] == 'armv7l'
+  when: arm
 
 - name: Set archhost facts
   set_fact:
@@ -36,7 +38,7 @@
     swap_size: 35
     swappiness: 1
     packages_file: "{{packages_dir}}/packages_desktop.py"
-  when: ansible_facts['architecture'] == 'x86_64' and reg_product_name_x86_64.stdout == 'MS-7978'
+  when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7978'
 
 - name: Set archnote facts (xiaomi)
   set_fact:
@@ -48,7 +50,7 @@
     swap_size: 8
     swappiness: 20
     packages_file: "{{packages_dir}}/packages_desktop.py"
-  when: ansible_facts['architecture'] == 'x86_64' and reg_product_name_x86_64.stdout == 'TM1613'
+  when: x86_64 and reg_product_name_x86_64.stdout == 'TM1613'
 
 - name: Set archsrv facts
   set_fact:
@@ -60,7 +62,7 @@
     swap_size: 35
     swappiness: 1
     packages_file: "{{packages_dir}}/packages_archsrv.py"
-  when: ansible_facts['architecture'] == 'x86_64' and reg_product_name_x86_64.stdout == 'System Product Name'
+  when: x86_64 and reg_product_name_x86_64.stdout == 'System Product Name'
 
 - name: Set hass facts
   set_fact:
@@ -72,4 +74,4 @@
     swap_size: 1
     swappiness: 1
     packages_file: "{{packages_dir}}/packages_hass.py"
-  when: ansible_facts['architecture'] == 'armv7l' and reg_product_name_armv7l.stdout == '00000000bed57e85'
+  when: arm and reg_product_name_armv7l.stdout == '00000000bed57e85'

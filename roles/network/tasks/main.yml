@@ -1,6 +1,7 @@
 ---
 - name: Set hostname
-  hostname: name={{hostname_id}}
+  hostname:
+    name: "{{hostname_id}}"
   become: yes
   when: is_chroot == False
 
