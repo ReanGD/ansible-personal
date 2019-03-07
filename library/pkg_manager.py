@@ -82,21 +82,23 @@ class Aur:
 
 
 class InstallManager:
-    def __init__(self, aur, module):
-        self._aur = aur
+    def __init__(self, module):
         self._module = module
         self._installed_packages = []
 
-    @property
-    def installed_packages(self):
-        return self._installed_packages
+    def _run_install_command(self, args, cwd=None):
+        rc, stdout, stderr = self._module.run_command(args, cwd=cwd)
+        if rc != 0:
+            msg = "Failed to install '{}', stdout: {}, stderr: {}".format(name, stdout, stderr)
+            raise StrError(msg)
 
-    def install_by_makepkg(self, name):
+    def _install_by_makepkg(self, name):
         import tarfile
         import tempfile
 
-        url = self._aur.get_package_load_url(name)
-        f = self._aur.open_url(url)
+        aur = Aur()
+        url = aur.get_package_load_url(name)
+        f = aur.open_url(url)
         with tempfile.TemporaryDirectory() as tmpdir:
             install_dir = os.path.join(tmpdir, name)
             tar_file_path = os.path.join(tmpdir, "{}.tar.gz".format(name))
@@ -108,50 +110,47 @@ class InstallManager:
 
             params = ["makepkg", "--syncdeps", "--install", "--noconfirm", "--skippgpcheck",
                       "--needed"]
-            rc, stdout, stderr = self._module.run_command(params, cwd=install_dir)
-            if rc != 0:
-                msg = "Failed to install '{}', stdout: {}, stderr: {}".format(name, stdout, stderr)
-                raise StrError(msg)
-
+            self._run_install_command(params, install_dir)
             self._installed_packages.append(name)
 
-    def install_by_yay(self, name, as_explicit):
-        params = ["env", "LC_ALL=C", "yay", "-S", "--noconfirm"]
+    def _install_by_manager(self, name, as_explicit, manager):
+        params = ["env", "LC_ALL=C", manager, "-S", "--noconfirm"]
         if as_explicit is not None:
             if as_explicit:
                 params += ["--asexplicit"]
             else:
                 params += ["--asdeps"]
 
-        rc, stdout, stderr = self._module.run_command(params + [name])
-        if rc != 0:
-            msg = "Failed to install '{}', stdout: {}, stderr: {}".format(name, stdout, stderr)
-            raise StrError(msg)
-
+        self._run_install_command(params + [name])
         self._installed_packages.append(name)
+
+    def install(self, packages):
+        pacman = Pacman()
+        packages.difference_update(pacman.get_local_explicit_packages())
+
+        if "yay" in packages:
+            self._install_by_makepkg("yay")
+            packages.discard("yay")
+
+        local_packages = pacman.get_local_packages()
+        manager = "yay" if "yay" in local_packages else "pacman"
+
+        for name in packages.difference(local_packages):
+            self._install_by_manager(name, None, manager)
+
+        for name in packages.difference(pacman.get_local_explicit_packages()):
+            self._install_by_manager(name, True, manager)
+
+        return self._installed_packages
 
 
 def install(module, packages):
-    aur = Aur()
-    pacman = Pacman()
-    mng = InstallManager(aur, module)
-
     packages = {it.strip() for it in packages}
-    packages.difference_update(pacman.get_local_explicit_packages())
 
-    if "yay" in packages:
-        mng.install_by_makepkg("yay")
-        packages.discard("yay")
-
-    for name in packages.difference(pacman.get_local_packages()):
-        mng.install_by_yay(name, None)
-
-    for name in packages.difference(pacman.get_local_explicit_packages()):
-        mng.install_by_yay(name, True)
-
-    cnt = len(mng.installed_packages)
+    installed_packages = InstallManager(module).install(packages)
+    cnt = len(installed_packages)
     if cnt != 0:
-        msg = "Installed {} package(s): {}".format(cnt, ",".join(mng.installed_packages))
+        msg = "Installed {} package(s): {}".format(cnt, ",".join(installed_packages))
         changed = True
     else:
         msg = "Package(s) already installed"
