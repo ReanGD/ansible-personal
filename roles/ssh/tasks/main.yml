@@ -14,5 +14,7 @@
     file: secrets.yml
 
 - include: keys.yml
+  when: set_ssh_access_keys == True
+
 - include: sshd.yml
 - include: known_hosts.yml

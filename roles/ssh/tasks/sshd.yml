@@ -26,6 +26,15 @@
     owner: "{{main_user}}"
   when: hostname_id == "archsrv"
 
+- name: Add public key for hass
+  copy:
+    content: "{{hass_public_key}}"
+    dest: "/home/{{main_user}}/.ssh/authorized_keys"
+    mode: 0400
+    group: users
+    owner: "{{main_user}}"
+  when: hostname_id == "hass"
+
 - name: Copy sshd config
   copy:
     src: sshd_config
@@ -34,7 +43,6 @@
     group: root
     owner: root
   become: yes
-  when: set_ssh_access_keys == True
 
 - name: Install package for ssh server
   pkg_manager:

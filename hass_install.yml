@@ -9,6 +9,7 @@
     - users
     - network
     - packages_manager
+    - ssh
     # - include: "{{tasks_dir}}/common/time.yml"
     # - include: "{{tasks_dir}}/common/systemd_cfg.yml"
     # - include: "{{tasks_dir}}/hass/rsync.yml"

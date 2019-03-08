@@ -6,7 +6,6 @@
     mode: 0400
     group: users
     owner: "{{main_user}}"
-  when: set_ssh_access_keys == True
 
 - name: Install ssh keys
   copy:
@@ -26,4 +25,3 @@
     - { key: "{{ archsrv_private_key }}", name: "archsrv" }
   loop_control:
     label: "{{ item.name }}"
-  when: set_ssh_access_keys == True
