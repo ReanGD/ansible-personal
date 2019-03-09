@@ -86,11 +86,13 @@ class InstallManager:
         self._module = module
         self._installed_packages = []
 
-    def _run_install_command(self, args, cwd=None):
+    def _run_install_command(self, args, name, cwd=None):
         rc, stdout, stderr = self._module.run_command(args, cwd=cwd)
         if rc != 0:
             msg = "Failed to install '{}', stdout: {}, stderr: {}".format(name, stdout, stderr)
             raise StrError(msg)
+
+        self._installed_packages.append(name)
 
     def _install_by_makepkg(self, name):
         import tarfile
@@ -110,19 +112,21 @@ class InstallManager:
 
             params = ["makepkg", "--syncdeps", "--install", "--noconfirm", "--skippgpcheck",
                       "--needed"]
-            self._run_install_command(params, install_dir)
-            self._installed_packages.append(name)
+            self._run_install_command(params, name, install_dir)
 
     def _install_by_manager(self, name, as_explicit, manager):
-        params = ["env", "LC_ALL=C", manager, "-S", "--noconfirm"]
+        if manager == "pacman":
+            params = ["env", "LC_ALL=C", "sudo", "pacman", "-S", "--noconfirm"]
+        else:
+            params = ["env", "LC_ALL=C", manager, "-S", "--noconfirm"]
+
         if as_explicit is not None:
             if as_explicit:
                 params += ["--asexplicit"]
             else:
                 params += ["--asdeps"]
 
-        self._run_install_command(params + [name])
-        self._installed_packages.append(name)
+        self._run_install_command(params + [name], name)
 
     def install(self, packages):
         pacman = Pacman()

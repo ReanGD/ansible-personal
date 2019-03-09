@@ -10,8 +10,11 @@
     - network
     - packages_manager
     - ssh
-    # - include: "{{tasks_dir}}/common/time.yml"
-    # - include: "{{tasks_dir}}/common/systemd_cfg.yml"
+    - swap
+    - systemd_configure
+    - time
+    - hddtemp
+    # - packages
     # - include: "{{tasks_dir}}/hass/rsync.yml"
     # - include: "{{tasks_dir}}/hass/mosquitto.yml"
     # - include: "{{tasks_dir}}/hass/hass_install.yml"
