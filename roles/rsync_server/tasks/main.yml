@@ -1,0 +1,11 @@
+---
+- name: Install rsync package
+  pkg_manager:
+    name: rsync
+
+- name: Enable and start rsyncd service
+  service:
+    name: rsyncd.service
+    enabled: yes
+    state: started
+  become: yes

@@ -14,8 +14,8 @@
     - systemd_configure
     - time
     - hddtemp
+    - rsync_server
     # - packages
-    # - include: "{{tasks_dir}}/hass/rsync.yml"
     # - include: "{{tasks_dir}}/hass/mosquitto.yml"
     # - include: "{{tasks_dir}}/hass/hass_install.yml"
     # - include: "{{tasks_dir}}/hass/hass_update.yml"
