@@ -1,0 +1,11 @@
+---
+- name: Install mosquitto package
+  pkg_manager:
+    name: mosquitto
+
+- name: Enable and start mosquitto service
+  service:
+    name: mosquitto.service
+    enabled: yes
+    state: started
+  become: yes
