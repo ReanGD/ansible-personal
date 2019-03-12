@@ -1,0 +1,58 @@
+---
+- name: Install packages for install homeassistant
+  pkg_manager:
+    name: python-virtualenv,libffi,protobuf,python-pip,gcc,make,pkgconf,libudev0-shim
+
+- name: Udev rule for Z-Wave stick
+  copy:
+    src: 99-usb-serial.rules
+    dest: /etc/udev/rules.d/99-usb-serial.rules
+    mode: 644
+    group: root
+    owner: root
+  become: yes
+
+- name: Turn off "Disco lights"
+  shell: echo -e -n "\x01\x08\x00\xF2\x51\x01\x00\x05\x01\x51" > /dev/serial/by-id/usb-0658_0200-if00
+  become: yes
+
+- name: Create dirs for homeassistant
+  file:
+    path: "{{item}}"
+    state: directory
+    mode: 0755
+    group: users
+    owner: rean
+  with_items:
+    - /hass
+    - /hass/venv
+    - /hass/dotfiles-hass
+  become: yes
+
+- name: Install homeassistant
+  pip:
+    name: homeassistant
+    virtualenv: /hass/venv
+    virtualenv_site_packages: yes
+
+- name: Enable port 80 for hass
+  capabilities:
+    path: /hass/venv/bin/python
+    capability: cap_net_bind_service=+ep
+    state: present
+  become: yes
+
+- name: Create service homeassistant
+  copy:
+    src: hass.service
+    dest: /etc/systemd/system/hass.service
+    mode: 0644
+    group: root
+    owner: root
+  become: yes
+
+- name: Enable homeassistant service
+  service:
+    name: hass.service
+    enabled: yes
+  become: yes

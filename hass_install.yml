@@ -16,6 +16,6 @@
     - hddtemp
     - rsync_server
     - mosquitto
+    - hass_server
     # - packages
-    # - include: "{{tasks_dir}}/hass/hass_install.yml"
     # - include: "{{tasks_dir}}/hass/hass_update.yml"
