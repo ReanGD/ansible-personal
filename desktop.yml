@@ -16,6 +16,7 @@
     - swap
     - systemd_configure
     - time
+    - font
     - pkgcacheclean
     - docker
     - automount
