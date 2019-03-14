@@ -4,11 +4,12 @@ ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 cd $ROOT_DIR
 
 MENU_ID=$(whiptail --clear --title 'Get info about host' \
---menu "Enter your choice:" 15 60 4 \
+--menu "Enter your choice:" 15 60 5 \
 	"1" "archhost" \
 	"2" "archnote" \
 	"3" "archsrv" \
-	"4" "Quit" \
+	"4" "hass" \
+	"5" "Quit" \
 	3>&1 1>&2 2>&3)
 
 if [ $? != 0 ]; then
@@ -26,6 +27,9 @@ case $MENU_ID in
 	/usr/bin/ansible-playbook info.yml --ask-become-pass --extra-vars "variable_host=archsrv" $@
 	;;
   "4")
+	/usr/bin/ansible-playbook info.yml --ask-become-pass --extra-vars "variable_host=hass" $@
+	;;
+  "5")
 	exit 1
 	;;
 esac

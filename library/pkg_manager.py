@@ -178,16 +178,20 @@ def get_info(packages, groups):
 
     packages = {it.strip() for it in packages}
     groups = {it.strip() for it in groups}
-    pacman = Pacman()
-    aur = Aur()
 
+    pacman = Pacman()
     db_groups = pacman.get_db_groups()
     db_packages = pacman.get_db_packages()
-    aur_packages = aur.get_db_packages()
     local_packages = pacman.get_local_packages()
     local_explicit_packages = pacman.get_local_explicit_packages()
     db_packages_for_groups = pacman.get_db_packages_for_groups(groups)
     local_packages_for_groups = pacman.get_local_packages_for_groups(groups)
+
+    if "yay" in local_packages:
+        aur = Aur()
+        aur_packages = aur.get_db_packages()
+    else:
+        aur_packages = set()
 
     groups_name_wrong = groups.difference(db_groups)
     packages_name_wrong = packages.difference(db_packages, aur_packages)
