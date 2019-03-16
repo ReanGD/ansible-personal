@@ -3,24 +3,35 @@
   pkg_manager:
     name: go
 
-- name: Install go utils without sudo
+- name: Install go utils
   command: go get -u {{item}}
   environment:
     GOPATH: /home/{{main_user}}/.local/share/go
   loop:
-    - 'github.com/nsf/gocode'
-    - 'github.com/rogpeppe/godef'
-    - 'github.com/jstemmer/gotags'
-    - 'github.com/kisielk/errcheck'
-    - 'golang.org/x/tools/cmd/guru'
-    - 'github.com/golang/lint/golint'
-    - 'golang.org/x/tools/cmd/gorename'
-    - 'golang.org/x/tools/cmd/goimports'  
+    # for auto-completion
+    - github.com/mdempsky/gocode
+    # for symbol search in the current file
+    - github.com/ramya-rao-a/go-outline
+    # for symbol search in the current workspace
+    - github.com/acroca/go-symbols
+    # for auto-completion of unimported packages
+    - github.com/uudashr/gopkgs/cmd/gopkgs
+    #  for the 'Find all References' feature
+    - golang.org/x/tools/cmd/guru
+    # for renaming symbols
+    - golang.org/x/tools/cmd/gorename    
+    # for formatting code
+    - github.com//sqs/goreturns
+    # for the 'Go to Definition' feature
+    - github.com/rogpeppe/godef
+    # for the documentation that appears on hover
+    - golang.org/x/tools/cmd/godoc
+    # for linting
+    - golang.org/x/lint/golint
+    # for debugging
+    - github.com/go-delve/delve/cmd/dlv
 
-- name: Install go utils with sudo
-  command: go get -u {{item}}
-  become: yes
-  environment:
-    GOPATH: /home/{{main_user}}/.local/share/go
-  loop:
-    - 'golang.org/x/tools/cmd/godoc'
+    # - 'github.com/jstemmer/gotags'
+    # - 'github.com/kisielk/errcheck'
+
+
