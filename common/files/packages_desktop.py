@@ -105,7 +105,7 @@ pkgs += ["firefox",
 pkgs += ["protobuf"]
 
 # cpp
-pkgs += ["boost", "clang", "gtest", "zeromq", "valgrind", "cmake", "gdb"]
+pkgs += ["boost", "clang", "gtest", "zeromq", "valgrind", "cmake", "clion-cmake", "gdb"]
 
 # rust
 # pkgs += ["rust", "cargo", "rust-src", "rust-racer"]
@@ -140,7 +140,7 @@ pkgs += ["python",
          ]
 
 # text editors & ide
-pkgs += ["emacs", "vim", "sublime-text-dev", "clion"]
+pkgs += ["emacs", "vim", "sublime-text-dev", "code", "clion"]
 if is_notebook:
     pkgs += ["pycharm-community-edition"]
 else:
@@ -202,6 +202,9 @@ pkgs += ["playonlinux",
         "steam",
         "lib32-libldap",  # for WOT ?
         "minecraft"]
+
+# messengers
+pkgs += ["telegram-desktop"]
 
 # groups
 grps += ["base", "base-devel"]
