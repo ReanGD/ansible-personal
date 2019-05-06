@@ -21,21 +21,12 @@ class StrError(RuntimeError):
 class ActionModule(ActionBase):
     TRANSFERS_FILES = False
 
-    def _get_var_install_user(self):
-        if "install_user" not in self._task_vars:
-            StrError("Not install fact 'install_user'")
-        result = self._task_vars["install_user"].strip()
-        if result == "":
-            StrError("Fact 'install_user' is empty")
-
-        return result
-
     def _get_var_hostname_id(self):
         if "hostname_id" not in self._task_vars:
-            StrError("Not install fact 'hostname_id'")
+            raise StrError("Not install fact 'hostname_id'")
         result = self._task_vars["hostname_id"].strip()
         if result == "":
-            StrError("Fact 'hostname_id' is empty")
+            raise StrError("Fact 'hostname_id' is empty")
 
         return result
 
@@ -85,29 +76,16 @@ class ActionModule(ActionBase):
         display.error(text, wrap_text=False)
 
     def _call_module(self, name, args):
-        install_user = self._get_var_install_user()
-        orig_become = self._play_context.become
-        orig_become_user = self._play_context.become_user
+        result = self._execute_module(module_name=name, module_args=args,
+                                        task_vars=self._task_vars)
+        if result.get("failed"):
+            exception = result.get("exception", None)
+            if exception is not None:
+                display.error(exception, wrap_text=False)
 
-        if orig_become is None or orig_become is False:
-            self._play_context.become = True
-        if orig_become_user is None or orig_become_user != install_user:
-            self._play_context.become_user = install_user
+            raise StrError(result.get("msg", "Unknown error in module {}".format(name)))
 
-        try:
-            result = self._execute_module(module_name=name, module_args=args,
-                                          task_vars=self._task_vars)
-            if result.get("failed"):
-                exception = result.get("exception", None)
-                if exception is not None:
-                    display.error(exception, wrap_text=False)
-
-                raise StrError(result.get("msg", "Unknown error in module {}".format(name)))
-
-            return result
-        finally:
-            self._play_context.become = orig_become
-            self._play_context.become_user = orig_become_user
+        return result
 
     def _get_info(self, packages, groups):
         args = {"command": "get_info", "packages": packages, "groups": groups}
@@ -147,14 +125,15 @@ class ActionModule(ActionBase):
 
     def run(self, tmp=None, task_vars=None):
         if task_vars is None:
-            task_vars = dict()
+            self._task_vars = dict()
+        else:
+            self._task_vars = task_vars
 
         self._supports_async = False
         self._supports_check_mode = False
-        result = super(ActionModule, self).run(tmp, task_vars)
+        result = super(ActionModule, self).run(tmp, self._task_vars)
         del tmp  # tmp no longer has any effect
 
-        self._task_vars = task_vars
         try:
             result.update(self._run())
         except StrError as e:
@@ -163,6 +142,6 @@ class ActionModule(ActionBase):
         except Exception:
             ActionModule._print_exception(format_exc())
             result['failed'] = True
-            result['msg'] = "Error in action_plugin/pkg_manager: "
+            result['msg'] = "Exception in action_plugin/pkg_manager: "
 
         return result
