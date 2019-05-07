@@ -2,6 +2,8 @@
 - name: Install package go
   pkg_manager:
     name: go
+  become: yes
+  become_user: "{{install_user}}"
 
 - name: Install go utils
   command: go get -u {{item}}

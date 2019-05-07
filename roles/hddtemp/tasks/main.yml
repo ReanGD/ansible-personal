@@ -2,6 +2,8 @@
 - name: Install packages for hddtemp
   pkg_manager:
     name: hddtemp, smartmontools
+  become: yes
+  become_user: "{{install_user}}"
 
 - name: Create hddtemp service directory
   file:

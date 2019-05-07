@@ -2,6 +2,8 @@
 - name: Install package pkgcacheclean
   pkg_manager:
     name: pkgcacheclean
+  become: yes
+  become_user: "{{install_user}}"
 
 - name: Timer pkgcacheclean
   copy:

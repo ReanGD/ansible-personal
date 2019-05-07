@@ -27,6 +27,8 @@
 - name: Install fonts packages
   pkg_manager:
     name: ttf-ms-fonts,ttf-tahoma,ttf-fixedsys-excelsior-linux,ttf-droid,ttf-dejavu,ttf-ubuntu-font-family,adobe-source-code-pro-fonts
+  become: yes
+  become_user: "{{install_user}}"
 
 - name: Update fonts
   shell: fc-cache -fr

@@ -2,6 +2,8 @@
 - name: Install rsync package
   pkg_manager:
     name: rsync
+  become: yes
+  become_user: "{{install_user}}"
 
 - name: Enable and start rsyncd service
   service:
