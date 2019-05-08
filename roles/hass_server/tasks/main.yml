@@ -31,28 +31,6 @@
     - /hass/dotfiles-hass
   become: yes
 
-- name: Check that certificate files exist
-  stat: 
-    path: /etc/letsencrypt/live/iot.fr.to/fullchain.pem
-  register: cert_file
-  become: yes
-
-- name: Create certificates
-  shell: certbot certonly --standalone --noninteractive --agree-tos --preferred-challenges=http-01 --email=reangd@yandex.ru --domain=iot.fr.to
-  become: yes
-  when: cert_file.stat.exists == False
-
-- name: Recursively change ownership of a directory
-  file:
-    path: "{{item}}"
-    state: directory
-    recurse: yes
-    mode: 0755
-  loop:
-    - /etc/letsencrypt/live/
-    - /etc/letsencrypt/archive/
-  become: yes
-
 - name: Install homeassistant
   pip:
     name: homeassistant

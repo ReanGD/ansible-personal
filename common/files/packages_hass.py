@@ -2,8 +2,11 @@
 pkgs = []
 grps = []
 
-# system
+# raspberry
 pkgs += ["raspberrypi-firmware", "raspberrypi-bootloader-x", "linux-raspberrypi", "raspberrypi-bootloader"]
+
+# system
+pkgs += ["gcc", "make", "pkgconf"]
 
 # monitoring
 pkgs += ["rsync",
