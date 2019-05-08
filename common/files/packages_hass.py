@@ -26,6 +26,9 @@ pkgs += ["libffi", "libudev0-shim"]
 # hass deps
 pkgs += ["protobuf", "mosquitto"]
 
+# ssl
+pkgs += ["certbot"]
+
 # groups
 grps += ["base", "base-devel"]
 
