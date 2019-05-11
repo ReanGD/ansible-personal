@@ -37,6 +37,7 @@ pkgs += ["ttf-ms-fonts",
          "ttf-droid",
          "ttf-dejavu",
          "ttf-ubuntu-font-family",
+         "noto-fonts-emoji",  # emoji for chrome
          "adobe-source-code-pro-fonts"]
 
 # terminal
@@ -57,6 +58,7 @@ pkgs += ["refind-efi",
          "perwindowlayoutd",  # daemon to make per window layout (also exists "kbdd-git")
          "libnotify",  # create notifications message
          "yay",  # AUR package manager
+         "bind-tools",  # dig and etc
          "ansible",
          "rsync"]
 
@@ -97,7 +99,7 @@ pkgs += ["pulseaudio",
 pkgs += ["firefox",
          "firefox-i18n-ru",
          "flashplugin",
-         "tor-browser-ru",
+         # "tor-browser-ru",
          "google-chrome",
          ]
 
@@ -140,16 +142,13 @@ pkgs += ["python",
          ]
 
 # text editors & ide
-pkgs += ["emacs", "vim", "sublime-text-dev", "code", "clion"]
-if is_notebook:
-    pkgs += ["pycharm-community-edition"]
-else:
-    pkgs += ["pycharm-professional"]
+pkgs += ["emacs", "vim", "sublime-text-dev", "visual-studio-code-bin", "clion"]
+# pycharm-community-edition + pycharm-professional
 
 # file managers
 pkgs += ["doublecmd-gtk2",
          "fsearch-git",
-         "transmission-remote-gui-bin",
+         "transmission-remote-gui",  # transmission-remote-gui-bin - not work now
          "yandex-disk",  # yandex-disk setup/start
          "dropbox"]
 
@@ -204,7 +203,7 @@ pkgs += ["playonlinux",
         "minecraft"]
 
 # messengers
-pkgs += ["telegram-desktop"]
+pkgs += ["telegram-desktop", "slack-desktop"]
 
 # groups
 grps += ["base", "base-devel"]
