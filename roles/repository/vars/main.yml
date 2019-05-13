@@ -7,7 +7,6 @@ repository_map:
   - { repo: "cpp-simple-key-logger.git",      dest: "cpp-simple-key-logger" }
   - { repo: "docker-alpine.git",              dest: "docker-alpine" }
   - { repo: "docker-home-manage.git",         dest: "docker-home-manage" }
-  - { repo: "docker-x11-base.git",            dest: "docker-x11-base" }
   - { repo: "dokuwiki-plugin-addnewpage.git", dest: "dokuwiki-plugin-addnewpage" }
   - { repo: "dokuwiki-tablecalc.git",         dest: "dokuwiki-tablecalc" }
   - { repo: "dotfiles-hass.git",              dest: "dotfiles-hass" }
@@ -16,6 +15,7 @@ repository_map:
   - { repo: "dotfiles.git",                   dest: "dotfiles" }
   - { repo: "emacs-multi-compile.git",        dest: "emacs-multi-compile" }
   - { repo: "evolution.git",                  dest: "evolution" }
+  - { repo: "go-algo.git",                    dest: "go/src/github.com/ReanGD/go-algo" }
   - { repo: "go-morphy.git",                  dest: "go/src/github.com/ReanGD/go-morphy" }
   - { repo: "go-web-search.git",              dest: "go/src/github.com/ReanGD/go-web-search" }
   - { repo: "HabrArticle.git",                dest: "HabrArticle" }
