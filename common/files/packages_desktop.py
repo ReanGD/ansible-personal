@@ -142,8 +142,10 @@ pkgs += ["python",
          ]
 
 # text editors & ide
-pkgs += ["emacs", "vim", "sublime-text-dev", "visual-studio-code-bin", "clion"]
+pkgs += ["emacs", "vim", "sublime-text-dev", "visual-studio-code-bin"]
 # pycharm-community-edition + pycharm-professional
+if not is_notebook:
+    pkgs += ["clion"]
 
 # file managers
 pkgs += ["doublecmd-gtk2",
@@ -151,6 +153,9 @@ pkgs += ["doublecmd-gtk2",
          "transmission-remote-gui",  # transmission-remote-gui-bin - not work now
          "yandex-disk",  # yandex-disk setup/start
          "dropbox"]
+
+if not is_notebook:
+    pkgs += ["transmission-remote-gui"]
 
 # git
 pkgs += ["git",
