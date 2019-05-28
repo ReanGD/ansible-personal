@@ -16,6 +16,11 @@
   become: yes
   when: cert_file.stat.exists == False
 
+- name: Update certificates
+  shell: certbot renew --standalone  --noninteractive --agree-tos --pre-hook "systemctl stop hass" --post-hook "systemctl start hass"
+  become: yes
+  when: cert_file.stat.exists == True
+
 - name: Recursively change ownership of a directory
   file:
     path: "{{item}}"
