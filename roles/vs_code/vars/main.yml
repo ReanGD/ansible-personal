@@ -1,0 +1,35 @@
+---
+vs_code_extensions:
+  # markdownlint
+  - "davidanson.vscode-markdownlint"
+  # python
+  - "ms-python.python"
+  # go
+  - "ms-vscode.go"
+  # cpp
+  - "jeff-hykin.better-cpp-syntax"
+  - "ms-vscode.cpptools"
+  - "hars.cppsnippets"
+  - "austin.code-gnu-global"
+  - "ajshort.include-autocomplete"
+  # cmake
+  - "twxs.cmake"
+  - "ms-vscode.cmake-tools"
+  # opengl
+  - "slevesque.shader"
+  # proto
+  - "zxh404.vscode-proto3"
+  # log
+  - "emilast.logfilehighlighter"
+  # todo
+  - "Gruntfuggly.todo-tree"
+  # bookmarks
+  - "alefragnani.Bookmarks"
+  # git
+  - "eamodio.gitlens"
+  # ssh
+  - "Kelvin.vscode-sshfs"
+  # keybindings
+  - "ms-vscode.sublime-keybindings"
+  # interface
+  - "seunlanlege.action-buttons"

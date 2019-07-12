@@ -25,6 +25,7 @@
     - dotfiles
     - xorg
     - lightdm
+    - vs_code    
     - go_env
     - ups
     - packages
