@@ -28,3 +28,4 @@ documents_path_map:
   - {src: "Doc/task",    dst: "doc/task" }
   - {src: "Doc/work",    dst: "doc/work" }
   - {src: "Projects",    dst: "projects/old" }
+  - {src: "Projects/RTGEAssets", dst: "projects/home/cpp-rtge/assets" }
