@@ -170,6 +170,7 @@ pkgs += ["byzanz-git",  # create gif from screen
          "viewnior",  # image viewer
          "simplescreenrecorder",  # write video from screen
          "gimp",
+         "gimp-dds",
          "blender",
          "smplayer",
          "deadbeef"]
