@@ -1,6 +1,12 @@
 ---
-- name: Clone or update repository
+- name: Clone or update ReanGD repositories
   update_git:
     repo: git@github.com:ReanGD/{{item.repo}}
     dest: /home/{{main_user}}/projects/home/{{item.dest}}
-  loop: "{{ repository_map }}"
+  loop: "{{ reangd_repositories_map }}"
+
+- name: Clone or update TerraGraphics repositories
+  update_git:
+    repo: git@github.com:TerraGraphics/{{item.repo}}
+    dest: /home/{{main_user}}/projects/terra/{{item.dest}}
+  loop: "{{ terra_repositories_map }}"
