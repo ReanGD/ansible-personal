@@ -22,6 +22,7 @@ reangd_repositories_map:
   - { repo: "LearningEnglish.git",            dest: "LearningEnglish" }
   - { repo: "neural-network.git",             dest: "neural-network" }
   - { repo: "py-calendar.git",                dest: "py-calendar" }
+  - { repo: "py-invest.git",                  dest: "py-invest" }
   - { repo: "reangd.github.io.git",           dest: "reangd.github.io" }
   - { repo: "rust-open3d.git",                dest: "rust-open3d" }
   - { repo: "rust-software-render.git",       dest: "rust-software-render" }

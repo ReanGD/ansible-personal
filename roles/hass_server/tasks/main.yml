@@ -39,7 +39,7 @@
 
 - name: Enable ports 80/443 for hass
   capabilities:
-    path: /hass/venv/bin/python
+    path: /hass/venv/bin/python3
     capability: cap_net_bind_service=+ep
     state: present
   become: yes
