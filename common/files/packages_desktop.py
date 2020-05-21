@@ -49,7 +49,7 @@ pkgs += ["urxvt-perls",
          "fzf"]
 
 # system
-pkgs += ["refind-efi",
+pkgs += ["refind",
          "polkit",
          "gnupg",
          "xcursor-ize-vision",  # a couple of X cursor that similar to Windows 7 cursor.
@@ -107,7 +107,7 @@ pkgs += ["firefox",
 pkgs += ["protobuf"]
 
 # cpp
-pkgs += ["boost", "clang", "gtest", "zeromq", "valgrind", "cmake", "clion-cmake", "gdb"]
+pkgs += ["boost", "clang", "gtest", "zeromq", "valgrind", "cmake", "gdb", "include-what-you-use"]
 
 # rust
 # pkgs += ["rust", "cargo", "rust-src", "rust-racer"]
@@ -130,7 +130,6 @@ pkgs += ["python",
          "python-nose",
          "python2-nose",
          "python-jedi",
-         "python2-jedi",
          "python-pylint",
          "flake8",
          "python-pytest",
@@ -142,10 +141,8 @@ pkgs += ["python",
          ]
 
 # text editors & ide
-pkgs += ["emacs", "vim", "sublime-text-dev", "visual-studio-code-bin"]
-# pycharm-community-edition + pycharm-professional
-if not is_notebook:
-    pkgs += ["clion"]
+pkgs += ["emacs", "nano", "vim", "sublime-text-dev", "visual-studio-code-bin"]
+# not is_notebook: pycharm-community-edition + pycharm-professional + clion + clion-cmake
 
 # file managers
 pkgs += ["doublecmd-gtk2",
@@ -170,14 +167,13 @@ pkgs += ["byzanz-git",  # create gif from screen
          "viewnior",  # image viewer
          "simplescreenrecorder",  # write video from screen
          "gimp",
-         "gimp-dds",
          "blender",
          "smplayer",
          "deadbeef"]
 
 # office
-pkgs += ["mupdf"  # pdf viewer (analog: llpp-git)
-         # "libreoffice-fresh"
+pkgs += ["mupdf",  # pdf viewer (analog: llpp-git)
+         "libreoffice-fresh-ru"
          ]
 
 # spell checkers
@@ -212,7 +208,7 @@ pkgs += ["playonlinux",
 pkgs += ["telegram-desktop", "slack-desktop"]
 
 # groups
-grps += ["base", "base-devel"]
+grps += ["base-devel"]
 
 packages = pkgs
 groups = grps

@@ -33,7 +33,7 @@ pkgs += ["protobuf", "mosquitto"]
 pkgs += ["certbot"]
 
 # groups
-grps += ["base", "base-devel"]
+grps += ["base-devel"]
 
 packages = pkgs
 groups = grps

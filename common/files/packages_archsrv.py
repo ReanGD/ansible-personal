@@ -10,7 +10,7 @@ pkgs += ["iftop",  # network monitor
          "smartmontools"]
 
 # system
-pkgs += ["refind-efi",
+pkgs += ["refind",
          "gnupg",
          "pkgfile",  # pkgfile makepkg (get package for makepkg)
          "pkgcacheclean",  # clean the pacman cache         
@@ -34,7 +34,7 @@ pkgs += ["docker", "docker-compose"]
 pkgs += ["plex-media-server"]
 
 # groups
-grps += ["base", "base-devel"]
+grps += ["base-devel"]
 
 packages = pkgs
 groups = grps
