@@ -16,7 +16,9 @@
     owner: "{{main_user}}"
   loop:
     - { key: "{{ github_private_key }}", name: "github" }
+    - { key: "{{ github_public_key }}", name: "github.pub" }
     - { key: "{{ work_private_key }}", name: "id_rsa" }
+    - { key: "{{ work_public_key }}", name: "id_rsa.pub" }
     - { key: "{{ vscale_private_key }}", name: "vscale" }
     - { key: "{{ hass_private_key }}", name: "hass" }
     - { key: "{{ respeaker_private_key }}", name: "respeaker" }
