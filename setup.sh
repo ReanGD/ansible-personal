@@ -11,7 +11,7 @@ function archhost {
         sgdisk -n 0:0:+550M -t 0:ef00 -c 0:"boot" /dev/sda
         sgdisk -n 0:0:0 -t 0:8300 -c 0:"root" /dev/sda
     fi
-    # add hdd format and mount
+    # add hdd format and mount (/disk0)
     mkfs.fat -F32 /dev/sda1
     mkfs.ext4 /dev/sda2
 

@@ -7,8 +7,8 @@
   register: reg_swapfile
   become: yes
 
-- name: Write swapfile
-  command: fallocate -l {{swap_size}}G /swapfile
+- name: Create swapfile
+  command: dd if=/dev/zero of=/swapfile bs=1G count={{swap_size}}
   become: yes
   when: reg_swapfile.stat.exists == False
 
@@ -20,7 +20,7 @@
     owner: root
   become: yes
 
-- name: Create swapfile
+- name: Init swapfile
   command: mkswap /swapfile
   become: yes
   when: reg_swapfile.stat.exists == False
