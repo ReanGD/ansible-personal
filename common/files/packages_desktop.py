@@ -135,6 +135,7 @@ pkgs += ["python",
          "python-pytest",
          "python-termcolor",
          "python-virtualenv",
+         "python-dateutil", # for include-what-you-use
          "tk",
          "swig",
          "portaudio",  # for pyaudio and my audio-lib
@@ -197,6 +198,8 @@ if is_notebook:
 
 # VM
 pkgs += ["docker", "docker-compose"]
+if not is_notebook:
+    pkgs += ["qemu", "libvirt", "virt-manager", "edk2-ovmf", "ebtables", "dnsmasq", "python-lxml"]
 
 # game
 pkgs += ["playonlinux",
