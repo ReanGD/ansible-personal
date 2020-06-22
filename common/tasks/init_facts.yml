@@ -34,6 +34,7 @@
     network_type: "lan"
     hostname_id: "archhost"
     set_ssh_access_keys: True
+    install_kvm: True
     boot_ssd: True
     swap_size: 35
     swappiness: 1
@@ -46,6 +47,7 @@
     network_type: "wifi"
     hostname_id: "archnote"
     set_ssh_access_keys: True
+    install_kvm: False
     boot_ssd: True
     swap_size: 8
     swappiness: 20
@@ -58,6 +60,7 @@
     network_type: "lan"
     hostname_id: "archsrv"
     set_ssh_access_keys: False
+    install_kvm: False
     boot_ssd: False
     swap_size: 35
     swappiness: 1
@@ -70,6 +73,7 @@
     network_type: "lan_old"
     hostname_id: "hass"
     set_ssh_access_keys: False
+    install_kvm: False
     boot_ssd: False
     swap_size: 1
     swappiness: 1
