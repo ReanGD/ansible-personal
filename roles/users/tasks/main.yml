@@ -21,6 +21,22 @@
     docker_group: ""
   when: reg_exists_docker_group.rc != 0
 
+- name: Find libvirt group
+  shell: getent group libvirt
+  register: reg_exists_libvirt_group
+  changed_when: false
+  failed_when: reg_exists_libvirt_group.rc == 1
+
+- name: Set libvirt group exists
+  set_fact:
+    libvirt_group: ",libvirt"
+  when: reg_exists_libvirt_group.rc == 0
+
+- name: Set libvirt group not exists
+  set_fact:
+    libvirt_group: ""
+  when: reg_exists_libvirt_group.rc != 0
+
 - name: Change root password
   user:
     name: root
@@ -34,7 +50,7 @@
     append: no
     create_home: yes
     group: users
-    groups: video,audio,storage,power,uucp{{docker_group}}
+    groups: video,audio,storage,power,uucp{{docker_group}}{{libvirt_group}}
     password: "{{main_user_password}}"
   become: yes
 
