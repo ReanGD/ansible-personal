@@ -1,0 +1,17 @@
+<pool type="dir">
+  <name>images</name>
+  <uuid>1a24dc67-ca6c-4521-b7e5-a80d8bbb7a2b</uuid>
+  <capacity unit="bytes">315993423872</capacity>
+  <allocation unit="bytes">67149824</allocation>
+  <available unit="bytes">315926274048</available>
+  <source>
+  </source>
+  <target>
+    <path>/disk0/kvm/images</path>
+    <permissions>
+      <mode>0755</mode>
+      <owner>1000</owner>
+      <group>0</group>
+    </permissions>
+  </target>
+</pool>

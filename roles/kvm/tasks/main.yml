@@ -6,10 +6,16 @@
   become_user: "{{install_user}}"
   when: install_kvm == True
 
+- name: Start libvirt service
+  service:
+    name: libvirtd.service
+    state: started
+  become: yes
+  when: install_kvm == True
+
 - name: Add network kvm_default
   virt_net:
     command: define
-    autostart: yes
     name: kvm_default
     xml: "{{ lookup('file', 'kvm_default_network.xml') }}"
   when: install_kvm == True
@@ -24,4 +30,69 @@
   virt_net:
     autostart: yes
     name: kvm_default
+  when: install_kvm == True
+
+- name: Remove default network for kvm from autostart
+  virt_net:
+    autostart: no
+    name: default
+  when: install_kvm == True
+
+- name: Stop default network for kvm
+  virt_net:
+    command: destroy
+    name: default
+  when: install_kvm == True
+
+- name: Create dirs for kvm storage pools
+  file:
+    path: "/disk0/kvm/{{item}}"
+    state: directory
+    mode: 0755
+    group: root
+    owner: "{{main_user}}"
+  loop:
+    - images
+    - data
+  become: yes
+  when: install_kvm == True
+
+- name: Add storage pools for kvm
+  virt_pool:
+    command: define
+    name: "{{item}}"
+    xml: "{{ lookup('file', 'kvm_{{item}}_pool.xml') }}"
+  loop:
+    - images
+    - data
+  when: install_kvm == True
+
+- name: Start storage pools for kvm
+  virt_pool:
+    command: create
+    name: "{{item}}"
+  loop:
+    - images
+    - data
+  when: install_kvm == True
+
+- name: Add storage pools for kvm to autostart
+  virt_pool:
+    autostart: yes
+    name: "{{item}}"
+  loop:
+    - images
+    - data
+  when: install_kvm == True
+
+- name: Remove default storage pool for kvm from autostart
+  virt_pool:
+    autostart: no
+    name: default
+  when: install_kvm == True
+
+- name: Stop default storage pool for kvm
+  virt_pool:
+    command: destroy
+    name: default
   when: install_kvm == True
