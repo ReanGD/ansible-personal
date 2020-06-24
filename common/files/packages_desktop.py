@@ -37,6 +37,20 @@ def develop_pkgs():
                          "python-dateutil", # for include-what-you-use
                          "include-what-you-use"]
 
+    if "python" in develops:
+        develop_pkgs += ["python",
+                         "python-pip",
+                         "python-nose",
+                         "python-jedi",
+                         "python-pylint",
+                         "flake8",
+                         "python-pytest",
+                         "python-termcolor",
+                         "python-virtualenv",
+                         "tk",
+                         "swig",
+                         "portaudio"]  # for pyaudio and my audio-lib
+
     if "go" in develops:
         develop_pkgs += ["go"]
 
@@ -45,6 +59,9 @@ def develop_pkgs():
 
     if "rust3D" in develops:
         develop_pkgs += ["sdl2", "sdl2_image"]
+
+    if "sqlite" in develops:
+        develop_pkgs += ["sqlite-analyzer"]
 
     return develop_pkgs
 
@@ -150,27 +167,6 @@ pkgs += ["firefox",
 
 # programming
 pkgs += ["protobuf"]
-
-# sql
-pkgs += ["sqlite-analyzer"]
-
-# python
-pkgs += ["python",
-         "python2",
-         "python-pip",
-         "python2-pip",
-         "python-nose",
-         "python2-nose",
-         "python-jedi",
-         "python-pylint",
-         "flake8",
-         "python-pytest",
-         "python-termcolor",
-         "python-virtualenv",
-         "tk",
-         "swig",
-         "portaudio",  # for pyaudio and my audio-lib
-         ]
 
 # text editors & ide
 pkgs += ["emacs", "nano", "vim", "sublime-text-dev", "visual-studio-code-bin"]
