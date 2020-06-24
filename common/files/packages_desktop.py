@@ -199,7 +199,14 @@ if is_notebook:
 # VM
 pkgs += ["docker", "docker-compose"]
 if not is_notebook:
-    pkgs += ["qemu", "libvirt", "virt-manager", "edk2-ovmf", "ebtables", "dnsmasq", "python-lxml"]
+    pkgs += ["qemu",
+             "virt-viewer",  # for SPICE
+             "libvirt",  # additional interface
+             "virt-manager",  # GUI for libvirt
+             "edk2-ovmf",  # for UEFI
+             "ebtables",  # for network
+             "dnsmasq",  # for network
+             "python-lxml"]  # for ansible
 
 # game
 pkgs += ["playonlinux",

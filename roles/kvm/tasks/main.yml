@@ -1,7 +1,7 @@
 ---
 - name: Install packages for kvm
   pkg_manager:
-    name: qemu,libvirt,virt-manager,edk2-ovmf,ebtables,dnsmasq,python-lxml
+    name: qemu,virt-viewer,libvirt,virt-manager,edk2-ovmf,ebtables,dnsmasq,python-lxml
   become: yes
   become_user: "{{install_user}}"
   when: install_kvm == True
@@ -30,6 +30,27 @@
   virt_net:
     autostart: yes
     name: kvm_default
+  when: install_kvm == True
+
+- name: Create dir for qemu cfg
+  file:
+    path: "/etc/qemu/"
+    state: directory
+    mode: 0755
+    group: root
+    owner: "{{main_user}}"
+  become: yes
+  when: install_kvm == True
+
+- name: Add bridge name of kvm_default to qemu
+  copy:
+    dest: "/etc/qemu/bridge.conf"
+    content: |
+      allow virbr_kvmdef
+    mode: 0755
+    group: root
+    owner: "{{main_user}}"
+  become: yes
   when: install_kvm == True
 
 - name: Remove default network for kvm from autostart
