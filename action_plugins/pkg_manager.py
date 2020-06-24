@@ -21,21 +21,12 @@ class StrError(RuntimeError):
 class ActionModule(ActionBase):
     TRANSFERS_FILES = False
 
-    def _get_var_hostname_id(self):
-        if "hostname_id" not in self._task_vars:
-            raise StrError("Not install fact 'hostname_id'")
-        result = self._task_vars["hostname_id"].strip()
+    def _get_var(self, name):
+        if name not in self._task_vars:
+            raise StrError("Not install fact '{}'".format(name))
+        result = self._task_vars[name].strip()
         if result == "":
-            raise StrError("Fact 'hostname_id' is empty")
-
-        return result
-
-    def _get_var_virtualization(self):
-        if "virtualization" not in self._task_vars:
-            raise StrError("Not install fact 'virtualization'")
-        result = self._task_vars["virtualization"].strip()
-        if result == "":
-            raise StrError("Fact 'virtualization' is empty")
+            raise StrError("Fact '{}' is empty".format(name))
 
         return result
 
@@ -56,7 +47,7 @@ class ActionModule(ActionBase):
         if not os.path.exists(config):
             raise StrError("Config file '{}' not found".format(config))
 
-        gvars = {"host": self._get_var_hostname_id(), "virtualization": self._get_var_virtualization()}
+        gvars = {"host": self._get_var("hostname_id"), "virtualization": self._get_var("virtualization"), "develop": self._get_var("develop")}
         exec(open(config).read(), gvars)
         packages = [it.strip() for it in gvars["packages"]]
         groups = [it.strip() for it in gvars["groups"]]

@@ -1,5 +1,5 @@
-# global host
-# global virtualization
+# global host, virtualization, develop
+
 pkgs = []
 grps = []
 
@@ -8,7 +8,6 @@ is_notebook = host in ["archnote"]
 def virtualization_pkgs():
     if virtualization == "kvm_qemu":
         return ["qemu",
-                "libvirt",  # dependency of SPICE
                 "virt-viewer",  # for SPICE
                 "edk2-ovmf"]  # for UEFI
     elif virtualization == "kvm_libvirt":
@@ -23,6 +22,22 @@ def virtualization_pkgs():
     else:
         return []
 
+def develop_pkgs():
+    if develop == "none":
+        return []
+
+    develop_pkgs = []
+    develops = develop.split(",")
+    if "cpp" in develops:
+        develop_pkgs += ["clang",
+                         "cmake",
+                         "ninja",
+                         "gdb",
+                         "cpp-dependencies",
+                         "python-dateutil", # for include-what-you-use
+                         "include-what-you-use"]
+
+    return develop_pkgs
 
 # drivers
 pkgs += ["mesa"]
@@ -127,9 +142,6 @@ pkgs += ["firefox",
 # programming
 pkgs += ["protobuf"]
 
-# cpp
-pkgs += ["boost", "clang", "gtest", "zeromq", "valgrind", "cmake", "gdb", "include-what-you-use"]
-
 # rust
 # pkgs += ["rust", "cargo", "rust-src", "rust-racer"]
 # rust-doc-git
@@ -156,7 +168,6 @@ pkgs += ["python",
          "python-pytest",
          "python-termcolor",
          "python-virtualenv",
-         "python-dateutil", # for include-what-you-use
          "tk",
          "swig",
          "portaudio",  # for pyaudio and my audio-lib
@@ -221,6 +232,7 @@ if is_notebook:
 pkgs += ["docker", "docker-compose"]
 
 pkgs += virtualization_pkgs()
+pkgs += develop_pkgs()
 
 # game
 pkgs += ["playonlinux",
