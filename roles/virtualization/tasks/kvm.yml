@@ -4,33 +4,28 @@
     name: qemu,virt-viewer,libvirt,virt-manager,edk2-ovmf,ebtables,dnsmasq,python-lxml
   become: yes
   become_user: "{{install_user}}"
-  when: install_kvm == True
 
 - name: Start libvirt service
   service:
     name: libvirtd.service
     state: started
   become: yes
-  when: install_kvm == True
 
 - name: Add network kvm_default
   virt_net:
     command: define
     name: kvm_default
     xml: "{{ lookup('file', 'kvm_default_network.xml') }}"
-  when: install_kvm == True
 
 - name: Start network kvm_default
   virt_net:
     command: create
     name: kvm_default
-  when: install_kvm == True
 
 - name: Add network kvm_default to autostart
   virt_net:
     autostart: yes
     name: kvm_default
-  when: install_kvm == True
 
 - name: Create dir for qemu cfg
   file:
@@ -40,7 +35,6 @@
     group: root
     owner: "{{main_user}}"
   become: yes
-  when: install_kvm == True
 
 - name: Add bridge name of kvm_default to qemu
   copy:
@@ -51,19 +45,16 @@
     group: root
     owner: "{{main_user}}"
   become: yes
-  when: install_kvm == True
 
 - name: Remove default network for kvm from autostart
   virt_net:
     autostart: no
     name: default
-  when: install_kvm == True
 
 - name: Stop default network for kvm
   virt_net:
     command: destroy
     name: default
-  when: install_kvm == True
 
 - name: Create dirs for kvm storage pools
   file:
@@ -76,7 +67,6 @@
     - images
     - data
   become: yes
-  when: install_kvm == True
 
 - name: Add storage pools for kvm
   virt_pool:
@@ -86,7 +76,10 @@
   loop:
     - images
     - data
-  when: install_kvm == True
+
+- name: Get facts on existing pools
+  virt_pool:
+    command: facts
 
 - name: Start storage pools for kvm
   virt_pool:
@@ -95,7 +88,7 @@
   loop:
     - images
     - data
-  when: install_kvm == True
+  when: ansible_libvirt_pools[item].state != "active"
 
 - name: Add storage pools for kvm to autostart
   virt_pool:
@@ -104,16 +97,14 @@
   loop:
     - images
     - data
-  when: install_kvm == True
 
 - name: Remove default storage pool for kvm from autostart
   virt_pool:
     autostart: no
     name: default
-  when: install_kvm == True
 
 - name: Stop default storage pool for kvm
   virt_pool:
     command: destroy
     name: default
-  when: install_kvm == True
+  when: ansible_libvirt_pools["default"].state == "active"
