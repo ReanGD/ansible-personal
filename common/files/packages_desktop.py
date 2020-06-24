@@ -5,6 +5,10 @@ grps = []
 
 is_notebook = host in ["archnote"]
 
+
+def network_pkgs():
+    return ["netctl"]
+
 def virtualization_pkgs():
     if virtualization == "kvm_qemu":
         return ["qemu",
@@ -226,6 +230,7 @@ if is_notebook:
 # Containerization
 pkgs += ["docker", "docker-compose"]
 
+pkgs += network_pkgs()
 pkgs += virtualization_pkgs()
 pkgs += develop_pkgs()
 
