@@ -28,6 +28,15 @@ def develop_pkgs():
 
     develop_pkgs = []
     develops = develop.split(",")
+    if "utils" in develops:
+        # "pycharm-community-edition", "pycharm-professional", "clion", "clion-cmake"
+        develop_pkgs += ["git",
+                         "icdiff",  # console diff
+                         "meld",
+                         "emacs",
+                         "sublime-text-dev",
+                         "visual-studio-code-bin"]
+
     if "cpp" in develops:
         develop_pkgs += ["clang",
                          "cmake",
@@ -60,8 +69,14 @@ def develop_pkgs():
     if "rust3D" in develops:
         develop_pkgs += ["sdl2", "sdl2_image"]
 
+    if "protobuf" in develops:
+        develop_pkgs += ["protobuf"]
+
     if "sqlite" in develops:
         develop_pkgs += ["sqlite-analyzer"]
+
+    if "android" in develops:
+        develop_pkgs += ["adb"]
 
     return develop_pkgs
 
@@ -122,7 +137,10 @@ pkgs += ["refind",
          "yay",  # AUR package manager
          "bind-tools",  # dig and etc
          "ansible",
-         "rsync"]
+         "rsync",
+         "git",
+         "nano",
+         "vim"]
 
 # WM
 pkgs += ["xorg-server",
@@ -165,13 +183,6 @@ pkgs += ["firefox",
          "google-chrome",
          ]
 
-# programming
-pkgs += ["protobuf"]
-
-# text editors & ide
-pkgs += ["emacs", "nano", "vim", "sublime-text-dev", "visual-studio-code-bin"]
-# not is_notebook: pycharm-community-edition + pycharm-professional + clion + clion-cmake
-
 # file managers
 pkgs += ["doublecmd-gtk2",
          "fsearch-git",
@@ -181,11 +192,6 @@ pkgs += ["doublecmd-gtk2",
 
 if not is_notebook:
     pkgs += ["transmission-remote-gui"]
-
-# git
-pkgs += ["git",
-         "icdiff",  # console diff
-         "meld"]
 
 # archive program
 pkgs += ["p7zip", "unzip", "unrar"]
@@ -206,12 +212,6 @@ pkgs += ["mupdf",  # pdf viewer (analog: llpp-git)
 
 # spell checkers
 pkgs += ["enchant", "hunspell-en_US", "hunspell-ru-aot", "languagetool"]
-
-# android
-# if host == "archhost":
-#     pkgs += ["adb"]
-# if host == "archmini":
-#     pkgs += ["android-studio"]
 
 # xorg
 pkgs += ["xorg-xfontsel",  # font select
