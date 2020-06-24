@@ -27,7 +27,6 @@
     - lightdm
     - virtualization
     - vs_code
-    - go_env
     - ups
     - packages
     - clear

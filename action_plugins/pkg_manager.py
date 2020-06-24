@@ -49,9 +49,9 @@ class ActionModule(ActionBase):
 
         gvars = {"host": self._get_var("hostname_id"), "virtualization": self._get_var("virtualization"), "develop": self._get_var("develop")}
         exec(open(config).read(), gvars)
-        packages = [it.strip() for it in gvars["packages"]]
-        groups = [it.strip() for it in gvars["groups"]]
-        return {"packages": packages, "groups": groups}
+        packages = {it.strip() for it in gvars["packages"]}
+        groups = {it.strip() for it in gvars["groups"]}
+        return {"packages": list(packages), "groups": list(groups)}
 
     def _get_param_name(self, command):
         param_name = "name"

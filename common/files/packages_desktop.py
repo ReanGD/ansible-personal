@@ -37,6 +37,15 @@ def develop_pkgs():
                          "python-dateutil", # for include-what-you-use
                          "include-what-you-use"]
 
+    if "go" in develops:
+        develop_pkgs += ["go"]
+
+    if "rust" in develops:
+        develop_pkgs += ["rust", "cargo", "rust-src", "rust-racer"]
+
+    if "rust3D" in develops:
+        develop_pkgs += ["sdl2", "sdl2_image"]
+
     return develop_pkgs
 
 # drivers
@@ -142,18 +151,8 @@ pkgs += ["firefox",
 # programming
 pkgs += ["protobuf"]
 
-# rust
-# pkgs += ["rust", "cargo", "rust-src", "rust-racer"]
-# rust-doc-git
-
-# 3D for rust
-# pkgs += ["sdl2", "sdl2_image"]
-
 # sql
 pkgs += ["sqlite-analyzer"]
-
-# go
-pkgs += ["go"]
 
 # python
 pkgs += ["python",
