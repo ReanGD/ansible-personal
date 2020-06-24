@@ -1,3 +1,6 @@
 ---
-- include: kvm.yml
-  when: virtualization == "kvm"
+- include: kvm_libvirt.yml
+  when: virtualization == "kvm_libvirt"
+
+- include: kvm_qemu.yml
+  when: virtualization == "kvm_qemu"

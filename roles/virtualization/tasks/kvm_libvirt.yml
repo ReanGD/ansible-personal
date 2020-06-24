@@ -1,7 +1,7 @@
 ---
 - name: Install packages for kvm
   pkg_manager:
-    name: qemu,virt-viewer,libvirt,virt-manager,edk2-ovmf,ebtables,dnsmasq,python-lxml
+    name: qemu,libvirt,virt-viewer,virt-manager,edk2-ovmf,ebtables,dnsmasq,python-lxml
   become: yes
   become_user: "{{install_user}}"
 

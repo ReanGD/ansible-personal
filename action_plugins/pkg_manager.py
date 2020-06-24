@@ -30,6 +30,15 @@ class ActionModule(ActionBase):
 
         return result
 
+    def _get_var_virtualization(self):
+        if "virtualization" not in self._task_vars:
+            raise StrError("Not install fact 'virtualization'")
+        result = self._task_vars["virtualization"].strip()
+        if result == "":
+            raise StrError("Fact 'virtualization' is empty")
+
+        return result
+
     def _get_param_command(self):
         param_name = "command"
         result = self._task.args.get(param_name, "install")
@@ -42,12 +51,12 @@ class ActionModule(ActionBase):
         config = self._task.args.get("config", None)
         if config is None or config.strip() == "":
             raise StrError("Not found required param 'config' for command '{}'.".format(command))
-        
+
         config = config.strip()
         if not os.path.exists(config):
             raise StrError("Config file '{}' not found".format(config))
 
-        gvars = {"host": self._get_var_hostname_id()}
+        gvars = {"host": self._get_var_hostname_id(), "virtualization": self._get_var_virtualization()}
         exec(open(config).read(), gvars)
         packages = [it.strip() for it in gvars["packages"]]
         groups = [it.strip() for it in gvars["groups"]]

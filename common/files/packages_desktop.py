@@ -1,8 +1,29 @@
 # global host
+# global virtualization
 pkgs = []
 grps = []
 
 is_notebook = host in ["archnote"]
+
+def virtualization_pkgs():
+    if virtualization == "kvm_qemu":
+        return ["qemu",
+                "libvirt",  # dependency of SPICE
+                "virt-viewer",  # for SPICE
+                "edk2-ovmf"]  # for UEFI
+    elif virtualization == "kvm_libvirt":
+        return ["qemu",
+                "libvirt",  # additional interface
+                "virt-viewer",  # for SPICE
+                "virt-manager",  # GUI for libvirt
+                "edk2-ovmf",  # for UEFI
+                "ebtables",  # for network
+                "dnsmasq",  # for network
+                "python-lxml"]  # for ansible
+    else:
+        return []
+
+
 # drivers
 pkgs += ["mesa"]
 
@@ -76,7 +97,7 @@ if is_notebook:
 pkgs += ["lightdm", "lightdm-gtk-greeter"]
 
 # net tools
-pkgs += ["wget",         
+pkgs += ["wget",
          "net-tools",
          "dialog",
          "smbclient",
@@ -196,17 +217,10 @@ pkgs += ["xorg-xfontsel",  # font select
 if is_notebook:
     pkgs += ["xorg-xbacklight"]  # backlight control application (xbacklight -set 40)
 
-# VM
+# Containerization
 pkgs += ["docker", "docker-compose"]
-if not is_notebook:
-    pkgs += ["qemu",
-             "virt-viewer",  # for SPICE
-             "libvirt",  # additional interface
-             "virt-manager",  # GUI for libvirt
-             "edk2-ovmf",  # for UEFI
-             "ebtables",  # for network
-             "dnsmasq",  # for network
-             "python-lxml"]  # for ansible
+
+pkgs += virtualization_pkgs()
 
 # game
 pkgs += ["playonlinux",

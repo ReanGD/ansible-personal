@@ -34,7 +34,7 @@
     network_type: "lan"
     hostname_id: "archhost"
     set_ssh_access_keys: True
-    virtualization: "kvm"
+    virtualization: "kvm_qemu"
     boot_ssd: True
     swap_size: 35
     swappiness: 1
