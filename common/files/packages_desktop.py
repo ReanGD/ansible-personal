@@ -7,10 +7,13 @@ is_notebook = hostname_id in ["archnote"]
 
 
 def system_pkgs():
+    system_pkgs = []
     if x86_64:
-        return ["yay"] # AUR package manager
+        system_pkgs += ["yay"]  # AUR package manager
     else:
-        return []
+        system_pkgs += ["refind"]  # UEFI boot manager
+
+    return system_pkgs
 
 def network_pkgs():
     return ["netctl",  # arch specific network manager
@@ -137,8 +140,7 @@ pkgs += ["urxvt-perls",
          "fzf"]
 
 # system
-pkgs += ["refind",
-         "polkit",
+pkgs += ["polkit",
          "gnupg",
          "xcursor-ize-vision",  # a couple of X cursor that similar to Windows 7 cursor.
          "pkgfile",  # pkgfile makepkg (get package for makepkg)
