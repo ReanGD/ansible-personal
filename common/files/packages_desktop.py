@@ -11,7 +11,8 @@ def system_pkgs():
     if x86_64:
         system_pkgs += ["yay"]  # AUR package manager
     else:
-        system_pkgs += ["refind"]  # UEFI boot manager
+        system_pkgs += ["pkgcacheclean",  # clean the pacman cache
+                        "refind"]  # UEFI boot manager
 
     return system_pkgs
 
@@ -107,6 +108,11 @@ def font_pkgs():
             "noto-fonts-emoji",  # emoji for chrome
             "adobe-source-code-pro-fonts"]
 
+def docker_pkgs():
+    if "docker" not in pkg_groups.split(","):
+        return []
+    return ["docker", "docker-compose"]
+
 # drivers
 pkgs += ["mesa"]
 
@@ -146,7 +152,6 @@ pkgs += ["polkit",
          "gnupg",
          "xcursor-ize-vision",  # a couple of X cursor that similar to Windows 7 cursor.
          "pkgfile",  # pkgfile makepkg (get package for makepkg)
-         "pkgcacheclean",  # clean the pacman cache
          "perwindowlayoutd",  # daemon to make per window layout (also exists "kbdd-git")
          "libnotify",  # create notifications message
          "bind-tools",  # dig and etc
@@ -236,14 +241,12 @@ pkgs += ["xorg-xfontsel",  # font select
 if is_notebook:
     pkgs += ["xorg-xbacklight"]  # backlight control application (xbacklight -set 40)
 
-# Containerization
-pkgs += ["docker", "docker-compose"]
-
 pkgs += system_pkgs()
 pkgs += network_pkgs()
 pkgs += virtualization_pkgs()
 pkgs += develop_pkgs()
 pkgs += font_pkgs()
+pkgs += docker_pkgs()
 
 # game
 pkgs += ["playonlinux",

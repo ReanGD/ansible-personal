@@ -32,6 +32,7 @@
 # network_type: "lan" or ""lan_old" or "wifi"
 # virtualization: "none" or "kvm_qemu" or "kvm_libvirt"
 # develop: "none" or ["utils", "cpp", "python", "go", "rust", "rust3D", "protobuf", "sqlite", "android"]
+# pkg_groups: "none" or ["font", "docker"]
 
 - name: Set archhost facts
   set_fact:
@@ -42,6 +43,7 @@
     set_ssh_access_keys: True
     virtualization: "kvm_qemu"
     develop: "utils,cpp,python,go,protobuf"
+    pkg_groups: "font,docker"
     boot_ssd: True
     swap_size: 35
     swappiness: 1
@@ -57,6 +59,7 @@
     set_ssh_access_keys: True
     virtualization: "none"
     develop: "utils,cpp,python,go,protobuf"
+    pkg_groups: "font,docker"
     boot_ssd: True
     swap_size: 8
     swappiness: 20
@@ -72,6 +75,7 @@
     set_ssh_access_keys: False
     virtualization: "none"
     develop: "none"
+    pkg_groups: "docker"
     boot_ssd: False
     swap_size: 35
     swappiness: 1
@@ -87,6 +91,7 @@
     set_ssh_access_keys: False
     virtualization: "none"
     develop: "none"
+    pkg_groups: "none"
     boot_ssd: False
     swap_size: 1
     swappiness: 1

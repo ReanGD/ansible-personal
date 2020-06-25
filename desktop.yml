@@ -20,8 +20,10 @@
     - time
     - role: font
       when: "'font' in pkg_groups.split(',')"
-    - pkgcacheclean
-    - docker
+    - role: pkgcacheclean
+      when: x86_64
+    - role: docker
+      when: "'docker' in pkg_groups.split(',')"
     - automount
     - hddtemp
     - repository

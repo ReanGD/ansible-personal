@@ -3,7 +3,7 @@ Description=Clean package cache timer (/var/cache/pacman)
 
 [Timer]
 OnBootSec=30min
-OnUnitActiveSec=1w 
+OnUnitActiveSec=1w
 
 [Install]
 WantedBy=timers.target
