@@ -19,12 +19,13 @@
     - systemd_configure
     - time
     - role: font
-      when: "'font' in pkg_groups.split(',')"
+      when: "'font' in roles.split(',')"
     - role: pkgcacheclean
       when: x86_64
     - role: docker
-      when: "'docker' in pkg_groups.split(',')"
-    - automount
+      when: "'docker' in roles.split(',')"
+    - role: automount
+      when: "'automount' in roles.split(',')"
     - hddtemp
     - repository
     - dotfiles

@@ -1,4 +1,4 @@
-# global x86_64, hostname_id, distro, network_type, virtualization, develop, pkg_groups
+# global x86_64, hostname_id, distro, network_type, virtualization, develop, roles
 
 pkgs = []
 grps = []
@@ -96,7 +96,7 @@ def develop_pkgs():
     return develop_pkgs
 
 def font_pkgs():
-    if "font" not in pkg_groups.split(","):
+    if "font" not in roles.split(","):
         return []
     return ["ttf-ms-fonts",
             "ttf-tahoma",
@@ -109,9 +109,14 @@ def font_pkgs():
             "adobe-source-code-pro-fonts"]
 
 def docker_pkgs():
-    if "docker" not in pkg_groups.split(","):
+    if "docker" not in roles.split(","):
         return []
     return ["docker", "docker-compose"]
+
+def automount_pkgs():
+    if "automount" not in roles.split(","):
+        return []
+    return ["nfs-utils"]
 
 # drivers
 pkgs += ["mesa"]
@@ -179,7 +184,6 @@ pkgs += ["wget",
          "net-tools",
          "dialog",
          "smbclient",
-         "nfs-utils",
          "httpie",
          "openvpn",
          "openconnect", # for vpn to work
@@ -247,6 +251,7 @@ pkgs += virtualization_pkgs()
 pkgs += develop_pkgs()
 pkgs += font_pkgs()
 pkgs += docker_pkgs()
+pkgs += automount_pkgs()
 
 # game
 pkgs += ["playonlinux",

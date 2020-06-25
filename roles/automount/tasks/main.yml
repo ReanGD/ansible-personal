@@ -16,6 +16,8 @@
   loop:
     - mnt-nas-backup.mount
     - mnt-nas-backup.automount
+    - mnt-nas-distrib.mount
+    - mnt-nas-distrib.automount
     - mnt-nas-multimedia.mount
     - mnt-nas-multimedia.automount
 
@@ -27,4 +29,5 @@
   become: yes
   loop:
     - mnt-nas-backup.automount
+    - mnt-nas-distrib.automount
     - mnt-nas-multimedia.automount

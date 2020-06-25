@@ -1,0 +1,10 @@
+[Unit]
+Description=NFS share NAS:Distrib
+Requires=network-online.target
+
+[Automount]
+Where=/mnt/nas/distrib
+TimeoutIdleSec=301
+
+[Install]
+WantedBy=multi-user.target
