@@ -1,12 +1,13 @@
 ---
-- name: Copy pacman configuration
-  copy:
-    src: "{% if x86_64 %}pacman.conf{% else %}pacman_arm.conf{% endif %}"
-    dest: /etc/pacman.conf
-    mode: 0644
-    owner: root
-    group: root
-  become: yes
+
+- include: arch.yml
+  when: distro == "arch"
+
+- include: arch_arm.yml
+  when: distro == "arch_arm"
+
+- include: manjaro.yml
+  when: distro == "manjaro"
 
 - name: Update pacman cache
   pacman:

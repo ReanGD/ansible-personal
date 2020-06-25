@@ -1,0 +1,18 @@
+---
+- name: Copy arch pacman configuration
+  copy:
+    src: arch_pacman.conf
+    dest: /etc/pacman.conf
+    mode: 0644
+    owner: root
+    group: root
+  become: yes
+
+- name: Copy arch mirrorlist configuration
+  copy:
+    src: arch_mirrorlist
+    dest: /etc/pacman.d/mirrorlist
+    mode: 0644
+    owner: root
+    group: root
+  become: yes

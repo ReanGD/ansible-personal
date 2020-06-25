@@ -1,0 +1,18 @@
+---
+- name: Copy manjaro pacman configuration
+  copy:
+    src: manjaro_pacman.conf
+    dest: /etc/pacman.conf
+    mode: 0644
+    owner: root
+    group: root
+  become: yes
+
+- name: Copy manjaro mirrorlist configuration
+  copy:
+    src: manjaro_mirrorlist
+    dest: /etc/pacman.d/mirrorlist
+    mode: 0644
+    owner: root
+    group: root
+  become: yes

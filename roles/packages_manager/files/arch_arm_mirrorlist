@@ -1,0 +1,7 @@
+##
+## Arm Arch Linux repository mirrorlist
+## https://archlinuxarm.org/about/mirrors
+##
+
+Server = http://mirror.archlinuxarm.org/$arch/$repo
+# Server = http://ru.mirror.archlinuxarm.org/$arch/$repo

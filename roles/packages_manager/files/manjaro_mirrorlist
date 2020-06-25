@@ -1,0 +1,42 @@
+##
+## Manjaro Linux repository mirrorlist
+## Generated on 2020-06-25 02:44
+##
+## sudo pacman-mirrors --fasttrack 30
+##
+
+## Country : Belgium
+Server = https://mirror.futureweb.be/manjaro/stable/$repo/$arch
+
+## Country : Germany
+Server = https://mirror.23media.com/manjaro/stable/$repo/$arch
+
+## Country : Germany
+Server = http://ftp.tu-chemnitz.de/pub/linux/manjaro/stable/$repo/$arch
+
+## Country : Austria
+Server = http://mirror.easyname.at/manjaro/stable/$repo/$arch
+
+## Country : Ukraine
+Server = http://mirrors.colocall.net/manjaro/stable/$repo/$arch
+
+## Country : France
+Server = http://ftp.free.org/mirrors/repo.manjaro.org/repos/stable/$repo/$arch
+
+## Country : Poland
+Server = http://ftp.vectranet.pl/manjaro/stable/$repo/$arch
+
+## Country : Taiwan
+Server = http://free.nchc.org.tw/manjaro/stable/$repo/$arch
+
+## Country : United_Kingdom
+Server = https://uk.mirrors.fossho.st/manjaro/stable/$repo/$arch
+
+## Country : Poland
+Server = https://pl.mirrors.fossho.st/manjaro/stable/$repo/$arch
+
+## Country : Germany
+Server = https://mirror.alpix.eu/manjaro/stable/$repo/$arch
+
+## Country : Russia
+Server = http://mirror.truenetwork.ru/manjaro/stable/$repo/$arch
