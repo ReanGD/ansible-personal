@@ -26,7 +26,8 @@
       when: "'docker' in roles.split(',')"
     - role: automount
       when: "'automount' in roles.split(',')"
-    - hddtemp
+    - role: hddtemp
+      when: "'hddtemp' in roles.split(',')"
     - repository
     - dotfiles
     - xorg

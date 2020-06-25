@@ -9,10 +9,9 @@ is_notebook = hostname_id in ["archnote"]
 def system_pkgs():
     system_pkgs = []
     if x86_64:
-        system_pkgs += ["yay"]  # AUR package manager
-    else:
-        system_pkgs += ["pkgcacheclean",  # clean the pacman cache
-                        "refind"]  # UEFI boot manager
+        system_pkgs += ["yay",  # AUR package manager
+                        "refind",  # UEFI boot manager
+                        "pkgcacheclean"]  # clean the pacman cache
 
     return system_pkgs
 
@@ -118,6 +117,21 @@ def automount_pkgs():
         return []
     return ["nfs-utils"]
 
+def monitoring_pkgs():
+    monitoring_pkgs = ["iftop",  # network monitor
+                       "htop",  # process monitor
+                       "iotop",  # disk monitor
+                       "hwinfo"]  # info about hardware
+
+    if x86_64:
+        monitoring_pkgs+=["hw-probe"]  # check hardware and find drivers
+
+    if "hddtemp" in roles.split(","):
+        monitoring_pkgs+=["hddtemp",  # disk temperature
+                          "smartmontools"]
+
+    return monitoring_pkgs
+
 # drivers
 pkgs += ["mesa"]
 
@@ -131,13 +145,6 @@ elif hostname_id == "archnote":
              # "nvidia",
              "xf86-video-intel",
              "xf86-input-libinput"]  # touchpad
-
-# monitoring
-pkgs += ["iftop",  # network monitor
-         "htop",  # process monitor
-         "iotop",  # disk monitor
-         "hddtemp",  # disk temperature
-         "smartmontools"]
 
 if hostname_id == "archhost":
     pkgs += ["apcupsd"]  # UPS
@@ -252,6 +259,7 @@ pkgs += develop_pkgs()
 pkgs += font_pkgs()
 pkgs += docker_pkgs()
 pkgs += automount_pkgs()
+pkgs += monitoring_pkgs()
 
 # game
 pkgs += ["playonlinux",
