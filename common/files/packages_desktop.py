@@ -1,4 +1,4 @@
-# global x86_64, hostname_id, distro, network_type, virtualization, develop
+# global x86_64, hostname_id, distro, network_type, virtualization, develop, pkg_groups
 
 pkgs = []
 grps = []
@@ -94,6 +94,19 @@ def develop_pkgs():
 
     return develop_pkgs
 
+def font_pkgs():
+    if "font" not in pkg_groups.split(","):
+        return []
+    return ["ttf-ms-fonts",
+            "ttf-tahoma",
+            # "ttf-vista-fonts",
+            "ttf-fixedsys-excelsior-linux",
+            "ttf-droid",
+            "ttf-dejavu",
+            "ttf-ubuntu-font-family",
+            "noto-fonts-emoji",  # emoji for chrome
+            "adobe-source-code-pro-fonts"]
+
 # drivers
 pkgs += ["mesa"]
 
@@ -119,17 +132,6 @@ if hostname_id == "archhost":
     pkgs += ["apcupsd"]  # UPS
 elif is_notebook:
     pkgs += ["powertop"]
-
-# font packages
-pkgs += ["ttf-ms-fonts",
-         "ttf-tahoma",
-         # "ttf-vista-fonts",
-         "ttf-fixedsys-excelsior-linux",
-         "ttf-droid",
-         "ttf-dejavu",
-         "ttf-ubuntu-font-family",
-         "noto-fonts-emoji",  # emoji for chrome
-         "adobe-source-code-pro-fonts"]
 
 # terminal
 pkgs += ["urxvt-perls",
@@ -241,6 +243,7 @@ pkgs += system_pkgs()
 pkgs += network_pkgs()
 pkgs += virtualization_pkgs()
 pkgs += develop_pkgs()
+pkgs += font_pkgs()
 
 # game
 pkgs += ["playonlinux",

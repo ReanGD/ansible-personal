@@ -11,12 +11,15 @@
     - users
     - network
     - packages_manager
+    # update required for each machine
     - ssh
-    - boot
+    - role: boot
+      when: x86_64
     - swap
     - systemd_configure
     - time
-    - font
+    - role: font
+      when: "'font' in pkg_groups.split(',')"
     - pkgcacheclean
     - docker
     - automount

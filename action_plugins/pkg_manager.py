@@ -51,7 +51,8 @@ class ActionModule(ActionBase):
         if not os.path.exists(config):
             raise StrError("Config file '{}' not found".format(config))
 
-        gvars = {key: self._get_var(key) for key in ["x86_64", "hostname_id", "distro", "network_type", "virtualization", "develop"]}
+        keys = ["x86_64", "hostname_id", "distro", "network_type", "virtualization", "develop", "pkg_groups"]
+        gvars = {key: self._get_var(key) for key in keys}
         exec(open(config).read(), gvars)
         packages = {it.strip() for it in gvars["packages"]}
         groups = {it.strip() for it in gvars["groups"]}
