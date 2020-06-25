@@ -11,6 +11,7 @@
     - users
     - network
     - packages_manager
+    - setup
     - ssh
     - boot
     - swap

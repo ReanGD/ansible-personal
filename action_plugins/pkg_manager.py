@@ -24,9 +24,13 @@ class ActionModule(ActionBase):
     def _get_var(self, name):
         if name not in self._task_vars:
             raise StrError("Not install fact '{}'".format(name))
-        result = self._task_vars[name].strip()
-        if result == "":
-            raise StrError("Fact '{}' is empty".format(name))
+        result = self._task_vars[name]
+        if isinstance(result, str):
+            result = result.strip()
+            if result == "":
+                raise StrError("Fact '{}' is empty".format(name))
+        elif not isinstance(result, bool):
+            raise StrError("Fact '{}' has unknown type".format(name))
 
         return result
 
@@ -47,7 +51,7 @@ class ActionModule(ActionBase):
         if not os.path.exists(config):
             raise StrError("Config file '{}' not found".format(config))
 
-        gvars = {"host": self._get_var("hostname_id"), "virtualization": self._get_var("virtualization"), "develop": self._get_var("develop")}
+        gvars = {key: self._get_var(key) for key in ["x86_64", "hostname_id", "distro", "network_type", "virtualization", "develop"]}
         exec(open(config).read(), gvars)
         packages = {it.strip() for it in gvars["packages"]}
         groups = {it.strip() for it in gvars["groups"]}

@@ -1,13 +1,20 @@
-# global host, virtualization, develop
+# global x86_64, hostname_id, distro, network_type, virtualization, develop
 
 pkgs = []
 grps = []
 
-is_notebook = host in ["archnote"]
+is_notebook = hostname_id in ["archnote"]
 
+
+def system_pkgs():
+    if x86_64:
+        return ["yay"] # AUR package manager
+    else:
+        return []
 
 def network_pkgs():
-    return ["netctl"]
+    return ["netctl",  # arch specific network manager
+            "openssh"]  # ssh server
 
 def virtualization_pkgs():
     if virtualization == "kvm_qemu":
@@ -87,11 +94,11 @@ def develop_pkgs():
 # drivers
 pkgs += ["mesa"]
 
-if host == "archhost":
+if hostname_id == "archhost":
     pkgs += ["nvidia",
              "lib32-nvidia-utils"  # for steam
              ]
-elif host == "archnote":
+elif hostname_id == "archnote":
     pkgs += ["bbswitch",
              # "bumblebee",
              # "nvidia",
@@ -105,7 +112,7 @@ pkgs += ["iftop",  # network monitor
          "hddtemp",  # disk temperature
          "smartmontools"]
 
-if host == "archhost":
+if hostname_id == "archhost":
     pkgs += ["apcupsd"]  # UPS
 elif is_notebook:
     pkgs += ["powertop"]
@@ -138,7 +145,6 @@ pkgs += ["refind",
          "pkgcacheclean",  # clean the pacman cache
          "perwindowlayoutd",  # daemon to make per window layout (also exists "kbdd-git")
          "libnotify",  # create notifications message
-         "yay",  # AUR package manager
          "bind-tools",  # dig and etc
          "ansible",
          "rsync",
@@ -166,7 +172,6 @@ pkgs += ["wget",
          "smbclient",
          "nfs-utils",
          "httpie",
-         "openssh",
          "openvpn",
          "openconnect", # for vpn to work
          ]
@@ -230,6 +235,7 @@ if is_notebook:
 # Containerization
 pkgs += ["docker", "docker-compose"]
 
+pkgs += system_pkgs()
 pkgs += network_pkgs()
 pkgs += virtualization_pkgs()
 pkgs += develop_pkgs()
