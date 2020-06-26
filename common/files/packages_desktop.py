@@ -1,4 +1,4 @@
-# global x86_64, hostname_id, distro, network_type, virtualization, develop, roles
+# global x86_64, hostname_id, distro, network_type, virtualization, develop, roles, gui
 
 pkgs = []
 grps = []
@@ -132,6 +132,33 @@ def monitoring_pkgs():
 
     return monitoring_pkgs
 
+def gui_pkgs():
+    if gui == "none":
+        return []
+
+    gui_pkgs = ["xorg-server",
+                "xorg-xinit",
+                "xorg-xfontsel",  # font select
+                "xorg-xprop",  # window info (xprop | grep WM_CLASS)
+                "xorg-xev",  # keypress info
+                "xorg-xwininfo",  # select window
+                "xrectsel"]  # get select region
+
+    guis = gui.split(",")
+    if "lightdm" in guis:
+        gui_pkgs += ["lightdm", "lightdm-gtk-greeter"]
+
+    if "awesome" in guis:
+        gui_pkgs += ["awesome", "vicious"]
+
+    if "cinnamon" in guis:
+        gui_pkgs += ["cinnamon"]
+
+    if "notebook" in guis:
+        gui_pkgs += ["xorg-xbacklight"]  # backlight control application (xbacklight -set 40)
+
+    return gui_pkgs
+
 # drivers
 pkgs += ["mesa"]
 
@@ -174,17 +201,7 @@ pkgs += ["polkit",
          "vim"]
 
 # WM
-pkgs += ["xorg-server",
-         "xorg-xinit",
-         "awesome",
-         "rofi",  # run app menu
-         "vicious"]
-
-if is_notebook:
-    pkgs += ["cinnamon"]
-
-# login manager
-pkgs += ["lightdm", "lightdm-gtk-greeter"]
+pkgs += ["rofi"]  # run app menu
 
 # net tools
 pkgs += ["wget",
@@ -242,16 +259,6 @@ pkgs += ["mupdf",  # pdf viewer (analog: llpp-git)
 # spell checkers
 pkgs += ["enchant", "hunspell-en_US", "hunspell-ru-aot", "languagetool"]
 
-# xorg
-pkgs += ["xorg-xfontsel",  # font select
-         "xorg-xprop",  # window info (xprop | grep WM_CLASS)
-         "xorg-xev",  # keypress info
-         "xorg-xwininfo",  # select window
-         "xrectsel"]  # get select region
-
-if is_notebook:
-    pkgs += ["xorg-xbacklight"]  # backlight control application (xbacklight -set 40)
-
 pkgs += system_pkgs()
 pkgs += network_pkgs()
 pkgs += virtualization_pkgs()
@@ -260,6 +267,7 @@ pkgs += font_pkgs()
 pkgs += docker_pkgs()
 pkgs += automount_pkgs()
 pkgs += monitoring_pkgs()
+pkgs += gui_pkgs()
 
 # game
 pkgs += ["playonlinux",

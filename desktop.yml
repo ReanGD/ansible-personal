@@ -28,8 +28,10 @@
       when: "'automount' in roles.split(',')"
     - role: hddtemp
       when: "'hddtemp' in roles.split(',')"
-    - repository
-    - dotfiles
+    - role: repository
+      when: "'repository' in roles.split(',')"
+    - role: dotfiles
+      when: "'dotfiles' in roles.split(',')"
     - xorg
     - lightdm
     - virtualization
