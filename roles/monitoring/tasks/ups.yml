@@ -4,7 +4,6 @@
     name: apcupsd
   become: yes
   become_user: "{{install_user}}"
-  when: hostname_id == "archhost"
 
 - name: Configure apcupsd
   copy:
@@ -14,7 +13,6 @@
     group: root
     owner: root
   become: yes
-  when: hostname_id == "archhost"
 
 - name: Enable and start apcupsd service
   service:
@@ -22,4 +20,3 @@
     enabled: yes
     state: started
   become: yes
-  when: hostname_id == "archhost"

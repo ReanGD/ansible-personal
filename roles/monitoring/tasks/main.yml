@@ -1,0 +1,6 @@
+---
+- include: hddtemp.yml
+  when: "'hddtemp' in monitoring.split(',')"
+
+- include: ups.yml
+  when: "'ups' in monitoring.split(',')"

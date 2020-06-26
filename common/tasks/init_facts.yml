@@ -31,9 +31,10 @@
 # distro: "arch" or "arch_arm" or "manjaro"
 # network_type: "lan" or ""lan_old" or "wifi"
 # virtualization: "none" or "kvm_qemu" or "kvm_libvirt"
-# develop: "none" or ["utils", "cpp", "python", "go", "rust", "rust3D", "protobuf", "sqlite", "android"]
-# roles: "none" or ["font", "docker", "automount", "hddtemp", "repository", "dotfiles"]
 # gui: "none" or ["lightdm", "awesome", "cinnamon", "notebook"]
+# develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "protobuf", "sqlite", "android"]
+# monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
+# roles: "none" or ["font", "docker", "automount", "repository", "dotfiles"]
 
 - name: Set archhost facts
   set_fact:
@@ -43,9 +44,10 @@
     network_type: "lan"
     set_ssh_access_keys: True
     virtualization: "kvm_qemu"
-    develop: "utils,cpp,python,go,protobuf"
-    roles: "font,docker,automount,hddtemp,repository,dotfiles"
     gui: "lightdm,awesome"
+    develop: "std,cpp,python,go,protobuf"
+    monitoring: "std,hddtemp"
+    roles: "font,docker,automount,repository,dotfiles"
     boot_ssd: True
     swap_size: 35
     swappiness: 1
@@ -60,9 +62,10 @@
     network_type: "wifi"
     set_ssh_access_keys: True
     virtualization: "none"
-    develop: "utils,cpp,python,go,protobuf"
-    roles: "font,docker,automount,hddtemp,repository,dotfiles"
     gui: "lightdm,awesome,cinnamon,notebook"
+    develop: "std,cpp,python,go,protobuf"
+    monitoring: "std,notebook,hddtemp"
+    roles: "font,docker,automount,repository,dotfiles"
     boot_ssd: True
     swap_size: 8
     swappiness: 20
@@ -77,9 +80,10 @@
     network_type: "lan"
     set_ssh_access_keys: False
     virtualization: "none"
-    develop: "none"
-    roles: "docker,automount,hddtemp"
     gui: "none"
+    develop: "none"
+    monitoring: "std,hddtemp"
+    roles: "docker,automount"
     boot_ssd: False
     swap_size: 35
     swappiness: 1
@@ -94,9 +98,10 @@
     network_type: "lan_old"
     set_ssh_access_keys: False
     virtualization: "none"
-    develop: "none"
-    roles: "hddtemp"
     gui: "none"
+    develop: "none"
+    monitoring: "std,hddtemp"
+    roles: "none"
     boot_ssd: False
     swap_size: 1
     swappiness: 1

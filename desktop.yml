@@ -26,8 +26,8 @@
       when: "'docker' in roles.split(',')"
     - role: automount
       when: "'automount' in roles.split(',')"
-    - role: hddtemp
-      when: "'hddtemp' in roles.split(',')"
+    - role: monitoring
+      when: "monitoring!='none'"
     - role: repository
       when: "'repository' in roles.split(',')"
     - role: dotfiles
@@ -35,8 +35,9 @@
     # update required for each machine
     - role: gui
       when: "gui!='none'"
-    - virtualization
-    - vs_code
-    - ups
+    - role: virtualization
+      when: "virtualization!='none'"
+    - role: vs_code
+      when: "develop!='none'"
     - packages
     - clear

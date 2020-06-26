@@ -1,4 +1,4 @@
-# global x86_64, hostname_id, distro, network_type, virtualization, develop, roles, gui
+# global x86_64, hostname_id, distro, network_type, virtualization, gui, develop, monitoring, roles
 
 pkgs = []
 grps = []
@@ -7,7 +7,19 @@ is_notebook = hostname_id in ["archnote"]
 
 
 def system_pkgs():
-    system_pkgs = ["base", "polkit", "wget", "curl", "logrotate", "pacutils", "mlocate", "man-db"]
+    system_pkgs = ["base",
+                   "polkit",
+                   "wget",
+                   "curl",
+                   "git",
+                   "rsync",
+                   "logrotate",
+                   "nano",
+                   "vim",
+                   "pacutils",
+                   "pkgfile",  # pkgfile makepkg (get package for makepkg)
+                   "mlocate",
+                   "man-db"]
     if x86_64:
         system_pkgs += ["yay",  # AUR package manager
                         "refind",  # UEFI boot manager
@@ -49,6 +61,33 @@ def virtualization_pkgs():
                 "python-lxml"]  # for ansible
     else:
         return []
+
+def gui_pkgs():
+    if gui == "none":
+        return []
+
+    gui_pkgs = ["xorg-server",
+                "xorg-xinit",
+                "xorg-xfontsel",  # font select
+                "xorg-xprop",  # window info (xprop | grep WM_CLASS)
+                "xorg-xev",  # keypress info
+                "xorg-xwininfo",  # select window
+                "xrectsel"]  # get select region
+
+    guis = gui.split(",")
+    if "lightdm" in guis:
+        gui_pkgs += ["lightdm", "lightdm-gtk-greeter"]
+
+    if "awesome" in guis:
+        gui_pkgs += ["awesome", "vicious"]
+
+    if "cinnamon" in guis:
+        gui_pkgs += ["cinnamon"]
+
+    if "notebook" in guis:
+        gui_pkgs += ["xorg-xbacklight"]  # backlight control application (xbacklight -set 40)
+
+    return gui_pkgs
 
 def develop_pkgs():
     if develop == "none":
@@ -108,6 +147,32 @@ def develop_pkgs():
 
     return develop_pkgs
 
+def monitoring_pkgs():
+    if monitoring == "none":
+        return []
+
+    monitoring_pkgs = []
+    if "std" in monitoring.split(","):
+        monitoring_pkgs += ["iftop",  # network monitor
+                            "htop",  # process monitor
+                            "iotop",  # disk monitor
+                            "hwinfo"]  # info about hardware
+
+        if x86_64:
+            monitoring_pkgs+=["hw-probe"]  # check hardware and find drivers
+
+    if "notebook" in monitoring.split(","):
+        monitoring_pkgs+=["powertop"]
+
+    if "hddtemp" in monitoring.split(","):
+        monitoring_pkgs+=["hddtemp",  # disk temperature
+                          "smartmontools"]
+
+    if "ups" in monitoring.split(","):
+        monitoring_pkgs+=["apcupsd"]
+
+    return monitoring_pkgs
+
 def font_pkgs():
     if "font" not in roles.split(","):
         return []
@@ -132,53 +197,6 @@ def automount_pkgs():
         return []
     return ["nfs-utils"]
 
-def monitoring_pkgs():
-    monitoring_pkgs = ["iftop",  # network monitor
-                       "htop",  # process monitor
-                       "iotop",  # disk monitor
-                       "hwinfo"]  # info about hardware
-
-    if x86_64:
-        monitoring_pkgs+=["hw-probe"]  # check hardware and find drivers
-
-    if "hddtemp" in roles.split(","):
-        monitoring_pkgs+=["hddtemp",  # disk temperature
-                          "smartmontools"]
-
-    return monitoring_pkgs
-
-def gui_pkgs():
-    if gui == "none":
-        return []
-
-    gui_pkgs = ["xorg-server",
-                "xorg-xinit",
-                "xorg-xfontsel",  # font select
-                "xorg-xprop",  # window info (xprop | grep WM_CLASS)
-                "xorg-xev",  # keypress info
-                "xorg-xwininfo",  # select window
-                "xrectsel"]  # get select region
-
-    guis = gui.split(",")
-    if "lightdm" in guis:
-        gui_pkgs += ["lightdm", "lightdm-gtk-greeter"]
-
-    if "awesome" in guis:
-        gui_pkgs += ["awesome", "vicious"]
-
-    if "cinnamon" in guis:
-        gui_pkgs += ["cinnamon"]
-
-    if "notebook" in guis:
-        gui_pkgs += ["xorg-xbacklight"]  # backlight control application (xbacklight -set 40)
-
-    return gui_pkgs
-
-
-if hostname_id == "archhost":
-    pkgs += ["apcupsd"]  # UPS
-elif is_notebook:
-    pkgs += ["powertop"]
 
 # terminal
 pkgs += ["urxvt-perls",
@@ -191,15 +209,10 @@ pkgs += ["urxvt-perls",
 # system
 pkgs += ["gnupg",
          "xcursor-ize-vision",  # a couple of X cursor that similar to Windows 7 cursor.
-         "pkgfile",  # pkgfile makepkg (get package for makepkg)
          "perwindowlayoutd",  # daemon to make per window layout (also exists "kbdd-git")
          "libnotify",  # create notifications message
          "bind-tools",  # dig and etc
-         "ansible",
-         "rsync",
-         "git",
-         "nano",
-         "vim"]
+         "ansible"]
 
 # WM
 pkgs += ["rofi"]  # run app menu
@@ -263,12 +276,12 @@ pkgs += system_pkgs()
 pkgs += driver_pkgs()
 pkgs += network_pkgs()
 pkgs += virtualization_pkgs()
+pkgs += gui_pkgs()
 pkgs += develop_pkgs()
+pkgs += monitoring_pkgs()
 pkgs += font_pkgs()
 pkgs += docker_pkgs()
 pkgs += automount_pkgs()
-pkgs += monitoring_pkgs()
-pkgs += gui_pkgs()
 
 # game
 pkgs += ["playonlinux",
