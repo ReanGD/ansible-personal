@@ -1,0 +1,5 @@
+---
+- include: xorg.yml
+
+- include: lightdm.yml
+  when: "'lightdm' in gui.split(',')"

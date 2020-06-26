@@ -32,8 +32,9 @@
       when: "'repository' in roles.split(',')"
     - role: dotfiles
       when: "'dotfiles' in roles.split(',')"
-    - xorg
-    - lightdm
+    # update required for each machine
+    - role: gui
+      when: "gui!='none'"
     - virtualization
     - vs_code
     - ups
