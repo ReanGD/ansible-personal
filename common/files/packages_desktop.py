@@ -7,13 +7,27 @@ is_notebook = hostname_id in ["archnote"]
 
 
 def system_pkgs():
-    system_pkgs = []
+    system_pkgs = ["base", "polkit", "wget", "curl", "logrotate", "pacutils", "mlocate", "man-db"]
     if x86_64:
         system_pkgs += ["yay",  # AUR package manager
                         "refind",  # UEFI boot manager
                         "pkgcacheclean"]  # clean the pacman cache
 
     return system_pkgs
+
+def driver_pkgs():
+    driver_pkgs = ["mesa"]
+
+    if hostname_id == "archhost":
+        driver_pkgs += ["nvidia"]
+    elif hostname_id == "archnote":
+        driver_pkgs += ["bbswitch",
+                        # "bumblebee",
+                        # "nvidia",
+                        "xf86-video-intel",
+                        "xf86-input-libinput"]  # touchpad
+
+    return driver_pkgs
 
 def network_pkgs():
     return ["netctl",  # arch specific network manager
@@ -97,7 +111,8 @@ def develop_pkgs():
 def font_pkgs():
     if "font" not in roles.split(","):
         return []
-    return ["ttf-ms-fonts",
+    return ["font-manager",  # viewer for fonts
+            "ttf-ms-fonts",
             "ttf-tahoma",
             # "ttf-vista-fonts",
             "ttf-fixedsys-excelsior-linux",
@@ -159,19 +174,6 @@ def gui_pkgs():
 
     return gui_pkgs
 
-# drivers
-pkgs += ["mesa"]
-
-if hostname_id == "archhost":
-    pkgs += ["nvidia",
-             "lib32-nvidia-utils"  # for steam
-             ]
-elif hostname_id == "archnote":
-    pkgs += ["bbswitch",
-             # "bumblebee",
-             # "nvidia",
-             "xf86-video-intel",
-             "xf86-input-libinput"]  # touchpad
 
 if hostname_id == "archhost":
     pkgs += ["apcupsd"]  # UPS
@@ -187,8 +189,7 @@ pkgs += ["urxvt-perls",
          "fzf"]
 
 # system
-pkgs += ["polkit",
-         "gnupg",
+pkgs += ["gnupg",
          "xcursor-ize-vision",  # a couple of X cursor that similar to Windows 7 cursor.
          "pkgfile",  # pkgfile makepkg (get package for makepkg)
          "perwindowlayoutd",  # daemon to make per window layout (also exists "kbdd-git")
@@ -204,8 +205,7 @@ pkgs += ["polkit",
 pkgs += ["rofi"]  # run app menu
 
 # net tools
-pkgs += ["wget",
-         "net-tools",
+pkgs += ["net-tools",
          "dialog",
          "smbclient",
          "httpie",
@@ -260,6 +260,7 @@ pkgs += ["mupdf",  # pdf viewer (analog: llpp-git)
 pkgs += ["enchant", "hunspell-en_US", "hunspell-ru-aot", "languagetool"]
 
 pkgs += system_pkgs()
+pkgs += driver_pkgs()
 pkgs += network_pkgs()
 pkgs += virtualization_pkgs()
 pkgs += develop_pkgs()
@@ -272,6 +273,7 @@ pkgs += gui_pkgs()
 # game
 pkgs += ["playonlinux",
         "steam",
+        "lib32-nvidia-utils",  # for steam
         "lib32-libldap",  # for WOT ?
         "minecraft"]
 
