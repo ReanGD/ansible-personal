@@ -18,6 +18,7 @@ def system_pkgs():
                    "vim",
                    "pacutils",
                    "pkgfile",  # pkgfile makepkg (get package for makepkg)
+                   "ansible",
                    "mlocate",
                    "man-db"]
     if x86_64:
@@ -75,6 +76,9 @@ def gui_pkgs():
                 "xorg-xprop",  # window info (xprop | grep WM_CLASS)
                 "xorg-xev",  # keypress info
                 "xorg-xwininfo",  # select window
+                "xcursor-ize-vision",  # a couple of X cursor that similar to Windows 7 cursor
+                "perwindowlayoutd",  # daemon to make per window layout (also exists "kbdd-git")
+                "libnotify",  # create notifications message
                 "xrectsel"]  # get select region
 
     guis = gui.split(",")
@@ -82,7 +86,9 @@ def gui_pkgs():
         gui_pkgs += ["lightdm", "lightdm-gtk-greeter"]
 
     if "awesome" in guis:
-        gui_pkgs += ["awesome", "vicious"]
+        gui_pkgs += ["awesome",
+                     "vicious",
+                     "rofi"]  # run app menu
 
     if "cinnamon" in guis:
         gui_pkgs += ["cinnamon"]
@@ -219,6 +225,16 @@ def messengers_pkgs():
         return []
     return ["telegram-desktop", "slack-desktop"]
 
+def media_pkgs():
+    if "media" not in roles.split(","):
+        return []
+
+    return ["viewnior",  # image viewer
+            "gimp",
+            "blender",
+            "smplayer",
+            "deadbeef"]
+
 # terminal
 pkgs += ["urxvt-perls",
          "zsh",
@@ -229,14 +245,7 @@ pkgs += ["urxvt-perls",
 
 # system
 pkgs += ["gnupg",
-         "xcursor-ize-vision",  # a couple of X cursor that similar to Windows 7 cursor.
-         "perwindowlayoutd",  # daemon to make per window layout (also exists "kbdd-git")
-         "libnotify",  # create notifications message
-         "bind-tools",  # dig and etc
-         "ansible"]
-
-# WM
-pkgs += ["rofi"]  # run app menu
+         "bind-tools"]  # dig and etc
 
 # net tools
 pkgs += ["net-tools",
@@ -268,15 +277,6 @@ if not is_notebook:
 # archive program
 pkgs += ["p7zip", "unzip", "unrar"]
 
-# media
-pkgs += ["byzanz-git",  # create gif from screen
-         "viewnior",  # image viewer
-         "simplescreenrecorder",  # write video from screen
-         "gimp",
-         "blender",
-         "smplayer",
-         "deadbeef"]
-
 # office
 pkgs += ["mupdf",  # pdf viewer (analog: llpp-git)
          "libreoffice-fresh-ru"
@@ -298,6 +298,7 @@ pkgs += automount_pkgs()
 pkgs += web_pkgs()
 pkgs += game_pkgs()
 pkgs += messengers_pkgs()
+pkgs += media_pkgs()
 
 # groups
 grps += ["base-devel"]
