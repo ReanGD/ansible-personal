@@ -27,16 +27,16 @@
   set_fact:
     efi_partition_name: "{{ efi_partition_name_reg.stdout }}"
     root_partition_uuid: "{{ root_partition_uuid_reg.stdout }}"
-    conf_path: "{% if boot_ssd == True %}/boot/efi/EFI/BOOT/refind.conf{% else %}/boot/efi/EFI/refind/refind.conf{% endif %}"
+    conf_path: "{% if nvram_write_enble == False %}/boot/efi/EFI/BOOT/refind.conf{% else %}/boot/efi/EFI/refind/refind.conf{% endif %}"
 
-- name: UEFI install to SSD
+- name: UEFI install for nvram write enble
   shell: refind-install --usedefault {{ efi_partition_name }} --alldrivers
-  when: boot_ssd == True and reg_efi_installed.stat.exists == False
+  when: nvram_write_enble == False and reg_efi_installed.stat.exists == False
   become: yes
 
-- name: UEFI install to HDD
-  shell: refind-install
-  when: boot_ssd == False and reg_efi_installed.stat.exists == False
+- name: UEFI install for nvram write disable
+  shell: refind-install --alldrivers
+  when: nvram_write_enble == True and reg_efi_installed.stat.exists == False
   become: yes
 
 - name: Create refind_linux config

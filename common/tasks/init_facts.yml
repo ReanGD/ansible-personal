@@ -53,7 +53,7 @@
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,hddtemp"
     roles: "font,docker,automount,web,game,messengers,media,repository,dotfiles"
-    boot_ssd: True
+    nvram_write_enble: False
     swap_size: 35
     swappiness: 1
     packages_file: "{{packages_dir}}/packages_desktop.py"
@@ -70,7 +70,7 @@
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,notebook,hddtemp"
     roles: "font,docker,automount,web,game,messengers,media,repository,dotfiles"
-    boot_ssd: True
+    nvram_write_enble: False
     swap_size: 8
     swappiness: 20
     packages_file: "{{packages_dir}}/packages_desktop.py"
@@ -87,7 +87,7 @@
     develop: "none"
     monitoring: "std,hddtemp"
     roles: "docker,automount"
-    boot_ssd: False
+    nvram_write_enble: True
     swap_size: 35
     swappiness: 1
     packages_file: "{{packages_dir}}/packages_archsrv.py"
@@ -104,7 +104,7 @@
     develop: "none"
     monitoring: "std,hddtemp"
     roles: "none"
-    boot_ssd: False
+    nvram_write_enble: True
     swap_size: 1
     swappiness: 1
     packages_file: "{{packages_dir}}/packages_hass.py"
@@ -122,7 +122,7 @@
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,hddtemp"
     roles: "font,docker,web,game,messengers,media,repository,dotfiles"
-    boot_ssd: False
+    nvram_write_enble: False
     swap_size: 4
     swappiness: 1
     packages_file: "{{packages_dir}}/packages_desktop.py"

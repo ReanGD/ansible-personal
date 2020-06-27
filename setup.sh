@@ -5,7 +5,6 @@ MENU_ID=$1
 
 run_with_sudo(){
 	if [ $EUID != 0 ]; then
-        echo "enter sudo pass for setup.sh"
 		sudo "$0" "$MENU_ID"
 		exit $?
 	fi
