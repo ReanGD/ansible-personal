@@ -13,6 +13,7 @@
     - packages_manager
     - setup
     - ssh
-    - boot
+    - role: boot
+      when: x86_64
     - swap
     - systemd_configure

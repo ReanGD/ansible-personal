@@ -28,7 +28,10 @@ def system_pkgs():
     return system_pkgs
 
 def driver_pkgs():
-    driver_pkgs = ["mesa"]
+    driver_pkgs = []
+
+    if gui != "none":
+        driver_pkgs = ["mesa"]
 
     if hostname_id == "archhost":
         driver_pkgs += ["nvidia"]
@@ -95,7 +98,7 @@ def develop_pkgs():
 
     develop_pkgs = []
     develops = develop.split(",")
-    if "utils" in develops:
+    if "std" in develops:
         # "pycharm-community-edition", "pycharm-professional", "clion", "clion-cmake"
         develop_pkgs += ["git",
                          "icdiff",  # console diff
@@ -197,6 +200,24 @@ def automount_pkgs():
         return []
     return ["nfs-utils"]
 
+def web_pkgs():
+    if "web" not in roles.split(","):
+        return []
+    return ["firefox", "firefox-i18n-ru", "google-chrome"]
+
+def game_pkgs():
+    if "game" not in roles.split(","):
+        return []
+    return ["playonlinux",
+            "steam",
+            "lib32-nvidia-utils",  # for steam
+            "lib32-libldap",  # for WOT ?
+            "minecraft"]
+
+def messengers_pkgs():
+    if "game" not in roles.split(","):
+        return []
+    return ["telegram-desktop", "slack-desktop"]
 
 # terminal
 pkgs += ["urxvt-perls",
@@ -233,14 +254,6 @@ if is_notebook:
 pkgs += ["pulseaudio",
          "pavucontrol",
          "volumeicon"]
-
-# web
-pkgs += ["firefox",
-         "firefox-i18n-ru",
-         "flashplugin",
-         # "tor-browser-ru",
-         "google-chrome",
-         ]
 
 # file managers
 pkgs += ["doublecmd-gtk2",
@@ -282,16 +295,9 @@ pkgs += monitoring_pkgs()
 pkgs += font_pkgs()
 pkgs += docker_pkgs()
 pkgs += automount_pkgs()
-
-# game
-pkgs += ["playonlinux",
-        "steam",
-        "lib32-nvidia-utils",  # for steam
-        "lib32-libldap",  # for WOT ?
-        "minecraft"]
-
-# messengers
-pkgs += ["telegram-desktop", "slack-desktop"]
+pkgs += web_pkgs()
+pkgs += game_pkgs()
+pkgs += messengers_pkgs()
 
 # groups
 grps += ["base-devel"]

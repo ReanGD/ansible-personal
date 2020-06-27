@@ -13,12 +13,6 @@
   become: yes
   become_user: "{{install_user}}"
 
-# - name: Add key for tor-browser-ru
-#   command: pacman-key --recv-keys 0x4E2C6E8793298290
-#   changed_when: false
-#   when: hostname_id in ["archhost", "archnote"]
-#   become: yes
-
 - name: Install packages
   pkg_manager:
     command: install_config

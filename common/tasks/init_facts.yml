@@ -34,7 +34,7 @@
 # gui: "none" or ["lightdm", "awesome", "cinnamon", "notebook"]
 # develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "protobuf", "sqlite", "android"]
 # monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
-# roles: "none" or ["font", "docker", "automount", "repository", "dotfiles"]
+# roles: "none" or ["font", "docker", "automount", "web", "game", "messengers", "repository", "dotfiles"]
 
 - name: Set archhost facts
   set_fact:
@@ -47,7 +47,7 @@
     gui: "lightdm,awesome"
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,hddtemp"
-    roles: "font,docker,automount,repository,dotfiles"
+    roles: "font,docker,automount,web,game,messengers,repository,dotfiles"
     boot_ssd: True
     swap_size: 35
     swappiness: 1
@@ -65,7 +65,7 @@
     gui: "lightdm,awesome,cinnamon,notebook"
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,notebook,hddtemp"
-    roles: "font,docker,automount,repository,dotfiles"
+    roles: "font,docker,automount,web,game,messengers,repository,dotfiles"
     boot_ssd: True
     swap_size: 8
     swappiness: 20
@@ -107,3 +107,21 @@
     swappiness: 1
     packages_file: "{{packages_dir}}/packages_hass.py"
   when: arm and reg_product_name_armv7l.stdout == '00000000bed57e85'
+
+- name: Set KVM test facts
+  set_fact:
+    hostname_id: "kvm_test"
+    distro: "manjaro"
+    add_dop_user: False
+    network_type: "lan"
+    set_ssh_access_keys: True
+    virtualization: "none"
+    gui: "lightdm,awesome"
+    develop: "std,cpp,python,go,protobuf"
+    monitoring: "std,hddtemp"
+    roles: "font,docker,web,game,messengers,repository,dotfiles"
+    boot_ssd: False
+    swap_size: 4
+    swappiness: 1
+    packages_file: "{{packages_dir}}/packages_desktop.py"
+  when: x86_64 and reg_product_name_x86_64.stdout == 'Standard PC (Q35 + ICH9, 2009)'

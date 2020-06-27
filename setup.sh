@@ -54,6 +54,22 @@ function archsrv {
     mount /dev/sda1 /mnt/boot/efi
 }
 
+function kvm_test {
+    echo "kvm_test" $1
+    if [[ $1 = "full" ]]
+    then
+        sgdisk -Z /dev/vda
+        sgdisk -n 0:0:+550M -t 0:ef00 -c 0:"boot" /dev/vda
+        sgdisk -n 0:0:0 -t 0:8300 -c 0:"root" /dev/vda
+    fi
+    mkfs.fat -F32 /dev/vda1
+    mkfs.ext4 /dev/vda2
+
+    mount /dev/vda2 /mnt
+    mkdir -p /mnt/boot/efi
+    mount /dev/vda1 /mnt/boot/efi
+}
+
 function setup_base {
     BOARD_NAME=$(cat /sys/class/dmi/id/product_name)
     case $BOARD_NAME in
@@ -66,12 +82,15 @@ function setup_base {
     'System Product Name')
         FUNC="archsrv"
         ;;
+    'Standard PC (Q35 + ICH9, 2009)')
+        FUNC="kvm_test"
+        ;;
     *)
         echo 'Unknown product name'
         exit 1
         ;;
     esac
-    
+
     umount -R /mnt
     dialog --title 'Install' --clear --defaultno --yesno 'Recreate partition table?' 10 40
     case "$?" in
@@ -89,9 +108,9 @@ function setup_base {
         exit 1
         ;;
     esac
-    
+
     read -n 1 -s -p "Press any key to continue"
-    
+
     echo 'Server = http://mirror.yandex.ru/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
     pacstrap /mnt base base-devel nano git ansible
     genfstab -U -p /mnt >> /mnt/etc/fstab
