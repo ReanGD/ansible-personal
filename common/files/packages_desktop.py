@@ -235,6 +235,12 @@ def media_pkgs():
             "smplayer",
             "deadbeef"]
 
+def plex_pkgs():
+    if "plex" not in roles.split(","):
+        return []
+
+    return ["plex-media-server"]
+
 # terminal
 pkgs += ["urxvt-perls",
          "zsh",
@@ -299,6 +305,7 @@ pkgs += web_pkgs()
 pkgs += game_pkgs()
 pkgs += messengers_pkgs()
 pkgs += media_pkgs()
+pkgs += plex_pkgs()
 
 # groups
 grps += ["base-devel"]

@@ -40,7 +40,7 @@
 # gui: "none" or ["lightdm", "awesome", "cinnamon", "notebook"]
 # develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "protobuf", "sqlite", "android"]
 # monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
-# roles: "none" or ["font", "docker", "automount", "web", "game", "messengers", "media", "repository", "dotfiles"]
+# roles: "none" or ["font", "docker", "automount", "web", "game", "messengers", "media", "plex", "repository", "dotfiles"]
 
 - name: Set archhost facts
   set_fact:
@@ -86,7 +86,7 @@
     gui: "none"
     develop: "none"
     monitoring: "std,hddtemp"
-    roles: "docker,automount"
+    roles: "docker,automount,plex"
     nvram_write_enble: True
     swap_size: 35
     swappiness: 1
