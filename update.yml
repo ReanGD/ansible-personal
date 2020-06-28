@@ -1,5 +1,5 @@
 ---
-- name: Update local mashine
+- name: Update mashine
   hosts: local
   gather_facts: false
   environment:

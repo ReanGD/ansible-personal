@@ -56,7 +56,7 @@
     nvram_write_enble: False
     swap_size: 35
     swappiness: 1
-    packages_file: "{{packages_dir}}/packages_desktop.py"
+    packages_file: "{{packages_dir}}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7978'
 
 - name: Set archnote facts (xiaomi)
@@ -73,7 +73,7 @@
     nvram_write_enble: False
     swap_size: 8
     swappiness: 20
-    packages_file: "{{packages_dir}}/packages_desktop.py"
+    packages_file: "{{packages_dir}}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'TM1613'
 
 - name: Set archsrv facts
@@ -125,5 +125,5 @@
     nvram_write_enble: False
     swap_size: 4
     swappiness: 1
-    packages_file: "{{packages_dir}}/packages_desktop.py"
+    packages_file: "{{packages_dir}}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'Standard PC (Q35 + ICH9, 2009)'
