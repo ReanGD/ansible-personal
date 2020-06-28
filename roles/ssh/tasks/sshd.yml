@@ -35,6 +35,12 @@
     owner: "{{main_user}}"
   when: hostname_id == "hass"
 
+- name: Install package for ssh server
+  pkg_manager:
+    name: openssh
+  become: yes
+  become_user: "{{install_user}}"
+
 - name: Copy sshd config
   copy:
     src: sshd_config
@@ -43,12 +49,6 @@
     group: root
     owner: root
   become: yes
-
-- name: Install package for ssh server
-  pkg_manager:
-    name: openssh
-  become: yes
-  become_user: "{{install_user}}"
 
 - name: Enable service sshd for chroot
   service:

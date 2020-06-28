@@ -3,6 +3,14 @@
 ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 MENU_ID=$1
 
+run_with_sudo(){
+	if [ $EUID != 0 ]; then
+        echo "enter sudo pass for setup.sh"
+		sudo "$0" "$MENU_ID"
+		exit $?
+	fi
+}
+
 function archhost {
     echo "archhost" $1
     if [[ $1 = "full" ]]
@@ -60,14 +68,20 @@ function kvm_test {
     then
         sgdisk -Z /dev/vda
         sgdisk -n 0:0:+550M -t 0:ef00 -c 0:"boot" /dev/vda
-        sgdisk -n 0:0:0 -t 0:8300 -c 0:"root" /dev/vda
+        sgdisk -n 0:0:+15GiB -t 0:8300 -c 0:"root" /dev/vda
+        sgdisk -n 0:0:0 -t 0:8302 -c 0:"home" /dev/vda
     fi
     mkfs.fat -F32 /dev/vda1
     mkfs.ext4 /dev/vda2
+    mkfs.ext4 /dev/vda3
 
     mount /dev/vda2 /mnt
+
     mkdir -p /mnt/boot/efi
     mount /dev/vda1 /mnt/boot/efi
+
+    mkdir -p /mnt/home
+    mount /dev/vda3 /mnt/home
 }
 
 function setup_base {
@@ -91,6 +105,23 @@ function setup_base {
         ;;
     esac
 
+    DISTRO_NAME=$(cat /etc/os-release | grep "^ID=" | cut -d'=' -f2-)
+    case $DISTRO_NAME in
+    'arch')
+        echo 'distro = arch'
+        ;;
+    'archarm')
+        echo 'distro = archarm'
+        ;;
+    'manjaro')
+        echo 'distro = manjaro'
+        ;;;
+    *)
+        echo 'Unknown distro name'
+        exit 1
+        ;;
+    esac
+
     umount -R /mnt
     dialog --title 'Install' --clear --defaultno --yesno 'Recreate partition table?' 10 40
     case "$?" in
@@ -110,12 +141,22 @@ function setup_base {
     esac
 
     read -n 1 -s -p "Press any key to continue"
+    case $DISTRO_NAME in
+    'arch*')
+        pacstrap /mnt base base-devel nano git ansible
+        genfstab -U -p /mnt >> /mnt/etc/fstab
+        arch-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /etc/ansible-personal
+        arch-chroot /mnt /etc/ansible-personal/setup.sh ansible
+        ;;
+    'manjaro')
+        pacman -Sy gptfdisk --noconfirm
+        basestrap /mnt base base-devel nano git ansible
+        fstabgen -U -p /mnt >> /mnt/etc/fstab
+        manjaro-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /etc/ansible-personal
+        manjaro-chroot /mnt /etc/ansible-personal/setup.sh ansible
+        ;;
+    esac
 
-    echo 'Server = http://mirror.yandex.ru/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
-    pacstrap /mnt base base-devel nano git ansible
-    genfstab -U -p /mnt >> /mnt/etc/fstab
-    arch-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /etc/ansible-personal
-    arch-chroot /mnt /etc/ansible-personal/setup.sh ansible
     # umount -R /mnt
 }
 
@@ -125,6 +166,7 @@ case $MENU_ID in
     /usr/bin/ansible-playbook setup.yml --ask-become-pass --ask-vault-pass
 	;;
   * )
+    run_with_sudo
 	setup_base
 	;;
 esac
