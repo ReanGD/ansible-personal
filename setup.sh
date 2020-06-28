@@ -115,7 +115,8 @@ function setup_base {
         ;;
     'manjaro')
         echo 'distro = manjaro'
-        ;;;
+        pacman -Sy gptfdisk --noconfirm
+        ;;
     *)
         echo 'Unknown distro name'
         exit 1
@@ -149,7 +150,6 @@ function setup_base {
         arch-chroot /mnt /etc/ansible-personal/setup.sh ansible
         ;;
     'manjaro')
-        pacman -Sy gptfdisk --noconfirm
         basestrap /mnt base base-devel nano git ansible
         fstabgen -U -p /mnt >> /mnt/etc/fstab
         manjaro-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /etc/ansible-personal

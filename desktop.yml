@@ -19,25 +19,25 @@
     - systemd_configure
     - time
     - role: font
-      when: "'font' in roles.split(',')"
+      when: "font" in roles.split(",")
     - role: pkgcacheclean
       when: x86_64
     - role: docker
-      when: "'docker' in roles.split(',')"
+      when: "docker" in roles.split(",")
     - role: automount
-      when: "'automount' in roles.split(',')"
+      when: "automount" in roles.split(",")
     - role: monitoring
-      when: "monitoring!='none'"
+      when: monitoring!="none"
     - role: repository
-      when: "'repository' in roles.split(',')"
+      when: "repository" in roles.split(",")
     - role: dotfiles
-      when: "'dotfiles' in roles.split(',')"
+      when: "dotfiles" in roles.split(",")
     # update required for each machine
     - role: gui
-      when: "gui!='none'"
+      when: gui!="none"
     - role: virtualization
-      when: "virtualization!='none'"
+      when: virtualization!="none"
     - role: vs_code
-      when: "develop!='none'"
+      when: develop!="none"
     - packages
     - clear

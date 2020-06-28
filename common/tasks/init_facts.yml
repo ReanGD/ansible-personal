@@ -5,6 +5,11 @@
       - '!all'
       - '!any'
 
+- name: Find distro name
+  shell: cat /etc/os-release | grep "^ID=" | cut -d'=' -f2-
+  register: reg_distro
+  changed_when: false
+
 - name: Set common facts
   set_fact:
     main_user: rean
@@ -14,6 +19,7 @@
     packages_dir: "{{ inventory_dir }}/common/files"
     x86_64: "{{ ansible_facts['architecture'] == 'x86_64' }}"
     arm: "{{ansible_facts['architecture'] == 'armv7l'}}"
+    distro: "{{reg_distro.stdout}}"
 
 - name: Find board uuid for x86_64
   shell: cat /sys/class/dmi/id/product_name
@@ -28,7 +34,7 @@
   changed_when: false
   when: arm
 
-# distro: "arch" or "arch_arm" or "manjaro"
+# distro: "arch" or "archarm" or "manjaro"
 # network_type: "lan" or ""lan_old" or "wifi"
 # virtualization: "none" or "kvm_qemu" or "kvm_libvirt"
 # gui: "none" or ["lightdm", "awesome", "cinnamon", "notebook"]
@@ -39,7 +45,6 @@
 - name: Set archhost facts
   set_fact:
     hostname_id: "archhost"
-    distro: "arch"
     add_dop_user: False
     network_type: "lan"
     set_ssh_access_keys: True
@@ -57,7 +62,6 @@
 - name: Set archnote facts (xiaomi)
   set_fact:
     hostname_id: "archnote"
-    distro: "arch"
     add_dop_user: True
     network_type: "wifi"
     set_ssh_access_keys: True
@@ -75,7 +79,6 @@
 - name: Set archsrv facts
   set_fact:
     hostname_id: "archsrv"
-    distro: "arch"
     add_dop_user: False
     network_type: "lan"
     set_ssh_access_keys: False
@@ -93,7 +96,6 @@
 - name: Set hass facts
   set_fact:
     hostname_id: "hass"
-    distro: "arch_arm"
     add_dop_user: False
     network_type: "lan_old"
     set_ssh_access_keys: False
