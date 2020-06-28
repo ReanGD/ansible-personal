@@ -54,3 +54,11 @@
     line: "timeout 1"
     path: "{{conf_path}}"
   become: yes
+
+- name: Use refind textonly mode
+  lineinfile:
+    regexp: "^#textonly$"
+    line: "textonly"
+    path: "{{conf_path}}"
+  when: hostname_id == "kvm_test"
+  become: yes

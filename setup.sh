@@ -142,19 +142,19 @@ function setup_base {
     read -n 1 -s -p "Press any key to continue"
     case $DISTRO_NAME in
     'arch')
-        pacstrap /mnt base base-devel nano git ansible linux linux-firmware
+        pacstrap /mnt base base-devel linux linux-firmware nano git ansible
         genfstab -U -p /mnt >> /mnt/etc/fstab
         arch-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /etc/ansible-personal
         arch-chroot /mnt /etc/ansible-personal/setup.sh ansible
         ;;
     'archarm')
-        pacstrap /mnt base base-devel nano git ansible linux linux-firmware
+        pacstrap /mnt base base-devel linux linux-firmware nano git ansible
         genfstab -U -p /mnt >> /mnt/etc/fstab
         arch-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /etc/ansible-personal
         arch-chroot /mnt /etc/ansible-personal/setup.sh ansible
         ;;
     'manjaro')
-        basestrap /mnt base base-devel nano git ansible linux linux-firmware
+        basestrap /mnt base base-devel linux linux-firmware nano git ansible
         fstabgen -U -p /mnt >> /mnt/etc/fstab
         manjaro-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /etc/ansible-personal
         manjaro-chroot /mnt /etc/ansible-personal/setup.sh ansible
