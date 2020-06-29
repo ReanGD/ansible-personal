@@ -90,7 +90,7 @@
     nvram_write_enble: True
     swap_size: 35
     swappiness: 1
-    packages_file: "{{packages_dir}}/packages_archsrv.py"
+    packages_file: "{{packages_dir}}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'System Product Name'
 
 - name: Set hass facts
