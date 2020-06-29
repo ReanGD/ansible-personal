@@ -112,7 +112,7 @@
 
 - name: Set KVM test facts
   set_fact:
-    hostname_id: "kvm_test"
+    hostname_id: "kvmtest"
     distro: "manjaro"
     add_dop_user: False
     network_type: "lan"

@@ -60,5 +60,5 @@
     regexp: "^#textonly$"
     line: "textonly"
     path: "{{conf_path}}"
-  when: hostname_id == "kvm_test"
+  when: hostname_id == "kvmtest"
   become: yes

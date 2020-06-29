@@ -61,8 +61,8 @@ function archsrv {
     mount /dev/sda1 /mnt/boot/efi
 }
 
-function kvm_test {
-    echo "kvm_test" $1
+function kvmtest {
+    echo "kvmtest" $1
     if [[ $1 = "full" ]]
     then
         sgdisk -Z /dev/vda
@@ -96,7 +96,7 @@ function setup_base {
         FUNC="archsrv"
         ;;
     'Standard PC (Q35 + ICH9, 2009)')
-        FUNC="kvm_test"
+        FUNC="kvmtest"
         ;;
     *)
         echo 'Unknown product name'

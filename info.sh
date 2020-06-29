@@ -9,7 +9,7 @@ MENU_ID=$(whiptail --clear --title 'Get info about host' \
 	"2" "archnote" \
 	"3" "archsrv" \
 	"4" "hass" \
-	"5" "kvm_test" \
+	"5" "kvmtest" \
 	"6" "Quit" \
 	3>&1 1>&2 2>&3)
 
@@ -31,7 +31,7 @@ case $MENU_ID in
 	/usr/bin/ansible-playbook info.yml --ask-become-pass --extra-vars "variable_host=hass" $@
 	;;
   "5")
-	/usr/bin/ansible-playbook info.yml --ask-become-pass --extra-vars "variable_host=kvm_test" $@
+	/usr/bin/ansible-playbook info.yml --ask-become-pass --extra-vars "variable_host=kvmtest" $@
 	;;
   "6")
 	exit 1
