@@ -1,11 +1,5 @@
 # global x86_64, hostname_id, distro, network_type, virtualization, gui, develop, monitoring, roles
 
-pkgs = []
-grps = []
-
-is_notebook = hostname_id in ["archnote"]
-
-
 def system_pkgs():
     system_pkgs = ["base",
                    "polkit",
@@ -31,6 +25,9 @@ def system_pkgs():
                     "oh-my-zsh-git",
                     "zsh-syntax-highlighting",
                     "fzf"]
+
+    # archivers
+    system_pkgs += ["p7zip", "unzip", "unrar"]
 
     if x86_64:
         system_pkgs += ["yay",  # AUR package manager
@@ -267,6 +264,38 @@ def media_pkgs():
             "smplayer",
             "deadbeef"]
 
+def pdf_pkgs():
+    if "pdf" not in roles.split(","):
+        return []
+
+    return ["mupdf"]  # pdf viewer (analog: llpp-git)
+
+def office_pkgs():
+    if "office" not in roles.split(","):
+        return []
+
+    return ["libreoffice-fresh-ru"]
+
+def file_managers_pkgs():
+    if "file_managers" not in roles.split(","):
+        return []
+
+    file_managers_pkgs = ["doublecmd-gtk2",
+                          "fsearch-git",
+                          "yandex-disk",  # yandex-disk setup/start
+                          "dropbox"]
+
+    if hostname_id == "archhost":
+        file_managers_pkgs += ["transmission-remote-gui"]  # transmission-remote-gui-bin - not work now
+
+    return file_managers_pkgs
+
+def spell_checkers_pkgs():
+    if "spell_checkers" not in roles.split(","):
+        return []
+
+    return ["enchant", "hunspell-en_US", "hunspell-ru-aot", "languagetool"]
+
 def plex_pkgs():
     if "plex" not in roles.split(","):
         return []
@@ -279,27 +308,9 @@ def work_pkgs():
 
     return ["openconnect"] # for vpn to work
 
-# file managers
-pkgs += ["doublecmd-gtk2",
-         "fsearch-git",
-         "transmission-remote-gui",  # transmission-remote-gui-bin - not work now
-         "yandex-disk",  # yandex-disk setup/start
-         "dropbox"]
+grps = ["base-devel"]
 
-if not is_notebook:
-    pkgs += ["transmission-remote-gui"]
-
-# archive program
-pkgs += ["p7zip", "unzip", "unrar"]
-
-# office
-pkgs += ["mupdf",  # pdf viewer (analog: llpp-git)
-         "libreoffice-fresh-ru"
-         ]
-
-# spell checkers
-pkgs += ["enchant", "hunspell-en_US", "hunspell-ru-aot", "languagetool"]
-
+pkgs = []
 pkgs += system_pkgs()
 pkgs += driver_pkgs()
 pkgs += network_pkgs()
@@ -315,11 +326,12 @@ pkgs += game_pkgs()
 pkgs += messengers_pkgs()
 pkgs += audio_pkgs()
 pkgs += media_pkgs()
+pkgs += pdf_pkgs()
+pkgs += office_pkgs()
+pkgs += spell_checkers_pkgs()
+pkgs += file_managers_pkgs()
 pkgs += plex_pkgs()
 pkgs += work_pkgs()
-
-# groups
-grps += ["base-devel"]
 
 packages = pkgs
 groups = grps
