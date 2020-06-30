@@ -1,7 +1,9 @@
 # global x86_64, hostname_id, distro, network_type, virtualization, gui, develop, monitoring, roles
 
-def system_pkgs():
-    system_pkgs = ["base",
+def system():
+    system_pkgs = ["linux",
+                   "linux-firmware",
+                   "base",
                    "polkit",
                    "gnupg",
                    "wget",
@@ -36,7 +38,7 @@ def system_pkgs():
 
     return system_pkgs
 
-def driver_pkgs():
+def driver():
     driver_pkgs = []
 
     if gui != "none":
@@ -53,7 +55,7 @@ def driver_pkgs():
 
     return driver_pkgs
 
-def network_pkgs():
+def network():
     network_pkgs = ["netctl",  # arch specific network manager
                     "net-tools",
                     "bind-tools",  # dig and etc
@@ -67,7 +69,7 @@ def network_pkgs():
 
     return network_pkgs
 
-def virtualization_pkgs():
+def vm():
     if virtualization == "kvm_qemu":
         return ["qemu",
                 "virt-viewer",  # for SPICE
@@ -84,7 +86,7 @@ def virtualization_pkgs():
     else:
         return []
 
-def gui_pkgs():
+def desctop_env():
     if gui == "none":
         return []
 
@@ -116,7 +118,7 @@ def gui_pkgs():
 
     return gui_pkgs
 
-def develop_pkgs():
+def development():
     if develop == "none":
         return []
 
@@ -174,7 +176,7 @@ def develop_pkgs():
 
     return develop_pkgs
 
-def monitoring_pkgs():
+def monitoring_utils():
     if monitoring == "none":
         return []
 
@@ -200,7 +202,7 @@ def monitoring_pkgs():
 
     return monitoring_pkgs
 
-def font_pkgs():
+def font():
     if "font" not in roles.split(","):
         return []
     return ["font-manager",  # viewer for fonts
@@ -214,22 +216,22 @@ def font_pkgs():
             "noto-fonts-emoji",  # emoji for chrome
             "adobe-source-code-pro-fonts"]
 
-def docker_pkgs():
+def docker():
     if "docker" not in roles.split(","):
         return []
     return ["docker", "docker-compose"]
 
-def automount_pkgs():
+def automount():
     if "automount" not in roles.split(","):
         return []
     return ["nfs-utils"]
 
-def web_pkgs():
+def web():
     if "web" not in roles.split(","):
         return []
     return ["firefox", "firefox-i18n-ru", "google-chrome"]
 
-def game_pkgs():
+def game():
     if "game" not in roles.split(","):
         return []
     return ["playonlinux",
@@ -238,12 +240,12 @@ def game_pkgs():
             "lib32-libldap",  # for WOT ?
             "minecraft"]
 
-def messengers_pkgs():
+def messengers():
     if "game" not in roles.split(","):
         return []
     return ["telegram-desktop", "slack-desktop"]
 
-def audio_pkgs():
+def audio():
     if "audio" not in roles.split(","):
         return []
 
@@ -254,7 +256,7 @@ def audio_pkgs():
 
     return audio_pkgs
 
-def media_pkgs():
+def media():
     if "media" not in roles.split(","):
         return []
 
@@ -264,45 +266,46 @@ def media_pkgs():
             "smplayer",
             "deadbeef"]
 
-def pdf_pkgs():
+def pdf():
     if "pdf" not in roles.split(","):
         return []
 
     return ["mupdf"]  # pdf viewer (analog: llpp-git)
 
-def office_pkgs():
+def office():
     if "office" not in roles.split(","):
         return []
 
     return ["libreoffice-fresh-ru"]
 
-def file_managers_pkgs():
+def file_managers():
     if "file_managers" not in roles.split(","):
         return []
 
-    file_managers_pkgs = ["doublecmd-gtk2",
-                          "fsearch-git",
-                          "yandex-disk",  # yandex-disk setup/start
-                          "dropbox"]
+    return ["doublecmd-gtk2",
+            "fsearch-git",
+            "yandex-disk",  # yandex-disk setup/start
+            "dropbox"]
 
-    if hostname_id == "archhost":
-        file_managers_pkgs += ["transmission-remote-gui"]  # transmission-remote-gui-bin - not work now
+def torrent():
+    if "torrent" not in roles.split(","):
+        return []
 
-    return file_managers_pkgs
+    return ["transmission-remote-gui"]  # transmission-remote-gui-bin - not work now
 
-def spell_checkers_pkgs():
+def spell_checkers():
     if "spell_checkers" not in roles.split(","):
         return []
 
     return ["enchant", "hunspell-en_US", "hunspell-ru-aot", "languagetool"]
 
-def plex_pkgs():
+def plex():
     if "plex" not in roles.split(","):
         return []
 
     return ["plex-media-server"]
 
-def work_pkgs():
+def work():
     if "work" not in roles.split(","):
         return []
 
@@ -311,27 +314,28 @@ def work_pkgs():
 grps = ["base-devel"]
 
 pkgs = []
-pkgs += system_pkgs()
-pkgs += driver_pkgs()
-pkgs += network_pkgs()
-pkgs += virtualization_pkgs()
-pkgs += gui_pkgs()
-pkgs += develop_pkgs()
-pkgs += monitoring_pkgs()
-pkgs += font_pkgs()
-pkgs += docker_pkgs()
-pkgs += automount_pkgs()
-pkgs += web_pkgs()
-pkgs += game_pkgs()
-pkgs += messengers_pkgs()
-pkgs += audio_pkgs()
-pkgs += media_pkgs()
-pkgs += pdf_pkgs()
-pkgs += office_pkgs()
-pkgs += spell_checkers_pkgs()
-pkgs += file_managers_pkgs()
-pkgs += plex_pkgs()
-pkgs += work_pkgs()
+pkgs += system()
+pkgs += driver()
+pkgs += network()
+pkgs += vm()
+pkgs += desctop_env()
+pkgs += development()
+pkgs += monitoring_utils()
+pkgs += font()
+pkgs += docker()
+pkgs += automount()
+pkgs += web()
+pkgs += game()
+pkgs += messengers()
+pkgs += audio()
+pkgs += media()
+pkgs += pdf()
+pkgs += office()
+pkgs += spell_checkers()
+pkgs += file_managers()
+pkgs += torrent()
+pkgs += plex()
+pkgs += work()
 
 packages = pkgs
 groups = grps

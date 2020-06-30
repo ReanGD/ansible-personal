@@ -1,8 +1,0 @@
----
-- hosts: local_srv
-  
-  vars:
-    docker_cfg: /home/rean/docker/
-
-  tasks:
-    - include: tasks/archsrv/docker.yml

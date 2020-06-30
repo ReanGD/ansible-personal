@@ -6,7 +6,7 @@ vs_code_extensions:
   # python
   - "ms-python.python"
   # go
-  - "golang.Go"
+  - "golang.go"
   # cpp
   - "ms-vscode.cpptools"
   - "hars.CppSnippets"
