@@ -40,7 +40,7 @@
 # gui: "none" or ["lightdm", "awesome", "cinnamon", "notebook"]
 # develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "protobuf", "sqlite", "android"]
 # monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
-# roles: "none" or ["font", "docker", "automount", "web", "game", "messengers", "media", "plex", "repository", "dotfiles"]
+# roles: "none" or ["font", "docker", "automount", "web", "game", "messengers", "audio", "media", "plex", "work", "repository", "dotfiles"]
 
 - name: Set archhost facts
   set_fact:
@@ -52,7 +52,7 @@
     gui: "lightdm,awesome"
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,hddtemp"
-    roles: "font,docker,automount,web,game,messengers,media,repository,dotfiles"
+    roles: "font,docker,automount,web,game,messengers,audio,media,work,repository,dotfiles"
     nvram_write_enble: False
     swap_size: 35
     swappiness: 1
@@ -69,7 +69,7 @@
     gui: "lightdm,awesome,cinnamon,notebook"
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,notebook,hddtemp"
-    roles: "font,docker,automount,web,game,messengers,media,repository,dotfiles"
+    roles: "font,docker,automount,web,game,messengers,audio,media,work,repository,dotfiles"
     nvram_write_enble: False
     swap_size: 8
     swappiness: 20
@@ -121,7 +121,7 @@
     gui: "lightdm,awesome"
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,hddtemp"
-    roles: "font,docker,web,game,messengers,media,repository,dotfiles"
+    roles: "font,docker,web,game,messengers,audio,media,repository,dotfiles"
     nvram_write_enble: False
     swap_size: 4
     swappiness: 1

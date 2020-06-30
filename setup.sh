@@ -67,7 +67,7 @@ function kvmtest {
     then
         sgdisk -Z /dev/vda
         sgdisk -n 0:0:+550M -t 0:ef00 -c 0:"boot" /dev/vda
-        sgdisk -n 0:0:+15GiB -t 0:8300 -c 0:"root" /dev/vda
+        sgdisk -n 0:0:+25GiB -t 0:8300 -c 0:"root" /dev/vda
         sgdisk -n 0:0:0 -t 0:8302 -c 0:"home" /dev/vda
     fi
     mkfs.fat -F32 /dev/vda1

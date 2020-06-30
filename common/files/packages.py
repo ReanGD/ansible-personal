@@ -9,6 +9,7 @@ is_notebook = hostname_id in ["archnote"]
 def system_pkgs():
     system_pkgs = ["base",
                    "polkit",
+                   "gnupg",
                    "wget",
                    "curl",
                    "git",
@@ -18,9 +19,19 @@ def system_pkgs():
                    "vim",
                    "pacutils",
                    "pkgfile",  # pkgfile makepkg (get package for makepkg)
+                   "dialog",
+                   "libnewt",  # external dialog
                    "ansible",
                    "mlocate",
                    "man-db"]
+
+    # terminal
+    system_pkgs += ["urxvt-perls",
+                    "zsh",
+                    "oh-my-zsh-git",
+                    "zsh-syntax-highlighting",
+                    "fzf"]
+
     if x86_64:
         system_pkgs += ["yay",  # AUR package manager
                         "refind",  # UEFI boot manager
@@ -46,8 +57,18 @@ def driver_pkgs():
     return driver_pkgs
 
 def network_pkgs():
-    return ["netctl",  # arch specific network manager
-            "openssh"]  # ssh server
+    network_pkgs = ["netctl",  # arch specific network manager
+                    "net-tools",
+                    "bind-tools",  # dig and etc
+                    "smbclient",
+                    "httpie",
+                    "openvpn",
+                    "openssh"]  # ssh server
+
+    if "wifi" in network_type.split(","):
+        network_pkgs += ["connman", "wpa_supplicant"]
+
+    return network_pkgs
 
 def virtualization_pkgs():
     if virtualization == "kvm_qemu":
@@ -225,6 +246,17 @@ def messengers_pkgs():
         return []
     return ["telegram-desktop", "slack-desktop"]
 
+def audio_pkgs():
+    if "audio" not in roles.split(","):
+        return []
+
+    audio_pkgs = ["pulseaudio"]
+
+    if gui != "none":
+        audio_pkgs += ["pavucontrol", "volumeicon"]
+
+    return audio_pkgs
+
 def media_pkgs():
     if "media" not in roles.split(","):
         return []
@@ -241,34 +273,11 @@ def plex_pkgs():
 
     return ["plex-media-server"]
 
-# terminal
-pkgs += ["urxvt-perls",
-         "zsh",
-         "libnewt",  # external dialog
-         "oh-my-zsh-git",
-         "zsh-syntax-highlighting",
-         "fzf"]
+def work_pkgs():
+    if "work" not in roles.split(","):
+        return []
 
-# system
-pkgs += ["gnupg",
-         "bind-tools"]  # dig and etc
-
-# net tools
-pkgs += ["net-tools",
-         "dialog",
-         "smbclient",
-         "httpie",
-         "openvpn",
-         "openconnect", # for vpn to work
-         ]
-
-if is_notebook:
-    pkgs += ["connman", "wpa_supplicant"]
-
-# audio
-pkgs += ["pulseaudio",
-         "pavucontrol",
-         "volumeicon"]
+    return ["openconnect"] # for vpn to work
 
 # file managers
 pkgs += ["doublecmd-gtk2",
@@ -304,8 +313,10 @@ pkgs += automount_pkgs()
 pkgs += web_pkgs()
 pkgs += game_pkgs()
 pkgs += messengers_pkgs()
+pkgs += audio_pkgs()
 pkgs += media_pkgs()
 pkgs += plex_pkgs()
+pkgs += work_pkgs()
 
 # groups
 grps += ["base-devel"]
