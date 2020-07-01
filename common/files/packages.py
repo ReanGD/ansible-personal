@@ -17,9 +17,11 @@ def system():
                    "pkgfile",  # pkgfile makepkg (get package for makepkg)
                    "dialog",
                    "libnewt",  # external dialog
-                   "ansible",
                    "mlocate",
                    "man-db"]
+
+    # ansible
+    system_pkgs += ["ansible", "python", "python-lxml"]
 
     # terminal
     system_pkgs += ["urxvt-perls",
@@ -52,6 +54,8 @@ def driver():
                         # "nvidia",
                         "xf86-video-intel",
                         "xf86-input-libinput"]  # touchpad
+    elif hostname_id == "kvmtest":
+        driver_pkgs += ["spice-vdagent", "xf86-video-qxl"]
 
     return driver_pkgs
 
@@ -81,8 +85,7 @@ def vm():
                 "virt-manager",  # GUI for libvirt
                 "edk2-ovmf",  # for UEFI
                 "ebtables",  # for network
-                "dnsmasq",  # for network
-                "python-lxml"]  # for ansible
+                "dnsmasq"]  # for network
     else:
         return []
 
@@ -143,8 +146,7 @@ def development():
                          "include-what-you-use"]
 
     if "python" in develops:
-        develop_pkgs += ["python",
-                         "python-pip",
+        develop_pkgs += ["python-pip",
                          "python-nose",
                          "python-jedi",
                          "python-pylint",
