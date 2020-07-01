@@ -89,7 +89,7 @@ def vm():
     else:
         return []
 
-def desctop_env():
+def desktop_env():
     if gui == "none":
         return []
 
@@ -115,6 +115,9 @@ def desctop_env():
 
     if "cinnamon" in guis:
         gui_pkgs += ["cinnamon"]
+
+    if "kde" in guis:
+        gui_pkgs += ["plasma-desktop"]
 
     if "notebook" in guis:
         gui_pkgs += ["xorg-xbacklight"]  # backlight control application (xbacklight -set 40)
@@ -320,7 +323,7 @@ pkgs += system()
 pkgs += driver()
 pkgs += network()
 pkgs += vm()
-pkgs += desctop_env()
+pkgs += desktop_env()
 pkgs += development()
 pkgs += monitoring_utils()
 pkgs += font()
