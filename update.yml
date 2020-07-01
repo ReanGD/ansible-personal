@@ -1,6 +1,6 @@
 ---
-- name: Update mashine
-  hosts: local
+- name: Update "{{ variable_host }}"
+  hosts: "{{ variable_host }}"
   gather_facts: false
   environment:
     GNUPGHOME: /home/rean/.config/gnupg

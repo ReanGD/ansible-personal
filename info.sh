@@ -17,23 +17,26 @@ if [ $? != 0 ]; then
 	exit 1
 fi
 
+HOST_NAME=""
 case $MENU_ID in
   "1")
-	/usr/bin/ansible-playbook info.yml --ask-become-pass --extra-vars "variable_host=archhost" $@
+	HOST_NAME="archhost"
 	;;
   "2")
-	/usr/bin/ansible-playbook info.yml --ask-become-pass --extra-vars "variable_host=archnote" $@
+	HOST_NAME="archnote"
 	;;
   "3")
-	/usr/bin/ansible-playbook info.yml --ask-become-pass --extra-vars "variable_host=archsrv" $@
+	HOST_NAME="archsrv"
 	;;
   "4")
-	/usr/bin/ansible-playbook info.yml --ask-become-pass --extra-vars "variable_host=hass" $@
+	HOST_NAME="hass"
 	;;
   "5")
-	/usr/bin/ansible-playbook info.yml --ask-become-pass --extra-vars "variable_host=kvmtest" $@
+	HOST_NAME="kvmtest"
 	;;
   "6")
 	exit 1
 	;;
 esac
+
+/usr/bin/ansible-playbook info.yml --ask-become-pass --extra-vars "variable_host=${HOST_NAME}" $@
