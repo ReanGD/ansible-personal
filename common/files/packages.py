@@ -117,7 +117,9 @@ def desktop_env():
         gui_pkgs += ["cinnamon"]
 
     if "kde" in guis:
-        gui_pkgs += ["plasma-desktop"]
+        gui_pkgs += ["plasma-desktop", "kdeconnect", "dolphin-plugins", "ksystemlog", "print-manager"]
+        if distro == "manjaro":
+            gui_pkgs += ["manjaro-kde-settings", "manjaro-settings-manager-knotifier", "manjaro-settings-manager-kcm", "pamac-gtk"]
 
     if "notebook" in guis:
         gui_pkgs += ["xorg-xbacklight"]  # backlight control application (xbacklight -set 40)
