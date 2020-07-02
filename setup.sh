@@ -15,7 +15,7 @@ function archhost {
     if [[ $1 = "full" ]]
     then
         sgdisk -Z /dev/sda
-        sgdisk -n 0:0:+550M -t 0:ef00 -c 0:"boot" /dev/sda
+        sgdisk -n 0:0:+512M -t 0:ef00 -c 0:"boot" /dev/sda
         sgdisk -n 0:0:0 -t 0:8300 -c 0:"root" /dev/sda
     fi
     # add hdd format and mount (/disk0)
@@ -32,7 +32,7 @@ function archnote {
     if [[ $1 = "full" ]]
     then
         sgdisk -Z /dev/nvme0n1
-        sgdisk -n 0:0:+450M -t 0:ef00 -c 0:"boot" /dev/nvme0n1
+        sgdisk -n 0:0:+512M -t 0:ef00 -c 0:"boot" /dev/nvme0n1
         sgdisk -n 0:0:0 -t 0:8300 -c 0:"root" /dev/nvme0n1
     fi
 
@@ -49,7 +49,7 @@ function archsrv {
     if [[ $1 = "full" ]]
     then
         sgdisk -Z /dev/sda
-        sgdisk -n 0:0:+550M -t 0:ef00 -c 0:"boot" /dev/sda
+        sgdisk -n 0:0:+512M -t 0:ef00 -c 0:"boot" /dev/sda
         sgdisk -n 0:0:0 -t 0:8300 -c 0:"root" /dev/sda
     fi
 
@@ -66,13 +66,16 @@ function kvmtest {
     if [[ $1 = "full" ]]
     then
         sgdisk -Z /dev/vda
-        sgdisk -n 0:0:+550M -t 0:ef00 -c 0:"boot" /dev/vda
+        sgdisk -n 0:0:+512M -t 0:ef00 -c 0:"boot" /dev/vda
         sgdisk -n 0:0:+25GiB -t 0:8300 -c 0:"root" /dev/vda
         sgdisk -n 0:0:0 -t 0:8302 -c 0:"home" /dev/vda
+        cryptsetup luksFormat /dev/vda3
+        cryptsetup open /dev/vda3 home
     fi
+
     mkfs.fat -F32 /dev/vda1
     mkfs.ext4 /dev/vda2
-    mkfs.ext4 /dev/vda3
+    mkfs.ext4 /dev/mapper/home
 
     mount /dev/vda2 /mnt
 
@@ -80,7 +83,7 @@ function kvmtest {
     mount /dev/vda1 /mnt/boot/efi
 
     mkdir -p /mnt/home
-    mount /dev/vda3 /mnt/home
+    mount /dev/mapper/home /mnt/home
 }
 
 function setup_base {
