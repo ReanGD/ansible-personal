@@ -108,12 +108,14 @@ function setup_base {
     case $DISTRO_NAME in
     'arch')
         echo 'distro = arch'
+        echo 'Server = http://mirror.yandex.ru/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
         ;;
     'archarm')
         echo 'distro = archarm'
         ;;
     'manjaro')
         echo 'distro = manjaro'
+        echo 'Server = http://mirror.truenetwork.ru/manjaro/stable/$repo/$arch' > /etc/pacman.d/mirrorlist
         pacman -Sy gptfdisk --noconfirm
         ;;
     *)

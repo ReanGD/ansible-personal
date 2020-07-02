@@ -113,7 +113,6 @@
 - name: Set KVM test facts
   set_fact:
     hostname_id: "kvmtest"
-    distro: "manjaro"
     add_dop_user: False
     network_type: "lan"
     set_ssh_access_keys: True
@@ -121,7 +120,7 @@
     gui: "lightdm,awesome,kde"
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,hddtemp"
-    roles: "font,docker,web,game,messengers,audio,media,pdf,office,file_managers,spell_checkers,repository,dotfiles"
+    roles: "font,docker,web,messengers,audio,media,pdf,office,file_managers,spell_checkers,repository,dotfiles"
     nvram_write_enble: False
     swap_size: 4
     swappiness: 1

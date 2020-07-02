@@ -5,6 +5,9 @@
 ## sudo pacman-mirrors --fasttrack 30
 ##
 
+## Country : Russia
+Server = http://mirror.truenetwork.ru/manjaro/stable/$repo/$arch
+
 ## Country : Belgium
 Server = https://mirror.futureweb.be/manjaro/stable/$repo/$arch
 
@@ -37,6 +40,3 @@ Server = https://pl.mirrors.fossho.st/manjaro/stable/$repo/$arch
 
 ## Country : Germany
 Server = https://mirror.alpix.eu/manjaro/stable/$repo/$arch
-
-## Country : Russia
-Server = http://mirror.truenetwork.ru/manjaro/stable/$repo/$arch

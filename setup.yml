@@ -11,7 +11,8 @@
     - users
     - network
     - packages_manager
-    - setup
+    - role: setup
+      when: is_chroot == True
     - ssh
     - role: boot
       when: x86_64
