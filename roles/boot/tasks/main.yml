@@ -23,29 +23,46 @@
   register: root_partition_uuid_reg
   changed_when: false
 
+- name: Find home partition uuid
+  shell: findmnt -o UUID --noheadings /home
+  register: home_partition_uuid_reg
+  changed_when: false
+
 - name: Set partitions facts
   set_fact:
     efi_partition_name: "{{ efi_partition_name_reg.stdout }}"
     root_partition_uuid: "{{ root_partition_uuid_reg.stdout }}"
+    home_partition_uuid: "{{ home_partition_uuid_reg.stdout }}"
     conf_path: "{% if nvram_write_enble == False %}/boot/efi/EFI/BOOT/refind.conf{% else %}/boot/efi/EFI/refind/refind.conf{% endif %}"
 
 - name: UEFI install for nvram write enble
   shell: refind-install --usedefault {{ efi_partition_name }} --alldrivers
-  when: nvram_write_enble == False and reg_efi_installed.stat.exists == False
+  when: "'nvram_write_disable' in boot.split(',') and reg_efi_installed.stat.exists == False"
   become: yes
 
 - name: UEFI install for nvram write disable
   shell: refind-install --alldrivers
-  when: nvram_write_enble == True and reg_efi_installed.stat.exists == False
+  when: "'nvram_write_enble' in boot.split(',') and reg_efi_installed.stat.exists == False"
   become: yes
 
-- name: Create refind_linux config
+- name: Create refind_linux config without crypto_home
   template:
     src: refind_linux.conf
     dest: /boot/refind_linux.conf
     mode: 0644
     owner: root
     group: root
+  when: "'crypto_home' not in boot.split(',')"
+  become: yes
+
+- name: Create refind_linux config with crypto_home
+  template:
+    src: refind_linux_crypto_home.conf
+    dest: /boot/refind_linux.conf
+    mode: 0644
+    owner: root
+    group: root
+  when: "'crypto_home' in boot.split(',')"
   become: yes
 
 - name: Update refind timeout
@@ -60,5 +77,5 @@
     regexp: "^#textonly$"
     line: "textonly"
     path: "{{conf_path}}"
-  when: hostname_id == "kvmtest"
+  when: "'textonly' in boot.split(',')"
   become: yes

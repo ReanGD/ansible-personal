@@ -4,3 +4,10 @@
 
 - include: kvm_qemu.yml
   when: virtualization == "kvm_qemu"
+
+- name: Add group user
+  user:
+    name: "{{main_user}}"
+    append: yes
+    groups: libvirt
+  become: yes

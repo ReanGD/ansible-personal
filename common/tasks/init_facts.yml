@@ -35,6 +35,7 @@
   when: arm
 
 # distro: "arch" or "archarm" or "manjaro"
+# boot: "nvram_write_enble"|"nvram_write_disable" and ["crypto_home", "textonly"]
 # network_type: "lan" or ""lan_old" or "wifi"
 # virtualization: "none" or "kvm_qemu" or "kvm_libvirt"
 # gui: "none" or ["lightdm", "awesome", "cinnamon", "kde", "notebook"]
@@ -45,6 +46,7 @@
 - name: Set archhost facts
   set_fact:
     hostname_id: "archhost"
+    boot: "nvram_write_disable"
     add_dop_user: False
     network_type: "lan"
     set_ssh_access_keys: True
@@ -53,7 +55,6 @@
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,hddtemp"
     roles: "font,docker,automount,web,game,messengers,audio,media,pdf,office,file_managers,torrent,spell_checkers,work,repository,dotfiles"
-    nvram_write_enble: False
     swap_size: 35
     swappiness: 1
     packages_file: "{{packages_dir}}/packages.py"
@@ -62,6 +63,7 @@
 - name: Set archnote facts (xiaomi)
   set_fact:
     hostname_id: "archnote"
+    boot: "nvram_write_disable"
     add_dop_user: True
     network_type: "wifi"
     set_ssh_access_keys: True
@@ -70,7 +72,6 @@
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,notebook,hddtemp"
     roles: "font,docker,automount,web,game,messengers,audio,media,pdf,office,file_managers,spell_checkers,work,repository,dotfiles"
-    nvram_write_enble: False
     swap_size: 8
     swappiness: 20
     packages_file: "{{packages_dir}}/packages.py"
@@ -79,6 +80,7 @@
 - name: Set archsrv facts
   set_fact:
     hostname_id: "archsrv"
+    boot: "nvram_write_enble"
     add_dop_user: False
     network_type: "lan"
     set_ssh_access_keys: False
@@ -87,7 +89,6 @@
     develop: "none"
     monitoring: "std,hddtemp"
     roles: "docker,automount,plex"
-    nvram_write_enble: True
     swap_size: 35
     swappiness: 1
     packages_file: "{{packages_dir}}/packages.py"
@@ -96,6 +97,7 @@
 - name: Set hass facts
   set_fact:
     hostname_id: "hass"
+    boot: "nvram_write_enble"
     add_dop_user: False
     network_type: "lan_old"
     set_ssh_access_keys: False
@@ -104,7 +106,6 @@
     develop: "none"
     monitoring: "std,hddtemp"
     roles: "none"
-    nvram_write_enble: True
     swap_size: 1
     swappiness: 1
     packages_file: "{{packages_dir}}/packages_hass.py"
@@ -113,6 +114,7 @@
 - name: Set KVM test facts
   set_fact:
     hostname_id: "kvmtest"
+    boot: "nvram_write_disable,crypto_home,textonly"
     add_dop_user: False
     network_type: "lan"
     set_ssh_access_keys: True
@@ -121,7 +123,6 @@
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,hddtemp"
     roles: "font,docker,web,messengers,audio,media,pdf,office,file_managers,spell_checkers,repository,dotfiles"
-    nvram_write_enble: False
     swap_size: 4
     swappiness: 1
     packages_file: "{{packages_dir}}/packages.py"
