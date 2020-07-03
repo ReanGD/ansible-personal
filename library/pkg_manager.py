@@ -118,7 +118,7 @@ class InstallManager:
         if manager == "pacman":
             params = ["env", "LC_ALL=C", "sudo", "pacman", "-S", "--noconfirm"]
         else:
-            params = ["env", "LC_ALL=C", manager, "-S", "--answerclean", "All", "--answerdiff", "None", "--answeredit", "None", "--nopgpfetch", "--noconfirm"]
+            params = ["env", "LC_ALL=C", manager, "-S", "--answerclean", "All", "--answerdiff", "None", "--answeredit", "None", "--nopgpfetch", "--noconfirm", "--mflags", "--skippgpcheck"]
 
         if as_explicit is not None:
             if as_explicit:
