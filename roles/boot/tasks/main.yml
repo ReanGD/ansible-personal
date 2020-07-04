@@ -27,6 +27,7 @@
   shell: findmnt -o UUID --noheadings /home
   register: home_partition_uuid_reg
   changed_when: false
+  failed_when: home_partition_uuid_reg.rc > 1
 
 - name: Set partitions facts
   set_fact:

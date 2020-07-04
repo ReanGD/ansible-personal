@@ -20,3 +20,12 @@
     group: root
     owner: root
   become: yes
+
+- name: Set permissions for libvirt group
+  copy:
+    src: 10-libvirt-permissions.rules
+    dest: /etc/udev/rules.d/10-libvirt-permissions.rules
+    mode: 0644
+    group: root
+    owner: root
+  become: yes
