@@ -33,7 +33,7 @@
     efi_partition_name: "{{ efi_partition_name_reg.stdout }}"
     root_partition_uuid: "{{ root_partition_uuid_reg.stdout }}"
     home_partition_uuid: "{{ home_partition_uuid_reg.stdout }}"
-    conf_path: "{% if nvram_write_enble == False %}/boot/efi/EFI/BOOT/refind.conf{% else %}/boot/efi/EFI/refind/refind.conf{% endif %}"
+    conf_path: "{% if 'nvram_write_disable' in boot.split(',') %}/boot/efi/EFI/BOOT/refind.conf{% else %}/boot/efi/EFI/refind/refind.conf{% endif %}"
 
 - name: UEFI install for nvram write enble
   shell: refind-install --usedefault {{ efi_partition_name }} --alldrivers
