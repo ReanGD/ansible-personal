@@ -11,3 +11,12 @@
     append: yes
     groups: libvirt
   become: yes
+
+- name: Set memory limits for libvirt group
+  copy:
+    src: limits.conf
+    dest: /etc/security/limits.conf
+    mode: 0644
+    group: root
+    owner: root
+  become: yes
