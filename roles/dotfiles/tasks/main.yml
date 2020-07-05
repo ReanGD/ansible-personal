@@ -1,4 +1,13 @@
 ---
+- name: Copy uprofile.sh to /etc/profile.d
+  copy:
+    src: start_profile.sh
+    dest: /etc/profile.d/start_profile.sh
+    mode: 0644
+    group: root
+    owner: root
+  become: yes
+
 - name: Create cfg dirs
   file:
     path: "/home/{{main_user}}/{{item}}"
@@ -7,11 +16,13 @@
     group: users
     owner: "{{main_user}}"
   loop:
+    - .local/share
+    - .cache
+    - .config
     - .config/Code/User
     - .config/pulse
     - tmp
     - downloads
-    - .cache
     - projects/test
     - projects/work
     - projects/external
