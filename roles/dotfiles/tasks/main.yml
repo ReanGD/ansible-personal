@@ -9,15 +9,19 @@
   loop:
     - .config/Code/User
     - .config/pulse
-    - cloud
     - tmp
     - downloads
-    - doc
     - .cache
     - projects/test
     - projects/work
     - projects/external
     - projects/venv
+
+- name: Clone or update dotfile repositories
+  update_git:
+    repo: git@github.com:ReanGD/{{item.repo}}
+    dest: /home/{{main_user}}/projects/home/{{item.dest}}
+  loop: "{{ dotfiles_repositories_map }}"
 
 - name: Create links for dotfiles
   link:
@@ -25,34 +29,8 @@
     dst: /home/{{main_user}}/{{item.dst}}
   loop: "{{ dotfiles_path_map }}"
 
-- name: Create links for documents
-  link:
-    src: "/home/{{main_user}}/cloud/Dropbox/{{item.src}}"
-    dst: "/home/{{main_user}}/{{item.dst}}"
-  loop: "{{ documents_path_map }}"
+- include: cloud.yml
+  when: gui!="none"
 
-- name: Check that the doublecmd config exists
-  stat:
-    path: "/home/{{main_user}}/.config/doublecmd/doublecmd.xml"
-    get_checksum: no
-    get_mime: no
-  register: reg_doublecmd_cfg_exists
-
-- name: Copy doublecmd config for backup
-  copy:
-    src: "/home/{{main_user}}/.config/doublecmd/doublecmd.xml"
-    dest: "/home/{{main_user}}/.config/doublecmd/doublecmd.xml.backup"
-  when: reg_doublecmd_cfg_exists.stat.exists == True
-  changed_when: false
-
-- name: Remove from doublecmd config backup unused elements
-  xml:
-    path: "/home/{{main_user}}/.config/doublecmd/doublecmd.xml.backup"
-    xpath: "{{item}}"
-    state: absent
-    pretty_print: yes
-  loop:
-    - "/doublecmd/Tabs/*"
-    - "/doublecmd/MainWindow/*"
-  when: reg_doublecmd_cfg_exists.stat.exists == True
-  changed_when: false
+- include: doublecmd.yml
+  when: gui!="none"

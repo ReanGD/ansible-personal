@@ -32,8 +32,7 @@
       when: '"plex" in roles.split(",")'
     - role: repository
       when: '"repository" in roles.split(",")'
-    - role: dotfiles
-      when: '"dotfiles" in roles.split(",")'
+    - dotfiles
     # update required for each machine
     - role: gui
       when: gui!="none"

@@ -1,4 +1,8 @@
 ---
+dotfiles_repositories_map:
+  - { repo: "ansible-personal.git",           dest: "ansible-personal" }
+  - { repo: "dotfiles.git",                   dest: "dotfiles" }
+
 dotfiles_path_map:
   - {src: ".config/awesome",     dst: ".config/awesome" }
   - {src: ".config/bash",        dst: ".config/bash" }

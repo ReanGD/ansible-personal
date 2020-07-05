@@ -1,4 +1,5 @@
 ---
 dependencies:
   - role: users
-  - role: repository
+  - role: network
+  - role: ssh

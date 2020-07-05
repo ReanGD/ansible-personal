@@ -1,0 +1,17 @@
+---
+- name: Create cfg dirs
+  file:
+    path: "/home/{{main_user}}/{{item}}"
+    state: directory
+    mode: 0755
+    group: users
+    owner: "{{main_user}}"
+  loop:
+    - cloud
+    - doc
+
+- name: Create links for documents
+  link:
+    src: "/home/{{main_user}}/cloud/Dropbox/{{item.src}}"
+    dst: "/home/{{main_user}}/{{item.dst}}"
+  loop: "{{ documents_path_map }}"
