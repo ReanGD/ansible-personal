@@ -1,24 +1,30 @@
 # global x86_64, hostname_id, distro, network_type, virtualization, gui, develop, monitoring, roles
 
 def system():
-    system_pkgs = ["linux",
-                   "linux-firmware",
-                   "base",
-                   "polkit",
-                   "gnupg",
-                   "wget",
-                   "curl",
-                   "git",
-                   "rsync",
-                   "logrotate",
-                   "nano",
-                   "vim",
-                   "pacutils",
-                   "pkgfile",  # pkgfile makepkg (get package for makepkg)
-                   "dialog",
-                   "libnewt",  # external dialog
-                   "mlocate",
-                   "man-db"]
+    system_pkgs = []
+    if distro == "manjaro":
+        system_pkgs += ["linux-lts"]
+    else:
+        system_pkgs += ["linux"]
+
+    # utils
+    system_pkgs += ["linux-firmware",
+                    "base",
+                    "polkit",
+                    "gnupg",
+                    "wget",
+                    "curl",
+                    "git",
+                    "rsync",
+                    "logrotate",
+                    "nano",
+                    "vim",
+                    "pacutils",
+                    "pkgfile",  # pkgfile makepkg (get package for makepkg)
+                    "dialog",
+                    "libnewt",  # external dialog
+                    "mlocate",
+                    "man-db"]
 
     # ansible
     system_pkgs += ["ansible", "python", "python-lxml"]
@@ -54,8 +60,8 @@ def driver():
                         # "nvidia",
                         "xf86-video-intel",
                         "xf86-input-libinput"]  # touchpad
-    # elif hostname_id == "kvmtest":
-    #     driver_pkgs += ["spice-vdagent", "xf86-video-qxl"]
+    elif hostname_id == "kvmtest":
+        driver_pkgs += ["spice-vdagent", "xf86-video-qxl"]
 
     return driver_pkgs
 
@@ -117,7 +123,7 @@ def desktop_env():
         gui_pkgs += ["cinnamon"]
 
     if "kde" in guis:
-        gui_pkgs += ["plasma-desktop", "kdeconnect", "dolphin-plugins", "ksystemlog", "print-manager"]
+        gui_pkgs += ["plasma-desktop", "kdeconnect", "dolphin-plugins", "print-manager"]
         if distro == "manjaro":
             gui_pkgs += ["manjaro-kde-settings", "manjaro-settings-manager-knotifier", "manjaro-settings-manager-kcm", "pamac-gtk"]
 

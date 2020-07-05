@@ -159,7 +159,7 @@ function setup_base {
         arch-chroot /mnt /etc/ansible-personal/setup.sh ansible
         ;;
     'manjaro')
-        basestrap /mnt base base-devel linux linux-firmware nano git ansible
+        basestrap /mnt base base-devel linux-lts linux-firmware nano git ansible
         fstabgen -U -p /mnt >> /mnt/etc/fstab
         manjaro-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /etc/ansible-personal
         manjaro-chroot /mnt /etc/ansible-personal/setup.sh ansible
