@@ -54,8 +54,8 @@ def driver():
                         # "nvidia",
                         "xf86-video-intel",
                         "xf86-input-libinput"]  # touchpad
-    elif hostname_id == "kvmtest":
-        driver_pkgs += ["spice-vdagent", "xf86-video-qxl"]
+    # elif hostname_id == "kvmtest":
+    #     driver_pkgs += ["spice-vdagent", "xf86-video-qxl"]
 
     return driver_pkgs
 
