@@ -37,13 +37,17 @@ class ActionModule(ActionBase):
     def _print_exception(text):
         display.error(text, wrap_text=False)
 
+    @staticmethod
+    def _print_warning(text):
+        display.display(text, color=C.COLOR_WARN)
+
     def _call_module(self, name, args):
         result = self._execute_module(module_name=name, module_args=args,
                                       task_vars=self._task_vars)
         if result.get("failed"):
             exception = result.get("exception", None)
             if exception is not None:
-                display.error(exception, wrap_text=False)
+                self._print_exception(exception)
 
             msg = result.get("msg", "Unknown error in module {}".format(name))
             raise StrError("lib error: {}".format(msg))
@@ -56,7 +60,7 @@ class ActionModule(ActionBase):
 
         show_warning = result.get("show_warning")
         if show_warning is not None:
-            display.display(show_warning, color=C.COLOR_WARN)
+            self._print_warning(show_warning)
 
         return result
 

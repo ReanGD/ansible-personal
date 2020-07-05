@@ -1,7 +1,12 @@
 import os
 import re
+from traceback import format_exc
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils._text import to_native
+
+
+class StrError(RuntimeError):
+    pass
 
 
 def head_splitter(headfile, module):
@@ -13,7 +18,7 @@ def head_splitter(headfile, module):
             rawdata = f.readline()
             f.close()
         except:
-            module.fail_json(msg="Unable to read {}".format(headfile))
+            raise StrError("Unable to read '{}'".format(headfile))
         if rawdata:
             try:
                 rawdata = rawdata.replace("refs/remotes/origin", "", 1)
@@ -22,7 +27,7 @@ def head_splitter(headfile, module):
                 nrefparts = newref.split("/", 2)
                 res = nrefparts[-1].rstrip("\n")
             except:
-                module.fail_json(msg="Unable to split head from '{}'".rawdata)
+                raise StrError("Unable to split head from '{}'".format(rawdata))
     return res
 
 
@@ -57,8 +62,7 @@ def get_branches(git_path, module, dest):
     cmd = [git_path, "branch", "--no-color", "-a"]
     (rc, out, err) = module.run_command(cmd, cwd=dest)
     if rc != 0:
-        module.fail_json(msg="Could not determine branch data - received {}".format(out),
-                         stdout=out, stderr=err)
+        raise StrError("Could not determine branch data, stdout: {}, stderr: {}, rc: {}".format(out, err, rc))
     for line in out.split('\n'):
         if line.strip():
             branches.append(line.strip())
@@ -88,20 +92,12 @@ def pull_master(git_path, module, dest):
     cmd = [git_path, 'pull', 'origin', 'master']
     (rc, out, err) = module.run_command(cmd, cwd=dest)
     if rc != 0:
-        module.fail_json(msg="Failed to pull branch master", stdout=out, stderr=err, rc=rc)
+        raise StrError("Failed to pull branch master, stdout: {}, stderr: {}, rc: {}".format(out, err, rc))
 
     return version_before != get_version(module, git_path, dest)
 
 
-def main():
-    module = AnsibleModule(
-        argument_spec=dict(
-            dest=dict(default=None, required=True, type="path"),
-            repo=dict(default=None, required=True, type="str"),
-            ),
-        supports_check_mode=False
-    )
-
+def run_module(module):
     dest = os.path.abspath(module.params['dest'])
     repo = module.params['repo']
     git_path = module.get_bin_path('git', True)
@@ -111,7 +107,7 @@ def main():
     module.run_command_environ_update = dict(LANG='C', LC_ALL='C', LC_MESSAGES='C', LC_CTYPE='C')
 
     if is_dest and not os.path.exists(os.path.join(dest, ".git", 'config')):
-        module.fail_json(msg="dest directory ({}) is not empty".format(self.dest), **result)
+        raise StrError("Dest directory '{}', is not empty".format(dest))
     elif not is_dest:
         clone(git_path, module, repo, dest)
         result.update(changed=True)
@@ -121,6 +117,30 @@ def main():
         result.update(show_warning="HEAD branch not a master in repository ({})".format(dest))
     elif pull_master(git_path, module, dest):
         result.update(changed=True)
+
+    return result
+
+# update_git: repo=git@github.com:User/Repo dest=/home/repodir
+def main():
+    module = AnsibleModule(
+        argument_spec=dict(
+            dest=dict(default=None, required=True, type="path"),
+            repo=dict(default=None, required=True, type="str"),
+            ),
+        supports_check_mode=False
+    )
+
+    result = {}
+    try:
+        result = run_module(module)
+    except StrError as e:
+        result.update(failed=True, msg="Error in library/update_git: !!!")
+        # result.update(failed=True, msg="Error in library/update_git: " + str(e))
+        # module.fail_json(msg="Error in library/update_git: " + str(e))
+    except Exception:
+        result.update(failed=True, msg="Error in library/update_git: !!!")
+        # result.update(failed=True, msg="Exception in library/update_git", exception=format_exc())
+        # module.fail_json(msg="Exception in library/update_git", exception=format_exc())
 
     module.exit_json(**result)
 
