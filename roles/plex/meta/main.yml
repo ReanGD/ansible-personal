@@ -2,3 +2,4 @@
 dependencies:
   - role: packages_manager
   - role: automount
+    when: '"automount" in roles.split(",")'

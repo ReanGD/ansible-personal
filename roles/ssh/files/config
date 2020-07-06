@@ -30,10 +30,14 @@ host archhost
  HostName 192.168.1.20
  IdentityFile ~/.ssh/archhost
  User rean
+ RequestTTY yes
+ RemoteCommand . ~/.config/start/login_profile.sh; zsh
 
 host 192.168.1.20
  IdentityFile ~/.ssh/archhost
  User rean
+ RequestTTY yes
+ RemoteCommand . ~/.config/start/login_profile.sh; zsh
 
 host archnote
  HostName 192.168.1.21
@@ -48,7 +52,11 @@ host archsrv
  HostName 192.168.1.4
  IdentityFile ~/.ssh/archsrv
  User rean
+ RequestTTY yes
+ RemoteCommand . ~/.config/start/login_profile.sh; zsh
 
 host 192.168.1.4
  IdentityFile ~/.ssh/archsrv
  User rean
+ RequestTTY yes
+ RemoteCommand . ~/.config/start/login_profile.sh; zsh
