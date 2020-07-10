@@ -7,6 +7,7 @@ dotfiles_path_map:
   - {src: ".config/awesome",       dst: ".config/awesome" }
   - {src: ".config/bash",          dst: ".config/bash" }
   - {src: ".config/bin",           dst: ".config/bin" }
+  - {src: ".config/Dharkael",      dst: ".config/Dharkael" }
   - {src: ".config/doublecmd",     dst: ".config/doublecmd" }
   - {src: ".config/emacs",         dst: ".config/emacs" }
   - {src: ".config/enchant",       dst: ".config/enchant" }

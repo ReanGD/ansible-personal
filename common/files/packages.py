@@ -107,7 +107,11 @@ def desktop_env():
                 "xorg-xwininfo",  # select window
                 "xcursor-ize-vision",  # a couple of X cursor that similar to Windows 7 cursor
                 "perwindowlayoutd",  # daemon to make per window layout (also exists "kbdd-git")
+                "scrot",  # for screenshots
+                "flameshot",  # for screenshots
                 "libnotify",  # create notifications message
+                "wmctrl",  # windows manipulation
+                "xclip",  # save data to clipboard
                 "xrectsel"]  # get select region
 
     guis = gui.split(",")
