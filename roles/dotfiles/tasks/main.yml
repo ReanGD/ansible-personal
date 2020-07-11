@@ -21,6 +21,7 @@
     - .config
     - .config/Code/User
     - .config/pulse
+    - .config/sublime-text-3/Packages/User/
     - tmp
     - downloads
     - projects/test
