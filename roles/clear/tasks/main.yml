@@ -4,7 +4,6 @@
     path: /home/{{ main_user }}{{ item }}
     state: absent
   loop:
-    - /etc/ansible-personal
     - /.bash_history
     - /.bash_logout
     - /.bash_profile
