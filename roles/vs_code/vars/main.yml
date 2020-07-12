@@ -3,6 +3,8 @@ vs_code_extensions:
   # markdownlint
   - "shd101wyy.markdown-preview-enhanced"
   - "DavidAnson.vscode-markdownlint"
+  # ansible
+  - "vscoss.vscode-ansible"
   # python
   - "ms-python.python"
   # go
@@ -37,3 +39,4 @@ vs_code_extensions:
   - "ms-vscode.sublime-keybindings"
   # interface
   - "seunlanlege.action-buttons"
+  - "tomsaunders.vscode-workspace-explorer"
