@@ -7,6 +7,14 @@
     group: users
     owner: "{{main_user}}"
 
+- name: Copy ansible ssh config
+  copy:
+    src: ansible_config
+    dest: "/home/{{main_user}}/.ssh/ansible_config"
+    mode: 0400
+    group: users
+    owner: "{{main_user}}"
+
 - name: Install ssh keys
   copy:
     content: "{{item.key}}"
