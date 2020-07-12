@@ -31,6 +31,7 @@ def system():
 
     # terminal
     system_pkgs += ["urxvt-perls",
+                    "fd",  # fast find alternative
                     "zsh",
                     "oh-my-zsh-git",
                     "zsh-syntax-highlighting",
