@@ -17,8 +17,10 @@
     owner: "{{main_user}}"
   loop:
     - .local/share
+    - .local/share/zsh
     - .cache
     - .config
+    - .config/lib
     - .config/Code/User
     - .config/pulse
     - .config/sublime-text-3/Packages/User/

@@ -34,7 +34,6 @@ def system():
                     "fd",  # fast find alternative
                     "zsh",
                     "oh-my-zsh-git",
-                    "zsh-syntax-highlighting",
                     "fzf"]
 
     # archivers
@@ -182,9 +181,6 @@ def development():
 
     if "rust3D" in develops:
         develop_pkgs += ["sdl2", "sdl2_image"]
-
-    if "protobuf" in develops:
-        develop_pkgs += ["protobuf"]
 
     if "sqlite" in develops:
         develop_pkgs += ["sqlite-analyzer"]
