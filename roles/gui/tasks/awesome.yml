@@ -1,0 +1,19 @@
+---
+- name: Install package lightdm
+  pkg_manager:
+    name: luarocks, gobject-introspection
+  become: yes
+  become_user: "{{install_user}}"
+
+- name: Get installed lua rocks packages
+  shell: luarocks list
+  register: rocks
+  changed_when: no
+  check_mode: no
+
+- name: Install lua rocks packages
+  shell: "luarocks --global install {{ item }}"
+  with_items:
+    - pulseaudio_dbus
+  when: item not in rocks.stdout
+  become: yes

@@ -3,3 +3,6 @@
 
 - include: lightdm.yml
   when: "'lightdm' in gui.split(',')"
+
+- include: awesome.yml
+  when: "'awesome' in gui.split(',')"

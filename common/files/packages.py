@@ -120,7 +120,8 @@ def desktop_env():
 
     if "awesome" in guis:
         gui_pkgs += ["awesome",
-                     "vicious",
+                     "luarocks",  # lua package manager
+                     "gobject-introspection",  # for luarocks
                      "rofi"]  # run app menu
 
     if "cinnamon" in guis:
