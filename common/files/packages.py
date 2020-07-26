@@ -32,8 +32,8 @@ def system():
     # terminal
     system_pkgs += ["urxvt-perls",
                     "fd",  # fast find alternative
+                    "exa",  # ls alternative
                     "zsh",
-                    "oh-my-zsh-git",
                     "fzf"]
 
     # archivers

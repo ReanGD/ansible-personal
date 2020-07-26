@@ -19,6 +19,7 @@
     - .local/share
     - .local/share/zsh
     - .cache
+    - .cache/zsh
     - .config
     - .config/lib
     - .config/Code/User
