@@ -68,7 +68,6 @@ def driver():
 def network():
     network_pkgs = ["netctl",  # arch specific network manager
                     "net-tools",
-                    "bind-tools",  # dig and etc
                     "smbclient",
                     "httpie",
                     "openvpn",
@@ -105,6 +104,7 @@ def desktop_env():
                 "xorg-xprop",  # window info (xprop | grep WM_CLASS)
                 "xorg-xev",  # keypress info
                 "xorg-xwininfo",  # select window
+                "arandr",  # screen position
                 "xcursor-ize-vision",  # a couple of X cursor that similar to Windows 7 cursor
                 "perwindowlayoutd",  # daemon to make per window layout (also exists "kbdd-git")
                 "scrot",  # for screenshots
@@ -120,6 +120,8 @@ def desktop_env():
 
     if "awesome" in guis:
         gui_pkgs += ["awesome",
+                     "mate-icon-theme",
+                     "inter-font",
                      "luarocks",  # lua package manager
                      "gobject-introspection",  # for luarocks
                      "rofi"]  # run app menu
@@ -157,6 +159,7 @@ def development():
                          "cmake",
                          "ninja",
                          "gdb",
+                         "protobuf",
                          "cpp-dependencies",
                          "python-dateutil", # for include-what-you-use
                          "include-what-you-use"]
@@ -175,7 +178,7 @@ def development():
                          "portaudio"]  # for pyaudio and my audio-lib
 
     if "go" in develops:
-        develop_pkgs += ["go"]
+        develop_pkgs += ["go", "protobuf"]
 
     if "rust" in develops:
         develop_pkgs += ["rust", "cargo", "rust-src", "rust-racer"]
@@ -228,6 +231,7 @@ def font():
             "ttf-droid",
             "ttf-dejavu",
             "ttf-ubuntu-font-family",
+            "inter-font",  # for awesome
             "noto-fonts-emoji",  # emoji for chrome
             "adobe-source-code-pro-fonts"]
 
@@ -267,7 +271,7 @@ def audio():
     audio_pkgs = ["pulseaudio"]
 
     if gui != "none":
-        audio_pkgs += ["pavucontrol", "volumeicon"]
+        audio_pkgs += ["pavucontrol", "volumeicon", "pasystray"]
 
     return audio_pkgs
 

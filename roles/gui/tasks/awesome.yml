@@ -14,6 +14,6 @@
 - name: Install lua rocks packages
   shell: "luarocks --global install {{ item }}"
   with_items:
-    - pulseaudio_dbus
+    - "dbus_proxy 0.9.0-1"
   when: item not in rocks.stdout
   become: yes
