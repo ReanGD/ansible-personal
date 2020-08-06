@@ -122,8 +122,6 @@ def desktop_env():
         gui_pkgs += ["awesome",
                      "mate-icon-theme",
                      "inter-font",
-                     "luarocks",  # lua package manager
-                     "gobject-introspection",  # for luarocks
                      "rofi"]  # run app menu
 
     if "cinnamon" in guis:
