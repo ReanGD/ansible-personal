@@ -43,7 +43,7 @@
     name: iwd.service
     enabled: yes
   become: yes
-  when: is_chroot == True and "wired_old" in network_type.split(",")
+  when: is_chroot == True and "wireless" in network_type.split(",")
 
 - name: Start and enable service iwd for not chroot
   service:
@@ -51,4 +51,4 @@
     enabled: yes
     state: started
   become: yes
-  when: is_chroot == False and "wired_old" in network_type.split(",")
+  when: is_chroot == False and "wireless" in network_type.split(",")
