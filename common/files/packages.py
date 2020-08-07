@@ -104,6 +104,7 @@ def desktop_env():
                 "xorg-xev",  # keypress info
                 "xorg-xwininfo",  # select window
                 "arandr",  # screen position
+                "ddcutil",  # brightness\monitor control
                 "xcursor-ize-vision",  # a couple of X cursor that similar to Windows 7 cursor
                 "perwindowlayoutd",  # daemon to make per window layout (also exists "kbdd-git")
                 "scrot",  # for screenshots
@@ -130,9 +131,6 @@ def desktop_env():
         gui_pkgs += ["plasma-desktop", "kdeconnect", "dolphin-plugins", "print-manager"]
         if distro == "manjaro":
             gui_pkgs += ["manjaro-kde-settings", "manjaro-settings-manager-knotifier", "manjaro-settings-manager-kcm", "pamac-gtk"]
-
-    if "notebook" in guis:
-        gui_pkgs += ["xorg-xbacklight"]  # backlight control application (xbacklight -set 40)
 
     return gui_pkgs
 

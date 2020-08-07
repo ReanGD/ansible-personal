@@ -1,5 +1,6 @@
 ---
 - include: xorg.yml
+- include: brightness.yml
 
 - include: lightdm.yml
   when: "'lightdm' in gui.split(',')"

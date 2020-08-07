@@ -1,0 +1,28 @@
+---
+# alternatives:
+# xrandr --current --verbose | grep Brightness
+# xrandr --output DP-0 --brightness 0.9
+
+- name: Install package for brightness control
+  pkg_manager:
+    name: ddcutil
+  become: yes
+  become_user: "{{install_user}}"
+
+- name: Load kernel module for ddcutil
+  copy:
+    src: brightness.conf
+    dest: /etc/modules-load.d/brightness.conf
+    mode: 0755
+    group: root
+    owner: root
+  become: yes
+
+- name: Set permissions for i2c devices
+  copy:
+    src: 20-i2c-permissions.rules
+    dest: /etc/udev/rules.d/20-i2c-permissions.rules
+    mode: 0644
+    group: root
+    owner: root
+  become: yes
