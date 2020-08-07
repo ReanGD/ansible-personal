@@ -1,0 +1,30 @@
+---
+- name: Copy systemd-networkd configuration for modern interface
+  copy:
+    src: wired.network
+    dest: /etc/systemd/network/10-wired.network
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  when: '"wired" in network_type.split(",")'
+
+- name: Copy systemd-networkd configuration for old interface
+  copy:
+    src: eth0.network
+    dest: /etc/systemd/network/20-eth0.network
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  when: '"wired_old" in network_type.split(",")'
+
+- name: Copy systemd-networkd configuration for wireless interface
+  copy:
+    src: wireless.network
+    dest: /etc/systemd/network/20-wireless.network
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  when: '"wireless" in network_type.split(",")'

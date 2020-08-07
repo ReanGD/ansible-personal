@@ -5,9 +5,5 @@
   become: yes
   when: is_chroot == False
 
-- include: wireless.yml
-  when: '"wireless" in roles.split(",")'
-
-- include: wired.yml
-
+- include: config_network.yml
 - include: systemd_network.yml
