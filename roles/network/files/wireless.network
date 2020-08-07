@@ -1,5 +1,5 @@
 [Match]
-Name=eth0
+Name=wl*
 
 [Network]
 DHCP=ipv4
@@ -8,4 +8,4 @@ LinkLocalAddressing=no
 IPv6AcceptRA=no
 
 [DHCP]
-RouteMetric=10
+RouteMetric=20

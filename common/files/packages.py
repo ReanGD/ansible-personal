@@ -66,15 +66,14 @@ def driver():
     return driver_pkgs
 
 def network():
-    network_pkgs = ["netctl",  # arch specific network manager
-                    "net-tools",
+    network_pkgs = ["net-tools",
                     "smbclient",
                     "httpie",
                     "openvpn",
                     "openssh"]  # ssh server
 
-    if "wifi" in network_type.split(","):
-        network_pkgs += ["connman", "wpa_supplicant"]
+    if "wireless" in network_type.split(","):
+        network_pkgs += ["iwd"]
 
     return network_pkgs
 

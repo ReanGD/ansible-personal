@@ -5,8 +5,9 @@
   become: yes
   when: is_chroot == False
 
-- include: lan.yml
-  when: network_type == "lan" or network_type == "lan_old"
+- include: wireless.yml
+  when: '"wireless" in roles.split(",")'
 
-- include: wifi.yml
-  when: network_type == "wifi" and is_chroot == False
+- include: wired.yml
+
+- include: systemd_network.yml

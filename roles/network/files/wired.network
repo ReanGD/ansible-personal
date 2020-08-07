@@ -6,3 +6,6 @@ DHCP=ipv4
 # disable ipv6
 LinkLocalAddressing=no
 IPv6AcceptRA=no
+
+[DHCP]
+RouteMetric=10

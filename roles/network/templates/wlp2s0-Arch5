@@ -1,7 +1,0 @@
-Description='Profile for Arch5'
-Interface=wlp2s0
-Connection=wireless
-Security=wpa
-ESSID=Arch5
-IP=dhcp
-Key={{wifi_home_key}}

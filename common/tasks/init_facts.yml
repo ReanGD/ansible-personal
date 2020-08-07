@@ -36,7 +36,7 @@
 
 # distro: "arch" or "archarm" or "manjaro"
 # boot: "nvram_write_enble"|"nvram_write_disable" and ["crypto_home", "textonly"]
-# network_type: "lan" or ""lan_old" or "wifi"
+# network_type: ["wired", "wired_old", "wireless"]
 # virtualization: "none" or "kvm_qemu" or "kvm_libvirt"
 # gui: "none" or ["lightdm", "awesome", "cinnamon", "kde", "notebook"]
 # develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "protobuf", "sqlite", "android"]
@@ -48,7 +48,7 @@
     hostname_id: "archhost"
     boot: "nvram_write_disable"
     add_dop_user: False
-    network_type: "lan"
+    network_type: "wired"
     set_ssh_access_keys: True
     virtualization: "kvm_qemu"
     gui: "lightdm,awesome"
@@ -65,7 +65,7 @@
     hostname_id: "archnote"
     boot: "nvram_write_disable"
     add_dop_user: True
-    network_type: "wifi"
+    network_type: "wired,wireless"
     set_ssh_access_keys: True
     virtualization: "none"
     gui: "lightdm,awesome,cinnamon,notebook"
@@ -82,7 +82,7 @@
     hostname_id: "archsrv"
     boot: "nvram_write_enble"
     add_dop_user: False
-    network_type: "lan"
+    network_type: "wired"
     set_ssh_access_keys: False
     virtualization: "none"
     gui: "none"
@@ -99,7 +99,7 @@
     hostname_id: "hass"
     boot: "nvram_write_enble"
     add_dop_user: False
-    network_type: "lan_old"
+    network_type: "wired_old"
     set_ssh_access_keys: False
     virtualization: "none"
     gui: "none"
@@ -116,7 +116,7 @@
     hostname_id: "kvmtest"
     boot: "nvram_write_disable,crypto_home,textonly"
     add_dop_user: False
-    network_type: "lan"
+    network_type: "wired"
     set_ssh_access_keys: True
     virtualization: "none"
     gui: "lightdm,awesome,kde"

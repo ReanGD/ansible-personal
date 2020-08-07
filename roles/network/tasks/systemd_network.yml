@@ -1,24 +1,4 @@
 ---
-- name: Copy systemd-networkd configuration for new interface
-  copy:
-    src: wired.network
-    dest: /etc/systemd/network/wired.network
-    owner: root
-    group: root
-    mode: 0644
-  become: yes
-  when: network_type == "lan"
-
-- name: Copy systemd-networkd configuration for old interface
-  copy:
-    src: eth0.network
-    dest: /etc/systemd/network/eth0.network
-    owner: root
-    group: root
-    mode: 0644
-  become: yes
-  when: network_type == "lan_old"
-
 - name: Create symbolic links for /etc/resolv.conf
   file:
     src: /run/systemd/resolve/resolv.conf
@@ -35,7 +15,7 @@
   become: yes
   when: is_chroot == True
 
-- name: Enable and start service systemd-networkd
+- name: Start and enable service systemd-networkd for not chroot
   service:
     name: systemd-networkd.service
     enabled: yes
@@ -50,7 +30,7 @@
   become: yes
   when: is_chroot == True
 
-- name: Enable and start service systemd-resolved
+- name: Start and enable service systemd-resolved for not chroot
   service:
     name: systemd-resolved.service
     enabled: yes

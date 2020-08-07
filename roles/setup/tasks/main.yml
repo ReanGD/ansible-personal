@@ -5,10 +5,3 @@
     name: dialog,libnewt
   become: yes
   become_user: "{{install_user}}"
-
-- name: Install packages for wifi
-  pkg_manager:
-    name: connman,wpa_supplicant
-  become: yes
-  become_user: "{{install_user}}"
-  when: network_type == "wifi"
