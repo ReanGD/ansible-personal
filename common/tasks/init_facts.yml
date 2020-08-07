@@ -60,9 +60,9 @@
     packages_file: "{{packages_dir}}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7978'
 
-- name: Set archnote facts (xiaomi)
+- name: Set xnote facts (xiaomi)
   set_fact:
-    hostname_id: "archnote"
+    hostname_id: "xnote"
     boot: "nvram_write_disable"
     add_dop_user: True
     network_type: "wired,wireless"

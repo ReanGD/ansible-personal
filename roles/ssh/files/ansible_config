@@ -30,13 +30,13 @@ host 192.168.1.20
  IdentityFile ~/.ssh/archhost
  User rean
 
-host archnote
+host xnote
  HostName 192.168.1.21
- IdentityFile ~/.ssh/archnote
+ IdentityFile ~/.ssh/xnote
  User rean
 
 host 192.168.1.21
- IdentityFile ~/.ssh/archnote
+ IdentityFile ~/.ssh/xnote
  User rean
 
 host archsrv

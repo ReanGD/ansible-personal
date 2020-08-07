@@ -8,14 +8,14 @@
     owner: "{{main_user}}"
   when: hostname_id == "archhost"
 
-- name: Add public key for archnote
+- name: Add public key for xnote
   copy:
-    content: "{{archnote_public_key}}"
+    content: "{{xnote_public_key}}"
     dest: "/home/{{main_user}}/.ssh/authorized_keys"
     mode: 0400
     group: users
     owner: "{{main_user}}"
-  when: hostname_id == "archnote"
+  when: hostname_id == "xnote"
 
 - name: Add public key for archsrv
   copy:

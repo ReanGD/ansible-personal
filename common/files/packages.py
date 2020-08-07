@@ -54,7 +54,7 @@ def driver():
 
     if hostname_id == "archhost":
         driver_pkgs += ["nvidia"]
-    elif hostname_id == "archnote":
+    elif hostname_id == "xnote":
         driver_pkgs += ["bbswitch",
                         # "bumblebee",
                         # "nvidia",

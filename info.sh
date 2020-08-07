@@ -6,7 +6,7 @@ cd $ROOT_DIR
 MENU_ID=$(whiptail --clear --title 'Get info about host' \
 --menu "Enter your choice:" 15 60 6 \
 	"1" "archhost" \
-	"2" "archnote" \
+	"2" "xnote" \
 	"3" "archsrv" \
 	"4" "hass" \
 	"5" "kvmtest" \
@@ -23,7 +23,7 @@ case $MENU_ID in
 	HOST_NAME="archhost"
 	;;
   "2")
-	HOST_NAME="archnote"
+	HOST_NAME="xnote"
 	;;
   "3")
 	HOST_NAME="archsrv"

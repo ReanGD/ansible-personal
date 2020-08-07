@@ -27,8 +27,8 @@ function archhost {
     mount /dev/sda1 /mnt/boot/efi
 }
 
-function archnote {
-    echo "archnote" $1
+function xnote {
+    echo "xnote" $1
     if [[ $1 = "full" ]]
     then
         sgdisk -Z /dev/nvme0n1
@@ -93,7 +93,7 @@ function setup_base {
         FUNC="archhost"
         ;;
     'TM1613')
-        FUNC="archnote"
+        FUNC="xnote"
         ;;
     'System Product Name')
         FUNC="archsrv"

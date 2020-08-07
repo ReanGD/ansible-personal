@@ -39,13 +39,13 @@ host 192.168.1.20
  RequestTTY yes
  RemoteCommand . ~/.config/start/login_profile.sh; zsh
 
-host archnote
+host xnote
  HostName 192.168.1.21
- IdentityFile ~/.ssh/archnote
+ IdentityFile ~/.ssh/xnote
  User rean
 
 host 192.168.1.21
- IdentityFile ~/.ssh/archnote
+ IdentityFile ~/.ssh/xnote
  User rean
 
 host archsrv

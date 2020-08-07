@@ -7,7 +7,7 @@ MENU_ID=$(whiptail --clear --title 'Get info about host' \
 --menu "Enter your choice:" 15 60 5 \
 	"1" "local" \
 	"2" "archhost" \
-	"3" "archnote" \
+	"3" "xnote" \
 	"4" "archsrv" \
 	"5" "Quit" \
 	3>&1 1>&2 2>&3)
@@ -25,7 +25,7 @@ case $MENU_ID in
 	HOST_NAME="archhost"
 	;;
   "3")
-	HOST_NAME="archnote"
+	HOST_NAME="xnote"
 	;;
   "4")
 	HOST_NAME="archsrv"

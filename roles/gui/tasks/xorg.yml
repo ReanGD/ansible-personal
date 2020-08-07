@@ -22,7 +22,7 @@
     group: root
     owner: root
   become: yes
-  when: hostname_id == "archnote"
+  when: hostname_id == "xnote"
 
 - name: Configure monitor
   copy:

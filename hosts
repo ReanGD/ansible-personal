@@ -7,7 +7,7 @@ localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python3
 [archhost]
 192.168.1.20 ansible_connection=ssh ansible_user=rean ansible_python_interpreter=/usr/bin/python3
 
-[archnote]
+[xnote]
 192.168.1.21 ansible_connection=ssh ansible_user=rean ansible_python_interpreter=/usr/bin/python3
 
 [archsrv]
