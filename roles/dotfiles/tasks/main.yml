@@ -22,8 +22,9 @@
     - .cache/zsh
     - .config
     - .config/lib
-    - .config/Code/User
     - .config/pulse
+    - .config/Code/User
+    - .config/autostart-scripts
     - .config/sublime-text-3/Packages/User/
     - tmp
     - downloads
