@@ -43,10 +43,14 @@ host xnote
  HostName 192.168.1.21
  IdentityFile ~/.ssh/xnote
  User rean
+ RequestTTY yes
+ RemoteCommand . ~/.config/start/login_profile.sh; zsh
 
 host 192.168.1.21
  IdentityFile ~/.ssh/xnote
  User rean
+ RequestTTY yes
+ RemoteCommand . ~/.config/start/login_profile.sh; zsh
 
 host archsrv
  HostName 192.168.1.4
