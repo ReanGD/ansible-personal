@@ -9,6 +9,8 @@ vs_code_extensions:
   - "ms-python.python"
   # go
   - "golang.go"
+  # lua
+  - "keyring.Lua"
   # cpp
   - "ms-vscode.cpptools"
   - "hars.CppSnippets"
@@ -33,6 +35,7 @@ vs_code_extensions:
   - "alefragnani.Bookmarks"
   # git
   - "eamodio.gitlens"
+  - "huizhou.githd"
   # ssh
   - "Kelvin.vscode-sshfs"
   # keybindings
@@ -40,3 +43,4 @@ vs_code_extensions:
   # interface
   - "seunlanlege.action-buttons"
   - "tomsaunders.vscode-workspace-explorer"
+  - "formulahendry.code-runner"
