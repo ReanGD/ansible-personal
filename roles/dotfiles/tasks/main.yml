@@ -18,6 +18,8 @@
   loop:
     - .local/share
     - .local/share/zsh
+    - .local/share/vscode
+    - .local/share/applications
     - .cache
     - .cache/zsh
     - .config

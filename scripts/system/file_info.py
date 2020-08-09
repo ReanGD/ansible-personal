@@ -75,7 +75,6 @@ dir_map = {
         'proxy',
         'pulse',
         'python',
-        'shutter',
         'sublime-text-3',
         'volumeicon',
         'yandex-disk',
