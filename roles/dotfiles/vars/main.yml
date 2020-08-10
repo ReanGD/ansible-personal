@@ -31,6 +31,7 @@ dotfiles_path_map:
   - {src: ".local/share/applications/dropbox.desktop", dst: ".local/share/applications/dropbox.desktop" }
   - {src: ".local/share/applications/visual-studio-code.desktop", dst: ".local/share/applications/visual-studio-code.desktop" }
   - {src: ".local/share/applications/visual-studio-code-url-handler.desktop", dst: ".local/share/applications/visual-studio-code-url-handler.desktop" }
+  - {src: ".local/share/firefox/.mozilla/firefox/rean.default-release",       dst: ".local/share/firefox/.mozilla/firefox/rean.default-release" }
 
 documents_path_map:
   - {src: "Doc/blog",    dst: "doc/blog" }

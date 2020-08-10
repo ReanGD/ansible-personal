@@ -20,6 +20,7 @@
     - .local/share/zsh
     - .local/share/vscode
     - .local/share/applications
+    - .local/share/firefox/.mozilla/firefox/rean.default-release
     - .cache
     - .cache/zsh
     - .config
