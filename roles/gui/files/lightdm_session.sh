@@ -3,8 +3,8 @@
 # Run standart session wrapper
 . /etc/lightdm/Xsession ""
 
-if [ -n "$HOME" ] && [ -r "$HOME/.config/start/startx_profile.sh" ]; then
-. "$HOME/.config/start/startx_profile.sh"
+if [ "$1" = "awesome" ] && [ -n "$HOME" ] && [ -r "$HOME/.config/start/awesome_profile.sh" ]; then
+. "$HOME/.config/start/awesome_profile.sh"
 fi
 
 exec $@
