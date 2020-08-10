@@ -14,6 +14,15 @@
     owner: root
   become: yes
 
+- name: Create configuration for lightdm users
+  copy:
+    src: users.conf
+    dest: /etc/lightdm/users.conf
+    mode: 0644
+    group: root
+    owner: root
+  become: yes
+
 - name: Create session wrapper for lightdm
   copy:
     src: lightdm_session.sh
