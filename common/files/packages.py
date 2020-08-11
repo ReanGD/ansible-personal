@@ -122,7 +122,8 @@ def desktop_env():
         gui_pkgs += ["awesome",
                      "mate-icon-theme",
                      "inter-font",
-                     "rofi"]  # run app menu
+                     "rofi",  # run app menu
+                     "rofi-blocks-git"]
 
     if "cinnamon" in guis:
         gui_pkgs += ["cinnamon"]
@@ -155,6 +156,7 @@ def development():
                          "ninja",
                          "gdb",
                          "protobuf",
+                         "cpupower",  # for disable CPU powersafe mode in tests
                          "cpp-dependencies",
                          "python-dateutil", # for include-what-you-use
                          "include-what-you-use"]
