@@ -6,7 +6,6 @@ reangd_repositories_map:
   - { repo: "cpp-network.git",                dest: "cpp-network" }
   - { repo: "cpp-rtge.git",                   dest: "cpp-rtge" }
   - { repo: "docker-alpine.git",              dest: "docker-alpine" }
-  - { repo: "docker-home-manage.git",         dest: "docker-home-manage" }
   - { repo: "dokuwiki-plugin-addnewpage.git", dest: "dokuwiki-plugin-addnewpage" }
   - { repo: "dokuwiki-tablecalc.git",         dest: "dokuwiki-tablecalc" }
   - { repo: "dotfiles.git",                   dest: "dotfiles" }
@@ -24,6 +23,7 @@ reangd_repositories_map:
   - { repo: "py-calendar.git",                dest: "py-calendar" }
   - { repo: "py-invest.git",                  dest: "py-invest" }
   - { repo: "reangd.github.io.git",           dest: "reangd.github.io" }
+  - { repo: "rofi-proxy",                     dest: "rofi-proxy" }
   - { repo: "rust-open3d.git",                dest: "rust-open3d" }
   - { repo: "rust-software-render.git",       dest: "rust-software-render" }
   - { repo: "SimpleLang.git",                 dest: "SimpleLang" }

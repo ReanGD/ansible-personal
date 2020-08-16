@@ -18,6 +18,7 @@
   loop:
     - .local/share
     - .local/share/zsh
+    - .local/share/rofi
     - .local/share/vscode
     - .local/share/applications
     - .local/share/firefox/.mozilla/firefox/rean.default-release
