@@ -58,6 +58,18 @@
     group: users
     groups: video,audio,storage,power,uucp,i2c{{docker_group}}{{libvirt_group}}
     password: "{{main_user_password}}"
+  when: hostname_id != "worknote"
+  become: yes
+
+- name: Create main user
+  user:
+    name: "{{main_user}}"
+    append: no
+    create_home: yes
+    group: users
+    groups: video,audio,storage,power,uucp,i2c{{docker_group}}{{libvirt_group}}
+    password: "{{work_user_password}}"
+  when: hostname_id == "worknote"
   become: yes
 
 - name: Create dop user
