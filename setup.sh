@@ -61,6 +61,32 @@ function archsrv {
     mount /dev/sda1 /mnt/boot/efi
 }
 
+function worknote {
+    echo "worknote" $1
+    if [[ $1 = "full" ]]
+    then
+        sgdisk -Z /dev/sda
+        sgdisk -n 0:0:+512M -t 0:ef00 -c 0:"boot" /dev/sda
+        sgdisk -n 0:0:+150GiB -t 0:8300 -c 0:"root" /dev/sda
+        sgdisk -n 0:0:0 -t 0:8302 -c 0:"home" /dev/sda
+
+        cryptsetup luksFormat /dev/sda3
+        cryptsetup open /dev/sda3 home
+    fi
+
+    mkfs.fat -F32 /dev/sda1
+    mkfs.ext4 /dev/sda2
+    mkfs.ext4 /dev/mapper/home
+
+    mount /dev/sda2 /mnt
+
+    mkdir -p /mnt/boot/efi
+    mount /dev/sda1 /mnt/boot/efi
+
+    mkdir -p /mnt/home
+    mount /dev/mapper/home /mnt/home
+}
+
 function kvmtest {
     echo "kvmtest" $1
     if [[ $1 = "full" ]]
@@ -97,6 +123,9 @@ function setup_base {
         ;;
     'System Product Name')
         FUNC="archsrv"
+        ;;
+    'Latitude 5480')
+        FUNC="worknote"
         ;;
     'Standard PC (Q35 + ICH9, 2009)')
         FUNC="kvmtest"

@@ -17,6 +17,15 @@
     owner: "{{main_user}}"
   when: hostname_id == "xnote"
 
+- name: Add public key for worknote
+  copy:
+    content: "{{worknote_public_key}}"
+    dest: "/home/{{main_user}}/.ssh/authorized_keys"
+    mode: 0400
+    group: users
+    owner: "{{main_user}}"
+  when: hostname_id == "worknote"
+
 - name: Add public key for archsrv
   copy:
     content: "{{archsrv_public_key}}"

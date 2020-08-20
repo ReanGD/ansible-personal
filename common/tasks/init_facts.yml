@@ -77,6 +77,23 @@
     packages_file: "{{packages_dir}}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'TM1613'
 
+- name: Set worknote facts
+  set_fact:
+    hostname_id: "worknote"
+    boot: "nvram_write_disable"
+    add_dop_user: False
+    network_type: "wired,wireless"
+    set_ssh_access_keys: True
+    virtualization: "none"
+    gui: "lightdm,awesome,kde"
+    develop: "std,cpp,python,go,protobuf"
+    monitoring: "std,notebook,hddtemp"
+    roles: "font,docker,web,messengers,audio,media,pdf,office,file_managers,spell_checkers,work,repository"
+    swap_size: 35
+    swappiness: 1
+    packages_file: "{{packages_dir}}/packages.py"
+  when: x86_64 and reg_product_name_x86_64.stdout == 'Latitude 5480'
+
 - name: Set archsrv facts
   set_fact:
     hostname_id: "archsrv"

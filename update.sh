@@ -4,12 +4,13 @@ ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 cd $ROOT_DIR
 MENU_ID=$(whiptail --clear --title 'Get info about host' \
---menu "Enter your choice:" 15 60 5 \
+--menu "Enter your choice:" 15 60 6 \
 	"1" "local" \
 	"2" "archhost" \
 	"3" "xnote" \
 	"4" "archsrv" \
-	"5" "Quit" \
+	"5" "worknote" \
+	"6" "Quit" \
 	3>&1 1>&2 2>&3)
 
 if [ $? != 0 ]; then
@@ -31,6 +32,9 @@ case $MENU_ID in
 	HOST_NAME="archsrv"
 	;;
   "5")
+	HOST_NAME="worknote"
+	;;
+  "6")
 	exit 1
 	;;
 esac

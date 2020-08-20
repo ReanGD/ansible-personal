@@ -52,6 +52,19 @@ host 192.168.1.21
  RequestTTY yes
  RemoteCommand . ~/.config/start/login_profile.sh; zsh
 
+host worknote
+ HostName 192.168.1.22
+ IdentityFile ~/.ssh/worknote
+ User rean
+ RequestTTY yes
+ RemoteCommand . ~/.config/start/login_profile.sh; zsh
+
+host 192.168.1.22
+ IdentityFile ~/.ssh/worknote
+ User rean
+ RequestTTY yes
+ RemoteCommand . ~/.config/start/login_profile.sh; zsh
+
 host archsrv
  HostName 192.168.1.4
  IdentityFile ~/.ssh/archsrv
