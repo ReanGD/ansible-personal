@@ -39,4 +39,6 @@
   when: set_ssh_access_keys == True
 
 - include: sshd.yml
+
 - include: known_hosts.yml
+  when: is_chroot == False
