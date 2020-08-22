@@ -1,4 +1,11 @@
 ---
+- name: Install iwd package
+  pkg_manager:
+    name: iwd
+  become: yes
+  become_user: "{{install_user}}"
+  when: '"wireless" in network_type.split(",")'
+
 - name: Create symbolic links for /etc/resolv.conf
   file:
     src: /run/systemd/resolve/resolv.conf
