@@ -20,6 +20,8 @@
     - time
     - role: font
       when: '"font" in roles.split(",")'
+    - role: audio
+      when: '"audio" in roles.split(",")'
     - role: pkgcacheclean
       when: x86_64
     - role: docker
