@@ -21,6 +21,8 @@
     pretty_print: yes
   loop:
     - "/doublecmd/Tabs/*"
+    - "/doublecmd/Icons/*"
     - "/doublecmd/MainWindow/*"
+    - "/doublecmd/ColumnsSets/*"
   when: reg_doublecmd_cfg_exists.stat.exists == True
   changed_when: false
