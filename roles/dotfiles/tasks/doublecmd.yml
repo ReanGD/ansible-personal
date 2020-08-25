@@ -6,7 +6,7 @@
     get_mime: no
   register: reg_doublecmd_cfg_exists
 
-- name: Copy doublecmd config for backup
+- name: Backup doublecmd config
   copy:
     src: "/home/{{main_user}}/.config/doublecmd/doublecmd.xml"
     dest: "/home/{{main_user}}/.config/doublecmd/doublecmd.xml.backup"
@@ -26,3 +26,9 @@
     - "/doublecmd/ColumnsSets/*"
   when: reg_doublecmd_cfg_exists.stat.exists == True
   changed_when: false
+
+- name: Copy doublecmd config from backup
+  copy:
+    src: "/home/{{main_user}}/.config/doublecmd/doublecmd.xml.backup"
+    dest: "/home/{{main_user}}/.config/doublecmd/doublecmd.xml"
+  when: reg_doublecmd_cfg_exists.stat.exists == False
