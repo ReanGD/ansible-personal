@@ -54,3 +54,7 @@
 
 - include: doublecmd.yml
   when: gui!="none"
+
+- name: Update desktop database
+  shell: update-desktop-database ~/.local/share/applications
+  changed_when: false
