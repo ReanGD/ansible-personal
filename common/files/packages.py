@@ -263,7 +263,7 @@ def game():
             "minecraft"]
 
 def messengers():
-    if "game" not in roles.split(","):
+    if "messengers" not in roles.split(","):
         return []
     return ["telegram-desktop", "slack-desktop"]
 

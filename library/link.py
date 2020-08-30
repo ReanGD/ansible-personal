@@ -50,8 +50,6 @@ def copytree(src, dst):
     if errors:
         raise shutil.Error(errors)
 
-    return dst
-
 
 def main():
     module = AnsibleModule(
@@ -67,7 +65,7 @@ def main():
     dst = os.path.abspath(os.path.expanduser(module.params['dst']))
     dst_backup = dst + "__"
 
-    exists = os.path.exists(dst)
+    exists = os.path.lexists(dst)
     exists_dir = os.path.isdir(dst)
     changed = not (exists and os.path.islink(dst) and os.readlink(dst) == src)
 
