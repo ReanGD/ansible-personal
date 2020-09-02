@@ -1,5 +1,6 @@
 # global x86_64, hostname_id, distro, network_type, virtualization, gui, develop, monitoring, roles
 
+
 def system():
     system_pkgs = []
     if distro == "manjaro":
@@ -46,6 +47,7 @@ def system():
 
     return system_pkgs
 
+
 def driver():
     driver_pkgs = []
 
@@ -71,6 +73,7 @@ def driver():
 
     return driver_pkgs
 
+
 def network():
     network_pkgs = ["net-tools",
                     "smbclient",
@@ -82,6 +85,7 @@ def network():
         network_pkgs += ["iwd"]
 
     return network_pkgs
+
 
 def vm():
     if virtualization == "kvm_qemu":
@@ -99,6 +103,7 @@ def vm():
     else:
         return []
 
+
 def desktop_env():
     if gui == "none":
         return []
@@ -111,6 +116,7 @@ def desktop_env():
                 "xorg-xwininfo",  # select window
                 "arandr",  # screen position
                 "ddcutil",  # brightness\monitor control
+                "redshift",  # brightness control
                 "xcursor-ize-vision",  # a couple of X cursor that similar to Windows 7 cursor
                 "perwindowlayoutd",  # daemon to make per window layout (also exists "kbdd-git")
                 "scrot",  # for screenshots
@@ -120,6 +126,9 @@ def desktop_env():
                 "xclip",  # save data to clipboard
                 "xrectsel"]  # get select region
 
+    # rofi
+    gui_pkgs += ["rofi", "rofi-proxy", "python-googletrans", "python-psutil"]
+
     guis = gui.split(",")
     if "lightdm" in guis:
         gui_pkgs += ["lightdm", "lightdm-gtk-greeter"]
@@ -127,9 +136,7 @@ def desktop_env():
     if "awesome" in guis:
         gui_pkgs += ["awesome",
                      "mate-icon-theme",
-                     "inter-font",
-                     "rofi",  # run app menu
-                     "rofi-blocks-git"]
+                     "inter-font"]
 
     if "cinnamon" in guis:
         gui_pkgs += ["cinnamon"]
@@ -140,6 +147,7 @@ def desktop_env():
             gui_pkgs += ["manjaro-kde-settings", "manjaro-settings-manager-knotifier", "manjaro-settings-manager-kcm", "pamac-gtk"]
 
     return gui_pkgs
+
 
 def development():
     if develop == "none":
@@ -153,6 +161,7 @@ def development():
                          "icdiff",  # console diff
                          "meld",
                          "emacs",
+                         "sublime-merge",
                          "sublime-text-dev",
                          "visual-studio-code-bin"]
 
@@ -170,11 +179,10 @@ def development():
     if "python" in develops:
         develop_pkgs += ["python-pip",
                          "python-nose",
-                         "python-jedi",
-                         "python-pylint",
-                         "flake8",
+                         "python-jedi",  # for vs-code ?
+                         "pylama",
                          "python-pytest",
-                         "python-termcolor",
+                         "python-termcolor",  # for ansible
                          "python-virtualenv",
                          "tk",
                          "swig",
@@ -196,6 +204,7 @@ def development():
         develop_pkgs += ["adb"]
 
     return develop_pkgs
+
 
 def monitoring_utils():
     if monitoring == "none":
@@ -223,6 +232,7 @@ def monitoring_utils():
 
     return monitoring_pkgs
 
+
 def font():
     if "font" not in roles.split(","):
         return []
@@ -238,20 +248,24 @@ def font():
             "noto-fonts-emoji",  # emoji for chrome
             "adobe-source-code-pro-fonts"]
 
+
 def docker():
     if "docker" not in roles.split(","):
         return []
     return ["docker", "docker-compose"]
+
 
 def automount():
     if "automount" not in roles.split(","):
         return []
     return ["nfs-utils"]
 
+
 def web():
     if "web" not in roles.split(","):
         return []
     return ["firefox", "firefox-i18n-ru", "google-chrome"]
+
 
 def game():
     if "game" not in roles.split(","):
@@ -262,10 +276,12 @@ def game():
             "lib32-libldap",  # for WOT ?
             "minecraft"]
 
+
 def messengers():
     if "messengers" not in roles.split(","):
         return []
     return ["telegram-desktop", "slack-desktop"]
+
 
 def audio():
     if "audio" not in roles.split(","):
@@ -278,6 +294,7 @@ def audio():
 
     return audio_pkgs
 
+
 def media():
     if "media" not in roles.split(","):
         return []
@@ -288,17 +305,20 @@ def media():
             "smplayer",
             "deadbeef"]
 
+
 def pdf():
     if "pdf" not in roles.split(","):
         return []
 
     return ["mupdf"]  # pdf viewer (analog: llpp-git)
 
+
 def office():
     if "office" not in roles.split(","):
         return []
 
     return ["libreoffice-fresh-ru"]
+
 
 def file_managers():
     if "file_managers" not in roles.split(","):
@@ -309,11 +329,13 @@ def file_managers():
             "yandex-disk",  # yandex-disk setup/start
             "dropbox"]
 
+
 def torrent():
     if "torrent" not in roles.split(","):
         return []
 
     return ["transmission-remote-gui"]  # transmission-remote-gui-bin - not work now
+
 
 def spell_checkers():
     if "spell_checkers" not in roles.split(","):
@@ -321,17 +343,20 @@ def spell_checkers():
 
     return ["enchant", "hunspell-en_US", "hunspell-ru-aot", "languagetool"]
 
+
 def plex():
     if "plex" not in roles.split(","):
         return []
 
     return ["plex-media-server"]
 
+
 def work():
     if "work" not in roles.split(","):
         return []
 
-    return ["openconnect"] # for vpn to work
+    return ["openconnect"]  # for vpn to work
+
 
 grps = ["base-devel"]
 
