@@ -3,6 +3,11 @@ host github.com
  IdentityFile ~/.ssh/github
  User git
 
+host aur.archlinux.org
+ HostName aur.archlinux.org
+ IdentityFile ~/.ssh/aur
+ User aur
+
 host wiki
  HostName wiki.fr.to
  IdentityFile ~/.ssh/vscale
