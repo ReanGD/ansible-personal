@@ -1,9 +1,13 @@
 # global x86_64, hostname_id, distro, network_type, virtualization, gui, develop, monitoring, roles
 
 
+def is_manjaro():
+    return distro == "manjaro"
+
+
 def system():
     system_pkgs = []
-    if distro == "manjaro":
+    if is_manjaro():
         system_pkgs += ["linux-lts"]
     else:
         system_pkgs += ["linux"]
@@ -143,8 +147,11 @@ def desktop_env():
 
     if "kde" in guis:
         gui_pkgs += ["plasma-desktop", "kdeconnect", "dolphin-plugins", "print-manager"]
-        if distro == "manjaro":
-            gui_pkgs += ["manjaro-kde-settings", "manjaro-settings-manager-knotifier", "manjaro-settings-manager-kcm", "pamac-gtk"]
+        if is_manjaro():
+            gui_pkgs += ["manjaro-kde-settings",
+                         "manjaro-settings-manager-knotifier",
+                         "manjaro-settings-manager-kcm",
+                         "pamac-gtk"]
 
     return gui_pkgs
 
@@ -180,7 +187,9 @@ def development():
         develop_pkgs += ["python-pip",
                          "python-nose",
                          "python-jedi",  # for vs-code ?
-                         "pylama",
+                         "pylama",  # linter
+                         "mypy",  # linter
+                         "python-pylint",  # linter
                          "python-pytest",
                          "python-termcolor",  # for ansible
                          "python-virtualenv",
