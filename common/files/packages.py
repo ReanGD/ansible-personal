@@ -1,8 +1,41 @@
 # global x86_64, hostname_id, distro, network_type, virtualization, gui, develop, monitoring, roles
 
 
-def is_manjaro():
-    return distro == "manjaro"
+# pylama:ignore=E0602
+def is_manjaro() -> bool:
+    return distro == "manjaro"  # type: ignore
+
+
+def is_x86_64() -> bool:
+    return x86_64  # type: ignore
+
+
+def is_role(name: str) -> bool:
+    return name in roles.split(",")  # type: ignore
+
+
+def is_monitoring(name: str) -> bool:
+    return name in monitoring.split(",")  # type: ignore
+
+
+def is_gui(name: str) -> bool:
+    return name in gui.split(",")  # type: ignore
+
+
+def is_develop(name: str) -> bool:
+    return name in develop.split(",")  # type: ignore
+
+
+def is_network_type(name: str) -> bool:
+    return name in network_type.split(",")  # type: ignore
+
+
+def get_hostname_id() -> bool:
+    return hostname_id  # type: ignore
+
+
+def get_virtualization() -> bool:
+    return virtualization  # type: ignore
 
 
 def system():
@@ -44,7 +77,7 @@ def system():
     # archivers
     system_pkgs += ["p7zip", "unzip", "unrar"]
 
-    if x86_64:
+    if is_x86_64():
         system_pkgs += ["yay",  # AUR package manager
                         "refind",  # UEFI boot manager
                         "pkgcacheclean"]  # clean the pacman cache
@@ -55,24 +88,24 @@ def system():
 def driver():
     driver_pkgs = []
 
-    if gui != "none":
+    if not is_gui("none"):
         driver_pkgs = ["mesa"]
 
-    if hostname_id == "archhost":
+    if get_hostname_id() == "archhost":
         driver_pkgs += ["nvidia"]
-    elif hostname_id == "xnote":
+    elif get_hostname_id() == "xnote":
         driver_pkgs += ["bbswitch",
                         # "bumblebee",
                         # "nvidia",
                         "xf86-video-intel",
                         "xf86-input-libinput"]  # touchpad
-    elif hostname_id == "worknote":
+    elif get_hostname_id() == "worknote":
         driver_pkgs += ["bbswitch",
                         # "bumblebee",
                         # "nvidia",
                         "xf86-video-intel",
                         "xf86-input-libinput"]  # touchpad
-    elif hostname_id == "kvmtest":
+    elif get_hostname_id() == "kvmtest":
         driver_pkgs += ["spice-vdagent", "xf86-video-qxl"]
 
     return driver_pkgs
@@ -85,18 +118,18 @@ def network():
                     "openvpn",
                     "openssh"]  # ssh server
 
-    if "wireless" in network_type.split(","):
+    if is_network_type("wireless"):
         network_pkgs += ["iwd"]
 
     return network_pkgs
 
 
 def vm():
-    if virtualization == "kvm_qemu":
+    if get_virtualization() == "kvm_qemu":
         return ["qemu",
                 "virt-viewer",  # for SPICE
                 "edk2-ovmf"]  # for UEFI
-    elif virtualization == "kvm_libvirt":
+    elif get_virtualization() == "kvm_libvirt":
         return ["qemu",
                 "libvirt",  # additional interface
                 "virt-viewer",  # for SPICE
@@ -109,7 +142,7 @@ def vm():
 
 
 def desktop_env():
-    if gui == "none":
+    if is_gui("none"):
         return []
 
     gui_pkgs = ["xorg-server",
@@ -133,19 +166,18 @@ def desktop_env():
     # rofi
     gui_pkgs += ["rofi", "rofi-proxy", "python-googletrans", "python-psutil"]
 
-    guis = gui.split(",")
-    if "lightdm" in guis:
+    if is_gui("lightdm"):
         gui_pkgs += ["lightdm", "lightdm-gtk-greeter"]
 
-    if "awesome" in guis:
+    if is_gui("awesome"):
         gui_pkgs += ["awesome",
                      "mate-icon-theme",
                      "inter-font"]
 
-    if "cinnamon" in guis:
+    if is_gui("cinnamon"):
         gui_pkgs += ["cinnamon"]
 
-    if "kde" in guis:
+    if is_gui("kde"):
         gui_pkgs += ["plasma-desktop", "kdeconnect", "dolphin-plugins", "print-manager"]
         if is_manjaro():
             gui_pkgs += ["manjaro-kde-settings",
@@ -157,12 +189,11 @@ def desktop_env():
 
 
 def development():
-    if develop == "none":
+    if is_develop("none"):
         return []
 
     develop_pkgs = []
-    develops = develop.split(",")
-    if "std" in develops:
+    if is_develop("std"):
         # "pycharm-community-edition", "pycharm-professional", "clion", "clion-cmake"
         develop_pkgs += ["git",
                          "icdiff",  # console diff
@@ -172,7 +203,7 @@ def development():
                          "sublime-text-dev",
                          "visual-studio-code-bin"]
 
-    if "cpp" in develops:
+    if is_develop("cpp"):
         develop_pkgs += ["clang",
                          "cmake",
                          "ninja",
@@ -180,10 +211,10 @@ def development():
                          "protobuf",
                          "cpupower",  # for disable CPU powersafe mode in tests
                          "cpp-dependencies",
-                         "python-dateutil", # for include-what-you-use
+                         "python-dateutil",  # for include-what-you-use
                          "include-what-you-use"]
 
-    if "python" in develops:
+    if is_develop("python"):
         develop_pkgs += ["python-pip",
                          "python-nose",
                          "python-jedi",  # for vs-code ?
@@ -197,54 +228,55 @@ def development():
                          "swig",
                          "portaudio"]  # for pyaudio and my audio-lib
 
-    if "go" in develops:
+    if is_develop("go"):
         develop_pkgs += ["go", "protobuf"]
 
-    if "rust" in develops:
+    if is_develop("rust"):
         develop_pkgs += ["rust", "cargo", "rust-src", "rust-racer"]
 
-    if "rust3D" in develops:
+    if is_develop("rust3D"):
         develop_pkgs += ["sdl2", "sdl2_image"]
 
-    if "sqlite" in develops:
+    if is_develop("sqlite"):
         develop_pkgs += ["sqlite-analyzer"]
 
-    if "android" in develops:
+    if is_develop("android"):
         develop_pkgs += ["adb"]
 
     return develop_pkgs
 
 
 def monitoring_utils():
-    if monitoring == "none":
+    if is_monitoring("none"):
         return []
 
     monitoring_pkgs = []
-    if "std" in monitoring.split(","):
+    if is_monitoring("std"):
         monitoring_pkgs += ["iftop",  # network monitor
                             "htop",  # process monitor
                             "iotop",  # disk monitor
                             "hwinfo"]  # info about hardware
 
-        if x86_64:
-            monitoring_pkgs+=["hw-probe"]  # check hardware and find drivers
+        if is_x86_64():
+            monitoring_pkgs += ["hw-probe"]  # check hardware and find drivers
 
-    if "notebook" in monitoring.split(","):
-        monitoring_pkgs+=["powertop"]
+    if is_monitoring("notebook"):
+        monitoring_pkgs += ["powertop"]
 
-    if "hddtemp" in monitoring.split(","):
-        monitoring_pkgs+=["hddtemp",  # disk temperature
-                          "smartmontools"]
+    if is_monitoring("hddtemp"):
+        monitoring_pkgs += ["hddtemp",  # disk temperature
+                            "smartmontools"]
 
-    if "ups" in monitoring.split(","):
-        monitoring_pkgs+=["apcupsd"]
+    if is_monitoring("ups"):
+        monitoring_pkgs += ["apcupsd"]
 
     return monitoring_pkgs
 
 
 def font():
-    if "font" not in roles.split(","):
+    if not is_role("font"):
         return []
+
     return ["font-manager",  # viewer for fonts
             "ttf-ms-fonts",
             "ttf-tahoma",
@@ -259,26 +291,30 @@ def font():
 
 
 def docker():
-    if "docker" not in roles.split(","):
+    if not is_role("docker"):
         return []
+
     return ["docker", "docker-compose"]
 
 
 def automount():
-    if "automount" not in roles.split(","):
+    if not is_role("automount"):
         return []
+
     return ["nfs-utils"]
 
 
 def web():
-    if "web" not in roles.split(","):
+    if not is_role("web"):
         return []
+
     return ["firefox", "firefox-i18n-ru", "google-chrome"]
 
 
 def game():
-    if "game" not in roles.split(","):
+    if not is_role("game"):
         return []
+
     return ["playonlinux",
             "steam",
             "lib32-nvidia-utils",  # for steam
@@ -287,25 +323,26 @@ def game():
 
 
 def messengers():
-    if "messengers" not in roles.split(","):
+    if not is_role("messengers"):
         return []
+
     return ["telegram-desktop", "slack-desktop"]
 
 
 def audio():
-    if "audio" not in roles.split(","):
+    if not is_role("audio"):
         return []
 
     audio_pkgs = ["pulseaudio"]
 
-    if gui != "none":
+    if not is_gui("none"):
         audio_pkgs += ["pavucontrol", "volumeicon", "pasystray"]
 
     return audio_pkgs
 
 
 def media():
-    if "media" not in roles.split(","):
+    if not is_role("media"):
         return []
 
     return ["viewnior",  # image viewer
@@ -316,21 +353,21 @@ def media():
 
 
 def pdf():
-    if "pdf" not in roles.split(","):
+    if not is_role("pdf"):
         return []
 
     return ["mupdf"]  # pdf viewer (analog: llpp-git)
 
 
 def office():
-    if "office" not in roles.split(","):
+    if not is_role("office"):
         return []
 
     return ["libreoffice-fresh-ru"]
 
 
 def file_managers():
-    if "file_managers" not in roles.split(","):
+    if not is_role("file_managers"):
         return []
 
     return ["doublecmd-gtk2",
@@ -340,28 +377,28 @@ def file_managers():
 
 
 def torrent():
-    if "torrent" not in roles.split(","):
+    if not is_role("torrent"):
         return []
 
     return ["transmission-remote-gui"]  # transmission-remote-gui-bin - not work now
 
 
 def spell_checkers():
-    if "spell_checkers" not in roles.split(","):
+    if not is_role("spell_checkers"):
         return []
 
     return ["enchant", "hunspell-en_US", "hunspell-ru-aot", "languagetool"]
 
 
 def plex():
-    if "plex" not in roles.split(","):
+    if not is_role("plex"):
         return []
 
     return ["plex-media-server"]
 
 
 def work():
-    if "work" not in roles.split(","):
+    if not is_role("work"):
         return []
 
     return ["openconnect"]  # for vpn to work
