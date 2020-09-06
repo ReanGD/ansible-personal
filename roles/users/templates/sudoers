@@ -5,6 +5,7 @@ Defaults:{{ main_user }}	timestamp_timeout=20
 
 root		ALL = (ALL) ALL
 {{ main_user }}		ALL = (ALL) ALL
+{{ main_user }}		ALL = (ALL) NOPASSWD: /usr/bin/systemctl poweroff,/usr/bin/systemctl reboot,/usr/bin/systemctl suspend,/usr/bin/systemctl hibernate
 {% if add_dop_user == True %}
 {{ dop_user }}		ALL = (ALL) ALL
 {% endif %}
