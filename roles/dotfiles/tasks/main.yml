@@ -57,4 +57,5 @@
 
 - name: Update desktop database
   shell: update-desktop-database ~/.local/share/applications
+  when: gui!="none"
   changed_when: false
