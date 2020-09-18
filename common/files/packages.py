@@ -315,9 +315,12 @@ def game():
     if not is_role("game"):
         return []
 
+    if is_manjaro():
+        system_pkgs += ["steam-manjaro"]
+    else:
+        system_pkgs += ["steam"]
+
     return ["playonlinux",
-            "steam",
-            "lib32-nvidia-utils",  # for steam
             "lib32-libldap",  # for WOT ?
             "minecraft"]
 
