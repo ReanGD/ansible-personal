@@ -5,6 +5,7 @@ reangd_repositories_map:
   - { repo: "cpp-coroutine.git",              dest: "cpp-coroutine" }
   - { repo: "cpp-network.git",                dest: "cpp-network" }
   - { repo: "cpp-rtge.git",                   dest: "cpp-rtge" }
+  - { repo: "vscode-devdocs-io.git",          dest: "vscode-devdocs-io" }
   - { repo: "docker-alpine.git",              dest: "docker-alpine" }
   - { repo: "dokuwiki-plugin-addnewpage.git", dest: "dokuwiki-plugin-addnewpage" }
   - { repo: "dokuwiki-tablecalc.git",         dest: "dokuwiki-tablecalc" }
