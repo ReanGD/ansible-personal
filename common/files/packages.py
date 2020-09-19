@@ -315,14 +315,17 @@ def game():
     if not is_role("game"):
         return []
 
+    game_pkgs = []
     if is_manjaro():
-        system_pkgs += ["steam-manjaro"]
+        game_pkgs += ["steam-manjaro"]
     else:
-        system_pkgs += ["steam"]
+        game_pkgs += ["steam"]
 
-    return ["playonlinux",
-            "lib32-libldap",  # for WOT ?
-            "minecraft"]
+    game_pkgs += ["playonlinux",
+                  "lib32-libldap",  # for WOT ?
+                  "minecraft"]
+
+    return game_pkgs
 
 
 def messengers():
