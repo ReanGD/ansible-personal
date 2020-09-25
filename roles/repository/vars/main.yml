@@ -20,6 +20,7 @@ reangd_repositories_map:
   - { repo: "go-web-search.git",              dest: "go/src/github.com/ReanGD/go-web-search" }
   - { repo: "HabrArticle.git",                dest: "HabrArticle" }
   - { repo: "LearningEnglish.git",            dest: "LearningEnglish" }
+  - { repo: "machine-learning",               dest: "machine-learning" }
   - { repo: "neural-network.git",             dest: "neural-network" }
   - { repo: "py-calendar.git",                dest: "py-calendar" }
   - { repo: "py-invest.git",                  dest: "py-invest" }
