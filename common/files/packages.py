@@ -353,6 +353,8 @@ def media():
 
     return ["viewnior",  # image viewer
             "gimp",
+            "krita",
+            "inkscape",  # vector editor
             "blender",
             "smplayer",
             "deadbeef"]
