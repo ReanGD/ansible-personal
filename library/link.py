@@ -3,7 +3,7 @@ import shutil
 from ansible.module_utils.basic import AnsibleModule
 
 
-def copytree(src, dst):
+def copytree(src, dst, need_copystat):
     with os.scandir(src) as itr:
         entries = list(itr)
 
@@ -18,34 +18,24 @@ def copytree(src, dst):
             continue
 
         try:
-            is_symlink = srcentry.is_symlink()
-            if is_symlink:
-                linkto = os.readlink(srcname)
-                if not os.path.exists(linkto):
-                    continue
+            if srcentry.is_symlink() and not os.path.exists(os.readlink(srcname)):
+                continue
 
-                if srcentry.is_dir():
-                    copytree(srcentry, dstname)
-                else:
-                    shutil.copy2(srcentry, dstname)
-            elif srcentry.is_dir():
-                copytree(srcentry, dstname)
+            if srcentry.is_dir():
+                copytree(srcentry, dstname, True)
             else:
-                # Will raise a SpecialFileError for unsupported file types
                 shutil.copy2(srcentry, dstname)
-        # catch the Error from the recursive copytree so that we can
-        # continue with other files
         except shutil.Error as err:
+            # catch the Error from the recursive copytree so that we can continue with other files
             errors.extend(err.args[0])
         except OSError as why:
             errors.append((srcname, dstname, str(why)))
 
     try:
-        shutil.copystat(src, dst)
+        if need_copystat:
+            shutil.copystat(src, dst)
     except OSError as why:
-        # Copying file access times may fail on Windows
-        if getattr(why, 'winerror', None) is None:
-            errors.append((src, dst, str(why)))
+        errors.append((src, dst, f"copystat: {why}"))
 
     if errors:
         raise shutil.Error(errors)
@@ -65,21 +55,24 @@ def main():
     dst = os.path.abspath(os.path.expanduser(module.params['dst']))
     dst_backup = dst + "__"
 
-    exists = os.path.lexists(dst)
-    exists_dir = os.path.isdir(dst)
-    changed = not (exists and os.path.islink(dst) and os.readlink(dst) == src)
+    dst_exists = os.path.lexists(dst)
+    dst_dir_exists = os.path.isdir(dst)
+    dst_dir_exists_and_empty = dst_dir_exists and (len(os.listdir(dst)) == 0)
+    changed = not (dst_exists and os.path.islink(dst) and os.readlink(dst) == src)
 
     if changed:
         try:
-            if exists_dir:
+            if dst_dir_exists_and_empty:
+                shutil.rmtree(dst, ignore_errors=False)
+            elif dst_dir_exists:
                 os.rename(dst, dst_backup)
-            elif exists:
+            elif dst_exists:
                 os.unlink(dst)
 
             os.symlink(src, dst)
 
-            if exists_dir:
-                copytree(dst_backup, dst)
+            if dst_dir_exists and not dst_dir_exists_and_empty:
+                copytree(dst_backup, dst, False)
                 shutil.rmtree(dst_backup, ignore_errors=False)
 
         except Exception as e:
