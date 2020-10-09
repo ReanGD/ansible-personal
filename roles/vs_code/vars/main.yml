@@ -40,7 +40,11 @@ vs_code_extensions:
   - "Kelvin.vscode-sshfs"
   # keybindings
   - "ms-vscode.sublime-keybindings"
+  # spellchecking
+  - "ban.spellright"
   # interface
   - "seunlanlege.action-buttons"
   - "tomsaunders.vscode-workspace-explorer"
   - "formulahendry.code-runner"
+  - "bodil.file-browser"
+  - "softwaredotcom.music-time"
