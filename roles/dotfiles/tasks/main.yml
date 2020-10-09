@@ -49,6 +49,13 @@
     dst: /home/{{main_user}}/{{item.dst}}
   loop: "{{ dotfiles_path_map }}"
 
+- name: Create links for other items
+  link:
+    src: "{{item.src}}"
+    dst: /home/{{main_user}}/{{item.dst}}
+  when: gui!="none"
+  loop: "{{ others_path_map }}"
+
 - include: cloud.yml
   when: gui!="none"
 

@@ -42,3 +42,6 @@ documents_path_map:
   - {src: "Projects",    dst: "projects/old" }
   - {src: "config/workspases",   dst: "projects/workspases" }
   - {src: "Projects/RTGEAssets", dst: "projects/home/cpp-rtge/assets" }
+
+others_path_map:
+  - {src: "/usr/share/hunspell",  dst: ".config/Code/Dictionaries" }
