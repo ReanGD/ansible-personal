@@ -51,12 +51,14 @@ class ActionModule(ActionBase):
         if not os.path.exists(config):
             raise StrError("Config file '{}' not found".format(config))
 
-        keys = ["x86_64", "hostname_id", "distro", "network_type", "virtualization", "gui", "develop", "monitoring", "roles"]
-        gvars = {key: self._get_var(key) for key in keys}
+        gkeys = ["x86_64", "hostname_id", "distro", "network_type", "virtualization",
+                 "gui", "develop", "monitoring", "roles"]
+        gvars = {key: self._get_var(key) for key in gkeys}
         exec(open(config).read(), gvars)
         packages = {it.strip() for it in gvars["packages"]}
         groups = {it.strip() for it in gvars["groups"]}
-        return {"packages": list(packages), "groups": list(groups)}
+        keys = {it.strip() for it in gvars["keys"]}
+        return {"packages": list(packages), "groups": list(groups), "keys": list(keys)}
 
     def _get_param_name(self, command):
         param_name = "name"
@@ -81,14 +83,19 @@ class ActionModule(ActionBase):
         display.error(text, wrap_text=False)
 
     def _call_module(self, name, args):
-        result = self._execute_module(module_name=name, module_args=args,
-                                        task_vars=self._task_vars)
+        result = self._execute_module(module_name=name, module_args=args, task_vars=self._task_vars)
         if result.get("failed"):
             exception = result.get("exception", None)
             if exception is not None:
                 display.error(exception, wrap_text=False)
 
             raise StrError(result.get("msg", "Unknown error in module {}".format(name)))
+
+        return result
+
+    def _install(self, name):
+        args = {"command": "install", "name": name}
+        result = self._call_module(name="pkg_manager", args=args)
 
         return result
 
@@ -108,23 +115,21 @@ class ActionModule(ActionBase):
 
         return result
 
-    def _install(self, name):
-        args = {"command": "install", "name": name}
-        result = self._call_module(name="pkg_manager", args=args)
-
-        return result
-
     def _run(self):
         command = self._get_param_command()
-        if command == "get_info":
+        if command == "import_config_keys":
             config = self._get_param_config_value(command)
-            return self._get_info(config["packages"], config["groups"])
+            args = {"command": "import_keys", "keys": config["keys"]}
+            return self._call_module(name="pkg_manager", args=args)
         elif command == "install":
             name = self._get_param_name(command)
             return self._install(name)
         elif command == "install_config":
             config = self._get_param_config_value(command)
             return self._install(config["packages"])
+        elif command == "get_info":
+            config = self._get_param_config_value(command)
+            return self._get_info(config["packages"], config["groups"])
         else:
             raise StrError("Param 'command' has unexpected value '{}'.".format(command))
 

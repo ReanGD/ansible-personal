@@ -13,6 +13,12 @@
   become: yes
   become_user: "{{install_user}}"
 
+- name: Import package keys
+  pkg_manager:
+    command: import_config_keys
+    config: "{{packages_file}}"
+  become: yes
+
 - name: Install packages
   pkg_manager:
     command: install_config

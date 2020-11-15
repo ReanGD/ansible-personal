@@ -84,7 +84,16 @@ class Aur:
 class InstallManager:
     def __init__(self, module):
         self._module = module
+        self._imported_keys = []
         self._installed_packages = []
+
+    def _run_import_command(self, args, key, cwd=None):
+        rc, stdout, stderr = self._module.run_command(args, cwd=cwd)
+        if rc != 0:
+            msg = "Failed to import '{}', stdout: {}, stderr: {}".format(key, stdout, stderr)
+            raise StrError(msg)
+
+        self._imported_keys.append(key)
 
     def _run_install_command(self, args, name, cwd=None):
         rc, stdout, stderr = self._module.run_command(args, cwd=cwd)
@@ -93,6 +102,10 @@ class InstallManager:
             raise StrError(msg)
 
         self._installed_packages.append(name)
+
+    def _import_key(self, key):
+        params = ["env", "LC_ALL=C", "sudo", "pacman-key", "--keyserver", "keyserver.ubuntu.com", "--recv-keys", key]
+        self._run_import_command(params, key)
 
     def _install_by_makepkg(self, name):
         import tarfile
@@ -118,7 +131,10 @@ class InstallManager:
         if manager == "pacman":
             params = ["env", "LC_ALL=C", "sudo", "pacman", "-S", "--noconfirm"]
         else:
-            params = ["env", "LC_ALL=C", manager, "-S", "--answerclean", "All", "--answerdiff", "None", "--answeredit", "None", "--nopgpfetch", "--noconfirm", "--mflags", "--skippgpcheck"]
+            params = ["env", "LC_ALL=C", manager, "-S", "--noconfirm", "--nopgpfetch", "--mflags", "--skippgpcheck",
+                      "--answerclean", "All",
+                      "--answerdiff", "None",
+                      "--answeredit", "None"]
 
         if as_explicit is not None:
             if as_explicit:
@@ -127,6 +143,12 @@ class InstallManager:
                 params += ["--asdeps"]
 
         self._run_install_command(params + [name], name)
+
+    def import_keys(self, keys):
+        for key in keys:
+            self._import_key(key)
+
+        return self._imported_keys
 
     def install(self, packages):
         pacman = Pacman()
@@ -146,6 +168,21 @@ class InstallManager:
             self._install_by_manager(name, True, manager)
 
         return self._installed_packages
+
+
+def import_keys(module, keys):
+    keys = {it.strip() for it in keys}
+
+    imported_keys = InstallManager(module).import_keys(keys)
+    cnt = len(imported_keys)
+    if cnt != 0:
+        msg = "Installed {} keys(s): {}".format(cnt, ",".join(imported_keys))
+        changed = True
+    else:
+        msg = "Keys(s) already installed"
+        changed = False
+
+    return msg, changed
 
 
 def install(module, packages):
@@ -227,7 +264,17 @@ def get_info(packages, groups):
 def run_module(module):
     command = module.params["command"].strip()
 
-    if command == "install":
+    if command == "import_keys":
+        keys = module.params.get("keys", None)
+        if keys is None:
+            raise StrError("Not found required param 'keys' for command 'import_keys'")
+        else:
+            msg, changed = import_keys(module, keys)
+            return {
+                "msg": msg,
+                "changed": changed,
+            }
+    elif command == "install":
         name = module.params.get("name", None)
         if name is None:
             raise StrError("Not found required param 'name' for command 'install'")
@@ -252,12 +299,14 @@ def run_module(module):
 
 # pkg_manager: command=install name=dropbox
 # pkg_manager: command=install name=yay, python
+# pkg_manager: command=import_keys keys=1FF2, 33ED
 # pkg_manager: command=get_info packages=python2,python groups=base
 def main():
     module = AnsibleModule(
         argument_spec=dict(
-            command=dict(default=None, choices=["install", "get_info"], required=True, type="str"),
+            command=dict(default=None, choices=["import_keys", "install", "get_info"], required=True, type="str"),
             name=dict(default=None, required=False, type="list"),
+            keys=dict(default=None, required=False, type="list"),
             packages=dict(default=None, required=False, type="list"),
             groups=dict(default=None, required=False, type="list")
             ),
