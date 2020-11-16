@@ -211,6 +211,7 @@ def development():
                          "protobuf",
                          "cpupower",  # for disable CPU powersafe mode in tests
                          "cpp-dependencies",
+                         "vulkan-mesa-layers",  # show vulkan draw statistics
                          "python-dateutil",  # for include-what-you-use
                          "include-what-you-use"]
 
@@ -384,6 +385,14 @@ def file_managers():
             "dropbox"]
 
 
+def file_managers_keys():
+    if not is_role("file_managers"):
+        return []
+
+    # dropbox
+    return ["1C61A2656FB57B7E4DE0F4C1FC918B335044912E"]
+
+
 def torrent():
     if not is_role("torrent"):
         return []
@@ -412,31 +421,31 @@ def work():
     return ["openconnect"]  # for vpn to work
 
 
-grps = ["base-devel"]
+groups = ["base-devel"]
 
-pkgs = []
-pkgs += system()
-pkgs += driver()
-pkgs += network()
-pkgs += vm()
-pkgs += desktop_env()
-pkgs += development()
-pkgs += monitoring_utils()
-pkgs += font()
-pkgs += docker()
-pkgs += automount()
-pkgs += web()
-pkgs += game()
-pkgs += messengers()
-pkgs += audio()
-pkgs += media()
-pkgs += pdf()
-pkgs += office()
-pkgs += spell_checkers()
-pkgs += file_managers()
-pkgs += torrent()
-pkgs += plex()
-pkgs += work()
+packages = []
+packages += system()
+packages += driver()
+packages += network()
+packages += vm()
+packages += desktop_env()
+packages += development()
+packages += monitoring_utils()
+packages += font()
+packages += docker()
+packages += automount()
+packages += web()
+packages += game()
+packages += messengers()
+packages += audio()
+packages += media()
+packages += pdf()
+packages += office()
+packages += spell_checkers()
+packages += file_managers()
+packages += torrent()
+packages += plex()
+packages += work()
 
-packages = pkgs
-groups = grps
+keys = []
+keys += file_managers_keys()
