@@ -208,6 +208,7 @@ def development():
                          "cmake",
                          "ninja",
                          "gdb",
+                         "conan",
                          "protobuf",
                          "cpupower",  # for disable CPU powersafe mode in tests
                          "cpp-dependencies",
