@@ -19,6 +19,7 @@ reangd_repositories_map:
   - { repo: "go-morphy.git",                  dest: "go/src/github.com/ReanGD/go-morphy" }
   - { repo: "go-web-search.git",              dest: "go/src/github.com/ReanGD/go-web-search" }
   - { repo: "HabrArticle.git",                dest: "HabrArticle" }
+  - { repo: "kino-player.git",                dest: "kino-player" }
   - { repo: "LearningEnglish.git",            dest: "LearningEnglish" }
   - { repo: "machine-learning",               dest: "machine-learning" }
   - { repo: "neural-network.git",             dest: "neural-network" }
