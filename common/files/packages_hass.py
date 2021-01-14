@@ -6,7 +6,7 @@ grps = []
 pkgs += ["raspberrypi-firmware", "raspberrypi-bootloader-x", "linux-raspberrypi", "raspberrypi-bootloader"]
 
 # system
-pkgs += ["gcc", "make", "pkgconf"]
+pkgs += ["gcc", "make", "pkgconf", "unzip"]
 
 # monitoring
 pkgs += ["rsync",
@@ -37,3 +37,4 @@ grps += ["base-devel"]
 
 packages = pkgs
 groups = grps
+keys = []

@@ -16,7 +16,7 @@
     - hddtemp
     - rsync_server
     - mosquitto
+    - packages
     - hass_ssl
     - hass_server
-    - packages
     - hass_update
