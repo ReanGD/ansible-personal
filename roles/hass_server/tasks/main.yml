@@ -1,10 +1,4 @@
 ---
-- name: Install packages for install homeassistant
-  pkg_manager:
-    name: python-virtualenv,libffi,protobuf,python-pip,gcc,make,pkgconf,libudev0-shim
-  become: yes
-  become_user: "{{install_user}}"
-
 - name: Udev rule for Z-Wave stick
   copy:
     src: 99-usb-serial.rules
@@ -29,6 +23,7 @@
     - /hass
     - /hass/venv
     - /hass/dotfiles-hass
+    - /hass/dotfiles-hass/custom_components/hacs
   become: yes
 
 - name: Install homeassistant
@@ -36,6 +31,17 @@
     name: homeassistant
     virtualenv: /hass/venv
     virtualenv_site_packages: yes
+
+- name: Install HACS
+  ansible.builtin.unarchive:
+    creates: /hass/dotfiles-hass/custom_components/hacs/__init__.py
+    src: https://github.com/hacs/integration/releases/latest/download/hacs.zip
+    dest: /hass/dotfiles-hass/custom_components/hacs
+    mode: 0755
+    group: users
+    owner: rean
+    remote_src: yes
+  become: yes
 
 - name: Enable ports 80/443 for hass
   capabilities:
