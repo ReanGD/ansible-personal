@@ -3,10 +3,12 @@ vs_code_extensions:
   # markdownlint
   - "shd101wyy.markdown-preview-enhanced"
   - "DavidAnson.vscode-markdownlint"
+  - "yzhang.markdown-all-in-one"
   # ansible
   - "vscoss.vscode-ansible"
   # python
   - "ms-python.python"
+  - "ms-toolsai.jupyter"
   # go
   - "golang.go"
   # lua
@@ -17,6 +19,11 @@ vs_code_extensions:
   - "matepek.vscode-catch2-test-adapter"
   - "hbenl.vscode-test-explorer"
   - "ajshort.include-autocomplete"
+  # dart/flutter
+  - "Dart-Code.dart-code"
+  - "Dart-Code.flutter"
+  - "localizely.flutter-intl"
+  - "jeroen-meijer.pubspec-assist"
   # cmake
   - "twxs.cmake"
   - "ms-vscode.cmake-tools"
