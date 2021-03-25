@@ -8,7 +8,7 @@
 - name: Add "Jack Headphone Mic" and "Jack Headset Mic"
   copy:
     src: analog-input-internal-mic.conf
-    dest: /usr/share/alsa-card-profile/mixer/paths/analog-input-internal-mic.conf
+    dest: /usr/share/pulseaudio/alsa-mixer/paths/analog-input-internal-mic.conf
     mode: 0644
     group: root
     owner: root
