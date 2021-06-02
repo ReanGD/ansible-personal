@@ -60,7 +60,7 @@
     packages_file: "{{packages_dir}}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7978'
 
-  - name: Set master facts
+- name: Set master facts
   set_fact:
     hostname_id: "master"
     boot: "nvram_write_enble"

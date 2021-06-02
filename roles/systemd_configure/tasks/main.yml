@@ -7,3 +7,16 @@
     group: root
     owner: root
   become: yes
+
+- name: Install packages for set hostname
+  pkg_manager:
+    name: inetutils
+  become: yes
+  become_user: "{{install_user}}"
+
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: "{{hostname_id}}"
+    use: systemd
+  become: yes
+  when: is_chroot == False

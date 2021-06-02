@@ -1,9 +1,3 @@
 ---
-- name: Set hostname
-  hostname:
-    name: "{{hostname_id}}"
-  become: yes
-  when: is_chroot == False
-
 - include: config_network.yml
 - include: systemd_network.yml

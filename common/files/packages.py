@@ -62,6 +62,7 @@ def system():
                     "dialog",
                     "libnewt",  # external dialog
                     "mlocate",
+                    "inetutils",  # for set hostname (crazy ansible code)
                     "man-db"]
 
     # ansible
