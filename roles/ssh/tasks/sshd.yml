@@ -8,6 +8,15 @@
     owner: "{{main_user}}"
   when: hostname_id == "archhost"
 
+- name: Add public key for master
+  copy:
+    content: "{{master_public_key}}"
+    dest: "/home/{{main_user}}/.ssh/authorized_keys"
+    mode: 0400
+    group: users
+    owner: "{{main_user}}"
+  when: hostname_id == "master"
+
 - name: Add public key for xnote
   copy:
     content: "{{xnote_public_key}}"

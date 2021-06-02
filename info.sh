@@ -6,12 +6,13 @@ cd $ROOT_DIR
 MENU_ID=$(whiptail --clear --title 'Get info about host' \
 --menu "Enter your choice:" 15 60 7 \
 	"1" "archhost" \
-	"2" "xnote" \
-	"3" "archsrv" \
-	"4" "hass" \
-	"5" "worknote" \
-	"6" "kvmtest" \
-	"7" "Quit" \
+	"2" "master" \
+	"3" "xnote" \
+	"4" "archsrv" \
+	"5" "hass" \
+	"6" "worknote" \
+	"7" "kvmtest" \
+	"8" "Quit" \
 	3>&1 1>&2 2>&3)
 
 if [ $? != 0 ]; then
@@ -24,21 +25,24 @@ case $MENU_ID in
 	HOST_NAME="archhost"
 	;;
   "2")
-	HOST_NAME="xnote"
+	HOST_NAME="master"
 	;;
   "3")
-	HOST_NAME="archsrv"
+	HOST_NAME="xnote"
 	;;
   "4")
-	HOST_NAME="hass"
+	HOST_NAME="archsrv"
 	;;
   "5")
-	HOST_NAME="worknote"
+	HOST_NAME="hass"
 	;;
   "6")
-	HOST_NAME="kvmtest"
+	HOST_NAME="worknote"
 	;;
   "7")
+	HOST_NAME="kvmtest"
+	;;
+  "8")
 	exit 1
 	;;
 esac

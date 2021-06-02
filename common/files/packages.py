@@ -174,9 +174,6 @@ def desktop_env():
                      "mate-icon-theme",
                      "inter-font"]
 
-    if is_gui("cinnamon"):
-        gui_pkgs += ["cinnamon"]
-
     if is_gui("kde"):
         gui_pkgs += ["plasma-desktop", "kdeconnect", "dolphin-plugins", "print-manager"]
         if is_manjaro():

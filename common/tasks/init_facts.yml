@@ -38,7 +38,7 @@
 # boot: "nvram_write_enble"|"nvram_write_disable" and ["crypto_home", "textonly"]
 # network_type: ["wired", "wired_old", "wireless"]
 # virtualization: "none" or "kvm_qemu" or "kvm_libvirt"
-# gui: "none" or ["lightdm", "awesome", "cinnamon", "kde"]
+# gui: "none" or ["lightdm", "awesome", "kde"]
 # develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "protobuf", "sqlite", "android"]
 # monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
 # roles: "none" or ["font", "docker", "automount", "web", "game", "messengers", "audio", "media", "pdf", "office", "file_managers", "torrent", "spell_checkers", "plex", "work", "repository"]
@@ -56,9 +56,26 @@
     monitoring: "std,hddtemp"
     roles: "font,docker,automount,web,game,messengers,audio,media,pdf,office,file_managers,torrent,spell_checkers,work,repository"
     swap_size: 35
-    swappiness: 1
+    swappiness: 10
     packages_file: "{{packages_dir}}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7978'
+
+  - name: Set master facts
+  set_fact:
+    hostname_id: "master"
+    boot: "nvram_write_enble"
+    add_dop_user: False
+    network_type: "wired,wireless"
+    set_ssh_access_keys: True
+    virtualization: "none"
+    gui: "lightdm,awesome,kde"
+    develop: "std,cpp,python,go,protobuf"
+    monitoring: "std,hddtemp"
+    roles: "font,docker,automount,web,game,messengers,audio,media,pdf,office,file_managers,torrent,spell_checkers,work,repository"
+    swap_size: 20
+    swappiness: 10
+    packages_file: "{{packages_dir}}/packages.py"
+  when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7C90'
 
 - name: Set xnote facts (xiaomi)
   set_fact:
@@ -90,7 +107,7 @@
     monitoring: "std,notebook,hddtemp"
     roles: "font,docker,web,messengers,audio,media,pdf,office,file_managers,spell_checkers,work,repository"
     swap_size: 35
-    swappiness: 1
+    swappiness: 10
     packages_file: "{{packages_dir}}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'Latitude 5480'
 
@@ -107,7 +124,7 @@
     monitoring: "std,hddtemp"
     roles: "docker,automount,plex"
     swap_size: 35
-    swappiness: 1
+    swappiness: 10
     packages_file: "{{packages_dir}}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'System Product Name'
 

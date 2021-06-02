@@ -27,6 +27,23 @@ function archhost {
     mount /dev/sda1 /mnt/boot/efi
 }
 
+function master {
+    echo "master" $1
+    if [[ $1 = "full" ]]
+    then
+        sgdisk -Z /dev/nvme0n1
+        sgdisk -n 0:0:+512M -t 0:ef00 -c 0:"boot" /dev/nvme0n1
+        sgdisk -n 0:0:0 -t 0:8300 -c 0:"root" /dev/nvme0n1
+    fi
+    # add hdd format and mount (/disk0)
+    mkfs.fat -F32 /dev/nvme0n1p1
+    mkfs.ext4 /dev/nvme0n1p2
+
+    mount /dev/nvme0n1p2 /mnt
+    mkdir -p /mnt/boot/efi
+    mount /dev/nvme0n1p1 /mnt/boot/efi
+}
+
 function xnote {
     echo "xnote" $1
     if [[ $1 = "full" ]]
@@ -117,6 +134,9 @@ function setup_base {
     case $BOARD_NAME in
     'MS-7978')
         FUNC="archhost"
+        ;;
+    'MS-7C90')
+        FUNC="master"
         ;;
     'TM1613')
         FUNC="xnote"

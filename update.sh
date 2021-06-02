@@ -7,10 +7,11 @@ MENU_ID=$(whiptail --clear --title 'Get info about host' \
 --menu "Enter your choice:" 15 60 6 \
 	"1" "local" \
 	"2" "archhost" \
-	"3" "xnote" \
-	"4" "archsrv" \
-	"5" "worknote" \
-	"6" "Quit" \
+	"3" "master" \
+	"4" "xnote" \
+	"5" "archsrv" \
+	"6" "worknote" \
+	"7" "Quit" \
 	3>&1 1>&2 2>&3)
 
 if [ $? != 0 ]; then
@@ -26,15 +27,18 @@ case $MENU_ID in
 	HOST_NAME="archhost"
 	;;
   "3")
-	HOST_NAME="xnote"
+	HOST_NAME="master"
 	;;
   "4")
-	HOST_NAME="archsrv"
+	HOST_NAME="xnote"
 	;;
   "5")
-	HOST_NAME="worknote"
+	HOST_NAME="archsrv"
 	;;
   "6")
+	HOST_NAME="worknote"
+	;;
+  "7")
 	exit 1
 	;;
 esac

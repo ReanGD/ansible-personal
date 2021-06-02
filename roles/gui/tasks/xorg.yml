@@ -32,4 +32,4 @@
     group: root
     owner: root
   become: yes
-  when: hostname_id == "archhost"
+  when: hostname_id == "archhost" or hostname_id == "master"

@@ -31,6 +31,7 @@
     - { key: "{{ hass_private_key }}", name: "hass" }
     - { key: "{{ respeaker_private_key }}", name: "respeaker" }
     - { key: "{{ archhost_private_key }}", name: "archhost" }
+    - { key: "{{ master_private_key }}", name: "master" }
     - { key: "{{ xnote_private_key }}", name: "xnote" }
     - { key: "{{ worknote_private_key }}", name: "worknote" }
     - { key: "{{ archsrv_private_key }}", name: "archsrv" }
