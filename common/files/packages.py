@@ -72,6 +72,8 @@ def system():
     system_pkgs += ["urxvt-perls",
                     "fd",  # fast find alternative
                     "exa",  # ls alternative
+                    "ncdu",  # disk usage analyzer
+                    "bitwarden-cli-bin",
                     "zsh",
                     "fzf"]
 
@@ -93,6 +95,8 @@ def driver():
         driver_pkgs = ["mesa"]
 
     if get_hostname_id() == "archhost":
+        driver_pkgs += ["xf86-video-intel"]
+    elif get_hostname_id() == "master":
         driver_pkgs += ["nvidia"]
     elif get_hostname_id() == "xnote":
         driver_pkgs += ["bbswitch",
@@ -162,6 +166,7 @@ def desktop_env():
                 "libnotify",  # create notifications message
                 "wmctrl",  # windows manipulation
                 "xclip",  # save data to clipboard
+                "gsmartcontrol",  # UI for smartctl
                 "xrectsel"]  # get select region
 
     # rofi
@@ -323,7 +328,7 @@ def game():
 
     game_pkgs += ["playonlinux",
                   "lib32-libldap",  # for WOT ?
-                  "minecraft"]
+                  "minecraft-launcher"]
 
     return game_pkgs
 
@@ -342,7 +347,7 @@ def audio():
     audio_pkgs = ["pulseaudio"]
 
     if not is_gui("none"):
-        audio_pkgs += ["pavucontrol", "volumeicon", "pasystray"]
+        audio_pkgs += ["pavucontrol", "volumeicon", "pasystray", "spotify"]
 
     return audio_pkgs
 
@@ -403,7 +408,7 @@ def spell_checkers():
     if not is_role("spell_checkers"):
         return []
 
-    return ["enchant", "hunspell-en_US", "hunspell-ru-aot", "languagetool"]
+    return ["enchant", "hunspell-en_us", "hunspell-ru-aot", "languagetool"]
 
 
 def plex():
