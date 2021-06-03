@@ -61,7 +61,7 @@ class Pacman:
 class Aur:
     def open_url(self, url):
         try:
-            return open_url(url)
+            return open_url(url, validate_certs=False)
         except HTTPError as e:
             e.msg = "{} (url = {})".format(e.msg, url)
             raise e
