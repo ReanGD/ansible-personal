@@ -63,7 +63,7 @@
 - name: Set master facts
   set_fact:
     hostname_id: "master"
-    boot: "nvram_write_enble"
+    boot: "nvram_write_disable"
     add_dop_user: False
     network_type: "wired,wireless"
     set_ssh_access_keys: True
