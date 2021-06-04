@@ -56,6 +56,25 @@
   when: gui!="none"
   loop: "{{ others_path_map }}"
 
+# ansible-vault decrypt secrets.yml
+# ansible-vault encrypt secrets.yml
+- name: Include vars git user configs
+  include_vars:
+    file: secrets.yml
+
+- name: Create git user configs
+  copy:
+    content: "{{item.key}}"
+    dest: "/home/{{main_user}}/.config/git/{{item.name}}"
+    mode: 0644
+    group: users
+    owner: "{{main_user}}"
+  loop:
+    - { key: "{{ git_user_home }}", name: "user.home" }
+    - { key: "{{ git_user_work }}", name: "user.work" }
+  loop_control:
+    label: "{{ item.name }}"
+
 - include: cloud.yml
   when: gui!="none"
 

@@ -3,7 +3,7 @@
 ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 cd $ROOT_DIR
-MENU_ID=$(whiptail --clear --title 'Get info about host' \
+MENU_ID=$(whiptail --clear --title 'Update host' \
 --menu "Enter your choice:" 15 60 6 \
 	"1" "local" \
 	"2" "archhost" \
