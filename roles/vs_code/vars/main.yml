@@ -5,10 +5,11 @@ vs_code_extensions:
   - "DavidAnson.vscode-markdownlint"
   - "yzhang.markdown-all-in-one"
   # ansible
-  - "vscoss.vscode-ansible"
+  - "zbr.vscode-ansible"
   # python
   - "ms-python.python"
   - "ms-toolsai.jupyter"
+  - "ms-python.vscode-pylance"
   # go
   - "golang.go"
   # lua
@@ -19,6 +20,7 @@ vs_code_extensions:
   - "matepek.vscode-catch2-test-adapter"
   - "hbenl.vscode-test-explorer"
   - "ajshort.include-autocomplete"
+  - "ms-vscode.test-adapter-converter"
   # dart/flutter
   - "Dart-Code.dart-code"
   - "Dart-Code.flutter"

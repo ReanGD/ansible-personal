@@ -41,7 +41,7 @@ def get_virtualization() -> bool:
 def system():
     system_pkgs = []
     if is_manjaro():
-        system_pkgs += ["linux-lts"]
+        system_pkgs += ["linux512"]
     else:
         system_pkgs += ["linux"]
 

@@ -1,4 +1,11 @@
 ---
+
+- name: Install packages for parse doublecmd configs
+  pkg_manager:
+    name: python-lxml
+  become: yes
+  become_user: "{{install_user}}"
+
 - name: Check that the doublecmd config exists
   stat:
     path: "/home/{{main_user}}/.config/doublecmd/doublecmd.xml"
