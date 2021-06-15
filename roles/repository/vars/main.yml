@@ -23,6 +23,7 @@ reangd_repositories_map:
   - { repo: "LearningEnglish.git",            dest: "LearningEnglish" }
   - { repo: "machine-learning",               dest: "machine-learning" }
   - { repo: "neural-network.git",             dest: "neural-network" }
+  - { repo: "plasma-tile.git",                dest: "plasma-tile" }
   - { repo: "py-calendar.git",                dest: "py-calendar" }
   - { repo: "py-invest.git",                  dest: "py-invest" }
   - { repo: "reangd.github.io.git",           dest: "reangd.github.io" }
