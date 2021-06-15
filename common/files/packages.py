@@ -97,7 +97,7 @@ def driver():
     if get_hostname_id() == "archhost":
         driver_pkgs += ["xf86-video-intel"]
     elif get_hostname_id() == "master":
-        driver_pkgs += ["nvidia"]
+        driver_pkgs += ["linux512-nvidia"]
     elif get_hostname_id() == "xnote":
         driver_pkgs += ["bbswitch",
                         # "bumblebee",
@@ -157,8 +157,7 @@ def desktop_env():
                 "xorg-xev",  # keypress info
                 "xorg-xwininfo",  # select window
                 "arandr",  # screen position
-                "ddcutil",  # brightness\monitor control
-                "redshift",  # brightness control
+                "ddcutil",  # brightness\monitor control                
                 "xcursor-ize-vision",  # a couple of X cursor that similar to Windows 7 cursor
                 "perwindowlayoutd",  # daemon to make per window layout (also exists "kbdd-git")
                 "scrot",  # for screenshots
@@ -177,11 +176,17 @@ def desktop_env():
 
     if is_gui("awesome"):
         gui_pkgs += ["awesome",
+                     "redshift",  # brightness control
                      "mate-icon-theme",
                      "inter-font"]
 
     if is_gui("kde"):
-        gui_pkgs += ["plasma-desktop", "kdeconnect", "dolphin-plugins", "print-manager"]
+        gui_pkgs += ["plasma-desktop",  # minimal install
+                     "kdeconnect",  # connect to phone
+                     "plasma-pa",  # pulse audio plugins
+                     "plasma5-applets-virtual-desktop-bar-git",  # tilling bar
+                     "dolphin-plugins",
+                     "print-manager"]
         if is_manjaro():
             gui_pkgs += ["manjaro-kde-settings",
                          "manjaro-settings-manager-knotifier",
