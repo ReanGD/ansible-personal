@@ -157,7 +157,7 @@ def desktop_env():
                 "xorg-xev",  # keypress info
                 "xorg-xwininfo",  # select window
                 "arandr",  # screen position
-                "ddcutil",  # brightness\monitor control                
+                "ddcutil",  # brightness\monitor control
                 "xcursor-ize-vision",  # a couple of X cursor that similar to Windows 7 cursor
                 "perwindowlayoutd",  # daemon to make per window layout (also exists "kbdd-git")
                 "scrot",  # for screenshots
@@ -184,6 +184,10 @@ def desktop_env():
         gui_pkgs += ["plasma-desktop",  # minimal install
                      "kdeconnect",  # connect to phone
                      "plasma-pa",  # pulse audio plugins
+                     "kscreen",  # settings for screen configuration
+                     "kinfocenter",  # show information about computer
+                     "plasma-disks"  # monitoring disks (part of kinfocenter)
+                     "plasma-systemmonitor",  # system monitor
                      "plasma5-applets-virtual-desktop-bar-git",  # tilling bar
                      "dolphin-plugins",
                      "print-manager"]
