@@ -96,8 +96,8 @@ def driver():
 
     if get_hostname_id() == "archhost":
         driver_pkgs += ["xf86-video-intel"]
-    elif get_hostname_id() == "master":
-        driver_pkgs += ["linux512-nvidia"]
+    # elif get_hostname_id() == "master":
+    #    driver_pkgs += ["linux512-nvidia"]
     elif get_hostname_id() == "xnote":
         driver_pkgs += ["bbswitch",
                         # "bumblebee",
