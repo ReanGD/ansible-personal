@@ -25,7 +25,7 @@ dotfiles_path_map:
   - {src: ".config/yandex-disk",   dst: ".config/yandex-disk" }
   - {src: ".config/yay",           dst: ".config/yay" }
   - {src: ".config/zsh",           dst: ".config/zsh" }
-  # - {src: ".config/kwinrc",        dst: ".config/kwinrc" }
+  - {src: ".config/kwinrc",        dst: ".config/kwinrc" }
   - {src: ".config/kxkbrc",        dst: ".config/kxkbrc" }
   - {src: ".config/pulse/default.pa",           dst: ".config/pulse/default.pa" }
   - {src: ".config/Code/User/settings.json",    dst: ".config/Code/User/settings.json" }

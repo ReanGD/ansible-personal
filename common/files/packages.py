@@ -186,7 +186,7 @@ def desktop_env():
                      "plasma-pa",  # pulse audio plugins
                      "kscreen",  # settings for screen configuration
                      "kinfocenter",  # show information about computer
-                     "plasma-disks"  # monitoring disks (part of kinfocenter)
+                     "plasma-disks",  # monitoring disks (part of kinfocenter)
                      "plasma-systemmonitor",  # system monitor
                      "plasma5-applets-virtual-desktop-bar-git",  # tilling bar
                      "dolphin-plugins",
