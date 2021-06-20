@@ -195,6 +195,7 @@ def desktop_env():
             gui_pkgs += ["manjaro-kde-settings",
                          "manjaro-settings-manager-knotifier",
                          "manjaro-settings-manager-kcm",
+                         "mhwd",  # hardware detection library
                          "pamac-gtk"]
 
     return gui_pkgs
