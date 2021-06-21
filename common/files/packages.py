@@ -97,7 +97,7 @@ def driver():
     if get_hostname_id() == "archhost":
         driver_pkgs += ["xf86-video-intel"]
     elif get_hostname_id() == "master":
-        driver_pkgs += ["nvidia"]
+        driver_pkgs += ["nvidia-390xx"]
     elif get_hostname_id() == "xnote":
         driver_pkgs += ["bbswitch",
                         # "bumblebee",
@@ -224,10 +224,10 @@ def development():
                          "conan",
                          "protobuf",
                          "cpupower",  # for disable CPU powersafe mode in tests
-                         "cpp-dependencies",
-                         "vulkan-mesa-layers",  # show vulkan draw statistics
-                         "python-dateutil",  # for include-what-you-use
-                         "include-what-you-use"]
+                         # "python-dateutil",  # for include-what-you-use
+                         # "include-what-you-use",
+                         # "vulkan-mesa-layers",  # show vulkan draw statistics
+                         "cpp-dependencies"]
 
     if is_develop("python"):
         develop_pkgs += ["python-pip",
