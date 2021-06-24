@@ -97,7 +97,7 @@ def driver():
     if get_hostname_id() == "archhost":
         driver_pkgs += ["xf86-video-intel"]
     elif get_hostname_id() == "master":
-        driver_pkgs += ["nvidia-390xx"]
+        driver_pkgs += ["nvidia-390xx-dkms", "nvidia-390xx-utils", "nvidia-390xx-settings"]
     elif get_hostname_id() == "xnote":
         driver_pkgs += ["bbswitch",
                         # "bumblebee",
@@ -336,9 +336,7 @@ def game():
     else:
         game_pkgs += ["steam"]
 
-    game_pkgs += ["playonlinux",
-                  "lib32-libldap",  # for WOT ?
-                  "minecraft-launcher"]
+    game_pkgs += ["minecraft-launcher"]
 
     return game_pkgs
 

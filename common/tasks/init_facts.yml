@@ -71,7 +71,7 @@
     gui: "lightdm,awesome,kde"
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,hddtemp"
-    roles: "font,docker,automount,web,game,messengers,audio,media,pdf,office,file_managers,torrent,spell_checkers,work,repository"
+    roles: "font,docker,automount,web,messengers,audio,media,pdf,office,file_managers,torrent,spell_checkers,work,repository"
     swap_size: 20
     swappiness: 10
     packages_file: "{{packages_dir}}/packages.py"
