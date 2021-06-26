@@ -20,3 +20,11 @@
     use: systemd
   become: yes
   when: is_chroot == False
+
+- name: Enable fstrim timer
+  service:
+    name: fstrim.timer
+    enabled: yes
+    state: started
+  become: yes
+  when: is_chroot == False

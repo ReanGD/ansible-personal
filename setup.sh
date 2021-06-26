@@ -161,6 +161,7 @@ function setup_base {
     'arch')
         echo 'distro = arch'
         echo 'Server = http://mirror.yandex.ru/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
+        pacman -Sy dialog --noconfirm
         ;;
     'archarm')
         echo 'distro = archarm'
