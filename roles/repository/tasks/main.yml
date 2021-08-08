@@ -10,3 +10,9 @@
     repo: git@github.com:TerraGraphics/{{item.repo}}
     dest: /home/{{main_user}}/projects/terra/{{item.dest}}
   loop: "{{ terra_repositories_map }}"
+
+- name: Clone or update LovelyHelper repositories
+  update_git:
+    repo: git@github.com:LovelyHelper/{{item.repo}}
+    dest: /home/{{main_user}}/projects/lovely_helper/{{item.dest}}
+  loop: "{{ lovely_helper_repositories_map }}"

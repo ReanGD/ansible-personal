@@ -38,3 +38,6 @@ reangd_repositories_map:
 
 terra_repositories_map:
   - { repo: "TerraEngine.git", dest: "TerraEngine" }
+
+lovely_helper_repositories_map:
+  - { repo: "android_frontend.git", dest: "android_frontend" }
