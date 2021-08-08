@@ -53,6 +53,7 @@ def system():
                     "wget",
                     "curl",
                     "git",
+                    "jq",
                     "rsync",
                     "logrotate",
                     "nano",
@@ -97,7 +98,7 @@ def driver():
     if get_hostname_id() == "archhost":
         driver_pkgs += ["xf86-video-intel"]
     elif get_hostname_id() == "master":
-        driver_pkgs += ["nvidia-390xx"]
+        driver_pkgs += ["nvidia"]
     elif get_hostname_id() == "xnote":
         driver_pkgs += ["bbswitch",
                         # "bumblebee",
@@ -258,8 +259,8 @@ def development():
     if is_develop("android"):
         develop_pkgs += ["jdk8-openjdk",  # for flutter
                          "android-sdk",  # for flutter
-                         "flutter",
-                         "adb"]
+                         "android-tools",  # for adb
+                         "flutter"]
 
     return develop_pkgs
 
@@ -339,7 +340,7 @@ def game():
     else:
         game_pkgs += ["steam"]
 
-    game_pkgs += ["minecraft-launcher"]
+    # game_pkgs += ["minecraft-launcher"]
 
     return game_pkgs
 

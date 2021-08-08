@@ -69,7 +69,7 @@
     set_ssh_access_keys: True
     virtualization: "none"
     gui: "lightdm,awesome,kde"
-    develop: "std,cpp,python,go,protobuf"
+    develop: "std,cpp,python,go,android,protobuf"
     monitoring: "std,hddtemp"
     roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,torrent,bluetooth,work,repository"
     swap_size: 20
