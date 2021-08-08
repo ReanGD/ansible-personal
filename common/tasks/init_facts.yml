@@ -41,7 +41,7 @@
 # gui: "none" or ["lightdm", "awesome", "kde"]
 # develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "protobuf", "sqlite", "android"]
 # monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
-# roles: "none" or ["font", "docker", "automount", "web", "game", "messengers", "audio", "media", "pdf", "office", "file_managers", "torrent", "spell_checkers", "plex", "work", "repository"]
+# roles: "none" or ["font", "docker", "automount", "web", "game", "messengers", "audio", "media", "office", "file_managers", "torrent", "bluetooth", "plex", "work", "repository"]
 
 - name: Set archhost facts
   set_fact:
@@ -54,7 +54,7 @@
     gui: "lightdm,awesome"
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,hddtemp"
-    roles: "font,docker,automount,web,game,messengers,audio,media,pdf,office,file_managers,torrent,spell_checkers,work,repository"
+    roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,torrent,work,repository"
     swap_size: 35
     swappiness: 10
     packages_file: "{{packages_dir}}/packages.py"
@@ -71,7 +71,7 @@
     gui: "lightdm,awesome,kde"
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,hddtemp"
-    roles: "font,docker,automount,web,messengers,audio,media,pdf,office,file_managers,torrent,spell_checkers,work,repository"
+    roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,torrent,bluetooth,work,repository"
     swap_size: 20
     swappiness: 10
     packages_file: "{{packages_dir}}/packages.py"
@@ -88,7 +88,7 @@
     gui: "lightdm,awesome,kde"
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,notebook,hddtemp"
-    roles: "font,docker,automount,web,game,messengers,audio,media,pdf,office,file_managers,spell_checkers,work,repository"
+    roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,bluetooth,work,repository"
     swap_size: 8
     swappiness: 20
     packages_file: "{{packages_dir}}/packages.py"
@@ -105,7 +105,7 @@
     gui: "lightdm,awesome,kde"
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,notebook,hddtemp"
-    roles: "font,docker,web,messengers,audio,media,pdf,office,file_managers,spell_checkers,work,repository"
+    roles: "font,docker,web,messengers,audio,media,office,file_managers,bluetooth,work,repository"
     swap_size: 35
     swappiness: 10
     packages_file: "{{packages_dir}}/packages.py"
@@ -156,7 +156,7 @@
     gui: "lightdm,awesome,kde"
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,hddtemp"
-    roles: "font,docker,web,messengers,audio,media,pdf,office,file_managers,spell_checkers,repository"
+    roles: "font,docker,web,messengers,audio,media,office,file_managers,repository"
     swap_size: 4
     swappiness: 1
     packages_file: "{{packages_dir}}/packages.py"

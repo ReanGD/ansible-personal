@@ -376,18 +376,14 @@ def media():
             "deadbeef"]
 
 
-def pdf():
-    if not is_role("pdf"):
-        return []
-
-    return ["mupdf"]  # pdf viewer (analog: llpp-git)
-
-
 def office():
     if not is_role("office"):
         return []
 
-    return ["libreoffice-fresh-ru"]
+    return ["libreoffice-fresh-ru",
+            "mupdf", # pdf viewer (analog: llpp-git)
+            "enchant", "hunspell-en_us", "hunspell-ru-aot", "languagetool",  # spell checkers
+            ]
 
 
 def file_managers():
@@ -415,11 +411,14 @@ def torrent():
     return ["transmission-remote-gui"]  # transmission-remote-gui-bin - not work now
 
 
-def spell_checkers():
-    if not is_role("spell_checkers"):
+def bluetooth():
+    if not is_role("bluetooth"):
         return []
 
-    return ["enchant", "hunspell-en_us", "hunspell-ru-aot", "languagetool"]
+    if is_gui("kde"):
+        return ["bluedevil"]
+    else:
+        return ["bluez-qt"]
 
 
 def plex():
@@ -454,11 +453,10 @@ packages += game()
 packages += messengers()
 packages += audio()
 packages += media()
-packages += pdf()
 packages += office()
-packages += spell_checkers()
 packages += file_managers()
 packages += torrent()
+packages += bluetooth()
 packages += plex()
 packages += work()
 
