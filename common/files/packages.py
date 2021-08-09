@@ -257,9 +257,11 @@ def development():
         develop_pkgs += ["sqlite-analyzer"]
 
     if is_develop("android"):
-        develop_pkgs += ["jdk8-openjdk",  # for flutter
+        develop_pkgs += ["android-tools",  # for adb
+                         "jdk8-openjdk",  # for flutter
                          "android-sdk",  # for flutter
-                         "android-tools",  # for adb
+                         "android-sdk-platform-tools",  # for flutter
+                         "android-sdk-build-tools",  # for flutter
                          "flutter"]
 
     return develop_pkgs
