@@ -10,6 +10,7 @@ vs_code_extensions:
   - "ms-python.python"
   - "ms-toolsai.jupyter"
   - "ms-python.vscode-pylance"
+  - "frhtylcn.pythonsnippets"
   # go
   - "golang.go"
   # lua
