@@ -40,4 +40,5 @@ terra_repositories_map:
   - { repo: "TerraEngine.git", dest: "TerraEngine" }
 
 lovely_helper_repositories_map:
+  - { repo: "backend.git",          dest: "backend" }
   - { repo: "android_frontend.git", dest: "android_frontend" }
