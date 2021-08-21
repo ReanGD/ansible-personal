@@ -234,6 +234,8 @@ def development():
         develop_pkgs += ["python-pip",
                          "python-nose",
                          "python-jedi",  # for vs-code ?
+                         "pyenv",  # install others versions of python
+                         "python-poetry",  # project deps manager
                          "pylama",  # linter
                          "mypy",  # linter
                          "python-pylint",  # linter
