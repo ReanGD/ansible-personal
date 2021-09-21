@@ -7,6 +7,9 @@ After=network.target mosquitto.service
 Type=simple
 User=rean
 ExecStart=/hass/venv/bin/hass --config "/hass/dotfiles-hass" --log-rotate-days 1
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
 
 [Install]
 WantedBy=multi-user.target

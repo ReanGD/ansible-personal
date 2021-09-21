@@ -13,7 +13,8 @@
     - swap
     - systemd_configure
     - time
-    - hddtemp
+    - role: monitoring
+      when: monitoring!="none"
     - rsync_server
     - mosquitto
     - packages
