@@ -127,6 +127,9 @@ def network():
     if is_network_type("wireless"):
         network_pkgs += ["iwd"]
 
+    if is_network_type("networkmanager"):
+        network_pkgs += ["networkmanager"]
+
     return network_pkgs
 
 

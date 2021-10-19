@@ -1,3 +1,6 @@
 ---
-- include: config_network.yml
 - include: systemd_network.yml
+  when: "'systemd' in gui.split(',')"
+
+- include: networkmanager.yml
+  when: "'networkmanager' in gui.split(',')"
