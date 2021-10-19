@@ -35,7 +35,8 @@ vs_code_extensions:
   - "wholroyd.HCL"
   # proto
   - "zxh404.vscode-proto3"
-  # json
+  # yaml\json
+  - "redhat.vscode-yaml"
   - "mohsen1.prettify-json"
   # log
   - "emilast.LogFileHighlighter"
