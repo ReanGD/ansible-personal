@@ -1,6 +1,6 @@
 ---
 - include: systemd_network.yml
-  when: "'systemd' in gui.split(',')"
+  when: "'systemd' in network_type.split(',')"
 
 - include: networkmanager.yml
-  when: "'networkmanager' in gui.split(',')"
+  when: "'networkmanager' in network_type.split(',')"
