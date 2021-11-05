@@ -4,14 +4,13 @@ ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 cd $ROOT_DIR
 MENU_ID=$(whiptail --clear --title 'Update host' \
---menu "Enter your choice:" 15 60 6 \
+--menu "Enter your choice:" 15 60 5 \
 	"1" "local" \
-	"2" "archhost" \
-	"3" "master" \
+	"2" "master" \
+	"3" "server" \
 	"4" "xnote" \
-	"5" "archsrv" \
-	"6" "worknote" \
-	"7" "Quit" \
+	"5" "worknote" \
+	"6" "Quit" \
 	3>&1 1>&2 2>&3)
 
 if [ $? != 0 ]; then
@@ -24,21 +23,18 @@ case $MENU_ID in
 	HOST_NAME="local"
 	;;
   "2")
-	HOST_NAME="archhost"
+	HOST_NAME="master"
 	;;
   "3")
-	HOST_NAME="master"
+	HOST_NAME="server"
 	;;
   "4")
 	HOST_NAME="xnote"
 	;;
   "5")
-	HOST_NAME="archsrv"
-	;;
-  "6")
 	HOST_NAME="worknote"
 	;;
-  "7")
+  "6")
 	exit 1
 	;;
 esac

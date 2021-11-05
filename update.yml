@@ -30,8 +30,6 @@
       when: '"automount" in roles.split(",")'
     - role: monitoring
       when: monitoring!="none"
-    - role: plex
-      when: '"plex" in roles.split(",")'
     - role: repository
       when: '"repository" in roles.split(",")'
     - dotfiles

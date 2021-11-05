@@ -1,12 +1,21 @@
 ---
-- name: Add public key for archhost
+- name: Add public key for hass
   copy:
-    content: "{{archhost_public_key}}"
+    content: "{{hass_public_key}}"
     dest: "/home/{{main_user}}/.ssh/authorized_keys"
     mode: 0400
     group: users
     owner: "{{main_user}}"
-  when: hostname_id == "archhost"
+  when: hostname_id == "hass"
+
+- name: Add public key for server
+  copy:
+    content: "{{server_public_key}}"
+    dest: "/home/{{main_user}}/.ssh/authorized_keys"
+    mode: 0400
+    group: users
+    owner: "{{main_user}}"
+  when: hostname_id == "server"
 
 - name: Add public key for master
   copy:
@@ -34,24 +43,6 @@
     group: users
     owner: "{{main_user}}"
   when: hostname_id == "worknote"
-
-- name: Add public key for archsrv
-  copy:
-    content: "{{archsrv_public_key}}"
-    dest: "/home/{{main_user}}/.ssh/authorized_keys"
-    mode: 0400
-    group: users
-    owner: "{{main_user}}"
-  when: hostname_id == "archsrv"
-
-- name: Add public key for hass
-  copy:
-    content: "{{hass_public_key}}"
-    dest: "/home/{{main_user}}/.ssh/authorized_keys"
-    mode: 0400
-    group: users
-    owner: "{{main_user}}"
-  when: hostname_id == "hass"
 
 - name: Install package for ssh server
   pkg_manager:

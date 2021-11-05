@@ -29,11 +29,10 @@
     - { key: "{{ work_public_key }}", name: "id_rsa.pub" }
     - { key: "{{ vscale_private_key }}", name: "vscale" }
     - { key: "{{ hass_private_key }}", name: "hass" }
-    - { key: "{{ respeaker_private_key }}", name: "respeaker" }
-    - { key: "{{ archhost_private_key }}", name: "archhost" }
+    - { key: "{{ server_private_key }}", name: "server" }
     - { key: "{{ master_private_key }}", name: "master" }
     - { key: "{{ xnote_private_key }}", name: "xnote" }
     - { key: "{{ worknote_private_key }}", name: "worknote" }
-    - { key: "{{ archsrv_private_key }}", name: "archsrv" }
+    - { key: "{{ respeaker_private_key }}", name: "respeaker" }
   loop_control:
     label: "{{ item.name }}"

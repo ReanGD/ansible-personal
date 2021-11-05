@@ -95,9 +95,10 @@ def driver():
     if not is_gui("none"):
         driver_pkgs = ["mesa"]
 
-    if get_hostname_id() == "archhost":
-        driver_pkgs += ["xf86-video-intel"]
-    elif get_hostname_id() == "master":
+    # if get_hostname_id() == "server":
+    #     driver_pkgs += ["xf86-video-intel"]
+
+    if get_hostname_id() == "master":
         driver_pkgs += ["nvidia"]
     elif get_hostname_id() == "xnote":
         driver_pkgs += ["bbswitch",
@@ -323,6 +324,13 @@ def docker():
     return ["docker", "docker-compose"]
 
 
+def k8s():
+    if not is_role("k8s"):
+        return []
+
+    return ["minikube"]
+
+
 def automount():
     if not is_role("automount"):
         return []
@@ -389,7 +397,7 @@ def office():
         return []
 
     return ["libreoffice-fresh-ru",
-            "mupdf", # pdf viewer (analog: llpp-git)
+            "mupdf",  # pdf viewer (analog: llpp-git)
             "enchant", "hunspell-en_us", "hunspell-ru-aot", "languagetool",  # spell checkers
             ]
 
@@ -429,13 +437,6 @@ def bluetooth():
         return ["bluez-qt"]
 
 
-def plex():
-    if not is_role("plex"):
-        return []
-
-    return ["plex-media-server"]
-
-
 def work():
     if not is_role("work"):
         return []
@@ -455,6 +456,7 @@ packages += development()
 packages += monitoring_utils()
 packages += font()
 packages += docker()
+packages += k8s()
 packages += automount()
 packages += web()
 packages += game()
@@ -465,7 +467,6 @@ packages += office()
 packages += file_managers()
 packages += torrent()
 packages += bluetooth()
-packages += plex()
 packages += work()
 
 keys = []

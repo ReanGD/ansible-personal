@@ -41,20 +41,37 @@
 # gui: "none" or ["lightdm", "awesome", "kde"]
 # develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "protobuf", "sqlite", "android"]
 # monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
-# roles: "none" or ["font", "docker", "automount", "web", "game", "messengers", "audio", "media", "office", "file_managers", "torrent", "bluetooth", "plex", "work", "repository"]
+# roles: "none" or ["font", "docker", "k8s", "automount", "web", "game", "messengers", "audio", "media", "office", "file_managers", "torrent", "bluetooth", "work", "repository"]
 
-- name: Set archhost facts
+- name: Set hass facts
   set_fact:
-    hostname_id: "archhost"
+    hostname_id: "hass"
+    boot: "nvram_write_enble"
+    add_dop_user: False
+    network_type: "wired_old,systemd"
+    set_ssh_access_keys: False
+    virtualization: "none"
+    gui: "none"
+    develop: "none"
+    monitoring: "std,hddtemp"
+    roles: "none"
+    swap_size: 1
+    swappiness: 1
+    packages_file: "{{packages_dir}}/packages_hass.py"
+  when: arm and reg_product_name_armv7l.stdout == '00000000bed57e85'
+
+- name: Set server facts
+  set_fact:
+    hostname_id: "server"
     boot: "nvram_write_disable"
     add_dop_user: False
     network_type: "wired,systemd"
-    set_ssh_access_keys: True
-    virtualization: "kvm_qemu"
-    gui: "lightdm,awesome"
-    develop: "std,cpp,python,go,protobuf"
+    set_ssh_access_keys: False
+    virtualization: "none"
+    gui: "none"
+    develop: "none"
     monitoring: "std,hddtemp"
-    roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,torrent,work,repository"
+    roles: "k8s,automount"
     swap_size: 35
     swappiness: 10
     packages_file: "{{packages_dir}}/packages.py"
@@ -110,40 +127,6 @@
     swappiness: 10
     packages_file: "{{packages_dir}}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'Latitude 5480'
-
-- name: Set archsrv facts
-  set_fact:
-    hostname_id: "archsrv"
-    boot: "nvram_write_enble"
-    add_dop_user: False
-    network_type: "wired,systemd"
-    set_ssh_access_keys: False
-    virtualization: "none"
-    gui: "none"
-    develop: "none"
-    monitoring: "std,hddtemp"
-    roles: "docker,automount,plex"
-    swap_size: 35
-    swappiness: 10
-    packages_file: "{{packages_dir}}/packages.py"
-  when: x86_64 and reg_product_name_x86_64.stdout == 'System Product Name'
-
-- name: Set hass facts
-  set_fact:
-    hostname_id: "hass"
-    boot: "nvram_write_enble"
-    add_dop_user: False
-    network_type: "wired_old,systemd"
-    set_ssh_access_keys: False
-    virtualization: "none"
-    gui: "none"
-    develop: "none"
-    monitoring: "std,hddtemp"
-    roles: "none"
-    swap_size: 1
-    swappiness: 1
-    packages_file: "{{packages_dir}}/packages_hass.py"
-  when: arm and reg_product_name_armv7l.stdout == '00000000bed57e85'
 
 - name: Set KVM test facts
   set_fact:

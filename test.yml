@@ -1,6 +1,6 @@
 ---
 - name: Test playbook
-  # hosts: archsrv
+  # hosts: server
   hosts: local
   gather_facts: false
   environment:

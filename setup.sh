@@ -10,21 +10,34 @@ run_with_sudo(){
 	fi
 }
 
-function archhost {
-    echo "archhost" $1
+function server {
+    echo "server" $1
     if [[ $1 = "full" ]]
     then
-        sgdisk -Z /dev/sda
-        sgdisk -n 0:0:+512M -t 0:ef00 -c 0:"boot" /dev/sda
-        sgdisk -n 0:0:0 -t 0:8300 -c 0:"root" /dev/sda
+        sgdisk --zap-all /dev/sda
+        sgdisk --new=1:0:+512M --typecode=1:ef00 --change-name=1:"boot" /dev/sda
+        sgdisk --largest-new=2 --typecode=2:8300 --change-name=2:"root" /dev/sda
+        sgdisk --zap-all /dev/sdb
+        sgdisk --largest-new=1 --typecode=1:8300 --change-name=1:"data" /dev/sdb
+        sgdisk --zap-all /dev/sdc
+        sgdisk --largest-new=1 --typecode=1:8300 --change-name=1:"backup" /dev/sdc
     fi
-    # add hdd format and mount (/disk0)
+
     mkfs.fat -F32 /dev/sda1
-    mkfs.ext4 /dev/sda2
+    mkfs.ext4 -L "root" /dev/sda2
+    mkfs.btrfs -L "data" /dev/sdb1
+    mkfs.ext4 -L "backup" /dev/sdc1
 
     mount /dev/sda2 /mnt
+
     mkdir -p /mnt/boot/efi
     mount /dev/sda1 /mnt/boot/efi
+
+    mkdir -p /mnt/data/main
+    mount /dev/sdb1 /mnt/data/main
+
+    mkdir -p /mnt/backup/local
+    mount /dev/sdc1 /mnt/backup/local
 }
 
 function master {
@@ -59,23 +72,6 @@ function xnote {
     mount /dev/nvme0n1p2 /mnt
     mkdir -p /mnt/boot/efi
     mount /dev/nvme0n1p1 /mnt/boot/efi
-}
-
-function archsrv {
-    echo "archsrv" $1
-    if [[ $1 = "full" ]]
-    then
-        sgdisk -Z /dev/sda
-        sgdisk -n 0:0:+512M -t 0:ef00 -c 0:"boot" /dev/sda
-        sgdisk -n 0:0:0 -t 0:8300 -c 0:"root" /dev/sda
-    fi
-
-    mkfs.fat -F32 /dev/sda1
-    mkfs.ext4 /dev/sda2
-
-    mount /dev/sda2 /mnt
-    mkdir -p /mnt/boot/efi
-    mount /dev/sda1 /mnt/boot/efi
 }
 
 function worknote {
@@ -133,16 +129,13 @@ function setup_base {
     BOARD_NAME=$(cat /sys/class/dmi/id/product_name)
     case $BOARD_NAME in
     'MS-7978')
-        FUNC="archhost"
+        FUNC="server"
         ;;
     'MS-7C90')
         FUNC="master"
         ;;
     'TM1613')
         FUNC="xnote"
-        ;;
-    'System Product Name')
-        FUNC="archsrv"
         ;;
     'Latitude 5480')
         FUNC="worknote"
@@ -165,11 +158,6 @@ function setup_base {
         ;;
     'archarm')
         echo 'distro = archarm'
-        ;;
-    'manjaro')
-        echo 'distro = manjaro'
-        echo 'Server = http://mirror.truenetwork.ru/manjaro/stable/$repo/$arch' > /etc/pacman.d/mirrorlist
-        pacman -Sy gptfdisk dialog --noconfirm
         ;;
     *)
         echo 'Unknown distro name'
@@ -207,12 +195,6 @@ function setup_base {
         genfstab -U -p /mnt >> /mnt/etc/fstab
         arch-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /etc/ansible-personal
         arch-chroot /mnt /etc/ansible-personal/setup.sh ansible
-        ;;
-    'manjaro')
-        basestrap /mnt base base-devel linux512 linux-firmware nano git ansible
-        fstabgen -U -p /mnt >> /mnt/etc/fstab
-        manjaro-chroot /mnt git clone git://github.com/ReanGD/ansible-personal.git /etc/ansible-personal
-        manjaro-chroot /mnt /etc/ansible-personal/setup.sh ansible
         ;;
     esac
 
