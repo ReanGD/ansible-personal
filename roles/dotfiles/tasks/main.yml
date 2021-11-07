@@ -10,11 +10,11 @@
 
 - name: Create cfg dirs
   file:
-    path: "/home/{{main_user}}/{{item}}"
+    path: "/home/{{ main_user }}/{{ item }}"
     state: directory
     mode: 0755
     group: users
-    owner: "{{main_user}}"
+    owner: "{{ main_user }}"
   loop:
     - .local/share
     - .local/share/zsh
@@ -39,20 +39,27 @@
 
 - name: Clone or update dotfile repositories
   update_git:
-    repo: git@github.com:ReanGD/{{item.repo}}
-    dest: /home/{{main_user}}/projects/home/{{item.dest}}
+    repo: git@github.com:ReanGD/{{ item.repo }}
+    dest: /home/{{ main_user }}/projects/home/{{ item.dest }}
   loop: "{{ dotfiles_repositories_map }}"
 
 - name: Create links for dotfiles
   link:
-    src: /home/{{main_user}}/projects/home/dotfiles/{{item.src}}
-    dst: /home/{{main_user}}/{{item.dst}}
+    src: /home/{{ main_user }}/projects/home/dotfiles/{{ item.src }}
+    dst: /home/{{ main_user }}/{{ item.dst }}
   loop: "{{ dotfiles_path_map }}"
+
+- name: Create links for GUI dotfiles
+  link:
+    src: /home/{{ main_user }}/projects/home/dotfiles/{{ item.src }}
+    dst: /home/{{ main_user }}/{{ item.dst }}
+  when: gui!="none"
+  loop: "{{ dotfiles_gui_path_map }}"
 
 - name: Create links for other items
   link:
-    src: "{{item.src}}"
-    dst: /home/{{main_user}}/{{item.dst}}
+    src: "{{ item.src }}"
+    dst: /home/{{ main_user }}/{{ item.dst }}
   when: gui!="none"
   loop: "{{ others_path_map }}"
 
@@ -64,11 +71,11 @@
 
 - name: Create git user configs
   copy:
-    content: "{{item.key}}"
-    dest: "/home/{{main_user}}/.config/git/{{item.name}}"
+    content: "{{ item.key }}"
+    dest: "/home/{{ main_user }}/.config/git/{{ item.name }}"
     mode: 0644
     group: users
-    owner: "{{main_user}}"
+    owner: "{{ main_user }}"
   loop:
     - { key: "{{ git_user_home }}", name: "user.home" }
     - { key: "{{ git_user_work }}", name: "user.work" }
@@ -84,8 +91,9 @@
 - name: Install packages for update desktop database
   pkg_manager:
     name: desktop-file-utils
+  when: gui!="none"
   become: yes
-  become_user: "{{install_user}}"
+  become_user: "{{ install_user }}"
 
 - name: Update desktop database
   shell: update-desktop-database ~/.local/share/applications

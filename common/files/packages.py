@@ -165,6 +165,7 @@ def desktop_env():
                 "wmctrl",  # windows manipulation
                 "xclip",  # save data to clipboard
                 "gsmartcontrol",  # UI for smartctl
+                "desktop-file-utils",  # for apply desktop files
                 "xrectsel"]  # get select region
 
     # rofi

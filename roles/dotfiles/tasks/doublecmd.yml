@@ -4,26 +4,26 @@
   pkg_manager:
     name: python-lxml
   become: yes
-  become_user: "{{install_user}}"
+  become_user: "{{ install_user }}"
 
 - name: Check that the doublecmd config exists
   stat:
-    path: "/home/{{main_user}}/.config/doublecmd/doublecmd.xml"
+    path: "/home/{{ main_user }}/.config/doublecmd/doublecmd.xml"
     get_checksum: no
     get_mime: no
   register: reg_doublecmd_cfg_exists
 
 - name: Backup doublecmd config
   copy:
-    src: "/home/{{main_user}}/.config/doublecmd/doublecmd.xml"
-    dest: "/home/{{main_user}}/.config/doublecmd/doublecmd.xml.backup"
-  when: reg_doublecmd_cfg_exists.stat.exists == True
+    src: "/home/{{ main_user }}/.config/doublecmd/doublecmd.xml"
+    dest: "/home/{{ main_user }}/.config/doublecmd/doublecmd.xml.backup"
+  when: reg_doublecmd_cfg_exists.stat.exists
   changed_when: false
 
 - name: Remove from doublecmd config backup unused elements
   xml:
-    path: "/home/{{main_user}}/.config/doublecmd/doublecmd.xml.backup"
-    xpath: "{{item}}"
+    path: "/home/{{ main_user }}/.config/doublecmd/doublecmd.xml.backup"
+    xpath: "{{ item }}"
     state: absent
     pretty_print: yes
   loop:
@@ -31,11 +31,11 @@
     - "/doublecmd/Icons/*"
     - "/doublecmd/MainWindow/*"
     - "/doublecmd/ColumnsSets/*"
-  when: reg_doublecmd_cfg_exists.stat.exists == True
+  when: reg_doublecmd_cfg_exists.stat.exists
   changed_when: false
 
 - name: Copy doublecmd config from backup
   copy:
-    src: "/home/{{main_user}}/.config/doublecmd/doublecmd.xml.backup"
-    dest: "/home/{{main_user}}/.config/doublecmd/doublecmd.xml"
-  when: reg_doublecmd_cfg_exists.stat.exists == False
+    src: "/home/{{ main_user }}/.config/doublecmd/doublecmd.xml.backup"
+    dest: "/home/{{ main_user }}/.config/doublecmd/doublecmd.xml"
+  when: not reg_doublecmd_cfg_exists.stat.exists

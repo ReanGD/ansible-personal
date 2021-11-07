@@ -11,7 +11,7 @@ def get_files(base, names):
 
 
 def show_arr(key, text, diff, color):
-    if len(diff) != 0:        
+    if len(diff) != 0:
         print(colored(f'{text} ({key}):', color))
         for name in diff:
             print(colored(name, color))
@@ -61,7 +61,7 @@ dir_map = {
         'Code',
         '.conan',
         'dconf',
-        'Dharkael',        
+        'Dharkael',
         'doublecmd',
         'emacs',
         'enchant',
