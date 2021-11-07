@@ -33,11 +33,14 @@ function server {
     mkdir -p /mnt/boot/efi
     mount /dev/sda1 /mnt/boot/efi
 
-    mkdir -p /mnt/data/main
-    mount /dev/sdb1 /mnt/data/main
+    mkdir -p /mnt/data
+    mount /dev/sdb1 /mnt/data
+    btrfs subvolume create /mnt/data/@
+    umount /mnt/data
+    mount -o subvol=@,compress=lzo /dev/sdb1 /mnt/data
 
-    mkdir -p /mnt/backup/local
-    mount /dev/sdc1 /mnt/backup/local
+    mkdir -p /mnt/backup
+    mount /dev/sdc1 /mnt/backup
 }
 
 function master {
