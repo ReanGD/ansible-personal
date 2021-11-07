@@ -2,10 +2,6 @@
 
 
 # pylama:ignore=E0602
-def is_manjaro() -> bool:
-    return distro == "manjaro"  # type: ignore
-
-
 def is_x86_64() -> bool:
     return x86_64  # type: ignore
 
@@ -40,13 +36,10 @@ def get_virtualization() -> bool:
 
 def system():
     system_pkgs = []
-    if is_manjaro():
-        system_pkgs += ["linux512"]
-    else:
-        system_pkgs += ["linux"]
 
     # utils
-    system_pkgs += ["linux-firmware",
+    system_pkgs += ["linux",
+                    "linux-firmware",
                     "base",
                     "polkit",
                     "gnupg",
@@ -62,7 +55,6 @@ def system():
                     "pkgfile",  # pkgfile makepkg (get package for makepkg)
                     "dialog",
                     "libnewt",  # external dialog
-                    "mlocate",
                     "inetutils",  # for set hostname (crazy ansible code)
                     "man-db"]
 
@@ -70,13 +62,15 @@ def system():
     system_pkgs += ["ansible", "python", "python-lxml"]
 
     # terminal
-    system_pkgs += ["urxvt-perls",
-                    "fd",  # fast find alternative
+    system_pkgs += ["fd",  # fast find alternative
                     "exa",  # ls alternative
                     "ncdu",  # disk usage analyzer
-                    "bitwarden-cli",
                     "zsh",
                     "fzf"]
+
+    if not is_gui("none"):
+        system_pkgs = ["urxvt-perls",
+                       "bitwarden-cli"]
 
     # archivers
     system_pkgs += ["p7zip", "unzip", "unrar"]
@@ -95,10 +89,10 @@ def driver():
     if not is_gui("none"):
         driver_pkgs = ["mesa"]
 
-    # if get_hostname_id() == "server":
-    #     driver_pkgs += ["xf86-video-intel"]
-
-    if get_hostname_id() == "master":
+    if get_hostname_id() == "server":
+        #  "xf86-video-intel"
+        driver_pkgs += ["btrfs-progs"]
+    elif get_hostname_id() == "master":
         driver_pkgs += ["nvidia"]
     elif get_hostname_id() == "xnote":
         driver_pkgs += ["bbswitch",
@@ -196,12 +190,6 @@ def desktop_env():
                      "plasma5-applets-virtual-desktop-bar-git",  # tilling bar
                      "dolphin-plugins",
                      "print-manager"]
-        if is_manjaro():
-            gui_pkgs += ["manjaro-kde-settings",
-                         "manjaro-settings-manager-knotifier",
-                         "manjaro-settings-manager-kcm",
-                         "mhwd",  # hardware detection library
-                         "pamac-gtk"]
 
     return gui_pkgs
 
@@ -349,11 +337,7 @@ def game():
     if not is_role("game"):
         return []
 
-    game_pkgs = []
-    if is_manjaro():
-        game_pkgs += ["steam-manjaro"]
-    else:
-        game_pkgs += ["steam"]
+    game_pkgs = ["steam"]
 
     # game_pkgs += ["minecraft-launcher"]
 

@@ -44,15 +44,16 @@ function master {
     echo "master" $1
     if [[ $1 = "full" ]]
     then
-        sgdisk -Z /dev/nvme0n1
-        sgdisk -n 0:0:+512M -t 0:ef00 -c 0:"boot" /dev/nvme0n1
-        sgdisk -n 0:0:0 -t 0:8300 -c 0:"root" /dev/nvme0n1
+        sgdisk --zap-all /dev/nvme0n1
+        sgdisk --new=1:0:+512M --typecode=1:ef00 --change-name=1:"boot" /dev/nvme0n1
+        sgdisk --largest-new=2 --typecode=2:8300 --change-name=2:"root" /dev/nvme0n1
     fi
     # add hdd format and mount (/disk0)
     mkfs.fat -F32 /dev/nvme0n1p1
-    mkfs.ext4 /dev/nvme0n1p2
+    mkfs.ext4 -L "root" /dev/nvme0n1p2
 
     mount /dev/nvme0n1p2 /mnt
+
     mkdir -p /mnt/boot/efi
     mount /dev/nvme0n1p1 /mnt/boot/efi
 }
@@ -61,15 +62,16 @@ function xnote {
     echo "xnote" $1
     if [[ $1 = "full" ]]
     then
-        sgdisk -Z /dev/nvme0n1
-        sgdisk -n 0:0:+512M -t 0:ef00 -c 0:"boot" /dev/nvme0n1
-        sgdisk -n 0:0:0 -t 0:8300 -c 0:"root" /dev/nvme0n1
+        sgdisk --zap-all /dev/nvme0n1
+        sgdisk --new=1:0:+512M --typecode=1:ef00 --change-name=1:"boot" /dev/nvme0n1
+        sgdisk --largest-new=2 --typecode=2:8300 --change-name=2:"root" /dev/nvme0n1
     fi
 
     mkfs.fat -F32 /dev/nvme0n1p1
-    mkfs.ext4 /dev/nvme0n1p2
+    mkfs.ext4 -L "root" /dev/nvme0n1p2
 
     mount /dev/nvme0n1p2 /mnt
+
     mkdir -p /mnt/boot/efi
     mount /dev/nvme0n1p1 /mnt/boot/efi
 }
@@ -78,18 +80,18 @@ function worknote {
     echo "worknote" $1
     if [[ $1 = "full" ]]
     then
-        sgdisk -Z /dev/sda
-        sgdisk -n 0:0:+512M -t 0:ef00 -c 0:"boot" /dev/sda
-        sgdisk -n 0:0:+150GiB -t 0:8300 -c 0:"root" /dev/sda
-        sgdisk -n 0:0:0 -t 0:8302 -c 0:"home" /dev/sda
+        sgdisk --zap-all /dev/sda
+        sgdisk --new=1:0:+512M --typecode=1:ef00 --change-name=1:"boot" /dev/sda
+        sgdisk --new=2:0:+150GiB --typecode=2:8300 --change-name=2:"root" /dev/sda
+        sgdisk --largest-new=3 --typecode=3:8302 --change-name=3:"home" /dev/sda
 
         cryptsetup luksFormat /dev/sda3
         cryptsetup open /dev/sda3 home
     fi
 
     mkfs.fat -F32 /dev/sda1
-    mkfs.ext4 /dev/sda2
-    mkfs.ext4 /dev/mapper/home
+    mkfs.ext4 -L "root" /dev/sda2
+    mkfs.ext4 -L "home" /dev/mapper/home
 
     mount /dev/sda2 /mnt
 
@@ -104,17 +106,17 @@ function kvmtest {
     echo "kvmtest" $1
     if [[ $1 = "full" ]]
     then
-        sgdisk -Z /dev/vda
-        sgdisk -n 0:0:+512M -t 0:ef00 -c 0:"boot" /dev/vda
-        sgdisk -n 0:0:+25GiB -t 0:8300 -c 0:"root" /dev/vda
-        sgdisk -n 0:0:0 -t 0:8302 -c 0:"home" /dev/vda
+        sgdisk --zap-all /dev/vda
+        sgdisk --new=1:0:+512M --typecode=1:ef00 --change-name=1:"boot" /dev/vda
+        sgdisk --new=2:0:+25GiB --typecode=2:8300 --change-name=2:"root" /dev/vda
+        sgdisk --largest-new=3 --typecode=3:8302 --change-name=3:"home" /dev/vda
         cryptsetup luksFormat /dev/vda3
         cryptsetup open /dev/vda3 home
     fi
 
     mkfs.fat -F32 /dev/vda1
-    mkfs.ext4 /dev/vda2
-    mkfs.ext4 /dev/mapper/home
+    mkfs.ext4 -L "root" /dev/vda2
+    mkfs.ext4 -L "home" /dev/mapper/home
 
     mount /dev/vda2 /mnt
 

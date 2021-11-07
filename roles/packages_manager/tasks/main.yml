@@ -6,9 +6,6 @@
 - include: archarm.yml
   when: distro == "archarm"
 
-- include: manjaro.yml
-  when: distro == "manjaro"
-
 - name: Update pacman cache
   pacman:
     force: yes

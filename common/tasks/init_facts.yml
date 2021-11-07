@@ -34,7 +34,7 @@
   changed_when: false
   when: arm
 
-# distro: "arch" or "archarm" or "manjaro"
+# distro: "arch" or "archarm"
 # boot: "nvram_write_enble"|"nvram_write_disable" and ["crypto_home", "textonly"]
 # network_type: ["wired", "wired_old", "wireless", "systemd", "networkmanager"]
 # virtualization: "none" or "kvm_qemu" or "kvm_libvirt"
