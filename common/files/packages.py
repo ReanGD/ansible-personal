@@ -69,8 +69,8 @@ def system():
                     "fzf"]
 
     if not is_gui("none"):
-        system_pkgs = ["urxvt-perls",
-                       "bitwarden-cli"]
+        system_pkgs += ["urxvt-perls",
+                        "bitwarden-cli"]
 
     # archivers
     system_pkgs += ["p7zip", "unzip", "unrar"]

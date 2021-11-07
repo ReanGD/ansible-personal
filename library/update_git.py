@@ -120,6 +120,7 @@ def run_module(module):
 
     return result
 
+
 # update_git: repo=git@github.com:User/Repo dest=/home/repodir
 def main():
     module = AnsibleModule(

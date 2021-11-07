@@ -1,6 +1,5 @@
 import os
 from traceback import format_exc
-from ansible import constants as C
 from ansible.plugins.action import ActionBase
 
 try:
@@ -8,6 +7,19 @@ try:
 except ImportError:
     from ansible.utils.display import Display
     display = Display()
+
+
+class Clr:
+    COLOR_HIGHLIGHT = 'white'
+    COLOR_VERBOSE = 'blue'
+    COLOR_WARN = 'bright purple'
+    COLOR_ERROR = 'red'
+    COLOR_DEBUG = 'dark gray'
+    COLOR_DEPRECATE = 'purple'
+    COLOR_SKIP = 'cyan'
+    COLOR_UNREACHABLE = 'bright red'
+    COLOR_OK = 'green'
+    COLOR_CHANGED = 'yellow'
 
 
 class StrError(RuntimeError):
@@ -74,9 +86,9 @@ class ActionModule(ActionBase):
         if len(values) == 0:
             return
 
-        display.display("{}:".format(text), color=C.COLOR_UNREACHABLE)
+        display.display("{}:".format(text), color=Clr.COLOR_UNREACHABLE)
         for name in values:
-            display.display(" {}".format(name), color=C.COLOR_VERBOSE)
+            display.display(" {}".format(name), color=Clr.COLOR_VERBOSE)
 
     @staticmethod
     def _print_exception(text):

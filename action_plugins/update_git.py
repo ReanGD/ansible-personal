@@ -1,6 +1,4 @@
-import os
 from traceback import format_exc
-from ansible import constants as C
 from ansible.plugins.action import ActionBase
 
 try:
@@ -8,6 +6,19 @@ try:
 except ImportError:
     from ansible.utils.display import Display
     display = Display()
+
+
+class Clr:
+    COLOR_HIGHLIGHT = 'white'
+    COLOR_VERBOSE = 'blue'
+    COLOR_WARN = 'bright purple'
+    COLOR_ERROR = 'red'
+    COLOR_DEBUG = 'dark gray'
+    COLOR_DEPRECATE = 'purple'
+    COLOR_SKIP = 'cyan'
+    COLOR_UNREACHABLE = 'bright red'
+    COLOR_OK = 'green'
+    COLOR_CHANGED = 'yellow'
 
 
 class StrError(RuntimeError):
@@ -39,7 +50,7 @@ class ActionModule(ActionBase):
 
     @staticmethod
     def _print_warning(text):
-        display.display(text, color=C.COLOR_WARN)
+        display.display(text, color=Clr.COLOR_WARN)
 
     def _call_module(self, name, args):
         result = self._execute_module(module_name=name, module_args=args,
