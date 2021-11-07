@@ -72,7 +72,7 @@
     develop: "none"
     monitoring: "std,hddtemp"
     roles: "k8s,automount"
-    swap_size: 35
+    swap_size: 10
     swappiness: 10
     packages_file: "{{packages_dir}}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7978'

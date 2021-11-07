@@ -5,7 +5,7 @@ vs_code_extensions:
   - "DavidAnson.vscode-markdownlint"
   - "yzhang.markdown-all-in-one"
   # ansible
-  - "zbr.vscode-ansible"
+  - "tomaciazek.ansible"
   # python
   - "ms-python.python"
   - "ms-toolsai.jupyter"
@@ -35,8 +35,7 @@ vs_code_extensions:
   - "wholroyd.HCL"
   # proto
   - "zxh404.vscode-proto3"
-  # yaml\json
-  - "redhat.vscode-yaml"
+  # json
   - "mohsen1.prettify-json"
   # log
   - "emilast.LogFileHighlighter"

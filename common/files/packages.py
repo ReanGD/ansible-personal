@@ -74,7 +74,7 @@ def system():
                     "fd",  # fast find alternative
                     "exa",  # ls alternative
                     "ncdu",  # disk usage analyzer
-                    "bitwarden-cli-bin",
+                    "bitwarden-cli",
                     "zsh",
                     "fzf"]
 
