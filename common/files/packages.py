@@ -71,6 +71,8 @@ def system():
     if not is_gui("none"):
         system_pkgs += ["urxvt-perls",
                         "bitwarden-cli"]
+    else:
+        system_pkgs += ["rxvt-unicode-terminfo"]
 
     # archivers
     system_pkgs += ["p7zip", "unzip", "unrar"]
