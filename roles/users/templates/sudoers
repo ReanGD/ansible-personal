@@ -10,3 +10,4 @@ root		ALL = (ALL) ALL
 {{ dop_user }}		ALL = (ALL) ALL
 {% endif %}
 {{ install_user }}	ALL = (ALL) NOPASSWD: /usr/bin/pacman
+{{ install_user }}	ALL = (ALL) NOPASSWD: /usr/bin/podman

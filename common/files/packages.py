@@ -319,7 +319,7 @@ def k8s():
     if not is_role("k8s"):
         return []
 
-    return ["minikube"]
+    return ["minikube", "podman"]
 
 
 def automount():
