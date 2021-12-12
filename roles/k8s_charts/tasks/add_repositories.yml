@@ -1,4 +1,9 @@
 ---
+- name: Add traefik repository
+  kubernetes.core.helm_repository:
+    name: traefik
+    repo_url: https://helm.traefik.io/traefik
+
 - name: Add k8s-at-home repository
   kubernetes.core.helm_repository:
     name: k8s-at-home
