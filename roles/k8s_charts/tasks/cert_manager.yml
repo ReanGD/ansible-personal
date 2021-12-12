@@ -1,0 +1,22 @@
+---
+# ansible-vault decrypt cert_manager_values.yml
+# ansible-vault encrypt cert_manager_values.yml
+- name: Include cert_manager_values.yml
+  include_vars:
+    file: cert_manager_values.yml
+    name: values
+
+- name: Install cert_manager
+  kubernetes.core.helm:
+    name: cert-manager
+    chart_version: v1.6.1
+    chart_ref: jetstack/cert-manager
+    release_namespace: web
+    create_namespace: true
+    values: "{{ values | from_yaml }}"
+
+# ansible-vault decrypt certificates.yml
+# ansible-vault encrypt certificates.yml
+- name: Install certificates
+  kubernetes.core.k8s:
+    definition: "{{ lookup('file', 'certificates.yml') | from_yaml_all | list }}"
