@@ -1,0 +1,13 @@
+---
+- name: Remove traefik traefik
+  kubernetes.core.helm:
+    name: traefik
+    release_state: absent
+    release_namespace: web
+
+# ansible-vault decrypt traefik_routes.yml
+# ansible-vault encrypt traefik_routes.yml
+- name: Remove traefik routes
+  kubernetes.core.k8s:
+    state: absent
+    definition: "{{ lookup('file', 'traefik_routes.yml') | from_yaml_all | list }}"

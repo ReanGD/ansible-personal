@@ -19,5 +19,4 @@
 # ansible-vault encrypt traefik_routes.yml
 - name: Install traefik routes
   kubernetes.core.k8s:
-    state: present
     definition: "{{ lookup('file', 'traefik_routes.yml') | from_yaml_all | list }}"
