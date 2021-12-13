@@ -1,0 +1,13 @@
+---
+- name: Create homer volumes
+  kubernetes.core.k8s:
+    definition: "{{ lookup('file', 'homer_volumes.yml') | from_yaml_all | list }}"
+
+- name: Install homer
+  kubernetes.core.helm:
+    name: homer
+    chart_version: 7.0.0
+    chart_ref: k8s-at-home/homer
+    release_namespace: app
+    create_namespace: true
+    values: "{{ lookup('template', 'homer_values.yml') | from_yaml }}"

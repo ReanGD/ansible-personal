@@ -1,0 +1,11 @@
+---
+- name: Remove homer
+  kubernetes.core.helm:
+    name: homer
+    release_state: absent
+    release_namespace: app
+
+- name: Remove homer volumes
+  kubernetes.core.k8s:
+    state: absent
+    definition: "{{ lookup('file', 'homer_volumes.yml') | from_yaml_all | list }}"
