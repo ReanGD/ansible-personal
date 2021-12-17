@@ -16,3 +16,5 @@
 # - import_tasks: traefik_forward_auth_remove.yml
 - import_tasks: homer.yml
 # - import_tasks: homer_remove.yml
+- import_tasks: registry.yml
+# - import_tasks: registry_remove.yml

@@ -1,0 +1,22 @@
+---
+- name: Create dirs for registry
+  file:
+    path: /data/registry
+    state: directory
+    mode: 0755
+    group: root
+    owner: "{{ main_user }}"
+  become: yes
+
+- name: Create registry volumes
+  kubernetes.core.k8s:
+    definition: "{{ lookup('file', 'registry_volumes.yml') | from_yaml_all | list }}"
+
+- name: Install registry
+  kubernetes.core.helm:
+    name: registry
+    chart_version: 1.16.0
+    chart_ref: twuni/docker-registry
+    release_namespace: app
+    create_namespace: true
+    values: "{{ lookup('template', 'registry_values.yml') | from_yaml }}"

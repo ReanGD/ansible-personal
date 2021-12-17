@@ -1,0 +1,11 @@
+---
+- name: Remove registry
+  kubernetes.core.helm:
+    name: registry
+    release_state: absent
+    release_namespace: app
+
+- name: Remove registry volumes
+  kubernetes.core.k8s:
+    state: absent
+    definition: "{{ lookup('file', 'registry_volumes.yml') | from_yaml_all | list }}"

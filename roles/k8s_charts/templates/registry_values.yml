@@ -1,0 +1,24 @@
+ingress:
+  enabled: true
+  path: /v2
+  hosts:
+    - {{ registry_domain }}
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+  tls:
+  - secretName: le-cert-secret
+    hosts:
+    - {{ registry_domain }}
+
+storage: filesystem
+
+persistence:
+  accessMode: "ReadWriteOnce"
+  enabled: true
+  existingClaim: registry
+
+# docker run --entrypoint htpasswd httpd:2 -Bbn user 'pass'
+secrets:
+  htpasswd: {{ registry_htpasswd }}
