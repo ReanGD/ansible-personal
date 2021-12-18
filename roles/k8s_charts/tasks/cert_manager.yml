@@ -15,8 +15,6 @@
     create_namespace: true
     values: "{{ values | from_yaml }}"
 
-# ansible-vault decrypt certificates.yml
-# ansible-vault encrypt certificates.yml
 - name: Install certificates
   kubernetes.core.k8s:
-    definition: "{{ lookup('file', 'certificates.yml') | from_yaml_all | list }}"
+    definition: "{{ lookup('template', 'certificates.yml') | from_yaml_all | list }}"

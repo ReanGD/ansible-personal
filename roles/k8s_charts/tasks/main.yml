@@ -18,3 +18,5 @@
 # - import_tasks: homer_remove.yml
 - import_tasks: registry.yml
 # - import_tasks: registry_remove.yml
+- import_tasks: reg.yml
+# - import_tasks: reg_remove.yml

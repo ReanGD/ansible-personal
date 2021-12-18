@@ -1,10 +1,8 @@
 ---
-# ansible-vault decrypt certificates.yml
-# ansible-vault encrypt certificates.yml
 - name: Remove certificates
   kubernetes.core.k8s:
     state: absent
-    definition: "{{ lookup('file', 'certificates.yml') | from_yaml_all | list }}"
+    definition: "{{ lookup('template', 'certificates.yml') | from_yaml_all | list }}"
 
 - name: Remove cert_manager
   kubernetes.core.helm:

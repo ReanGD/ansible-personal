@@ -1,0 +1,6 @@
+---
+- name: Remove reg
+  kubernetes.core.helm:
+    name: reg
+    release_state: absent
+    release_namespace: app

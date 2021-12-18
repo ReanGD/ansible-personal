@@ -1,0 +1,35 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: le-issuer
+  namespace: web
+spec:
+  acme:
+    email: {{ email }}
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: le-issuer-account-key
+    solvers:
+    - http01:
+        ingress:
+          ingressTemplate:
+            metadata:
+              annotations:
+                "traefik.ingress.kubernetes.io/frontend-entry-points": "http"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: le-cert
+  namespace: web
+spec:
+  secretName: le-cert-secret
+  dnsNames:
+  - {{ lh_domain }}
+  - {{ iot_domain }}
+  - {{ root_domain }}
+  - {{ oauth_domain }}
+  - {{ registry_domain }}
+  issuerRef:
+    name: le-issuer
+    kind: Issuer

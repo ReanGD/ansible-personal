@@ -1,0 +1,9 @@
+---
+- name: Install reg
+  kubernetes.core.helm:
+    name: reg
+    chart_version: 3.1.0
+    chart_ref: k8s-at-home/reg
+    release_namespace: app
+    create_namespace: true
+    values: "{{ lookup('template', 'reg_values.yml') | from_yaml }}"
