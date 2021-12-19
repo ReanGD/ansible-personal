@@ -12,5 +12,4 @@
     chart_version: 1.0.10
     chart_ref: k8s-at-home/traefik-forward-auth
     release_namespace: web
-    create_namespace: true
     values: "{{ values | from_yaml }}"

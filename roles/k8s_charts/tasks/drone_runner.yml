@@ -1,0 +1,8 @@
+---
+- name: Install drone runner
+  kubernetes.core.helm:
+    name: drone-runner
+    chart_version: 0.3.0
+    chart_ref: volker/drone-runner
+    release_namespace: app
+    values: "{{ lookup('template', 'drone_runner_values.yml') | from_yaml }}"

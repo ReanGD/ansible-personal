@@ -1,0 +1,6 @@
+---
+- name: Remove drone runner
+  kubernetes.core.helm:
+    name: drone-runner
+    release_state: absent
+    release_namespace: app

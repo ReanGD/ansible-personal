@@ -5,7 +5,6 @@
     chart_version: v1.6.1
     chart_ref: jetstack/cert-manager
     release_namespace: web
-    create_namespace: true
     values: "{{ lookup('template', 'cert_manager_values.yml') | from_yaml }}"
 
 - name: Install certificates

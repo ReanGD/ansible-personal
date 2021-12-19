@@ -18,5 +18,4 @@
     chart_version: 0.2.2
     chart_ref: volker/drone
     release_namespace: app
-    create_namespace: true
     values: "{{ lookup('template', 'drone_values.yml') | from_yaml }}"

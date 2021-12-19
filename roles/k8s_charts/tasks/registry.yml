@@ -18,5 +18,4 @@
     chart_version: 1.16.0
     chart_ref: twuni/docker-registry
     release_namespace: app
-    create_namespace: true
     values: "{{ lookup('template', 'registry_values.yml') | from_yaml }}"
