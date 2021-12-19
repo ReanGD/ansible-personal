@@ -29,6 +29,7 @@ spec:
   - {{ iot_domain }}
   - {{ root_domain }}
   - {{ oauth_domain }}
+  - {{ drone_domain }}
   - {{ registry_domain }}
   issuerRef:
     name: le-issuer

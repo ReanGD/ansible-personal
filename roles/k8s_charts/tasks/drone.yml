@@ -1,0 +1,22 @@
+---
+- name: Create dirs for drone
+  file:
+    path: /data/drone
+    state: directory
+    mode: 0755
+    group: root
+    owner: "{{ main_user }}"
+  become: yes
+
+- name: Create drone volumes
+  kubernetes.core.k8s:
+    definition: "{{ lookup('file', 'drone_volumes.yml') | from_yaml_all | list }}"
+
+- name: Install drone
+  kubernetes.core.helm:
+    name: drone
+    chart_version: 0.2.2
+    chart_ref: volker/drone
+    release_namespace: app
+    create_namespace: true
+    values: "{{ lookup('template', 'drone_values.yml') | from_yaml }}"

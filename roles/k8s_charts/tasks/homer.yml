@@ -1,4 +1,13 @@
 ---
+- name: Create dirs for homer
+  file:
+    path: /data/homer
+    state: directory
+    mode: 0755
+    group: root
+    owner: "{{ main_user }}"
+  become: yes
+
 - name: Create homer volumes
   kubernetes.core.k8s:
     definition: "{{ lookup('file', 'homer_volumes.yml') | from_yaml_all | list }}"

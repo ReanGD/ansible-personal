@@ -1,0 +1,29 @@
+config:
+  DRONE_CLEANUP_DEADLINE_PENDING: 24h
+  DRONE_CLEANUP_DEADLINE_RUNNING: 24h
+  DRONE_CRON_INTERVAL: 10m
+  DRONE_GITHUB_CLIENT_SECRET: {{ drone_github_client_secret }}
+  DRONE_GITHUB_CLIENT_ID: {{ drone_github_client_id }}
+  DRONE_RPC_SECRET: {{ drone_rpc_secret }}
+  DRONE_SERVER_HOST: {{ drone_domain }}
+  DRONE_SERVER_PROTO: "http"
+
+ingress:
+  enabled: true
+  className: ""
+  annotations:
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: web-oauth@kubernetescrd
+  hosts:
+  - host: {{ drone_domain }}
+    paths:
+    - path: /
+      pathType: ImplementationSpecific
+  tls:
+  - secretName: "le-cert-secret"
+    hosts:
+    - {{ drone_domain }}
+
+persistence:
+  existingClaim: drone
