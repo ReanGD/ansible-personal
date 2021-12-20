@@ -1,0 +1,10 @@
+---
+# ansible-vault decrypt oauth_values.yml
+# ansible-vault encrypt oauth_values.yml
+- name: Install oauth chart
+  kubernetes.core.helm:
+    name: oauth
+    chart_version: 1.0.10
+    chart_ref: k8s-at-home/traefik-forward-auth
+    release_namespace: web
+    values: "{{ lookup('template', 'oauth_values.yml') | from_yaml }}"

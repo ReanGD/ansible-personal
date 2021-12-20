@@ -1,6 +1,6 @@
 ---
-- name: Remove traefik forward auth
+- name: Remove oauth chart
   kubernetes.core.helm:
-    name: traefik-forward-auth
+    name: oauth
     release_state: absent
     release_namespace: web
