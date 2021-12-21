@@ -1,6 +1,0 @@
----
-- name: Remove oauth chart
-  kubernetes.core.helm:
-    name: oauth
-    release_state: absent
-    release_namespace: web

@@ -1,0 +1,13 @@
+---
+- name: "{{ text_action }} chart {{ name }}"
+  vars:
+    text_action: "{{ 'Install' if action == 'install' else 'Remove' }}"
+    state: "{{ 'present' if action == 'install' else 'absent' }}"
+  kubernetes.core.helm:
+    name: "{{ name }}"
+    chart_version: "{{ version }}"
+    chart_ref: "{{ repo }}"
+    release_namespace: "{{ namespace }}"
+    release_state: "{{ state }}"
+    values: "{{ lookup('template', '{{ values_template }}') | from_yaml }}"
+  when: values_template is defined
