@@ -1,18 +1,18 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: homer
-  namespace: app
+  name: "{{ volume_name }}"
+  namespace: "{{ namespace }}"
 spec:
   capacity:
-    storage: 1Gi
+    storage: "{{ volume_size }}"
   volumeMode: Filesystem
   accessModes:
   - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /data/homer
+    path: "{{ volume_path }}"
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -25,13 +25,13 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: homer
-  namespace: app
+  name: "{{ volume_name }}"
+  namespace: "{{ namespace }}"
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: "1Gi"
+      storage: "{{ volume_size }}"
   storageClassName: local-storage
-  volumeName: homer
+  volumeName: "{{ volume_name }}"

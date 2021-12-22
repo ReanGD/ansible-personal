@@ -1,21 +1,10 @@
 ---
-- name: Create dirs for homer
-  file:
-    path: /data/homer
-    state: directory
-    mode: 0755
-    group: root
-    owner: "{{ main_user }}"
-  become: yes
-
-- name: Create homer volumes
-  kubernetes.core.k8s:
-    definition: "{{ lookup('file', 'homer_volumes.yml') | from_yaml_all | list }}"
-
-- name: Install homer
-  kubernetes.core.helm:
-    name: homer
-    chart_version: 7.0.0
-    chart_ref: k8s-at-home/homer
-    release_namespace: app
-    values: "{{ lookup('template', 'homer_values.yml') | from_yaml }}"
+- import_tasks: package.yml
+  vars:
+  - name: homer
+  - version: 7.0.0
+  - repo: k8s-at-home/homer
+  - namespace: app
+  - values_template: homer_values.yml
+  - volumes:
+    - { name: "homer", path: "/homer", size: "1Gi" }

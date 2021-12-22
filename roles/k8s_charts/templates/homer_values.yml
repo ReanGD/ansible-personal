@@ -1,3 +1,8 @@
+env:
+  TZ: "Europe/Moscow"
+  UID: "1000"
+  GID: "0"
+
 ingress:
   main:
     enabled: true
@@ -14,7 +19,7 @@ ingress:
     tls:
     - hosts:
       - {{ root_domain }}
-      secretName: le-cert-secret
+      secretName: {{ cert_secret }}
 
 persistence:
   config:
