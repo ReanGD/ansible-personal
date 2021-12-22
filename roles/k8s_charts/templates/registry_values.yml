@@ -1,3 +1,8 @@
+nameOverride: "registry"
+
+env:
+  TZ: Europe/Moscow
+
 ingress:
   enabled: true
   path: /v2
@@ -8,7 +13,7 @@ ingress:
     traefik.ingress.kubernetes.io/router.tls: "true"
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
   tls:
-  - secretName: le-cert-secret
+  - secretName: {{ cert_secret }}
     hosts:
     - {{ registry_domain }}
 
@@ -22,3 +27,8 @@ persistence:
 # docker run --entrypoint htpasswd httpd:2 -Bbn user 'pass'
 secrets:
   htpasswd: {{ registry_htpasswd }}
+
+securityContext:
+  enabled: true
+  runAsUser: "1000"
+  fsGroup: "0"

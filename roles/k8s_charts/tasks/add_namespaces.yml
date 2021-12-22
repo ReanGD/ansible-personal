@@ -6,5 +6,6 @@
     kind: Namespace
     state: present
   loop:
+    - ci
     - app
     - web

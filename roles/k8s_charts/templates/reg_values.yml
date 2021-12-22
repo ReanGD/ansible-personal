@@ -16,8 +16,7 @@ ingress:
     - host: {{ registry_domain }}
       paths:
       - path: /
-        pathType: Prefix
     tls:
     - hosts:
       - {{ registry_domain }}
-      secretName: le-cert-secret
+      secretName: {{ cert_secret }}
