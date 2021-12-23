@@ -1,13 +1,13 @@
 ---
 - name: "Create volume dirs for {{ name }} chart"
   file:
-    path: "{{ volumes_dir_root }}{{ it.name }}"
+    path: "{{ volumes_dir_root }}{{ it.path }}"
     state: directory
     mode: 0755
     group: root
     owner: "{{ main_user }}"
   become: yes
-  when: volumes is defined
+  when: volumes is defined and action == 'install'
   loop: "{{ volumes }}"
   loop_control:
     loop_var: it
@@ -24,6 +24,12 @@
   loop_control:
     loop_var: it
 
+- name: "Remove extra resources for chart {{ name }}"
+  kubernetes.core.k8s:
+    state: absent
+    definition: "{{ lookup('template', '{{ extra_template }}') | from_yaml_all | list }}"
+  when: extra_template is defined and action != 'install'
+
 - name: "{{ text_action }} chart {{ name }}"
   vars:
     text_action: "{{ 'Install' if action == 'install' else 'Remove' }}"
@@ -36,6 +42,11 @@
     release_state: "{{ state }}"
     values: "{{ lookup('template', '{{ values_template }}') | from_yaml }}"
   when: values_template is defined
+
+- name: "Create extra resources for chart {{ name }}"
+  kubernetes.core.k8s:
+    definition: "{{ lookup('template', '{{ extra_template }}') | from_yaml_all | list }}"
+  when: extra_template is defined and action == 'install'
 
 - name: "Remove volumes for {{ name }} chart"
   vars:

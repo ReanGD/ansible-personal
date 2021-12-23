@@ -1,0 +1,8 @@
+---
+- import_tasks: package.yml
+  vars:
+  - name: runner
+  - version: 0.3.0
+  - repo: volker/drone-runner
+  - namespace: ci
+  - values_template: runner_values.yml

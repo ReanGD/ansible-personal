@@ -1,6 +1,0 @@
-nameOverride: "drone-runner"
-
-config:
-  DRONE_RPC_HOST: "drone.app.svc.cluster.local"
-  DRONE_RPC_PROTO: "http"
-  DRONE_RPC_SECRET: {{ drone_rpc_secret }}

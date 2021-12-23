@@ -1,0 +1,9 @@
+env:
+  TZ: Europe/Moscow
+
+nameOverride: "runner"
+
+config:
+  DRONE_RPC_HOST: "drone.ci.svc.cluster.local"
+  DRONE_RPC_PROTO: "http"
+  DRONE_RPC_SECRET: {{ drone_rpc_secret }}
