@@ -1,3 +1,10 @@
+env:
+  TZ: Europe/Moscow
+
+podSecurityContext:
+  runAsUser: 1000
+  fsGroup: 0
+
 config:
   DRONE_CLEANUP_DEADLINE_PENDING: 24h
   DRONE_CLEANUP_DEADLINE_RUNNING: 24h
@@ -5,8 +12,14 @@ config:
   DRONE_GITHUB_CLIENT_SECRET: {{ drone_github_client_secret }}
   DRONE_GITHUB_CLIENT_ID: {{ drone_github_client_id }}
   DRONE_RPC_SECRET: {{ drone_rpc_secret }}
-  DRONE_SERVER_HOST: {{ drone_domain }}
-  DRONE_SERVER_PROTO: "http"
+  DRONE_SERVER_HOST: {{ ci_domain }}
+  DRONE_SERVER_PROTO: {{ drone_web_hook_proto }}
+  DRONE_WEBHOOK_ENDPOINT: "{{ drone_web_hook_proto }}://{{ ci_domain }}{{ drone_web_hook_path }}"
+  DRONE_WEBHOOK_SECRET: {{ drone_webhook_secret }}
+
+service:
+  type: ClusterIP
+  port: {{ drone_service_port }}
 
 ingress:
   enabled: true
@@ -16,14 +29,14 @@ ingress:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.middlewares: web-oauth@kubernetescrd
   hosts:
-  - host: {{ drone_domain }}
+  - host: {{ ci_domain }}
     paths:
     - path: /
       pathType: ImplementationSpecific
   tls:
-  - secretName: "le-cert-secret"
+  - secretName: {{ cert_secret }}
     hosts:
-    - {{ drone_domain }}
+    - {{ ci_domain }}
 
 persistence:
   existingClaim: drone

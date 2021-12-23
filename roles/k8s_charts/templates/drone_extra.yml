@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ name }}-hook"
+  namespace: ci
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+  - host: {{ ci_domain }}
+    http:
+      paths:
+      - pathType: Prefix
+        path: {{ drone_web_hook_path }}
+        backend:
+          service:
+            name: {{ name }}
+            port:
+              number: {{ drone_service_port }}
+  tls:
+  - hosts:
+    - {{ ci_domain }}
+    secretName: {{ cert_secret }}
