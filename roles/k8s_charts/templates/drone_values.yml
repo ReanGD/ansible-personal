@@ -1,9 +1,10 @@
 env:
   TZ: Europe/Moscow
 
-podSecurityContext:
-  runAsUser: 1000
-  fsGroup: 0
+# Bad Gateway
+# podSecurityContext:
+  # runAsUser: 1000
+  # runAsGroup: 0
 
 config:
   DRONE_CLEANUP_DEADLINE_PENDING: 24h
@@ -13,8 +14,7 @@ config:
   DRONE_GITHUB_CLIENT_ID: {{ drone_github_client_id }}
   DRONE_RPC_SECRET: {{ drone_rpc_secret }}
   DRONE_SERVER_HOST: {{ ci_domain }}
-  DRONE_SERVER_PROTO: {{ drone_web_hook_proto }}
-  DRONE_WEBHOOK_ENDPOINT: "{{ drone_web_hook_proto }}://{{ ci_domain }}{{ drone_web_hook_path }}"
+  DRONE_SERVER_PROTO: "https"
   DRONE_WEBHOOK_SECRET: {{ drone_webhook_secret }}
 
 service:

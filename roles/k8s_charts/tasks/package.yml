@@ -12,18 +12,6 @@
   loop_control:
     loop_var: it
 
-- name: "Create volumes for {{ name }} chart"
-  vars:
-    volume_name: "{{ it.name }}"
-    volume_path: "{{ volumes_dir_root }}{{ it.path }}"
-    volume_size: "{{ it.size }}"
-  kubernetes.core.k8s:
-    definition: "{{ lookup('template', 'local_volume.yml') | from_yaml_all | list }}"
-  when: volumes is defined and action == 'install'
-  loop: "{{ volumes }}"
-  loop_control:
-    loop_var: it
-
 - name: "Remove extra resources for chart {{ name }}"
   kubernetes.core.k8s:
     state: absent
@@ -48,15 +36,17 @@
     definition: "{{ lookup('template', '{{ extra_template }}') | from_yaml_all | list }}"
   when: extra_template is defined and action == 'install'
 
-- name: "Remove volumes for {{ name }} chart"
+- name: "{{ text_action }} volumes for {{ name }} chart"
   vars:
     volume_name: "{{ it.name }}"
     volume_path: "{{ volumes_dir_root }}{{ it.path }}"
     volume_size: "{{ it.size }}"
+    text_action: "{{ 'Install' if action == 'install' else 'Remove' }}"
+    state: "{{ 'present' if action == 'install' else 'absent' }}"
   kubernetes.core.k8s:
-    state: absent
+    state: "{{ state }}"
     definition: "{{ lookup('template', 'local_volume.yml') | from_yaml_all | list }}"
-  when: volumes is defined and action != 'install'
+  when: volumes is defined
   loop: "{{ volumes }}"
   loop_control:
     loop_var: it

@@ -13,7 +13,7 @@ spec:
     http:
       paths:
       - pathType: Prefix
-        path: {{ drone_web_hook_path }}
+        path: /hook
         backend:
           service:
             name: {{ name }}
