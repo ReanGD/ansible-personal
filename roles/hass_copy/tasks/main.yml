@@ -3,4 +3,4 @@
   synchronize:
     mode: pull
     src: /hass/dotfiles-hass
-    dest: /home/{{main_user}}/projects/home
+    dest: /home/{{ main_user }}/projects/home

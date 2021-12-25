@@ -18,11 +18,11 @@
     root_dir: "{{ inventory_dir }}"
     packages_dir: "{{ inventory_dir }}/common/files"
     x86_64: "{{ ansible_facts['architecture'] == 'x86_64' }}"
-    arm: "{{ansible_facts['architecture'] == 'armv7l'}}"
-    distro: "{{reg_distro.stdout}}"
+    arm: "{{ ansible_facts['architecture'] == 'armv7l'}}"
+    distro: "{{ reg_distro.stdout }}"
 
 - name: Find board uuid for x86_64
-  shell: cat /sys/class/dmi/id/product_name
+  command: cat /sys/class/dmi/id/product_name
   register: reg_product_name_x86_64
   changed_when: false
   become: yes
@@ -57,7 +57,7 @@
     roles: "none"
     swap_size: 1
     swappiness: 1
-    packages_file: "{{packages_dir}}/packages_hass.py"
+    packages_file: "{{ packages_dir }}/packages_hass.py"
   when: arm and reg_product_name_armv7l.stdout == '00000000bed57e85'
 
 - name: Set server facts
@@ -74,7 +74,7 @@
     roles: "k8s,automount"
     swap_size: 10
     swappiness: 10
-    packages_file: "{{packages_dir}}/packages.py"
+    packages_file: "{{ packages_dir }}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7978'
 
 - name: Set master facts
@@ -91,7 +91,7 @@
     roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,torrent,bluetooth,work,repository"
     swap_size: 20
     swappiness: 10
-    packages_file: "{{packages_dir}}/packages.py"
+    packages_file: "{{ packages_dir }}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7C90'
 
 - name: Set xnote facts (xiaomi)
@@ -108,7 +108,7 @@
     roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,bluetooth,work,repository"
     swap_size: 8
     swappiness: 20
-    packages_file: "{{packages_dir}}/packages.py"
+    packages_file: "{{ packages_dir }}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'TM1613'
 
 - name: Set worknote facts
@@ -125,7 +125,7 @@
     roles: "font,docker,web,messengers,audio,media,office,file_managers,bluetooth,work,repository"
     swap_size: 35
     swappiness: 10
-    packages_file: "{{packages_dir}}/packages.py"
+    packages_file: "{{ packages_dir }}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'Latitude 5480'
 
 - name: Set KVM test facts
@@ -142,5 +142,5 @@
     roles: "font,docker,web,messengers,audio,media,office,file_managers,repository"
     swap_size: 4
     swappiness: 1
-    packages_file: "{{packages_dir}}/packages.py"
+    packages_file: "{{ packages_dir }}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'Standard PC (Q35 + ICH9, 2009)'

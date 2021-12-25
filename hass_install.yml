@@ -3,7 +3,9 @@
   hosts: hass
   gather_facts: false
   pre_tasks:
-    - include: common/tasks/init_facts.yml is_chroot_param=False
+    - import_tasks: common/tasks/init_facts.yml
+      vars:
+        is_chroot_param: False
   roles:
     - locale
     - users

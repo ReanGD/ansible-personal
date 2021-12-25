@@ -6,6 +6,8 @@
   environment:
     GNUPGHOME: /home/rean/.config/gnupg
   pre_tasks:
-    - include: common/tasks/init_facts.yml is_chroot_param=False
+    - import_tasks: common/tasks/init_facts.yml
+      vars:
+        is_chroot_param: False
   roles:
     - test
