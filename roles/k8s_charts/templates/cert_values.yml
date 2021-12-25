@@ -1,0 +1,6 @@
+env:
+  TZ: Europe/Moscow
+
+nameOverride: "cert"
+
+installCRDs: true

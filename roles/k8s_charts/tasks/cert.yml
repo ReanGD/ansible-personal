@@ -1,0 +1,9 @@
+---
+- import_tasks: package.yml
+  vars:
+  - name: cert
+  - version: v1.6.1
+  - repo: jetstack/cert-manager
+  - namespace: web
+  - extra_template: cert_extra.yml
+  - values_template: cert_values.yml
