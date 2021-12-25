@@ -183,13 +183,7 @@ def desktop_env():
                      "inter-font"]
 
     if is_gui("kde"):
-        gui_pkgs += ["plasma-desktop",  # minimal install
-                     "kdeconnect",  # connect to phone
-                     "plasma-pa",  # pulse audio plugins
-                     "kscreen",  # settings for screen configuration
-                     "kinfocenter",  # show information about computer
-                     "plasma-disks",  # monitoring disks (part of kinfocenter)
-                     "plasma-systemmonitor",  # system monitor
+        gui_pkgs += ["kdeconnect",  # connect to phone
                      "plasma5-applets-virtual-desktop-bar-git",  # tilling bar
                      "dolphin-plugins",
                      "print-manager"]
@@ -319,7 +313,7 @@ def k8s():
     if not is_role("k8s"):
         return []
 
-    return ["minikube", "podman"]
+    return ["helm"]
 
 
 def automount():
@@ -418,10 +412,10 @@ def bluetooth():
     if not is_role("bluetooth"):
         return []
 
-    if is_gui("kde"):
-        return ["bluedevil"]
-    else:
+    if not is_gui("kde"):
         return ["bluez-qt"]
+
+    return []
 
 
 def work():
@@ -431,7 +425,7 @@ def work():
     return ["openconnect"]  # for vpn to work
 
 
-groups = ["base-devel"]
+groups = []
 
 packages = []
 packages += system()
