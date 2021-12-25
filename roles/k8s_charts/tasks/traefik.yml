@@ -1,21 +1,12 @@
 ---
 # ansible-vault decrypt traefik_values.yml
 # ansible-vault encrypt traefik_values.yml
-- name: Include traefik_values.yml
-  include_vars:
-    file: traefik_values.yml
-    name: values
-
-- name: Install traefik
-  kubernetes.core.helm:
-    name: traefik
-    chart_version: 10.7.1
-    chart_ref: traefik/traefik
-    release_namespace: web
-    values: "{{ values | from_yaml }}"
-
-# ansible-vault decrypt traefik_routes.yml
-# ansible-vault encrypt traefik_routes.yml
-- name: Install traefik routes
-  kubernetes.core.k8s:
-    definition: "{{ lookup('file', 'traefik_routes.yml') | from_yaml_all | list }}"
+- import_tasks: package.yml
+  vars:
+  - name: traefik
+  - version: 10.9.1
+  - repo: traefik/traefik
+  - namespace: web
+  - update_repo: True
+  - extra_template: traefik_extra.yml
+  - values_template: traefik_values.yml

@@ -1,0 +1,31 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-prefix-traefik
+  namespace: {{ namespace }}
+spec:
+  stripPrefix:
+    prefixes:
+      - /traefik
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: "{{ name }}-dashboard"
+  namespace: {{ namespace }}
+  annotations:
+    helm.sh/hook: "post-install,post-upgrade"
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - kind: Rule
+    match: "Host(`{{ root_domain }}`) && (PathPrefix(`/traefik`) || PathPrefix(`/api`))"
+    services:
+    - name: api@internal
+      kind: TraefikService
+    middlewares:
+    - name: strip-prefix-traefik
+    - name: oauth
+  tls:
+    secretName: {{ cert_secret }}
