@@ -5,22 +5,55 @@
   include_vars:
     file: k8s_vars.yml
 
-- import_tasks: helm_plugins.yml
-- import_tasks: add_namespaces.yml
-- import_tasks: add_repositories.yml
-- import_tasks: traefik.yml
-# - import_tasks: traefik_remove.yml
-- import_tasks: cert_manager.yml
-# - import_tasks: cert_manager_remove.yml
-- import_tasks: traefik_forward_auth.yml
-# - import_tasks: traefik_forward_auth_remove.yml
-- import_tasks: homer.yml
-# - import_tasks: homer_remove.yml
-- import_tasks: registry.yml
-# - import_tasks: registry_remove.yml
-- import_tasks: reg.yml
-# - import_tasks: reg_remove.yml
-- import_tasks: drone.yml
-# - import_tasks: drone_remove.yml
-- import_tasks: drone_runner.yml
-# - import_tasks: drone_runner_remove.yml
+- name: Install Helm diff plugin
+  kubernetes.core.helm_plugin:
+    state: present
+    plugin_path: https://github.com/databus23/helm-diff
+
+- name: Create k8s namespaces
+  kubernetes.core.k8s:
+    name: "{{ item }}"
+    api_version: v1
+    kind: Namespace
+    state: present
+  loop:
+    - ci
+    - app
+    - web
+
+- name: Add helm repositories
+  kubernetes.core.helm_repository:
+    name: "{{ item.name }}"
+    repo_url: "{{ item.url }}"
+  loop:
+    - {name: "twuni",       url: "https://helm.twun.io" }
+    - {name: "jetstack",    url: "https://charts.jetstack.io" }
+    - {name: "traefik",     url: "https://helm.traefik.io/traefik" }
+    - {name: "k8s-at-home", url: "https://k8s-at-home.com/charts/" }
+    - {name: "volker",      url: "https://charts.cryptic.systems/volker.raschek" }
+
+- include_tasks: "{{ item }}"
+  vars:
+    action: remove
+  loop: []
+  # - traefik.yml
+  # - cert.yml
+  # - oauth.yml
+  # - homer.yml
+  # - registry.yml
+  # - reg.yml
+  # - drone.yml
+  # - runner.yml
+
+- include_tasks: "{{ item }}"
+  vars:
+    action: install
+  loop:
+  - traefik.yml
+  - cert.yml
+  - oauth.yml
+  - homer.yml
+  - registry.yml
+  - reg.yml
+  - drone.yml
+  - runner.yml
