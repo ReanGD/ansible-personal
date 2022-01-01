@@ -39,4 +39,4 @@ case $MENU_ID in
 	;;
 esac
 
-/usr/bin/ansible-playbook update.yml --ask-become-pass --ask-vault-pass --extra-vars "variable_host=${HOST_NAME}" $@
+/usr/bin/ansible-playbook setup.yml --ask-become-pass --ask-vault-pass --extra-vars "variable_host=${HOST_NAME} is_chroot_param=False" $@

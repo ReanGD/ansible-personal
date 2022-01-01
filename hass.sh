@@ -91,7 +91,7 @@ case $MENU_ID in
 	;;
   "3")
 	cd $ROOT_DIR
-	/usr/bin/ansible-playbook hass_install.yml --ask-become-pass --ask-vault-pass
+	/usr/bin/ansible-playbook setup.yml --ask-become-pass --ask-vault-pass --extra-vars "variable_host=hass is_chroot_param=False" $@
 	;;
   "4")
 	run_with_sudo

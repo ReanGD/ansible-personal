@@ -1,13 +1,13 @@
 ---
-- name: Install local mashine
-  hosts: local
+- name: Setup "{{ variable_host }}"
+  hosts: "{{ variable_host }}"
   gather_facts: false
   environment:
     GNUPGHOME: /home/rean/.config/gnupg
   pre_tasks:
     - import_tasks: tasks/common/init_facts.yml
       vars:
-        is_chroot_param: True
+        is_chroot_param: False
   roles:
     - locale
     - users
@@ -45,7 +45,7 @@
     - role: repository
       when: 'not is_chroot and "repository" in roles.split(",")'
     - role: dotfiles
-      when: x86_64
+      when: not is_chroot and x86_64
     - role: gui
       when: not is_chroot and gui!="none"
     - role: vs_code

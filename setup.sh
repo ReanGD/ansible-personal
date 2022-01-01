@@ -209,7 +209,7 @@ function setup_base {
 case $MENU_ID in
   "ansible")
     cd $ROOT_DIR
-    /usr/bin/ansible-playbook setup.yml --ask-become-pass --ask-vault-pass
+    /usr/bin/ansible-playbook setup.yml --ask-become-pass --ask-vault-pass --extra-vars "variable_host=local is_chroot_param=True"
 	;;
   * )
     run_with_sudo
