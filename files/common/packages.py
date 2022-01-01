@@ -31,19 +31,20 @@ def get_hostname_id() -> bool:
 
 
 def system():
-    system_pkgs = []
+    system_pkgs = ["gnupg", "rsync"]
+
+    if not is_x86_64():
+        return system_pkgs
 
     # utils
     system_pkgs += ["linux",
                     "linux-firmware",
                     "base",
                     "polkit",
-                    "gnupg",
                     "wget",
                     "curl",
                     "git",
                     "jq",
-                    "rsync",
                     "logrotate",
                     "nano",
                     "vim",
@@ -83,6 +84,9 @@ def system():
 
 def driver():
     driver_pkgs = []
+
+    if not is_x86_64():
+        return driver_pkgs
 
     if not is_gui("none"):
         driver_pkgs = ["mesa"]
@@ -404,6 +408,30 @@ def rsync_server():
     return ["rsync"]
 
 
+def hass():
+    if not is_role("hass"):
+        return []
+
+    hass_pkgs = []
+
+    # raspberry
+    # hass_pkgs += ["raspberrypi-firmware", "raspberrypi-bootloader-x", "linux-raspberrypi", "raspberrypi-bootloader"]
+
+    # hass deps
+    hass_pkgs += ["protobuf", "libjpeg-turbo", "rust"]
+
+    # build tools
+    hass_pkgs += ["gcc", "make", "pkgconf", "libffi", "libudev0-shim"]
+
+    # python
+    hass_pkgs += ["python", "python-pip", "python-virtualenv"]
+
+    # tls
+    hass_pkgs += ["certbot"]
+
+    return hass_pkgs
+
+
 def work():
     if not is_role("work"):
         return []
@@ -434,6 +462,7 @@ packages += file_managers()
 packages += torrent()
 packages += bluetooth()
 packages += rsync_server()
+packages += hass()
 packages += work()
 
 keys = []

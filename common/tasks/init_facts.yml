@@ -16,7 +16,7 @@
     install_user: aur_builder
     is_chroot: "{{ is_chroot_param }}"
     root_dir: "{{ inventory_dir }}"
-    packages_dir: "{{ inventory_dir }}/common/files"
+    packages_file: "{{ inventory_dir }}/files/common/files.packages.py"
     x86_64: "{{ ansible_facts['architecture'] == 'x86_64' }}"
     arm: "{{ ansible_facts['architecture'] == 'armv7l'}}"
     distro: "{{ reg_distro.stdout }}"
@@ -40,7 +40,7 @@
 # gui: "none" or ["lightdm", "awesome", "kde"]
 # develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "protobuf", "sqlite", "android"]
 # monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
-# roles: "none" or ["font", "docker", "k8s", "automount", "web", "game", "messengers", "audio", "media", "office", "file_managers", "torrent", "bluetooth", "work", "repository", "rsync_server"]
+# roles: "none" or ["font", "docker", "k8s", "automount", "web", "game", "messengers", "audio", "media", "office", "file_managers", "torrent", "bluetooth", "work", "repository", "rsync_server", "hass"]
 
 - name: Set hass facts
   set_fact:
@@ -52,10 +52,9 @@
     gui: "none"
     develop: "none"
     monitoring: "std,hddtemp"
-    roles: "rsync_server"
+    roles: "rsync_server,hass"
     swap_size: 1
     swappiness: 1
-    packages_file: "{{ packages_dir }}/packages_hass.py"
   when: arm and reg_product_name_armv7l.stdout == '00000000bed57e85'
 
 - name: Set server facts
@@ -71,7 +70,6 @@
     roles: "k8s,automount"
     swap_size: 10
     swappiness: 10
-    packages_file: "{{ packages_dir }}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7978'
 
 - name: Set master facts
@@ -87,7 +85,6 @@
     roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,torrent,bluetooth,work,repository"
     swap_size: 20
     swappiness: 10
-    packages_file: "{{ packages_dir }}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7C90'
 
 - name: Set xnote facts (xiaomi)
@@ -103,7 +100,6 @@
     roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,bluetooth,work,repository"
     swap_size: 8
     swappiness: 20
-    packages_file: "{{ packages_dir }}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'TM1613'
 
 - name: Set worknote facts
@@ -119,7 +115,6 @@
     roles: "font,docker,web,messengers,audio,media,office,file_managers,bluetooth,work,repository"
     swap_size: 35
     swappiness: 10
-    packages_file: "{{ packages_dir }}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'Latitude 5480'
 
 - name: Set KVM test facts
@@ -135,5 +130,4 @@
     roles: "font,docker,web,messengers,audio,media,office,file_managers,repository"
     swap_size: 4
     swappiness: 1
-    packages_file: "{{ packages_dir }}/packages.py"
   when: x86_64 and reg_product_name_x86_64.stdout == 'Standard PC (Q35 + ICH9, 2009)'
