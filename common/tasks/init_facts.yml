@@ -37,7 +37,6 @@
 # distro: "arch" or "archarm"
 # boot: "nvram_write_enble"|"nvram_write_disable" and ["crypto_home", "textonly"]
 # network_type: ["wired", "wired_old", "wireless", "systemd", "networkmanager"]
-# virtualization: "none" or "kvm_qemu" or "kvm_libvirt"
 # gui: "none" or ["lightdm", "awesome", "kde"]
 # develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "protobuf", "sqlite", "android"]
 # monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
@@ -50,7 +49,6 @@
     add_dop_user: False
     network_type: "wired_old,systemd"
     set_ssh_access_keys: False
-    virtualization: "none"
     gui: "none"
     develop: "none"
     monitoring: "std,hddtemp"
@@ -67,7 +65,6 @@
     add_dop_user: False
     network_type: "wired,systemd"
     set_ssh_access_keys: False
-    virtualization: "none"
     gui: "none"
     develop: "none"
     monitoring: "std,hddtemp"
@@ -84,7 +81,6 @@
     add_dop_user: False
     network_type: "wired,wireless,systemd"
     set_ssh_access_keys: True
-    virtualization: "none"
     gui: "lightdm,awesome,kde"
     develop: "std,cpp,python,go,android,protobuf"
     monitoring: "std,hddtemp"
@@ -101,7 +97,6 @@
     add_dop_user: True
     network_type: "wired,wireless,systemd"
     set_ssh_access_keys: True
-    virtualization: "none"
     gui: "lightdm,awesome,kde"
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,notebook,hddtemp"
@@ -118,7 +113,6 @@
     add_dop_user: False
     network_type: "wired,wireless,networkmanager"
     set_ssh_access_keys: True
-    virtualization: "none"
     gui: "lightdm,awesome,kde"
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,notebook,hddtemp"
@@ -135,7 +129,6 @@
     add_dop_user: False
     network_type: "wired,systemd"
     set_ssh_access_keys: True
-    virtualization: "none"
     gui: "lightdm,awesome,kde"
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,hddtemp"

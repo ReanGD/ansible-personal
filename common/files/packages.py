@@ -1,4 +1,4 @@
-# global x86_64, hostname_id, distro, network_type, virtualization, gui, develop, monitoring, roles
+# global x86_64, hostname_id, distro, network_type, gui, develop, monitoring, roles
 
 
 # pylama:ignore=E0602
@@ -28,10 +28,6 @@ def is_network_type(name: str) -> bool:
 
 def get_hostname_id() -> bool:
     return hostname_id  # type: ignore
-
-
-def get_virtualization() -> bool:
-    return virtualization  # type: ignore
 
 
 def system():
@@ -128,23 +124,6 @@ def network():
         network_pkgs += ["networkmanager"]
 
     return network_pkgs
-
-
-def vm():
-    if get_virtualization() == "kvm_qemu":
-        return ["qemu",
-                "virt-viewer",  # for SPICE
-                "edk2-ovmf"]  # for UEFI
-    elif get_virtualization() == "kvm_libvirt":
-        return ["qemu",
-                "libvirt",  # additional interface
-                "virt-viewer",  # for SPICE
-                "virt-manager",  # GUI for libvirt
-                "edk2-ovmf",  # for UEFI
-                "ebtables",  # for network
-                "dnsmasq"]  # for network
-    else:
-        return []
 
 
 def desktop_env():
@@ -438,7 +417,6 @@ packages = []
 packages += system()
 packages += driver()
 packages += network()
-packages += vm()
 packages += desktop_env()
 packages += development()
 packages += monitoring_utils()
