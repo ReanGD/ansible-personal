@@ -2,4 +2,3 @@
 dependencies:
   - role: packages_manager
   - role: packages
-  - role: hass_ssl

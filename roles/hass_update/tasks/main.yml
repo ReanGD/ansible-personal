@@ -22,7 +22,7 @@
     dest: /hass
 
 - name: Generate protobuf
-  shell: /hass/smart-home/generate_proto.sh
+  command: /hass/smart-home/generate_proto.sh
 
 - name: Restart homeassistant service
   service:

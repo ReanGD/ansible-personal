@@ -12,14 +12,14 @@
   become: yes
 
 - name: Create certificates
-  shell: certbot certonly --standalone --noninteractive --agree-tos --preferred-challenges=http-01 --email=reangd@yandex.ru --domain=iot.fr.to
+  command: certbot certonly --standalone --noninteractive --agree-tos --preferred-challenges=http-01 --email=reangd@yandex.ru --domain=iot.fr.to
   become: yes
-  when: cert_file.stat.exists == False
+  when: not cert_file.stat.exists
 
 - name: Update certificates
-  shell: certbot renew --standalone  --noninteractive --agree-tos --pre-hook "systemctl stop hass" --post-hook "systemctl start hass"
+  command: certbot renew --standalone  --noninteractive --agree-tos --pre-hook "systemctl stop hass" --post-hook "systemctl start hass"
   become: yes
-  when: cert_file.stat.exists == True
+  when: cert_file.stat.exists
 
 - name: Recursively change ownership of a directory
   file:
