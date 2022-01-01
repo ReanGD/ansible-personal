@@ -2,26 +2,26 @@
 - name: Copy ssh config
   copy:
     src: config
-    dest: "/home/{{main_user}}/.ssh/config"
+    dest: "/home/{{ main_user }}/.ssh/config"
     mode: 0400
     group: users
-    owner: "{{main_user}}"
+    owner: "{{ main_user }}"
 
 - name: Copy ansible ssh config
   copy:
     src: ansible_config
-    dest: "/home/{{main_user}}/.ssh/ansible_config"
+    dest: "/home/{{ main_user }}/.ssh/ansible_config"
     mode: 0400
     group: users
-    owner: "{{main_user}}"
+    owner: "{{ main_user }}"
 
 - name: Install ssh keys
   copy:
-    content: "{{item.key}}"
-    dest: "/home/{{main_user}}/.ssh/{{item.name}}"
+    content: "{{ item.key }}"
+    dest: "/home/{{ main_user }}/.ssh/{{ item.name }}"
     mode: 0400
     group: users
-    owner: "{{main_user}}"
+    owner: "{{ main_user }}"
   loop:
     - { key: "{{ aur_private_key }}", name: "aur" }
     - { key: "{{ aur_public_key }}", name: "aur.pub" }

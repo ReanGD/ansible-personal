@@ -33,7 +33,7 @@
   pkg_manager:
     name: iwd
   become: yes
-  become_user: "{{install_user}}"
+  become_user: "{{ install_user }}"
   when: '"wireless" in network_type.split(",")'
 
 - name: Create symbolic links for /etc/resolv.conf
@@ -43,49 +43,23 @@
     state: link
     force: yes
   become: yes
-  when: is_chroot == False
+  when: not is_chroot
 
-- name: Enable service systemd-networkd for chroot
+- name: Enable service systemd-networkd
   service:
     name: systemd-networkd.service
     enabled: yes
   become: yes
-  when: is_chroot == True
 
-- name: Start and enable service systemd-networkd for not chroot
-  service:
-    name: systemd-networkd.service
-    enabled: yes
-    state: started
-  become: yes
-  when: is_chroot == False
-
-- name: Enable service systemd-resolved for chroot
+- name: Enable service systemd-resolved
   service:
     name: systemd-resolved.service
     enabled: yes
   become: yes
-  when: is_chroot == True
 
-- name: Start and enable service systemd-resolved for not chroot
-  service:
-    name: systemd-resolved.service
-    enabled: yes
-    state: started
-  become: yes
-  when: is_chroot == False
-
-- name: Enable service iwd for chroot
+- name: Enable service iwd
   service:
     name: iwd.service
     enabled: yes
   become: yes
-  when: is_chroot == True and "wireless" in network_type.split(",")
-
-- name: Start and enable service iwd for not chroot
-  service:
-    name: iwd.service
-    enabled: yes
-    state: started
-  become: yes
-  when: is_chroot == False and "wireless" in network_type.split(",")
+  when: '"wireless" in network_type.split(",")'

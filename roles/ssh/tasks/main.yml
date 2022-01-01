@@ -1,11 +1,11 @@
 ---
 - name: Create ssh directory
   file:
-    path: "/home/{{main_user}}/.ssh"
+    path: "/home/{{ main_user }}/.ssh"
     state: directory
     mode: 0700
     group: users
-    owner: "{{main_user}}"
+    owner: "{{ main_user }}"
 
 # ansible-vault decrypt secrets.yml
 # ansible-vault encrypt secrets.yml
@@ -16,29 +16,29 @@
 - name: Copy ssh config for git
   copy:
     src: git_config
-    dest: "/home/{{main_user}}/.ssh/config"
+    dest: "/home/{{ main_user }}/.ssh/config"
     mode: 0400
     group: users
-    owner: "{{main_user}}"
-  when: set_ssh_access_keys == False
+    owner: "{{ main_user }}"
+  when: not set_ssh_access_keys
 
 - name: Install github keys
   copy:
-    content: "{{item.key}}"
-    dest: "/home/{{main_user}}/.ssh/{{item.name}}"
+    content: "{{ item.key }}"
+    dest: "/home/{{ main_user }}/.ssh/{{ item.name }}"
     mode: 0400
     group: users
-    owner: "{{main_user}}"
+    owner: "{{ main_user }}"
   loop:
     - { key: "{{ github_private_key }}", name: "github" }
     - { key: "{{ github_public_key }}", name: "github.pub" }
   loop_control:
     label: "{{ item.name }}"
 
-- include: keys.yml
+- include_tasks: keys.yml
   when: set_ssh_access_keys == True
 
-- include: sshd.yml
+- include_tasks: sshd.yml
 
-- include: known_hosts.yml
+- include_tasks: known_hosts.yml
   when: is_chroot == False

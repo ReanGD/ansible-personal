@@ -1,6 +1,6 @@
 ---
-- include: systemd_network.yml
+- include_tasks: systemd_network.yml
   when: "'systemd' in network_type.split(',')"
 
-- include: networkmanager.yml
+- include_tasks: networkmanager.yml
   when: "'networkmanager' in network_type.split(',')"

@@ -1,54 +1,54 @@
 ---
 - name: Add public key for hass
   copy:
-    content: "{{hass_public_key}}"
-    dest: "/home/{{main_user}}/.ssh/authorized_keys"
+    content: "{{ hass_public_key }}"
+    dest: "/home/{{ main_user }}/.ssh/authorized_keys"
     mode: 0400
     group: users
-    owner: "{{main_user}}"
+    owner: "{{ main_user }}"
   when: hostname_id == "hass"
 
 - name: Add public key for server
   copy:
-    content: "{{server_public_key}}"
-    dest: "/home/{{main_user}}/.ssh/authorized_keys"
+    content: "{{ server_public_key }}"
+    dest: "/home/{{ main_user }}/.ssh/authorized_keys"
     mode: 0400
     group: users
-    owner: "{{main_user}}"
+    owner: "{{ main_user }}"
   when: hostname_id == "server"
 
 - name: Add public key for master
   copy:
-    content: "{{master_public_key}}"
-    dest: "/home/{{main_user}}/.ssh/authorized_keys"
+    content: "{{ master_public_key }}"
+    dest: "/home/{{ main_user }}/.ssh/authorized_keys"
     mode: 0400
     group: users
-    owner: "{{main_user}}"
+    owner: "{{ main_user }}"
   when: hostname_id == "master"
 
 - name: Add public key for xnote
   copy:
-    content: "{{xnote_public_key}}"
-    dest: "/home/{{main_user}}/.ssh/authorized_keys"
+    content: "{{ xnote_public_key }}"
+    dest: "/home/{{ main_user }}/.ssh/authorized_keys"
     mode: 0400
     group: users
-    owner: "{{main_user}}"
+    owner: "{{ main_user }}"
   when: hostname_id == "xnote"
 
 - name: Add public key for worknote
   copy:
-    content: "{{worknote_public_key}}"
-    dest: "/home/{{main_user}}/.ssh/authorized_keys"
+    content: "{{ worknote_public_key }}"
+    dest: "/home/{{ main_user }}/.ssh/authorized_keys"
     mode: 0400
     group: users
-    owner: "{{main_user}}"
+    owner: "{{ main_user }}"
   when: hostname_id == "worknote"
 
 - name: Install package for ssh server
   pkg_manager:
     name: openssh
   become: yes
-  become_user: "{{install_user}}"
+  become_user: "{{ install_user }}"
 
 - name: Copy sshd config
   copy:
@@ -59,17 +59,8 @@
     owner: root
   become: yes
 
-- name: Enable service sshd for chroot
+- name: Enable service sshd
   service:
     name: sshd.service
     enabled: yes
   become: yes
-  when: is_chroot == True
-
-- name: Enable and start service sshd
-  service:
-    name: sshd.service
-    enabled: yes
-    state: started
-  become: yes
-  when: is_chroot == False
