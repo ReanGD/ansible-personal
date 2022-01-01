@@ -5,7 +5,7 @@
   environment:
     GNUPGHOME: /home/rean/.config/gnupg
   pre_tasks:
-    - import_tasks: common/tasks/init_facts.yml
+    - import_tasks: tasks/common/init_facts.yml
       vars:
         is_chroot_param: False
   roles:
@@ -13,34 +13,39 @@
     - users
     - network
     - packages_manager
-    # update required for each machine
     - ssh
     - role: boot
       when: x86_64
     - swap
     - systemd_configure
-    - time
+    - role: time
+      when: not is_chroot
     - role: font
       when: '"font" in roles.split(",")'
     - role: audio
       when: '"audio" in roles.split(",")'
-    - role: pkgcacheclean
-      when: x86_64
     - role: docker
       when: '"docker" in roles.split(",")'
     - role: automount
       when: '"automount" in roles.split(",")'
+    - role: rsync_server
+      when: '"rsync_server" in roles.split(",")'
+    - role: hass
+      when: '"hass" in roles.split(",")'
+    - role: hass_update
+      when: '"hass" in roles.split(",")'
     - role: monitoring
       when: monitoring!="none"
+    - role: packages
+      when: not is_chroot
+    - role: pkgcacheclean
+      when: x86_64
     - role: repository
-      when: '"repository" in roles.split(",")'
-    - dotfiles
-    # update required for each machine
+      when: 'not is_chroot and "repository" in roles.split(",")'
+    - role: dotfiles
+      when: not is_chroot and x86_64
     - role: gui
-      when: gui!="none"
-    - role: virtualization
-      when: virtualization!="none"
+      when: not is_chroot and gui!="none"
     - role: vs_code
-      when: develop!="none"
-    - packages
+      when: not is_chroot and develop!="none"
     - clear

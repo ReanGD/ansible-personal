@@ -1,18 +1,18 @@
 ---
 - name: Clone or update ReanGD repositories
   update_git:
-    repo: git@github.com:ReanGD/{{item.repo}}
-    dest: /home/{{ main_user }}/projects/home/{{item.dest}}
+    repo: git@github.com:ReanGD/{{ item.repo }}
+    dest: /home/{{ main_user }}/projects/home/{{ item.dest }}
   loop: "{{ reangd_repositories_map }}"
 
 - name: Clone or update TerraGraphics repositories
   update_git:
-    repo: git@github.com:TerraGraphics/{{item.repo}}
-    dest: /home/{{ main_user }}/projects/terra/{{item.dest}}
+    repo: git@github.com:TerraGraphics/{{ item.repo }}
+    dest: /home/{{ main_user }}/projects/terra/{{ item.dest }}
   loop: "{{ terra_repositories_map }}"
 
 - name: Clone or update LovelyHelper repositories
   update_git:
-    repo: git@github.com:LovelyHelper/{{item.repo}}
-    dest: /home/{{ main_user }}/projects/lovely_helper/{{item.dest}}
+    repo: git@github.com:LovelyHelper/{{ item.repo }}
+    dest: /home/{{ main_user }}/projects/lovely_helper/{{ item.dest }}
   loop: "{{ lovely_helper_repositories_map }}"

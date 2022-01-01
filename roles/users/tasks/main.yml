@@ -6,7 +6,7 @@
     file: secrets.yml
 
 - name: Find docker group
-  shell: getent group docker
+  command: getent group docker
   register: reg_exists_docker_group
   changed_when: false
   failed_when: reg_exists_docker_group.rc == 1
@@ -22,7 +22,7 @@
   when: reg_exists_docker_group.rc != 0
 
 - name: Find libvirt group
-  shell: getent group libvirt
+  command: getent group libvirt
   register: reg_exists_libvirt_group
   changed_when: false
   failed_when: reg_exists_libvirt_group.rc == 1
@@ -47,7 +47,7 @@
   user:
     name: root
     append: no
-    password: "{{root_user_password}}"
+    password: "{{ root_user_password }}"
   become: yes
 
 - name: Create main user
@@ -56,8 +56,8 @@
     append: no
     create_home: yes
     group: users
-    groups: video,audio,storage,power,uucp,i2c{{docker_group}}{{libvirt_group}}
-    password: "{{main_user_password}}"
+    groups: video,audio,storage,power,uucp,i2c{{ docker_group }}{{ libvirt_group }}
+    password: "{{ main_user_password }}"
   when: hostname_id != "worknote"
   become: yes
 
@@ -67,21 +67,21 @@
     append: no
     create_home: yes
     group: users
-    groups: video,audio,storage,power,uucp,i2c{{docker_group}}{{libvirt_group}}
-    password: "{{work_user_password}}"
+    groups: video,audio,storage,power,uucp,i2c{{ docker_group }}{{ libvirt_group }}
+    password: "{{ work_user_password }}"
   when: hostname_id == "worknote"
   become: yes
 
 - name: Create dop user
   user:
-    name: "{{dop_user}}"
+    name: "{{ dop_user }}"
     append: no
     create_home: yes
     group: users
     groups: video,audio,storage,power,i2c
-    password: "{{dop_user_password}}"
+    password: "{{ dop_user_password }}"
     uid: 1001
-  when: add_dop_user == True
+  when: add_dop_user
   become: yes
 
 - name: Create install_user user
