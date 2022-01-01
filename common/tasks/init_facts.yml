@@ -41,7 +41,7 @@
 # gui: "none" or ["lightdm", "awesome", "kde"]
 # develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "protobuf", "sqlite", "android"]
 # monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
-# roles: "none" or ["font", "docker", "k8s", "automount", "web", "game", "messengers", "audio", "media", "office", "file_managers", "torrent", "bluetooth", "work", "repository"]
+# roles: "none" or ["font", "docker", "k8s", "automount", "web", "game", "messengers", "audio", "media", "office", "file_managers", "torrent", "bluetooth", "work", "repository", "rsync_server"]
 
 - name: Set hass facts
   set_fact:
@@ -54,7 +54,7 @@
     gui: "none"
     develop: "none"
     monitoring: "std,hddtemp"
-    roles: "none"
+    roles: "rsync_server"
     swap_size: 1
     swappiness: 1
     packages_file: "{{ packages_dir }}/packages_hass.py"

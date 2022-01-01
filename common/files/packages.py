@@ -418,6 +418,13 @@ def bluetooth():
     return []
 
 
+def rsync_server():
+    if not is_role("rsync_server"):
+        return []
+
+    return ["rsync"]
+
+
 def work():
     if not is_role("work"):
         return []
@@ -448,6 +455,7 @@ packages += office()
 packages += file_managers()
 packages += torrent()
 packages += bluetooth()
+packages += rsync_server()
 packages += work()
 
 keys = []

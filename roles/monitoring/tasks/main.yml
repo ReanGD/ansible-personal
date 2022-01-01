@@ -1,6 +1,6 @@
 ---
-- include: hddtemp.yml
-  when: "'hddtemp' in monitoring.split(',')"
+- import_tasks: hddtemp.yml
+  when: "not is_chroot and 'hddtemp' in monitoring.split(',')"
 
-- include: ups.yml
+- import_tasks: ups.yml
   when: "'ups' in monitoring.split(',')"

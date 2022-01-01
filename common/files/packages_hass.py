@@ -27,7 +27,7 @@ pkgs += ["python", "python-pip", "python-virtualenv"]
 pkgs += ["libffi", "libudev0-shim"]
 
 # hass deps
-pkgs += ["protobuf", "mosquitto", "libjpeg-turbo", "rust"]
+pkgs += ["protobuf", "libjpeg-turbo", "rust"]
 
 # ssl
 pkgs += ["certbot"]

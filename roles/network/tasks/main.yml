@@ -1,6 +1,13 @@
 ---
-- include_tasks: systemd_network.yml
+- name: Install packages for wireless
+  pkg_manager:
+    name: iwd
+  become: yes
+  become_user: "{{ install_user }}"
+  when: '"wireless" in network_type.split(",")'
+
+- import_tasks: systemd_network.yml
   when: "'systemd' in network_type.split(',')"
 
-- include_tasks: networkmanager.yml
+- import_tasks: networkmanager.yml
   when: "'networkmanager' in network_type.split(',')"

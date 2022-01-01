@@ -8,9 +8,9 @@
   become: yes
 
 - name: Create swapfile
-  command: dd if=/dev/zero of=/swapfile bs=1G count={{swap_size}}
+  command: dd if=/dev/zero of=/swapfile bs=1G count={{ swap_size }}
   become: yes
-  when: reg_swapfile.stat.exists == False
+  when: not reg_swapfile.stat.exists
 
 - name: Set swapfile permissions
   file:
@@ -23,12 +23,12 @@
 - name: Init swapfile
   command: mkswap /swapfile
   become: yes
-  when: reg_swapfile.stat.exists == False
+  when: not reg_swapfile.stat.exists
 
 - name: Enable swapfile
   command: swapon /swapfile
   become: yes
-  when: reg_swapfile.stat.exists == False
+  when: not reg_swapfile.stat.exists
 
 - name: Add swapfile to /etc/fstab
   lineinfile:
@@ -36,7 +36,7 @@
     line: "/swapfile none swap defaults 0 0"
     state: present
   become: yes
-  when: reg_swapfile.stat.exists == False
+  when: not reg_swapfile.stat.exists
 
 - name: Configure swap settings
   template:

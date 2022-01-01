@@ -35,10 +35,10 @@
   loop_control:
     label: "{{ item.name }}"
 
-- include_tasks: keys.yml
-  when: set_ssh_access_keys == True
+- import_tasks: keys.yml
+  when: set_ssh_access_keys
 
-- include_tasks: sshd.yml
+- import_tasks: sshd.yml
 
-- include_tasks: known_hosts.yml
-  when: is_chroot == False
+- import_tasks: known_hosts.yml
+  when: not is_chroot

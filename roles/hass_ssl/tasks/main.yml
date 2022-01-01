@@ -3,10 +3,10 @@
   pkg_manager:
     name: certbot
   become: yes
-  become_user: "{{install_user}}"
+  become_user: "{{ install_user }}"
 
 - name: Check that certificate files exist
-  stat: 
+  stat:
     path: /etc/letsencrypt/live/iot.fr.to/fullchain.pem
   register: cert_file
   become: yes
@@ -23,7 +23,7 @@
 
 - name: Recursively change ownership of a directory
   file:
-    path: "{{item}}"
+    path: "{{ item }}"
     state: directory
     recurse: yes
     mode: 0755

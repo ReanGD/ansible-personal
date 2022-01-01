@@ -1,9 +1,9 @@
 ---
 
-- include: arch.yml
+- import_tasks: arch.yml
   when: distro == "arch"
 
-- include: archarm.yml
+- import_tasks: archarm.yml
   when: distro == "archarm"
 
 - name: Update pacman cache
@@ -17,5 +17,5 @@
   pkg_manager:
     name: yay
   become: yes
-  become_user: "{{install_user}}"
+  become_user: "{{ install_user }}"
   when: x86_64

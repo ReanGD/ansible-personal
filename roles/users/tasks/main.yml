@@ -52,7 +52,7 @@
 
 - name: Create main user
   user:
-    name: "{{main_user}}"
+    name: "{{ main_user }}"
     append: no
     create_home: yes
     group: users
@@ -63,7 +63,7 @@
 
 - name: Create main user
   user:
-    name: "{{main_user}}"
+    name: "{{ main_user }}"
     append: no
     create_home: yes
     group: users
@@ -86,7 +86,7 @@
 
 - name: Create install_user user
   user:
-    name: "{{install_user}}"
+    name: "{{ install_user }}"
     append: no
     create_home: yes
     group: wheel

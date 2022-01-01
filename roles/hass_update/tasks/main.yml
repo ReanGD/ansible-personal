@@ -6,20 +6,20 @@
     src: secrets.yaml
     dest: /hass/dotfiles-hass
     decrypt: yes
-    owner: "{{main_user}}"
+    owner: "{{ main_user }}"
     group: users
     mode: 0644
 
 - name: Synchronization smart-home
   synchronize:
-    src: /home/{{main_user}}/projects/home/smart-home
+    src: /home/{{ main_user }}/projects/home/smart-home
     dest: /hass
     delete: true
 
 - name: Synchronization dotfiles-hass
   synchronize:
-    src: /home/{{main_user}}/projects/home/dotfiles-hass
-    dest: /hass 
+    src: /home/{{ main_user }}/projects/home/dotfiles-hass
+    dest: /hass
 
 - name: Generate protobuf
   shell: /hass/smart-home/generate_proto.sh

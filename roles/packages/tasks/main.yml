@@ -1,17 +1,17 @@
 ---
 - name: Create gpg dir
   file:
-    path: "/home/{{main_user}}/.config/gnupg"
+    path: "/home/{{ main_user }}/.config/gnupg"
     state: directory
     mode: 0700
     group: users
-    owner: "{{main_user}}"
+    owner: "{{ main_user }}"
 
 - name: Install package gnupg
   pkg_manager:
     name: gnupg
   become: yes
-  become_user: "{{install_user}}"
+  become_user: "{{ install_user }}"
 
 - name: Import package keys
   pkg_manager:
@@ -24,4 +24,4 @@
     command: install_config
     config: "{{packages_file}}"
   become: yes
-  become_user: "{{install_user}}"
+  become_user: "{{ install_user }}"

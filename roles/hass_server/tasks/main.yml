@@ -14,7 +14,7 @@
 
 - name: Create dirs for homeassistant
   file:
-    path: "{{item}}"
+    path: "{{ item }}"
     state: directory
     mode: 0755
     group: users

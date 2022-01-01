@@ -24,7 +24,7 @@
       changed_when: false
 
     - name: Install packages
-      apt: name={{item}} state=present
+      apt: name={{ item }} state=present
       with_items:
         - htop
         - lego
@@ -38,7 +38,7 @@
 
     - name: Copy nginx config
       copy:
-        src: "{{file_root}}/etc/nginx/sites-enabled/default"      
+        src: "{{file_root}}/etc/nginx/sites-enabled/default"
         dest: /etc/nginx/sites-enabled/default
         owner: root
         group: root
@@ -54,8 +54,8 @@
 
     - name: Copy user scripts
       copy:
-        src: "{{file_root}}/usr/bin/{{item}}"
-        dest: /usr/bin/{{item}}
+        src: "{{file_root}}/usr/bin/{{ item }}"
+        dest: /usr/bin/{{ item }}
         owner: root
         group: root
         mode: 0755
@@ -88,7 +88,7 @@
         mode: 0400
 
     - name: Remove dirs
-      file: path={{item}} state=absent
+      file: path={{ item }} state=absent
       with_items:
         - /tmp/dokuwiki-{{dokuwiki_version}}
         - /dokuwiki
@@ -108,7 +108,7 @@
 
     - name: Stop nginx for generate ssl certificates
       service: name=nginx state=stopped
-      when: ssl_dir.stat.isdir is not defined 
+      when: ssl_dir.stat.isdir is not defined
 
     - name: Generate dhparam
       command: openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048

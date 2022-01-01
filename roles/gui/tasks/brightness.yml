@@ -7,7 +7,7 @@
   pkg_manager:
     name: ddcutil
   become: yes
-  become_user: "{{install_user}}"
+  become_user: "{{ install_user }}"
 
 - name: Load kernel module for ddcutil
   copy:

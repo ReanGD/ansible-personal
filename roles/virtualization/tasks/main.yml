@@ -7,7 +7,7 @@
 
 - name: Add group user
   user:
-    name: "{{main_user}}"
+    name: "{{ main_user }}"
     append: yes
     groups: libvirt
   become: yes

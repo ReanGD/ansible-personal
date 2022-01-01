@@ -3,13 +3,13 @@
   pkg_manager:
     name: nfs-utils
   become: yes
-  become_user: "{{install_user}}"
+  become_user: "{{ install_user }}"
 
 - name: Install servicies for nfs mount
   copy:
-    src: "{{item}}"
-    dest: /etc/systemd/system/{{item}}
-    mode: 0644
+    src: "{{ item }}"
+    dest: /etc/systemd/system/{{ item }}
+    mode: '0644'
     group: root
     owner: root
   become: yes
@@ -23,9 +23,8 @@
 
 - name: Enable and start servicies for nfs mount
   service:
-    name: "{{item}}"
+    name: "{{ item }}"
     enabled: yes
-    state: started
   become: yes
   loop:
     - mnt-nas-backup.automount

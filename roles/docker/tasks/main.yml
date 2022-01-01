@@ -3,18 +3,17 @@
   pkg_manager:
     name: docker, docker-compose
   become: yes
-  become_user: "{{install_user}}"
+  become_user: "{{ install_user }}"
 
 - name: Enable and start docker service
   service:
     name: docker.service
     enabled: yes
-    state: started
   become: yes
 
 - name: Add group user
   user:
-    name: "{{main_user}}"
+    name: "{{ main_user }}"
     append: yes
     groups: docker
   become: yes

@@ -14,7 +14,7 @@
   copy:
     src: timesyncd.conf
     dest: /etc/systemd/timesyncd.conf
-    mode: 0446
+    mode: '0446'
     group: root
     owner: root
   become: yes

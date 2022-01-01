@@ -3,4 +3,4 @@
   pkg_manager:
     name: qemu,virt-viewer,edk2-ovmf
   become: yes
-  become_user: "{{install_user}}"
+  become_user: "{{ install_user }}"

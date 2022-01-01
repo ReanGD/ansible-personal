@@ -3,7 +3,7 @@
   copy:
     src: journald.conf
     dest: /etc/systemd/journald.conf
-    mode: 0446
+    mode: '0446'
     group: root
     owner: root
   become: yes
@@ -12,19 +12,17 @@
   pkg_manager:
     name: inetutils
   become: yes
-  become_user: "{{install_user}}"
+  become_user: "{{ install_user }}"
 
 - name: Set hostname
   ansible.builtin.hostname:
-    name: "{{hostname_id}}"
+    name: "{{ hostname_id }}"
     use: systemd
   become: yes
-  when: is_chroot == False
+  when: not is_chroot
 
 - name: Enable fstrim timer
   service:
     name: fstrim.timer
     enabled: yes
-    state: started
   become: yes
-  when: is_chroot == False
