@@ -31,7 +31,12 @@ def get_hostname_id() -> bool:
 
 
 def system():
-    system_pkgs = ["gnupg", "rsync"]
+    system_pkgs = ["gnupg",
+                   "base",
+                   "inetutils",  # for set hostname (crazy ansible code)
+                   "rsync",
+                   "dialog",
+                   "nano"]
 
     if not is_x86_64():
         return system_pkgs
@@ -39,20 +44,16 @@ def system():
     # utils
     system_pkgs += ["linux",
                     "linux-firmware",
-                    "base",
                     "polkit",
                     "wget",
                     "curl",
                     "git",
                     "jq",
                     "logrotate",
-                    "nano",
                     "vim",
                     "pacutils",
                     "pkgfile",  # pkgfile makepkg (get package for makepkg)
-                    "dialog",
                     "libnewt",  # external dialog
-                    "inetutils",  # for set hostname (crazy ansible code)
                     "man-db"]
 
     # ansible
@@ -249,11 +250,11 @@ def monitoring_utils():
     if is_monitoring("std"):
         monitoring_pkgs += ["iftop",  # network monitor
                             "htop",  # process monitor
-                            "iotop",  # disk monitor
-                            "hwinfo"]  # info about hardware
+                            "iotop"]  # disk monitor
 
         if is_x86_64():
-            monitoring_pkgs += ["hw-probe"]  # check hardware and find drivers
+            monitoring_pkgs += ["hwinfo",    # info about hardware
+                                "hw-probe"]  # check hardware and find drivers
 
     if is_monitoring("notebook"):
         monitoring_pkgs += ["powertop"]
@@ -415,10 +416,10 @@ def hass():
     hass_pkgs = []
 
     # raspberry
-    # hass_pkgs += ["raspberrypi-firmware", "raspberrypi-bootloader-x", "linux-raspberrypi", "raspberrypi-bootloader"]
+    hass_pkgs += ["raspberrypi-firmware", "raspberrypi-bootloader-x", "raspberrypi-bootloader", "linux-rpi"]
 
     # hass deps
-    hass_pkgs += ["protobuf", "libjpeg-turbo", "rust"]
+    hass_pkgs += ["protobuf", "libjpeg-turbo", "rust", "unzip"]
 
     # build tools
     hass_pkgs += ["gcc", "make", "pkgconf", "libffi", "libudev0-shim"]
