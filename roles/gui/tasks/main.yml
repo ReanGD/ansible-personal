@@ -1,6 +1,6 @@
 ---
-- include: xorg.yml
-- include: brightness.yml
+- import_tasks: xorg.yml
+- import_tasks: brightness.yml
 
-- include: lightdm.yml
+- import_tasks: lightdm.yml
   when: "'lightdm' in gui.split(',')"

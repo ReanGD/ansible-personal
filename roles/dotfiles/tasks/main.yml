@@ -82,10 +82,10 @@
   loop_control:
     label: "{{ item.name }}"
 
-- include: cloud.yml
+- import_tasks: cloud.yml
   when: gui!="none"
 
-- include: doublecmd.yml
+- import_tasks: doublecmd.yml
   when: gui!="none"
 
 - name: Install packages for update desktop database

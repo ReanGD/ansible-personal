@@ -8,7 +8,7 @@
   become: yes
 
 - name: Create swapfile
-  command: dd if=/dev/zero of=/swapfile bs=1G count={{ swap_size }}
+  command: dd if=/dev/zero of=/swapfile bs=1M count={{ swap_size }}
   become: yes
   when: not reg_swapfile.stat.exists
 
