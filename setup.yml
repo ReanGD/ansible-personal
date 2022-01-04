@@ -6,8 +6,6 @@
     GNUPGHOME: /home/rean/.config/gnupg
   pre_tasks:
     - import_tasks: tasks/common/init_facts.yml
-      vars:
-        is_chroot_param: False
   roles:
     - locale
     - users
@@ -34,7 +32,10 @@
       when: '"rsync_server" in roles.split(",")'
     - role: hass
       when: '"hass" in roles.split(",")'
-    - role: hass_update
+    - role: hass_maintenance
+      var:
+        is_hass_copy: False
+        is_hass_update: True
       when: '"hass" in roles.split(",")'
     - role: monitoring
       when: monitoring!="none"

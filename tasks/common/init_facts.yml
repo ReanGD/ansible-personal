@@ -16,7 +16,7 @@
     install_user: aur_builder
     is_chroot: "{{ is_chroot_param }}"
     root_dir: "{{ inventory_dir }}"
-    packages_file: "{{ inventory_dir }}/files/common/files.packages.py"
+    packages_file: "{{ inventory_dir }}/files/common/packages.py"
     x86_64: "{{ ansible_facts['architecture'] == 'x86_64' }}"
     arm: "{{ ansible_facts['architecture'] == 'armv7l'}}"
     distro: "{{ reg_distro.stdout }}"
@@ -53,7 +53,7 @@
     develop: "none"
     monitoring: "std,hddtemp"
     roles: "rsync_server,hass"
-    swap_size: 1
+    swap_size: 2048
     swappiness: 1
   when: arm and reg_product_name_armv7l.stdout == '00000000bed57e85'
 
@@ -68,7 +68,7 @@
     develop: "none"
     monitoring: "std,hddtemp"
     roles: "k8s,automount"
-    swap_size: 10
+    swap_size: 10240
     swappiness: 10
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7978'
 
@@ -83,7 +83,7 @@
     develop: "std,cpp,python,go,android,protobuf"
     monitoring: "std,hddtemp"
     roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,torrent,bluetooth,work,repository"
-    swap_size: 20
+    swap_size: 20480
     swappiness: 10
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7C90'
 
@@ -98,7 +98,7 @@
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,notebook,hddtemp"
     roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,bluetooth,work,repository"
-    swap_size: 8
+    swap_size: 8192
     swappiness: 20
   when: x86_64 and reg_product_name_x86_64.stdout == 'TM1613'
 
@@ -113,7 +113,7 @@
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,notebook,hddtemp"
     roles: "font,docker,web,messengers,audio,media,office,file_managers,bluetooth,work,repository"
-    swap_size: 35
+    swap_size: 35840
     swappiness: 10
   when: x86_64 and reg_product_name_x86_64.stdout == 'Latitude 5480'
 
@@ -128,6 +128,6 @@
     develop: "std,cpp,python,go,protobuf"
     monitoring: "std,hddtemp"
     roles: "font,docker,web,messengers,audio,media,office,file_managers,repository"
-    swap_size: 4
+    swap_size: 4096
     swappiness: 1
   when: x86_64 and reg_product_name_x86_64.stdout == 'Standard PC (Q35 + ICH9, 2009)'

@@ -1,5 +1,5 @@
 ---
-- name: Update home assistant
+- name: Copy settings from home assistant to local host
   hosts: hass
   gather_facts: false
   pre_tasks:
@@ -7,4 +7,4 @@
       vars:
         is_chroot_param: False
   roles:
-    - hass_update
+    - hass_maintenance

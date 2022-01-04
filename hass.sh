@@ -83,11 +83,11 @@ fi
 case $MENU_ID in
   "1")
 	cd $ROOT_DIR
-	/usr/bin/ansible-playbook hass_update.yml --ask-become-pass --ask-vault-pass
+	/usr/bin/ansible-playbook hass_maintenance.yml --ask-become-pass --ask-vault-pass --extra-vars "is_hass_update=True" $@
 	;;
   "2")
 	cd $ROOT_DIR
-	/usr/bin/ansible-playbook hass_copy.yml
+	/usr/bin/ansible-playbook hass_maintenance.yml --extra-vars "is_hass_copy=True" $@
 	;;
   "3")
 	cd $ROOT_DIR

@@ -1,0 +1,5 @@
+---
+- import_tasks: hass_copy.yml
+  when: is_hass_copy is defined and is_hass_copy
+- import_tasks: hass_update.yml
+  when: is_hass_update is defined and is_hass_update
