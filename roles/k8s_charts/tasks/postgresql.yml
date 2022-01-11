@@ -1,0 +1,11 @@
+---
+- import_tasks: package.yml
+  vars:
+  - name: postgresql
+  - version: 1.0.0
+  - repo: reangd/postgresql
+  - namespace: storage
+  - values_template: postgresql_values.yml
+  - volumes:
+    - { name: "psql_data", path: "/psql_data", size: "50Gi" }
+    - { name: "psql_backup", path: "/psql_backup", size: "100Gi" }
