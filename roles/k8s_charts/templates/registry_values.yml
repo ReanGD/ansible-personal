@@ -5,6 +5,7 @@ env:
 
 ingress:
   enabled: true
+  className: ""
   path: /v2
   hosts:
     - {{ registry_domain }}

@@ -2,7 +2,7 @@
 - import_tasks: package.yml
   vars:
   - name: registry
-  - version: 1.16.0
+  - version: 2.0.0
   - repo: twuni/docker-registry
   - namespace: app
   - values_template: registry_values.yml

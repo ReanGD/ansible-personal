@@ -20,16 +20,21 @@
     - ci
     - app
     - web
+    - storage
 
 - name: Add helm repositories
   kubernetes.core.helm_repository:
     name: "{{ item.name }}"
     repo_url: "{{ item.url }}"
   loop:
-    - {name: "twuni",       url: "https://helm.twun.io" }
+  # official
     - {name: "jetstack",    url: "https://charts.jetstack.io" }
     - {name: "traefik",     url: "https://helm.traefik.io/traefik" }
+    - {name: "reangd",      url: "https://reangd.github.io/images" }
+  # trusted
     - {name: "k8s-at-home", url: "https://k8s-at-home.com/charts/" }
+  # untrusted
+    - {name: "twuni",       url: "https://helm.twun.io" }
     - {name: "volker",      url: "https://charts.cryptic.systems/volker.raschek" }
 
 - include_tasks: "{{ item }}"
@@ -39,6 +44,7 @@
   # - traefik.yml
   # - cert.yml
   # - oauth.yml
+  # - postgresql.yml
   # - homer.yml
   # - registry.yml
   # - reg.yml
@@ -52,6 +58,7 @@
   - traefik.yml
   - cert.yml
   - oauth.yml
+  - postgresql.yml
   - homer.yml
   - registry.yml
   - reg.yml

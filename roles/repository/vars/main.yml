@@ -6,7 +6,6 @@ reangd_repositories_map:
   - { repo: "cpp-network.git",                dest: "cpp-network" }
   - { repo: "cpp-rtge.git",                   dest: "cpp-rtge" }
   - { repo: "vscode-devdocs-io.git",          dest: "vscode-devdocs-io" }
-  - { repo: "docker-alpine.git",              dest: "docker-alpine" }
   - { repo: "dokuwiki-plugin-addnewpage.git", dest: "dokuwiki-plugin-addnewpage" }
   - { repo: "dokuwiki-tablecalc.git",         dest: "dokuwiki-tablecalc" }
   - { repo: "dotfiles.git",                   dest: "dotfiles" }
@@ -19,6 +18,7 @@ reangd_repositories_map:
   - { repo: "go-morphy.git",                  dest: "go/src/github.com/ReanGD/go-morphy" }
   - { repo: "go-web-search.git",              dest: "go/src/github.com/ReanGD/go-web-search" }
   - { repo: "HabrArticle.git",                dest: "HabrArticle" }
+  - { repo: "images.git",                     dest: "images" }
   - { repo: "kino-player.git",                dest: "kino-player" }
   - { repo: "LearningEnglish.git",            dest: "LearningEnglish" }
   - { repo: "machine-learning",               dest: "machine-learning" }
@@ -40,5 +40,6 @@ terra_repositories_map:
   - { repo: "TerraEngine.git", dest: "TerraEngine" }
 
 lovely_helper_repositories_map:
+  - { repo: "AI.git",               dest: "AI" }
   - { repo: "backend.git",          dest: "backend" }
   - { repo: "android_frontend.git", dest: "android_frontend" }
