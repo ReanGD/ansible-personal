@@ -1,17 +1,17 @@
 secret:
   POSTGRESQL_PASSWORD: {{ postgresql_password }}
-  POSTGRESQL_ARCHIVE_TIMEOUT: 600
+  POSTGRESQL_ARCHIVE_TIMEOUT: "600"
   WALG_COMPRESSION_METHOD: "brotli"
   WALG_BACKUP_TIME: "0 6 * * *"
-  WALG_DELTA_MAX_STEPS: 6
-  WALG_BACKUP_DEL_RETAIN: 4
+  WALG_DELTA_MAX_STEPS: "6"
+  WALG_BACKUP_DEL_RETAIN: "4"
 
 persistence:
-  psql_data:
+  psql-data:
     enabled: true
     type: pvc
-    existingClaim: psql_data
-  psql_backup:
+    existingClaim: psql-data
+  psql-backup:
     enabled: true
     type: pvc
-    existingClaim: psql_backup
+    existingClaim: psql-backup
