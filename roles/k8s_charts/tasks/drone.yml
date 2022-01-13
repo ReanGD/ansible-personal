@@ -2,7 +2,7 @@
 - import_tasks: package.yml
   vars:
   - name: drone
-  - version: 0.2.2
+  - version: 0.2.4
   - repo: volker/drone
   - namespace: ci
   - extra_template: drone_extra.yml

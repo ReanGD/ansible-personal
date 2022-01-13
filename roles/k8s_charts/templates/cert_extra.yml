@@ -29,7 +29,9 @@ spec:
   - {{ ci_domain }}
   - {{ iot_domain }}
   - {{ root_domain }}
+  - {{ test_domain }}
   - {{ oauth_domain }}
+  - {{ pgadmin_domain }}
   - {{ registry_domain }}
   issuerRef:
     name: {{ name }}

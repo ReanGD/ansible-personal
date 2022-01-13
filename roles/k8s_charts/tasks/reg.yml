@@ -4,5 +4,5 @@
   - name: reg
   - version: 3.1.0
   - repo: k8s-at-home/reg
-  - namespace: app
+  - namespace: storage
   - values_template: reg_values.yml

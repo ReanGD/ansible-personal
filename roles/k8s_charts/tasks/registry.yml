@@ -4,7 +4,7 @@
   - name: registry
   - version: 2.0.0
   - repo: twuni/docker-registry
-  - namespace: app
+  - namespace: storage
   - values_template: registry_values.yml
   - volumes:
     - { name: "registry", path: "/registry", size: "20Gi" }
