@@ -1,0 +1,10 @@
+---
+- import_tasks: package.yml
+  vars:
+  - name: pgadmin
+  - version: 1.8.2
+  - repo: runix/pgadmin4
+  - namespace: storage
+  - values_template: pgadmin_values.yml
+  - volumes:
+    - { name: "pgadmin", path: "/pgadmin", size: "10Gi" }

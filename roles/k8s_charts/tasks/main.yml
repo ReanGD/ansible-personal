@@ -35,7 +35,9 @@
     - {name: "k8s-at-home", url: "https://k8s-at-home.com/charts/" }
   # untrusted
     - {name: "twuni",       url: "https://helm.twun.io" }
-    - {name: "volker",      url: "https://charts.cryptic.systems/volker.raschek" }
+    - {name: "runix",       url: "https://helm.runix.net" }
+  # wrong
+    # - {name: "volker",      url: "https://charts.cryptic.systems/volker.raschek" }
 
 - include_tasks: "{{ item }}"
   vars:
@@ -44,7 +46,8 @@
   # - traefik.yml
   # - cert.yml
   # - oauth.yml
-  # - postgresql.yml
+  # - posgtresql.yml
+  # - pgadmin.yml
   # - homer.yml
   # - registry.yml
   # - reg.yml
@@ -59,8 +62,9 @@
   - cert.yml
   - oauth.yml
   - postgresql.yml
+  - pgadmin.yml
   - homer.yml
   - registry.yml
   - reg.yml
-  - drone.yml
-  - runner.yml
+  # - drone.yml
+  # - runner.yml
