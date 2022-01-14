@@ -1,0 +1,12 @@
+nameOverride: "ghactions"
+
+authSecret:
+  create: true
+  github_app_id: "{{ github_runner_app_id }}"
+  github_app_installation_id: "{{ github_runner_app_installation_id }}"
+  github_app_private_key: |
+    {{ github_runner_app_private_key }}
+
+scope:
+  singleNamespace: true
+  watchNamespace: "ci"

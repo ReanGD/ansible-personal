@@ -1,0 +1,10 @@
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: "{{ name }}-runner"
+  namespace: {{ namespace }}
+spec:
+  replicas: 1
+  template:
+    spec:
+      organization: LovelyHelper

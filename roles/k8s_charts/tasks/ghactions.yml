@@ -1,0 +1,10 @@
+---
+- import_tasks: package.yml
+  vars:
+  - name: ghactions
+  - version: 0.15.1
+  - repo: ghactions/actions-runner-controller
+  - namespace: ci
+  - wait_finish: True
+  - extra_template: ghactions_extra.yml
+  - values_template: ghactions_values.yml

@@ -36,6 +36,7 @@
   # untrusted
     - {name: "twuni",       url: "https://helm.twun.io" }
     - {name: "runix",       url: "https://helm.runix.net" }
+    - {name: "ghactions",   url: "https://actions-runner-controller.github.io/actions-runner-controller" }
   # wrong
     # - {name: "volker",      url: "https://charts.cryptic.systems/volker.raschek" }
 
@@ -51,6 +52,7 @@
   # - homer.yml
   # - registry.yml
   # - reg.yml
+  # - ghactions.yml
   # - drone.yml
   # - runner.yml
 
@@ -66,5 +68,6 @@
   - homer.yml
   - registry.yml
   - reg.yml
+  - ghactions.yml
   # - drone.yml
   # - runner.yml
