@@ -28,6 +28,7 @@ reangd_repositories_map:
   - { repo: "py-invest.git",                  dest: "py-invest" }
   - { repo: "reangd.github.io.git",           dest: "reangd.github.io" }
   - { repo: "rofi-proxy",                     dest: "rofi-proxy" }
+  - { repo: "runify.git",                     dest: "runify" }
   - { repo: "rust-open3d.git",                dest: "rust-open3d" }
   - { repo: "rust-software-render.git",       dest: "rust-software-render" }
   - { repo: "SimpleLang.git",                 dest: "SimpleLang" }
