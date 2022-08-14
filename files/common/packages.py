@@ -104,9 +104,10 @@ def driver():
                         "xf86-video-intel",
                         "xf86-input-libinput"]  # touchpad
     elif get_hostname_id() == "worknote":
-        driver_pkgs += ["bbswitch",
+        driver_pkgs += [
+                        # "bbswitch",
                         # "bumblebee",
-                        "nvidia",
+                        # "nvidia",
                         "xf86-video-intel",
                         "xf86-input-libinput"]  # touchpad
     elif get_hostname_id() == "kvmtest":
@@ -155,7 +156,8 @@ def desktop_env():
                 "xrectsel"]  # get select region
 
     # rofi
-    gui_pkgs += ["rofi", "rofi-proxy", "python-googletrans", "python-psutil"]
+    # "python-googletrans",
+    gui_pkgs += ["rofi", "rofi-proxy", "python-psutil"]
 
     if is_gui("lightdm"):
         gui_pkgs += ["lightdm", "lightdm-gtk-greeter"]
@@ -329,7 +331,7 @@ def messengers():
     if not is_role("messengers"):
         return []
 
-    return ["telegram-desktop", "slack-desktop"]
+    return ["telegram-desktop"]
 
 
 def audio():
