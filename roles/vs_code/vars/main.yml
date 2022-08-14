@@ -5,12 +5,14 @@ vs_code_extensions:
   - "DavidAnson.vscode-markdownlint"
   - "yzhang.markdown-all-in-one"
   # ansible
-  - "tomaciazek.ansible"
+  - "redhat.ansible"
   # python
   - "ms-python.python"
   - "ms-toolsai.jupyter"
+  - "ms-toolsai.jupyter-renderers"
   - "ms-python.vscode-pylance"
   - "frhtylcn.pythonsnippets"
+  - "KevinRose.vsc-python-indent"
   # go
   - "golang.go"
   # lua
@@ -30,13 +32,11 @@ vs_code_extensions:
   # cmake
   - "twxs.cmake"
   - "ms-vscode.cmake-tools"
-  # gamedev
-  - "slevesque.shader"
-  - "wholroyd.HCL"
   # proto
   - "zxh404.vscode-proto3"
-  # json
+  # json / yaml
   - "mohsen1.prettify-json"
+  - "redhat.vscode-yaml"
   # log
   - "emilast.LogFileHighlighter"
   # todo
@@ -45,9 +45,12 @@ vs_code_extensions:
   - "alefragnani.Bookmarks"
   # git
   - "eamodio.gitlens"
-  - "huizhou.githd"
-  # ssh
+  - "donjayamanne.githistory"
+  # docker
+  - "ms-azuretools.vscode-docker"
+  # remote
   - "Kelvin.vscode-sshfs"
+  - "ms-vscode-remote.remote-containers"
   # keybindings
   - "ms-vscode.sublime-keybindings"
   # spellchecking
@@ -57,4 +60,6 @@ vs_code_extensions:
   - "tomsaunders.vscode-workspace-explorer"
   - "formulahendry.code-runner"
   - "bodil.file-browser"
-  - "softwaredotcom.music-time"
+  # gamedev
+  # - "slevesque.shader"
+  # - "hashicorp.hcl"

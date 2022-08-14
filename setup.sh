@@ -83,6 +83,24 @@ function worknote {
     echo "worknote" $1
     if [[ $1 = "full" ]]
     then
+        sgdisk --zap-all /dev/nvme0n1
+        sgdisk --new=1:0:+512M --typecode=1:ef00 --change-name=1:"boot" /dev/nvme0n1
+        sgdisk --largest-new=2 --typecode=2:8300 --change-name=2:"root" /dev/nvme0n1
+    fi
+
+    mkfs.fat -F32 /dev/nvme0n1p1
+    mkfs.ext4 -L "root" /dev/nvme0n1p2
+
+    mount /dev/nvme0n1p2 /mnt
+
+    mkdir -p /mnt/boot/efi
+    mount /dev/nvme0n1p1 /mnt/boot/efi
+}
+
+function worknote_crypt {
+    echo "worknote_crypt" $1
+    if [[ $1 = "full" ]]
+    then
         sgdisk --zap-all /dev/sda
         sgdisk --new=1:0:+512M --typecode=1:ef00 --change-name=1:"boot" /dev/sda
         sgdisk --new=2:0:+150GiB --typecode=2:8300 --change-name=2:"root" /dev/sda
@@ -142,7 +160,7 @@ function setup_base {
     'TM1613')
         FUNC="xnote"
         ;;
-    'Latitude 5480')
+    '20WE')
         FUNC="worknote"
         ;;
     'Standard PC (Q35 + ICH9, 2009)')
