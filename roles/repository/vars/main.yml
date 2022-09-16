@@ -5,18 +5,15 @@ reangd_repositories_map:
   - { repo: "cpp-coroutine.git",              dest: "cpp-coroutine" }
   - { repo: "cpp-network.git",                dest: "cpp-network" }
   - { repo: "cpp-rtge.git",                   dest: "cpp-rtge" }
-  - { repo: "vscode-devdocs-io.git",          dest: "vscode-devdocs-io" }
   - { repo: "dokuwiki-plugin-addnewpage.git", dest: "dokuwiki-plugin-addnewpage" }
   - { repo: "dokuwiki-tablecalc.git",         dest: "dokuwiki-tablecalc" }
   - { repo: "dotfiles.git",                   dest: "dotfiles" }
   - { repo: "dotfiles-hass.git",              dest: "dotfiles-hass" }
-  - { repo: "dotfiles-jetbrains.git",         dest: "dotfiles-jetbrains" }
-  - { repo: "dotfiles-pycharm.git",           dest: "dotfiles-pycharm" }
   - { repo: "emacs-multi-compile.git",        dest: "emacs-multi-compile" }
   - { repo: "evolution.git",                  dest: "evolution" }
-  - { repo: "go-algo.git",                    dest: "go/src/github.com/ReanGD/go-algo" }
-  - { repo: "go-morphy.git",                  dest: "go/src/github.com/ReanGD/go-morphy" }
-  - { repo: "go-web-search.git",              dest: "go/src/github.com/ReanGD/go-web-search" }
+  - { repo: "go-algo.git",                    dest: "go-algo" }
+  - { repo: "go-morphy.git",                  dest: "go-morphy" }
+  - { repo: "go-web-search.git",              dest: "go-web-search" }
   - { repo: "HabrArticle.git",                dest: "HabrArticle" }
   - { repo: "images.git",                     dest: "images" }
   - { repo: "kino-player.git",                dest: "kino-player" }
@@ -34,6 +31,7 @@ reangd_repositories_map:
   - { repo: "SimpleLang.git",                 dest: "SimpleLang" }
   - { repo: "smart-home.git",                 dest: "smart-home" }
   - { repo: "sublime-powerslim.git",          dest: "sublime-powerslim" }
+  - { repo: "vscode-devdocs-io.git",          dest: "vscode-devdocs-io" }
   - { repo: "web-home-manage.git",            dest: "web-home-manage" }
   - { repo: "zrpc.git",                       dest: "zrpc" }
 
