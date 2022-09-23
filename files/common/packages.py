@@ -111,10 +111,7 @@ def driver():
                         "xf86-video-intel",
                         "xf86-input-libinput"]  # touchpad
     elif get_hostname_id() == "worknote":
-        driver_pkgs += [
-                        # "bbswitch",
-                        # "bumblebee",
-                        # "nvidia",
+        driver_pkgs += ["sof-firmware",  # sound
                         "xf86-video-intel",
                         "xf86-input-libinput"]  # touchpad
     elif get_hostname_id() == "kvmtest":
