@@ -25,6 +25,8 @@ def is_develop(name: str) -> bool:
 def is_network_type(name: str) -> bool:
     return name in network_type.split(",")  # type: ignore
 
+def is_work():
+    return hostname_id == "worknote"  # type: ignore
 
 def get_hostname_id() -> bool:
     return hostname_id  # type: ignore
@@ -60,14 +62,16 @@ def system():
     system_pkgs += ["ansible", "python", "python-lxml"]
 
     # terminal
-    system_pkgs += ["fd",  # fast find alternative
-                    "exa",  # ls alternative
-                    "ncdu",  # disk usage analyzer
+    system_pkgs += ["fd",       # fast find alternative
+                    "ripgrep",  # fast grep
+                    "exa",      # ls alternative
+                    "ncdu",     # disk usage analyzer
                     "zsh",
                     "fzf"]
 
     if not is_gui("none"):
         system_pkgs += ["urxvt-perls",
+                        "terminator",
                         "bitwarden-cli"]
     else:
         system_pkgs += ["rxvt-unicode-terminfo"]
@@ -79,6 +83,9 @@ def system():
         system_pkgs += ["yay",  # AUR package manager
                         "refind",  # UEFI boot manager
                         "pkgcacheclean"]  # clean the pacman cache
+
+    if is_work():
+        system_pkgs += ["debtap"]
 
     return system_pkgs
 
@@ -331,7 +338,12 @@ def messengers():
     if not is_role("messengers"):
         return []
 
-    return ["telegram-desktop"]
+    messengers_pkgs = ["telegram-desktop"]
+
+    if is_work():
+        messengers_pkgs += ["zoom"]
+
+    return messengers_pkgs
 
 
 def audio():

@@ -43,14 +43,15 @@
     state: present
   become: yes
 
-- name: Change root password
+- name: Change root password for home
   user:
     name: root
     append: no
     password: "{{ root_user_password }}"
+  when: hostname_id != "worknote"
   become: yes
 
-- name: Create main user
+- name: Create main user for home
   user:
     name: "{{ main_user }}"
     append: no
@@ -61,7 +62,15 @@
   when: hostname_id != "worknote"
   become: yes
 
-- name: Create main user
+- name: Change root password for home
+  user:
+    name: root
+    append: no
+    password: "{{ work_user_password }}"
+  when: hostname_id == "worknote"
+  become: yes
+
+- name: Create main user for work
   user:
     name: "{{ main_user }}"
     append: no
