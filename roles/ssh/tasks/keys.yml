@@ -25,14 +25,13 @@
   loop:
     - { key: "{{ aur_private_key }}", name: "aur" }
     - { key: "{{ aur_public_key }}", name: "aur.pub" }
-    - { key: "{{ work_private_key }}", name: "id_rsa" }
-    - { key: "{{ work_public_key }}", name: "id_rsa.pub" }
-    - { key: "{{ vscale_private_key }}", name: "vscale" }
     - { key: "{{ hass_private_key }}", name: "hass" }
-    - { key: "{{ server_private_key }}", name: "server" }
     - { key: "{{ master_private_key }}", name: "master" }
-    - { key: "{{ xnote_private_key }}", name: "xnote" }
-    - { key: "{{ worknote_private_key }}", name: "worknote" }
+    - { key: "{{ myoffice_private_key }}", name: "myoffice" }
     - { key: "{{ respeaker_private_key }}", name: "respeaker" }
+    - { key: "{{ server_private_key }}", name: "server" }
+    - { key: "{{ vscale_private_key }}", name: "vscale" }
+    - { key: "{{ worknote_private_key }}", name: "worknote" }
+    - { key: "{{ xnote_private_key }}", name: "xnote" }
   loop_control:
     label: "{{ item.name }}"

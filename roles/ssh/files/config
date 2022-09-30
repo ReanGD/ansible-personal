@@ -1,17 +1,12 @@
-host github.com
- HostName github.com
- IdentityFile ~/.ssh/github
- User git
-
 host aur.archlinux.org
  HostName aur.archlinux.org
  IdentityFile ~/.ssh/aur
  User aur
 
-host wiki
- HostName wiki.fr.to
- IdentityFile ~/.ssh/vscale
- User root
+host github.com
+ HostName github.com
+ IdentityFile ~/.ssh/github
+ User git
 
 host hass
  HostName 192.168.1.3
@@ -20,6 +15,41 @@ host hass
 
 host 192.168.1.3
  IdentityFile ~/.ssh/hass
+ User rean
+
+host master
+ HostName 192.168.1.20
+ IdentityFile ~/.ssh/master
+ User rean
+ RequestTTY yes
+ RemoteCommand . ~/.config/start/login_profile.sh; zsh
+
+host 192.168.1.20
+ IdentityFile ~/.ssh/master
+ User rean
+ RequestTTY yes
+ RemoteCommand . ~/.config/start/login_profile.sh; zsh
+
+host gitlab.stageoffice.ru
+ HostName gitlab.stageoffice.ru
+ IdentityFile ~/.ssh/myoffice
+ User vladimir.kvashnin
+
+Host log
+  Hostname ucs-infra-1.zulu.stageoffice.ru
+  User vladimir.kvashnin
+  Port 22
+  Compression yes
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/myoffice
+
+host respeaker
+ HostName 192.168.1.50
+ IdentityFile ~/.ssh/respeaker
+ User rean
+
+host 192.168.1.50
+ IdentityFile ~/.ssh/respeaker
  User rean
 
 host server
@@ -35,15 +65,20 @@ host 192.168.1.4
  RequestTTY yes
  RemoteCommand . ~/.config/start/login_profile.sh; zsh
 
-host master
- HostName 192.168.1.20
- IdentityFile ~/.ssh/master
+host wiki
+ HostName wiki.fr.to
+ IdentityFile ~/.ssh/vscale
+ User root
+
+host worknote
+ HostName 192.168.1.22
+ IdentityFile ~/.ssh/worknote
  User rean
  RequestTTY yes
  RemoteCommand . ~/.config/start/login_profile.sh; zsh
 
-host 192.168.1.20
- IdentityFile ~/.ssh/master
+host 192.168.1.22
+ IdentityFile ~/.ssh/worknote
  User rean
  RequestTTY yes
  RemoteCommand . ~/.config/start/login_profile.sh; zsh
@@ -60,25 +95,3 @@ host 192.168.1.21
  User rean
  RequestTTY yes
  RemoteCommand . ~/.config/start/login_profile.sh; zsh
-
-host worknote
- HostName 192.168.1.22
- IdentityFile ~/.ssh/worknote
- User rean
- RequestTTY yes
- RemoteCommand . ~/.config/start/login_profile.sh; zsh
-
-host 192.168.1.22
- IdentityFile ~/.ssh/worknote
- User rean
- RequestTTY yes
- RemoteCommand . ~/.config/start/login_profile.sh; zsh
-
-host respeaker
- HostName 192.168.1.50
- IdentityFile ~/.ssh/respeaker
- User rean
-
-host 192.168.1.50
- IdentityFile ~/.ssh/respeaker
- User rean
