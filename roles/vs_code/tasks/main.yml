@@ -2,15 +2,15 @@
 - name: Install VS code package
   pkg_manager:
     name: visual-studio-code-bin
-  become: yes
+  become: true
   become_user: "{{ install_user }}"
 
 - name: Get list of installed extensions
-  command: "code --list-extensions"
+  command: "/usr/bin/code --extensions-dir ~/.local/share/vscode --list-extensions"
   register: reg_vscode_installed_extensions
   changed_when: false
 
 - name: Install extensions
-  command: "code --install-extension {{ item }}"
+  command: "/usr/bin/code --extensions-dir ~/.local/share/vscode --install-extension {{ item }}"
   loop: "{{ vs_code_extensions }}"
   when: item not in reg_vscode_installed_extensions.stdout

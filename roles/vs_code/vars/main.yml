@@ -1,65 +1,68 @@
 ---
 vs_code_extensions:
-  # markdownlint
+  # Markdown
   - "shd101wyy.markdown-preview-enhanced"
   - "DavidAnson.vscode-markdownlint"
   - "yzhang.markdown-all-in-one"
-  # ansible
+  # Ansible
   - "redhat.ansible"
-  # python
+  # Python
   - "ms-python.python"
+  # included ms-toolsai.jupyter-keymap + ms-toolsai.jupyter-renderers
   - "ms-toolsai.jupyter"
-  - "ms-toolsai.jupyter-renderers"
   - "ms-python.vscode-pylance"
   - "frhtylcn.pythonsnippets"
   - "KevinRose.vsc-python-indent"
-  # go
+  # Go
   - "golang.go"
-  # lua
+  # Lua
   - "keyring.Lua"
-  # cpp
+  # Cpp
   - "ms-vscode.cpptools"
   - "hars.CppSnippets"
   - "matepek.vscode-catch2-test-adapter"
   - "hbenl.vscode-test-explorer"
   - "ajshort.include-autocomplete"
   - "ms-vscode.test-adapter-converter"
-  # dart/flutter
+  # Dart/flutter
   - "Dart-Code.dart-code"
   - "Dart-Code.flutter"
   - "localizely.flutter-intl"
   - "jeroen-meijer.pubspec-assist"
-  # cmake
+  # Cmake
   - "twxs.cmake"
   - "ms-vscode.cmake-tools"
-  # proto
+  # Proto
   - "zxh404.vscode-proto3"
-  # json / yaml
+  # Develop
+  - "GitHub.copilot"
+  # Json / yaml
   - "mohsen1.prettify-json"
   - "redhat.vscode-yaml"
-  # log
+  # Log
   - "emilast.LogFileHighlighter"
-  # todo
+  # Todo
   - "Gruntfuggly.todo-tree"
-  # bookmarks
+  # Bookmarks
   - "alefragnani.Bookmarks"
-  # git
+  # Git
   - "eamodio.gitlens"
   - "donjayamanne.githistory"
-  # docker
+  # Docker
   - "ms-azuretools.vscode-docker"
-  # remote
+  # Remote
   - "Kelvin.vscode-sshfs"
   - "ms-vscode-remote.remote-containers"
-  # keybindings
+  # Keybindings
   - "ms-vscode.sublime-keybindings"
-  # spellchecking
+  # Spellchecking
   - "ban.spellright"
-  # interface
+  # Interface
   - "seunlanlege.action-buttons"
+  - "alefragnani.project-manager"
   - "tomsaunders.vscode-workspace-explorer"
   - "formulahendry.code-runner"
   - "bodil.file-browser"
-  # gamedev
+  # Gamedev
   # - "slevesque.shader"
   # - "hashicorp.hcl"
