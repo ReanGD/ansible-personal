@@ -70,8 +70,7 @@ def system():
                     "fzf"]
 
     if not is_gui("none"):
-        system_pkgs += ["urxvt-perls",
-                        "terminator",
+        system_pkgs += ["terminator",
                         "bitwarden-cli"]
     else:
         system_pkgs += ["rxvt-unicode-terminfo"]
@@ -103,7 +102,8 @@ def driver():
         #  "xf86-video-intel"
         driver_pkgs += ["btrfs-progs"]
     elif get_hostname_id() == "master":
-        driver_pkgs += ["nvidia"]
+        driver_pkgs += ["nvidia",
+                        "gwe"]  # Controlling NVIDIA Fans
     elif get_hostname_id() == "xnote":
         driver_pkgs += ["bbswitch",
                         # "bumblebee",
@@ -451,7 +451,7 @@ def work():
     return ["openconnect"]  # for vpn to work
 
 
-groups = []
+groups = ["base-devel"]
 
 packages = []
 packages += system()

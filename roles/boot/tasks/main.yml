@@ -2,7 +2,7 @@
 - name: Install package refind
   pkg_manager:
     name: refind
-  become: yes
+  become: true
   become_user: "{{ install_user }}"
 
 - name: Check that the /boot/efi/EFI exists
@@ -11,7 +11,7 @@
     get_checksum: no
     get_mime: no
   register: reg_efi_installed
-  become: yes
+  become: true
 
 - name: Find efi partition name
   shell: findmnt -o SOURCE --noheadings /boot/efi
@@ -39,12 +39,12 @@
 - name: UEFI install for nvram write disable
   shell: refind-install --usedefault {{ efi_partition_name }} --alldrivers
   when: "'nvram_write_disable' in boot.split(',') and reg_efi_installed.stat.exists == False"
-  become: yes
+  become: true
 
 - name: UEFI install for nvram write enable
   shell: refind-install --alldrivers
   when: "'nvram_write_enble' in boot.split(',') and reg_efi_installed.stat.exists == False"
-  become: yes
+  become: true
 
 - name: Create refind_linux config without crypto_home
   template:
@@ -54,7 +54,7 @@
     owner: root
     group: root
   when: "'crypto_home' not in boot.split(',')"
-  become: yes
+  become: true
 
 - name: Create refind_linux config with crypto_home
   template:
@@ -64,14 +64,14 @@
     owner: root
     group: root
   when: "'crypto_home' in boot.split(',')"
-  become: yes
+  become: true
 
 - name: Update refind timeout
   lineinfile:
     regexp: "^timeout .*$"
     line: "timeout 1"
     path: "{{conf_path}}"
-  become: yes
+  become: true
 
 - name: Use refind textonly mode
   lineinfile:
@@ -79,4 +79,4 @@
     line: "textonly"
     path: "{{conf_path}}"
   when: "'textonly' in boot.split(',')"
-  become: yes
+  become: true

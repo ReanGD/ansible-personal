@@ -14,7 +14,6 @@ dotfiles_path_map:
   - {src: ".config/start",         dst: ".config/start" }
   - {src: ".config/yay",           dst: ".config/yay" }
   - {src: ".config/zsh",           dst: ".config/zsh" }
-  - {src: ".config/start/kde_profile.sh",  dst: ".config/autostart-scripts/kde_profile.sh" }
 
 dotfiles_gui_path_map:
   - {src: ".config/awesome",       dst: ".config/awesome" }
