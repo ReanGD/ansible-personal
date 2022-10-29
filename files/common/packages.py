@@ -194,6 +194,7 @@ def development():
                          "emacs",
                          "sublime-merge",
                          "sublime-text-dev",
+                         "ansible-lint",  # for ansible plugin in vscode
                          "visual-studio-code-bin"]
 
     if is_develop("cpp"):

@@ -3,7 +3,7 @@
   timezone:
     hwclock: 'UTC'
     name: Europe/Moscow
-  become: yes
+  become: true
 
 - name: Check is ntp enabled
   shell: timedatectl | grep "System clock synchronized\|NTP synchronized" | awk '{ print $NF }'
@@ -17,9 +17,9 @@
     mode: '0446'
     group: root
     owner: root
-  become: yes
+  become: true
 
 - name: Enable ntp
   command: timedatectl set-ntp true
   when: reg_timedatectl_ntp.stdout != 'yes'
-  become: yes
+  become: true

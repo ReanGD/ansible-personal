@@ -5,11 +5,11 @@
     get_checksum: no
     get_mime: no
   register: reg_swapfile
-  become: yes
+  become: true
 
 - name: Create swapfile
   command: dd if=/dev/zero of=/swapfile bs=1M count={{ swap_size }}
-  become: yes
+  become: true
   when: not reg_swapfile.stat.exists
 
 - name: Set swapfile permissions
@@ -18,16 +18,16 @@
     mode: 0600
     group: root
     owner: root
-  become: yes
+  become: true
 
 - name: Init swapfile
   command: mkswap /swapfile
-  become: yes
+  become: true
   when: not reg_swapfile.stat.exists
 
 - name: Enable swapfile
   command: swapon /swapfile
-  become: yes
+  become: true
   when: not reg_swapfile.stat.exists
 
 - name: Add swapfile to /etc/fstab
@@ -35,7 +35,7 @@
     dest: /etc/fstab
     line: "/swapfile none swap defaults 0 0"
     state: present
-  become: yes
+  become: true
   when: not reg_swapfile.stat.exists
 
 - name: Configure swap settings
@@ -45,4 +45,4 @@
     mode: 0644
     group: root
     owner: root
-  become: yes
+  become: true
