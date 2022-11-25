@@ -1,8 +1,8 @@
 [Unit]
-Description=NFS share NAS:Backup
+Description=NFS share NAS:backup
 
 [Mount]
-What=192.168.1.2:/Backup
+What=192.168.1.2:/backup
 Where=/mnt/nas/backup
 Type=nfs
 Options=rw

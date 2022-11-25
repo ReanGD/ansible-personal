@@ -1,5 +1,5 @@
 [Unit]
-Description=NFS share NAS:Backup
+Description=NFS share NAS:backup
 Requires=network-online.target
 
 [Automount]

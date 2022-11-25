@@ -1,9 +1,9 @@
 [Unit]
-Description=NFS share NAS:Distrib
+Description=NFS share NAS:downloads
 
 [Mount]
-What=192.168.1.2:/Distrib
-Where=/mnt/nas/distrib
+What=192.168.1.2:/downloads
+Where=/mnt/nas/downloads
 Type=nfs
 Options=rw
 DirectoryMode=0755

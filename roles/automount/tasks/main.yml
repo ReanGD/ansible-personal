@@ -16,17 +16,14 @@
   loop:
     - mnt-nas-backup.mount
     - mnt-nas-backup.automount
-    - mnt-nas-distrib.mount
-    - mnt-nas-distrib.automount
-    - mnt-nas-multimedia.mount
-    - mnt-nas-multimedia.automount
+    - mnt-nas-downloads.mount
+    - mnt-nas-downloads.automount
 
-- name: Enable and start servicies for nfs mount
+- name: Enable servicies for nfs mount
   service:
     name: "{{ item }}"
     enabled: yes
   become: true
   loop:
     - mnt-nas-backup.automount
-    - mnt-nas-distrib.automount
-    - mnt-nas-multimedia.automount
+    - mnt-nas-downloads.automount

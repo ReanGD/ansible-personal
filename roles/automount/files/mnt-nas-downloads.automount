@@ -1,9 +1,9 @@
 [Unit]
-Description=NFS share NAS:Distrib
+Description=NFS share NAS:downloads
 Requires=network-online.target
 
 [Automount]
-Where=/mnt/nas/distrib
+Where=/mnt/nas/downloads
 TimeoutIdleSec=301
 
 [Install]
