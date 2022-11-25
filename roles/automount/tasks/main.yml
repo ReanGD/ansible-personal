@@ -2,7 +2,7 @@
 - name: Install package nfs-utils
   pkg_manager:
     name: nfs-utils
-  become: yes
+  become: true
   become_user: "{{ install_user }}"
 
 - name: Install servicies for nfs mount
@@ -12,7 +12,7 @@
     mode: '0644'
     group: root
     owner: root
-  become: yes
+  become: true
   loop:
     - mnt-nas-backup.mount
     - mnt-nas-backup.automount
@@ -25,7 +25,7 @@
   service:
     name: "{{ item }}"
     enabled: yes
-  become: yes
+  become: true
   loop:
     - mnt-nas-backup.automount
     - mnt-nas-distrib.automount
