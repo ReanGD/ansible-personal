@@ -82,6 +82,15 @@
   loop_control:
     label: "{{ item.name }}"
 
+
+- name: Create set_hidden_params.sh
+  template:
+    src: set_hidden_params.sh
+    dest: "/home/{{ main_user }}/.config/start/set_hidden_params.sh"
+    mode: 0644
+    group: users
+    owner: "{{ main_user }}"
+
 - import_tasks: cloud.yml
   when: gui!="none"
 

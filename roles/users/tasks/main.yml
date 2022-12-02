@@ -41,7 +41,7 @@
   group:
     name: i2c
     state: present
-  become: yes
+  become: true
 
 - name: Change root password for home
   user:
@@ -49,7 +49,7 @@
     append: no
     password: "{{ root_user_password }}"
   when: hostname_id != "worknote"
-  become: yes
+  become: true
 
 - name: Create main user for home
   user:
@@ -60,7 +60,7 @@
     groups: video,audio,storage,power,uucp,i2c{{ docker_group }}{{ libvirt_group }}
     password: "{{ main_user_password }}"
   when: hostname_id != "worknote"
-  become: yes
+  become: true
 
 - name: Change root password for home
   user:
@@ -68,7 +68,7 @@
     append: no
     password: "{{ work_user_password }}"
   when: hostname_id == "worknote"
-  become: yes
+  become: true
 
 - name: Create main user for work
   user:
@@ -79,7 +79,7 @@
     groups: video,audio,storage,power,uucp,i2c{{ docker_group }}{{ libvirt_group }}
     password: "{{ work_user_password }}"
   when: hostname_id == "worknote"
-  become: yes
+  become: true
 
 - name: Create dop user
   user:
@@ -91,7 +91,7 @@
     password: "{{ dop_user_password }}"
     uid: 1001
   when: add_dop_user
-  become: yes
+  become: true
 
 - name: Create install_user user
   user:
@@ -100,7 +100,7 @@
     create_home: yes
     group: wheel
     uid: 1002
-  become: yes
+  become: true
 
 - name: Configure sudoers
   template:
@@ -109,11 +109,11 @@
     mode: 0440
     group: root
     owner: root
-  become: yes
+  become: true
 
 - name: Remove the user 'alarm'
   user:
     name: alarm
     state: absent
     remove: yes
-  become: yes
+  become: true
