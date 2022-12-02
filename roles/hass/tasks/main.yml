@@ -8,11 +8,11 @@
     mode: 0644
     group: root
     owner: root
-  become: yes
+  become: true
 
 - name: Turn off "Disco lights"
   shell: echo -e -n "\x01\x08\x00\xF2\x51\x01\x00\x05\x01\x51" > /dev/serial/by-id/usb-0658_0200-if00
-  become: yes
+  become: true
 
 - name: Create dirs for homeassistant
   file:
@@ -26,7 +26,7 @@
     - /hass/venv
     - /hass/dotfiles-hass
     - /hass/dotfiles-hass/custom_components/hacs
-  become: yes
+  become: true
 
 - name: Install homeassistant
   pip:
@@ -44,7 +44,7 @@
     group: users
     owner: rean
     remote_src: yes
-  become: yes
+  become: true
 
 - name: Create service homeassistant
   copy:
@@ -53,10 +53,10 @@
     mode: '0644'
     group: root
     owner: root
-  become: yes
+  become: true
 
 - name: Enable homeassistant service
   service:
     name: hass.service
     enabled: yes
-  become: yes
+  become: true

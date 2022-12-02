@@ -2,23 +2,23 @@
 - name: Install packages for install ssl certificates
   pkg_manager:
     name: certbot
-  become: yes
+  become: true
   become_user: "{{ install_user }}"
 
 - name: Check that certificate files exist
   stat:
     path: /etc/letsencrypt/live/iot.fr.to/fullchain.pem
   register: cert_file
-  become: yes
+  become: true
 
 - name: Create certificates
   command: certbot certonly --standalone --noninteractive --agree-tos --preferred-challenges=http-01 --email=reangd@yandex.ru --domain=iot.fr.to
-  become: yes
+  become: true
   when: not cert_file.stat.exists
 
 - name: Update certificates
   command: certbot renew --standalone  --noninteractive --agree-tos --pre-hook "systemctl stop hass" --post-hook "systemctl start hass"
-  become: yes
+  become: true
   when: cert_file.stat.exists
 
 - name: Recursively change ownership of a directory
@@ -30,4 +30,4 @@
   loop:
     - /etc/letsencrypt/live/
     - /etc/letsencrypt/archive/
-  become: yes
+  become: true

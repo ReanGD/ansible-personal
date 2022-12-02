@@ -28,4 +28,4 @@
   service:
     name: hass.service
     state: restarted
-  become: yes
+  become: true
