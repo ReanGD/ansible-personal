@@ -67,11 +67,13 @@ class Aur:
             raise e
 
     def get_db_packages(self):
-        import zlib
+        # import zlib
 
         url = "https://aur.archlinux.org/packages.gz"
-        text = zlib.decompress(self.open_url(url).read(), 16 + zlib.MAX_WBITS).decode("utf-8")
-        return {it.strip() for it in text.split() if it.strip() != ""}
+        data = self.open_url(url).read()
+        # text = zlib.decompress(data, 16 + zlib.MAX_WBITS)
+        text = data
+        return {it.strip() for it in text.decode("utf-8").split() if it.strip() != ""}
 
     def get_package_load_url(self, name):
         url = "https://aur.archlinux.org/rpc/?v=5&type=info&arg={}".format(name)
@@ -200,7 +202,7 @@ def install(module, packages):
     return msg, changed
 
 
-def get_info(packages, groups):
+def get_info(packages, ignore_packages, groups):
     # ошибочные названия среди groups (groups_name_wrong)
     # ошибочные названия среди packages (packages_name_wrong)
     # неустановленные среди packages (packages_not_installed)
@@ -213,14 +215,15 @@ def get_info(packages, groups):
     # пакеты среди packages, которые относятся к пакетам в groups (packages_in_group)
     # пакеты входящие в groups, но не установленные (packages_not_installed_in_group)
 
-    packages = {it.strip() for it in packages}
     groups = {it.strip() for it in groups}
+    packages = {it.strip() for it in packages}
+    ignore_packages = {it.strip() for it in ignore_packages}
 
     pacman = Pacman()
     db_groups = pacman.get_db_groups()
     db_packages = pacman.get_db_packages()
-    local_packages = pacman.get_local_packages()
-    local_explicit_packages = pacman.get_local_explicit_packages()
+    local_packages = pacman.get_local_packages().difference(ignore_packages)
+    local_explicit_packages = pacman.get_local_explicit_packages().difference(ignore_packages)
     db_packages_for_groups = pacman.get_db_packages_for_groups(groups)
     local_packages_for_groups = pacman.get_local_packages_for_groups(groups)
 
@@ -285,14 +288,15 @@ def run_module(module):
                 "changed": changed,
             }
     elif command == "get_info":
-        packages = module.params.get("packages", None)
         groups = module.params.get("groups", None)
+        packages = module.params.get("packages", None)
+        ignore_packages = module.params.get("ignore_packages", None)
         if packages is None:
             raise StrError("Not found required param 'packages' for command '{}'".format(command))
         elif groups is None:
             raise StrError("Not found required param 'groups' for command '{}'".format(command))
         else:
-            return get_info(packages, groups)
+            return get_info(packages, ignore_packages, groups)
     else:
         raise StrError("Param 'command' has unexpected value '{}'".format(command))
 
@@ -300,7 +304,7 @@ def run_module(module):
 # pkg_manager: command=install name=dropbox
 # pkg_manager: command=install name=yay, python
 # pkg_manager: command=import_keys keys=1FF2, 33ED
-# pkg_manager: command=get_info packages=python2,python groups=base
+# pkg_manager: command=get_info packages=python2,python ignore_packages=squadus groups=base
 def main():
     module = AnsibleModule(
         argument_spec=dict(
@@ -308,6 +312,7 @@ def main():
             name=dict(default=None, required=False, type="list"),
             keys=dict(default=None, required=False, type="list"),
             packages=dict(default=None, required=False, type="list"),
+            ignore_packages=dict(default=None, required=False, type="list"),
             groups=dict(default=None, required=False, type="list")
             ),
         supports_check_mode=False)

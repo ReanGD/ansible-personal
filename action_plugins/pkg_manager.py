@@ -66,10 +66,14 @@ class ActionModule(ActionBase):
         gkeys = ["x86_64", "hostname_id", "distro", "network_type", "gui", "develop", "monitoring", "roles"]
         gvars = {key: self._get_var(key) for key in gkeys}
         exec(open(config).read(), gvars)
-        packages = {it.strip() for it in gvars["packages"]}
-        groups = {it.strip() for it in gvars["groups"]}
         keys = {it.strip() for it in gvars["keys"]}
-        return {"packages": list(packages), "groups": list(groups), "keys": list(keys)}
+        groups = {it.strip() for it in gvars["groups"]}
+        packages = {it.strip() for it in gvars["packages"]}
+        ignore_packages = {it.strip() for it in gvars["ignore_packages"]}
+        return {"packages": list(packages),
+                "ignore_packages": list(ignore_packages),
+                "groups": list(groups),
+                "keys": list(keys)}
 
     def _get_param_name(self, command):
         param_name = "name"
@@ -110,8 +114,8 @@ class ActionModule(ActionBase):
 
         return result
 
-    def _get_info(self, packages, groups):
-        args = {"command": "get_info", "packages": packages, "groups": groups}
+    def _get_info(self, packages, ignore_packages, groups):
+        args = {"command": "get_info", "packages": packages, "ignore_packages": ignore_packages, "groups": groups}
         result = self._call_module(name="pkg_manager", args=args)
 
         ActionModule._print_section("group, name wrong", result.get("groups_name_wrong"))
@@ -140,7 +144,7 @@ class ActionModule(ActionBase):
             return self._install(config["packages"])
         elif command == "get_info":
             config = self._get_param_config_value(command)
-            return self._get_info(config["packages"], config["groups"])
+            return self._get_info(config["packages"], config["ignore_packages"], config["groups"])
         else:
             raise StrError("Param 'command' has unexpected value '{}'.".format(command))
 

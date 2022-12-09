@@ -2,7 +2,7 @@
 - name: Install packages for hddtemp
   pkg_manager:
     name: hddtemp, smartmontools
-  become: yes
+  become: true
   become_user: "{{ install_user }}"
 
 - name: Create hddtemp service directory
@@ -12,18 +12,18 @@
     mode: '0755'
     group: root
     owner: root
-  become: yes
+  become: true
 
 - name: Remove old hddtemp settings file
   file:
     path: /tmp/customexec.conf
     state: absent
-  become: yes
+  become: true
   changed_when: false
 
 - name: Create hddtemp settings file
   script: generate.sh > /tmp/customexec.conf
-  become: yes
+  become: true
   changed_when: false
 
 - name: Install hddtemp settings file
@@ -34,14 +34,14 @@
     group: root
     owner: root
     remote_src: yes
-  become: yes
+  become: true
   register: reg_settings
 
 - name: Remove new hddtemp settings file
   file:
     path: /tmp/customexec.conf
     state: absent
-  become: yes
+  become: true
   changed_when: false
 
 - name: Enable and start hddtemp service
@@ -49,7 +49,7 @@
     name: hddtemp.service
     enabled: yes
     state: started
-  become: yes
+  become: true
 
 - name: Restart hddtemp service if config changed
   service:
@@ -57,4 +57,4 @@
     enabled: yes
     state: restarted
   when: reg_settings.changed
-  become: yes
+  become: true

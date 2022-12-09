@@ -25,10 +25,10 @@ def is_develop(name: str) -> bool:
 def is_network_type(name: str) -> bool:
     return name in network_type.split(",")  # type: ignore
 
-def is_work():
+def is_work_host() -> bool:
     return hostname_id == "worknote"  # type: ignore
 
-def get_hostname_id() -> bool:
+def get_hostname_id() -> str:
     return hostname_id  # type: ignore
 
 
@@ -38,7 +38,8 @@ def system():
                    "inetutils",  # for set hostname (crazy ansible code)
                    "rsync",
                    "dialog",
-                   "nano"]
+                   "nano",
+                   "bat"]
 
     if not is_x86_64():
         return system_pkgs
@@ -81,10 +82,9 @@ def system():
     if is_x86_64():
         system_pkgs += ["yay",  # AUR package manager
                         "refind",  # UEFI boot manager
-                        "pkgcacheclean"]  # clean the pacman cache
-
-    if is_work():
-        system_pkgs += ["debtap"]
+                        "debtap",  # install deb packages
+                        "pkgcacheclean",  # clean the pacman cache
+                        ]
 
     return system_pkgs
 
@@ -112,6 +112,7 @@ def driver():
                         "xf86-input-libinput"]  # touchpad
     elif get_hostname_id() == "worknote":
         driver_pkgs += ["sof-firmware",  # sound
+                        "vulkan-intel",
                         "xf86-video-intel",
                         "xf86-input-libinput"]  # touchpad
     elif get_hostname_id() == "kvmtest":
@@ -146,6 +147,7 @@ def desktop_env():
                 "xorg-xprop",  # window info (xprop | grep WM_CLASS)
                 "xorg-xev",  # keypress info
                 "xorg-xwininfo",  # select window
+                "xsel",  # get clipboard data
                 "arandr",  # screen position
                 "ddcutil",  # brightness\monitor control
                 "xcursor-ize-vision",  # a couple of X cursor that similar to Windows 7 cursor
@@ -161,7 +163,8 @@ def desktop_env():
 
     # rofi
     # "python-googletrans",
-    gui_pkgs += ["rofi", "rofi-proxy", "python-psutil"]
+    # "rofi-proxy"
+    gui_pkgs += ["rofi", "python-psutil"]
 
     if is_gui("lightdm"):
         gui_pkgs += ["lightdm", "lightdm-gtk-greeter"]
@@ -208,7 +211,8 @@ def development():
                          # "python-dateutil",  # for include-what-you-use
                          # "include-what-you-use",
                          # "vulkan-mesa-layers",  # show vulkan draw statistics
-                         "cpp-dependencies"]
+                        #  "cpp-dependencies",  # show dependencies graph
+                         ]
 
     if is_develop("python"):
         develop_pkgs += ["python-pip",
@@ -261,7 +265,8 @@ def monitoring_utils():
 
         if is_x86_64():
             monitoring_pkgs += ["hwinfo",    # info about hardware
-                                "hw-probe"]  # check hardware and find drivers
+                                ]
+                                # "hw-probe"  # check hardware and find drivers, need fix dependencies
 
     if is_monitoring("notebook"):
         monitoring_pkgs += ["powertop"]
@@ -338,7 +343,7 @@ def messengers():
 
     messengers_pkgs = ["telegram-desktop"]
 
-    if is_work():
+    if is_work_host():
         messengers_pkgs += ["zoom"]
 
     return messengers_pkgs
@@ -449,7 +454,10 @@ def work():
     if not is_role("work"):
         return []
 
-    return ["openconnect"]  # for vpn to work
+    return ["openconnect",  # for vpn to work
+            "allure-commandline",  # view allure report
+            "bazelisk",  # build tool for bazel
+            ]
 
 
 groups = ["base-devel"]
@@ -477,6 +485,8 @@ packages += bluetooth()
 packages += rsync_server()
 packages += hass()
 packages += work()
+
+ignore_packages = ["squadus"]
 
 keys = []
 keys += file_managers_keys()

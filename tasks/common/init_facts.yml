@@ -38,7 +38,7 @@
 # boot: "nvram_write_enble"|"nvram_write_disable" and ["crypto_home", "textonly"]
 # network_type: ["wired", "wired_old", "wireless", "systemd", "networkmanager"]
 # gui: "none" or ["lightdm", "awesome", "kde"]
-# develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "protobuf", "sqlite", "android"]
+# develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "sqlite", "android"]
 # monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
 # roles: "none" or ["font", "docker", "k8s", "automount", "web", "game", "messengers", "audio", "media", "office", "file_managers", "torrent", "bluetooth", "work", "repository", "rsync_server", "hass"]
 
@@ -80,7 +80,7 @@
     network_type: "wired,wireless,systemd"
     set_ssh_access_keys: True
     gui: "lightdm,awesome,kde"
-    develop: "std,cpp,python,go,android,protobuf"
+    develop: "std,cpp,python,go,android"
     monitoring: "std,hddtemp"
     roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,torrent,bluetooth,work,repository"
     swap_size: 20480
@@ -95,7 +95,7 @@
     network_type: "wired,wireless,systemd"
     set_ssh_access_keys: True
     gui: "lightdm,awesome,kde"
-    develop: "std,cpp,python,go,protobuf"
+    develop: "std,cpp,python,go"
     monitoring: "std,notebook,hddtemp"
     roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,bluetooth,work,repository"
     swap_size: 8192
@@ -107,10 +107,10 @@
     hostname_id: "worknote"
     boot: "nvram_write_disable"
     add_dop_user: False
-    network_type: "wired,wireless,networkmanager"
+    network_type: "networkmanager"
     set_ssh_access_keys: True
     gui: "lightdm,awesome,kde"
-    develop: "std,cpp,python,go,protobuf"
+    develop: "std,cpp,python,go"
     monitoring: "std,notebook,hddtemp"
     roles: "font,docker,web,messengers,audio,media,office,file_managers,bluetooth,work,repository"
     swap_size: 35840
@@ -125,7 +125,7 @@
     network_type: "wired,systemd"
     set_ssh_access_keys: True
     gui: "lightdm,awesome,kde"
-    develop: "std,cpp,python,go,protobuf"
+    develop: "std,cpp,python,go"
     monitoring: "std,hddtemp"
     roles: "font,docker,web,messengers,audio,media,office,file_managers,repository"
     swap_size: 4096
