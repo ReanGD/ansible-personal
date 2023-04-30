@@ -16,3 +16,10 @@
     owner: root
     group: root
   become: yes
+
+- name: Update pacman cache
+  pacman:
+    force: yes
+    update_cache: yes
+  become: yes
+  changed_when: false

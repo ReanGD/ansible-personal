@@ -9,5 +9,7 @@ root		ALL = (ALL) ALL
 {% if add_dop_user == True %}
 {{ dop_user }}		ALL = (ALL) ALL
 {% endif %}
+{% if distro == "arch" or distro == "archarm" %}
 {{ install_user }}	ALL = (ALL) NOPASSWD: /usr/bin/pacman
 {{ install_user }}	ALL = (ALL) NOPASSWD: /usr/bin/podman
+{% endif %}

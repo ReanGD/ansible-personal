@@ -3,13 +3,13 @@
   locale_gen:
     name: en_US.UTF-8
     state: present
-  become: yes
+  become: true
 
 - name: Add ru_RU.UTF-8 locale
   locale_gen:
     name: ru_RU.UTF-8
     state: present
-  become: yes
+  become: true
 
 - name: Copy locale.conf
   copy:
@@ -18,7 +18,7 @@
     mode: 0644
     group: root
     owner: root
-  become: yes
+  become: true
 
 - name: Copy vconsole.conf
   copy:
@@ -27,4 +27,4 @@
     mode: 0644
     group: root
     owner: root
-  become: yes
+  become: true

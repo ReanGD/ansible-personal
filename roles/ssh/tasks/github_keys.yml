@@ -1,0 +1,22 @@
+---
+- name: Copy ssh config for git
+  copy:
+    src: git_config
+    dest: "/home/{{ main_user }}/.ssh/config"
+    mode: 0400
+    group: users
+    owner: "{{ main_user }}"
+  when: not set_ssh_access_keys
+
+- name: Install github keys
+  copy:
+    content: "{{ item.key }}"
+    dest: "/home/{{ main_user }}/.ssh/{{ item.name }}"
+    mode: 0400
+    group: users
+    owner: "{{ main_user }}"
+  loop:
+    - { key: "{{ github_private_key }}", name: "github" }
+    - { key: "{{ github_public_key }}", name: "github.pub" }
+  loop_control:
+    label: "{{ item.name }}"

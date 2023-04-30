@@ -1,5 +1,6 @@
 ---
 reangd_repositories_map:
+  - { repo: "arena.git",                      dest: "arena.git" }
   - { repo: "ansible-personal.git",           dest: "ansible-personal" }
   - { repo: "bot-platform.git",               dest: "bot-platform" }
   - { repo: "cpp-coroutine.git",              dest: "cpp-coroutine" }

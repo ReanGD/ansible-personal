@@ -46,46 +46,57 @@
 - name: Change root password for home
   user:
     name: root
-    append: no
+    append: false
     password: "{{ root_user_password }}"
   when: hostname_id != "worknote"
+  become: true
+
+- name: Change root password for work
+  user:
+    name: root
+    append: false
+    password: "{{ work_user_password }}"
+  when: hostname_id == "worknote"
   become: true
 
 - name: Create main user for home
   user:
     name: "{{ main_user }}"
-    append: no
-    create_home: yes
+    append: false
+    create_home: true
     group: users
     groups: video,audio,storage,power,uucp,i2c{{ docker_group }}{{ libvirt_group }}
     password: "{{ main_user_password }}"
-  when: hostname_id != "worknote"
-  become: true
-
-- name: Change root password for home
-  user:
-    name: root
-    append: no
-    password: "{{ work_user_password }}"
-  when: hostname_id == "worknote"
+  when: hostname_id != "worknote" and hostname_id != "vdsina"
   become: true
 
 - name: Create main user for work
   user:
     name: "{{ main_user }}"
-    append: no
-    create_home: yes
+    append: false
+    create_home: true
     group: users
     groups: video,audio,storage,power,uucp,i2c{{ docker_group }}{{ libvirt_group }}
     password: "{{ work_user_password }}"
   when: hostname_id == "worknote"
   become: true
 
+- name: Create main user for vdsina
+  user:
+    name: "{{ main_user }}"
+    append: false
+    create_home: true
+    group: users
+    groups: video,audio,uucp,i2c
+    password: "{{ work_user_password }}"
+  when: hostname_id == "vdsina"
+  become: true
+
 - name: Create dop user
   user:
     name: "{{ dop_user }}"
-    append: no
-    create_home: yes
+    append: false
+    create_home: true
     group: users
     groups: video,audio,storage,power,i2c
     password: "{{ dop_user_password }}"
@@ -96,17 +107,18 @@
 - name: Create install_user user
   user:
     name: "{{ install_user }}"
-    append: no
-    create_home: yes
+    append: false
+    create_home: true
     group: wheel
     uid: 1002
+  when: distro == "arch" or distro == "archarm"
   become: true
 
 - name: Configure sudoers
   template:
     src: sudoers
     dest: /etc/sudoers
-    mode: 0440
+    mode: "0440"
     group: root
     owner: root
   become: true
@@ -115,5 +127,5 @@
   user:
     name: alarm
     state: absent
-    remove: yes
+    remove: true
   become: true

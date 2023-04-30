@@ -25,7 +25,7 @@
   command: cat /sys/class/dmi/id/product_name
   register: reg_product_name_x86_64
   changed_when: false
-  become: yes
+  become: true
   when: x86_64
 
 - name: Find board uuid for armv7l
@@ -34,9 +34,10 @@
   changed_when: false
   when: arm
 
-# distro: "arch" or "archarm"
+# distro: "arch"|"archarm"|"debian"
 # boot: "nvram_write_enble"|"nvram_write_disable" and ["crypto_home", "textonly"]
 # network_type: ["wired", "wired_old", "wireless", "systemd", "networkmanager"]
+# ssh_access: ["all"|"github"|"none"]
 # gui: "none" or ["lightdm", "awesome", "kde"]
 # develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "sqlite", "android"]
 # monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
@@ -46,9 +47,9 @@
   set_fact:
     hostname_id: "hass"
     boot: "nvram_write_enble"
-    add_dop_user: False
+    add_dop_user: false
     network_type: "wired_old,systemd"
-    set_ssh_access_keys: False
+    ssh_access: "github"
     gui: "none"
     develop: "none"
     monitoring: "std,hddtemp"
@@ -61,9 +62,9 @@
   set_fact:
     hostname_id: "server"
     boot: "nvram_write_disable"
-    add_dop_user: False
+    add_dop_user: false
     network_type: "wired,systemd"
-    set_ssh_access_keys: False
+    ssh_access: "github"
     gui: "none"
     develop: "none"
     monitoring: "std,hddtemp"
@@ -76,9 +77,9 @@
   set_fact:
     hostname_id: "master"
     boot: "nvram_write_disable"
-    add_dop_user: False
+    add_dop_user: false
     network_type: "wired,wireless,systemd"
-    set_ssh_access_keys: True
+    ssh_access: "all"
     gui: "lightdm,awesome,kde"
     develop: "std,cpp,python,go,android"
     monitoring: "std,hddtemp"
@@ -91,9 +92,9 @@
   set_fact:
     hostname_id: "xnote"
     boot: "nvram_write_disable"
-    add_dop_user: True
+    add_dop_user: true
     network_type: "wired,wireless,systemd"
-    set_ssh_access_keys: True
+    ssh_access: "all"
     gui: "lightdm,awesome,kde"
     develop: "std,cpp,python,go"
     monitoring: "std,notebook,hddtemp"
@@ -106,9 +107,9 @@
   set_fact:
     hostname_id: "worknote"
     boot: "nvram_write_disable"
-    add_dop_user: False
+    add_dop_user: false
     network_type: "networkmanager"
-    set_ssh_access_keys: True
+    ssh_access: "all"
     gui: "lightdm,awesome,kde"
     develop: "std,cpp,python,go"
     monitoring: "std,notebook,hddtemp"
@@ -117,13 +118,28 @@
     swappiness: 10
   when: x86_64 and reg_product_name_x86_64.stdout == '20WE'
 
+- name: Set vdsina facts
+  set_fact:
+    hostname_id: "vdsina"
+    boot: ""
+    add_dop_user: false
+    network_type: ""
+    ssh_access: "none"
+    gui: "none"
+    develop: "none"
+    monitoring: ""
+    roles: ""
+    swap_size: 0
+    swappiness: 0
+  when: x86_64 and reg_product_name_x86_64.stdout == 'KVM'
+
 - name: Set KVM test facts
   set_fact:
     hostname_id: "kvmtest"
     boot: "nvram_write_disable,crypto_home,textonly"
-    add_dop_user: False
+    add_dop_user: false
     network_type: "wired,systemd"
-    set_ssh_access_keys: True
+    ssh_access: "none"
     gui: "lightdm,awesome,kde"
     develop: "std,cpp,python,go"
     monitoring: "std,hddtemp"

@@ -6,16 +6,5 @@
 - import_tasks: archarm.yml
   when: distro == "archarm"
 
-- name: Update pacman cache
-  pacman:
-    force: yes
-    update_cache: yes
-  become: yes
-  changed_when: false
-
-- name: install yay
-  pkg_manager:
-    name: yay
-  become: yes
-  become_user: "{{ install_user }}"
-  when: x86_64
+- import_tasks: debian.yml
+  when: distro == "debian"
