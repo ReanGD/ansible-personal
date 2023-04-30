@@ -47,7 +47,7 @@
 - name: Install package for ssh server
   pkg_manager:
     name: openssh
-  become: yes
+  become: true
   become_user: "{{ install_user }}"
 
 - name: Copy sshd config
@@ -57,10 +57,10 @@
     mode: 0644
     group: root
     owner: root
-  become: yes
+  become: true
 
 - name: Enable service sshd
   service:
     name: sshd.service
     enabled: yes
-  become: yes
+  become: true

@@ -29,6 +29,8 @@
     - { key: "{{ master_private_key }}", name: "master" }
     - { key: "{{ myoffice_private_key }}", name: "myoffice" }
     - { key: "{{ respeaker_private_key }}", name: "respeaker" }
+    - { key: "{{ vdsina_private_key }}", name: "vdsina" }
+    - { key: "{{ vdsina_public_key }}", name: "vdsina.pub" }
     - { key: "{{ server_private_key }}", name: "server" }
     - { key: "{{ vscale_private_key }}", name: "vscale" }
     - { key: "{{ worknote_private_key }}", name: "worknote" }

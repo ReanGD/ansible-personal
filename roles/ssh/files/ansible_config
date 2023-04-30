@@ -56,3 +56,12 @@ host respeaker
 host 192.168.1.50
  IdentityFile ~/.ssh/respeaker
  User rean
+
+host vdsina
+ HostName vdsina.d7x.ru
+ IdentityFile ~/.ssh/vdsina
+ User rean
+
+host 91.201.115.56
+ IdentityFile ~/.ssh/vdsina
+ User rean
