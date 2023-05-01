@@ -1,0 +1,13 @@
+---
+- name: Install nginx
+  ansible.builtin.apt:
+    name:
+      - nginx
+      - certbot
+      - python3-certbot-nginx
+      - php-gd
+      - php-fpm
+      - php-xml
+      - php-sqlite3
+    state: present
+  become: true

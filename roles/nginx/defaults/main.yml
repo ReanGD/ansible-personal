@@ -1,0 +1,5 @@
+---
+domain: "example.com"
+notification_email: "example@example.com"
+include_conf: ""
+reinstall: false

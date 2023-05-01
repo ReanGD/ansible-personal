@@ -1,0 +1,13 @@
+---
+- name: Install nginx
+  pkg_manager:
+    name:
+      - nginx
+      - certbot-nginx
+      - php-gd
+      - php-fpm
+      - php-sqlite
+      # php-xml?
+    command: install
+  become: true
+  become_user: "{{ install_user }}"

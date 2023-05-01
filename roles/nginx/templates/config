@@ -1,0 +1,9 @@
+server {
+        listen 80;
+        listen [::]:80 ipv6only=on;
+        server_name {{ domain }};
+
+{% if include_conf != "" %}
+        include {{ include_conf }};
+{% endif %}
+}

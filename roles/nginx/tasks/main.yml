@@ -1,0 +1,17 @@
+---
+- import_tasks: arch_pkg.yml
+  when: distro == "arch" or distro == "archarm"
+
+- import_tasks: debian_pkg.yml
+  when: distro == "debian"
+
+- name: Check that the nginx config exists
+  stat:
+    path: /etc/nginx/sites-enabled/{{ domain }}
+    get_checksum: false
+    get_mime: false
+  register: reg_nginx_cfg_exists
+  become: true
+
+- import_tasks: nginx_cfg.yml
+  when: "reinstall or not reg_nginx_cfg_exists.stat.exists"

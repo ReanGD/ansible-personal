@@ -1,0 +1,21 @@
+---
+- name: Create config for domain
+  template:
+    src: config
+    dest: "/etc/nginx/sites-available/{{ domain }}"
+    mode: 0644
+    group: root
+    owner: root
+  become: true
+
+- name: Enable config for domain
+  link:
+    src: "/etc/nginx/sites-available/{{ domain }}"
+    dst: "/etc/nginx/sites-enabled/{{ domain }}"
+  become: true
+
+- name: Generate ssl certificates
+  command: "certbot --nginx --nginx-ctl /usr/sbin/nginx -d {{ domain }} -m {{ notification_email }} --agree-tos -n"
+  register: my_output
+  changed_when: my_output.rc != 0
+  become: true
