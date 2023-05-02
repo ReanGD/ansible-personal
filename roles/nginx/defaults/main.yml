@@ -1,5 +1,6 @@
 ---
+reinstall: false
+include_conf: ""
 domain: "example.com"
 notification_email: "example@example.com"
-include_conf: ""
-reinstall: false
+add_www_data_group: false

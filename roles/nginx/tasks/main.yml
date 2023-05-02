@@ -15,3 +15,11 @@
 
 - import_tasks: nginx_cfg.yml
   when: "reinstall or not reg_nginx_cfg_exists.stat.exists"
+
+- name: Add group www-data for main user
+  user:
+    name: "{{ main_user }}"
+    append: true
+    groups: www-data
+  when: "add_www_data_group"
+  become: true

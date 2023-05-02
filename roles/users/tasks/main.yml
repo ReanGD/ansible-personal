@@ -88,7 +88,7 @@
     create_home: true
     group: users
     groups: video,audio,uucp,i2c
-    password: "{{ work_user_password }}"
+    password: "{{ main_user_password }}"
   when: hostname_id == "vdsina"
   become: true
 

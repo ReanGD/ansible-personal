@@ -1,5 +1,5 @@
 ---
-- name: Install nginx
+- name: Install nginx and php packages
   pkg_manager:
     name:
       - nginx
