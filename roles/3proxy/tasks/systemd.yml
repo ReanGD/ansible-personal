@@ -1,0 +1,17 @@
+---
+- name: Create systemd unit file
+  ansible.builtin.copy:
+    src: 3proxy.service
+    dest: /etc/systemd/system/3proxy.service
+    group: root
+    owner: root
+    mode: "0644"
+  become: true
+
+- name: Enable and restart systemd service
+  ansible.builtin.service:
+    name: 3proxy.service
+    enabled: true
+    daemon_reload: true
+    state: restarted
+  become: true

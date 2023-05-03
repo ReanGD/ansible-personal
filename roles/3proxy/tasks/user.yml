@@ -1,0 +1,18 @@
+---
+- name: Create system group
+  ansible.builtin.group:
+    name: proxy3
+    gid: "{{ proxy3_system_group_id }}"
+    state: present
+  become: true
+
+- name: Create system user
+  ansible.builtin.user:
+    name: proxy3
+    group: proxy3
+    uid: "{{ proxy3_system_user_id }}"
+    system: true
+    create_home: false
+    shell: /sbin/nologin
+    state: present
+  become: true

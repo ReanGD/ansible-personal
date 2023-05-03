@@ -1,0 +1,4 @@
+---
+- name: Arch linux not supported
+  ansible.builtin.fail:
+    msg: Not supported

@@ -1,0 +1,36 @@
+---
+- name: Create config dir
+  ansible.builtin.file:
+    path: /etc/3proxy
+    state: directory
+    group: proxy3
+    owner: "{{ main_user }}"
+    mode: "0550"
+  become: true
+
+- name: Fill and copy config
+  ansible.builtin.template:
+    src: 3proxy-cfg.j2
+    dest: /etc/3proxy/3proxy.cfg
+    group: proxy3
+    owner: "{{ main_user }}"
+    mode: "0440"
+  become: true
+
+- name: Check that auth exists
+  stat:
+    path: /etc/3proxy/3proxy.cfg
+    get_checksum: false
+    get_mime: false
+  register: reg_3proxy_auth_exists
+  become: true
+
+- name: Create auth config
+  copy:
+    content: ""
+    dest: /etc/3proxy/auth
+    force: false
+    group: proxy3
+    owner: proxy3
+    mode: "0440"
+  become: true

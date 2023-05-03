@@ -1,0 +1,11 @@
+---
+proxy3_reinstall: false
+proxy3_version: "0.9.4"
+proxy3_system_group_id: "200"
+proxy3_system_user_id: "201"
+proxy3_dns:
+  - 1.1.1.1
+  - 1.0.0.1
+  - 8.8.8.8
+proxy3_http_port: 3128
+proxy3_socks_port: 1080

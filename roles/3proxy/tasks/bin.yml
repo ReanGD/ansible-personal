@@ -1,0 +1,32 @@
+---
+- name: Remove tmp dir
+  ansible.builtin.file:
+    path: "/tmp/3proxy-{{ proxy3_version }}"
+    state: absent
+  become: true
+
+- name: Download and extract sources
+  ansible.builtin.unarchive:
+    src: "https://github.com/3proxy/3proxy/archive/refs/tags/{{ proxy3_version }}.tar.gz"
+    dest: /tmp/
+    remote_src: true
+    group: root
+    owner: root
+    mode: "0644"
+  become: true
+
+- name: Compile sources
+  community.general.make:
+    chdir: "/tmp/3proxy-{{ proxy3_version }}"
+    file: Makefile.Linux
+  become: true
+
+- name: Copy binaries
+  ansible.builtin.copy:
+    src: /tmp/3proxy-{{ proxy3_version }}/bin/3proxy
+    dest: /usr/bin/3proxy
+    owner: root
+    group: root
+    mode: "0755"
+    remote_src: true
+  become: true

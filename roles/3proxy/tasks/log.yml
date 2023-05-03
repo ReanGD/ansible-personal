@@ -1,0 +1,15 @@
+---
+- name: Remove log dir with old logs
+  ansible.builtin.file:
+    path: /var/log/3proxy
+    state: absent
+  become: true
+
+- name: Create log dir
+  ansible.builtin.file:
+    path: /var/log/3proxy
+    state: directory
+    group: proxy3
+    owner: "{{ main_user }}"
+    mode: "0570"
+  become: true
