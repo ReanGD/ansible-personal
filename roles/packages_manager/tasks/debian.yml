@@ -1,9 +1,7 @@
 ---
-- name: Update apt-get cache
-  apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
-  become: yes
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
   changed_when: false
-
-- name: Install sudo
-  apt: name=sudo state=present
-  become: yes

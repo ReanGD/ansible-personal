@@ -1,31 +1,52 @@
 ---
+- name: Create user for install packages
+  ansible.builtin.user:
+    name: "{{ install_user }}"
+    append: false
+    create_home: true
+    password: "!"
+    password_lock: true
+    shell: "/sbin/nologin"
+    group: wheel
+    uid: 1002
+  become: true
+
+- name: Allow pacman for install user
+  community.general.sudoers:
+    name: "{{ install_user }}-allow-pacman"
+    state: present
+    user: "{{ install_user }}"
+    nopassword: true
+    commands: /usr/bin/pacman
+  become: true
+
 - name: Copy arch pacman configuration
-  copy:
+  ansible.builtin.copy:
     src: arch_pacman.conf
     dest: /etc/pacman.conf
     mode: 0644
     owner: root
     group: root
-  become: yes
+  become: true
 
 - name: Copy arch mirrorlist configuration
-  copy:
+  ansible.builtin.copy:
     src: arch_mirrorlist
     dest: /etc/pacman.d/mirrorlist
     mode: 0644
     owner: root
     group: root
-  become: yes
+  become: true
 
 - name: Update pacman cache
-  pacman:
-    force: yes
-    update_cache: yes
-  become: yes
+  community.general.pacman:
+    force: true
+    update_cache: true
+  become: true
   changed_when: false
 
-- name: install yay
+- name: Install yay
   pkg_manager:
     name: yay
-  become: yes
+  become: true
   become_user: "{{ install_user }}"
