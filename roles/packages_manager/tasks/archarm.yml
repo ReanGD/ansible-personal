@@ -11,9 +11,9 @@
     uid: 1002
   become: true
 
-- name: Allow pacman for install user
+- name: Nopassword pacman for install user
   community.general.sudoers:
-    name: allow-pacman
+    name: "{{ install_user }}-nopassword"
     state: present
     user: "{{ install_user }}"
     nopassword: true

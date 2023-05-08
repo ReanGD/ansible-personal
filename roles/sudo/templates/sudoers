@@ -1,0 +1,9 @@
+Defaults lecture=never
+Defaults env_reset
+
+Defaults logfile=/var/log/sudo.log
+
+Defaults timestamp_timeout=0
+Defaults:{{ main_user }}	timestamp_timeout=20
+
+#includedir /etc/sudoers.d
