@@ -2,5 +2,6 @@
 - name: Install sudo package
   pkg_manager:
     name: sudo
+    command: install
   become: true
   become_user: "{{ install_user }}"

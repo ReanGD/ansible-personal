@@ -14,28 +14,6 @@
     commands: "ALL"
   become: true
 
-- name: Nopassword for main user
-  community.general.sudoers:
-    name: "{{ main_user }}-nopassword"
-    state: present
-    user: "{{ main_user }}"
-    nopassword: true
-    commands:
-      - /usr/bin/systemctl poweroff
-      - /usr/bin/systemctl reboot
-      - /usr/bin/systemctl suspend
-      - /usr/bin/systemctl hibernate
-  become: true
-
-- name: All for main user
-  community.general.sudoers:
-    name: "{{ main_user }}-all"
-    state: present
-    user: "{{ main_user }}"
-    nopassword: false
-    commands: "ALL"
-  become: true
-
 - name: Configure sudoers
   template:
     src: sudoers
