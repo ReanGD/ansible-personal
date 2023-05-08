@@ -1,6 +1,8 @@
 skip_list:
+  - meta-no-info
   - fqcn-builtins
-  - fqcn[action-core]
+  - no-changed-when
   - fqcn[action]
   - name[missing]
+  - fqcn[action-core]
   - yaml[octal-values]
