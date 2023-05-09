@@ -6,62 +6,62 @@ host wiki
 host hass
  HostName 192.168.1.3
  IdentityFile ~/.ssh/hass
- User rean
+ User {{ main_user }}
 
 host 192.168.1.3
  IdentityFile ~/.ssh/hass
- User rean
+ User {{ main_user }}
 
 host server
  HostName 192.168.1.4
  IdentityFile ~/.ssh/server
- User rean
+ User {{ main_user }}
 
 host 192.168.1.4
  IdentityFile ~/.ssh/server
- User rean
+ User {{ main_user }}
 
 host master
  HostName 192.168.1.20
  IdentityFile ~/.ssh/master
- User rean
+ User {{ main_user }}
 
 host 192.168.1.20
  IdentityFile ~/.ssh/master
- User rean
+ User {{ main_user }}
 
 host xnote
  HostName 192.168.1.21
  IdentityFile ~/.ssh/xnote
- User rean
+ User {{ main_user }}
 
 host 192.168.1.21
  IdentityFile ~/.ssh/xnote
- User rean
+ User {{ main_user }}
 
 host worknote
  HostName 192.168.1.22
  IdentityFile ~/.ssh/worknote
- User rean
+ User {{ main_user }}
 
 host 192.168.1.22
  IdentityFile ~/.ssh/worknote
- User rean
+ User {{ main_user }}
 
 host respeaker
  HostName 192.168.1.50
  IdentityFile ~/.ssh/respeaker
- User rean
+ User {{ main_user }}
 
 host 192.168.1.50
  IdentityFile ~/.ssh/respeaker
- User rean
+ User {{ main_user }}
 
 host vdsina
  HostName vdsina.d7x.ru
  IdentityFile ~/.ssh/vdsina
- User rean
+ User {{ main_user }}
 
 host 91.201.115.56
  IdentityFile ~/.ssh/vdsina
- User rean
+ User {{ main_user }}

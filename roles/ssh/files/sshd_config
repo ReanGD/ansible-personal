@@ -1,3 +1,0 @@
-PermitRootLogin yes
-PasswordAuthentication no
-Subsystem sftp internal-sftp

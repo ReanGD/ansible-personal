@@ -1,40 +1,38 @@
 ---
 - name: Copy ssh config
-  copy:
+  ansible.builtin.template:
     src: config
     dest: "/home/{{ main_user }}/.ssh/config"
-    mode: 0400
-    group: users
+    mode: "0600"
     owner: "{{ main_user }}"
+    group: "{{ main_user }}"
 
 - name: Copy ansible ssh config
-  copy:
+  ansible.builtin.template:
     src: ansible_config
     dest: "/home/{{ main_user }}/.ssh/ansible_config"
-    mode: 0400
-    group: users
+    mode: "0600"
     owner: "{{ main_user }}"
+    group: "{{ main_user }}"
 
-- name: Install ssh keys
-  copy:
+- name: Add public keys
+  ansible.builtin.copy:
     content: "{{ item.key }}"
     dest: "/home/{{ main_user }}/.ssh/{{ item.name }}"
-    mode: 0400
-    group: users
+    mode: "0600"
     owner: "{{ main_user }}"
+    group: "{{ main_user }}"
   loop:
     - { key: "{{ aur_private_key }}", name: "aur" }
-    - { key: "{{ aur_public_key }}", name: "aur.pub" }
+    - { key: "{{ github_private_key }}", name: "github" }
     - { key: "{{ hass_private_key }}", name: "hass" }
     - { key: "{{ master_private_key }}", name: "master" }
     - { key: "{{ myoffice_private_key }}", name: "myoffice" }
     - { key: "{{ respeaker_private_key }}", name: "respeaker" }
-    - { key: "{{ vdsina_private_key }}", name: "vdsina" }
     - { key: "{{ server_private_key }}", name: "server" }
+    - { key: "{{ vdsina_private_key }}", name: "vdsina" }
     - { key: "{{ vscale_private_key }}", name: "vscale" }
     - { key: "{{ worknote_private_key }}", name: "worknote" }
     - { key: "{{ xnote_private_key }}", name: "xnote" }
-    - { key: "{{ github_private_key }}", name: "github" }
-    - { key: "{{ github_public_key }}", name: "github.pub" }
   loop_control:
     label: "{{ item.name }}"

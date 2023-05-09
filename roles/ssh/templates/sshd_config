@@ -1,0 +1,36 @@
+PermitRootLogin no
+AllowUsers {{ main_user }}
+
+PermitEmptyPasswords no
+
+UsePAM no
+PubkeyAuthentication yes
+PasswordAuthentication no
+HostbasedAuthentication no
+AuthenticationMethods publickey
+ChallengeResponseAuthentication no
+
+TCPKeepAlive no
+ClientAliveCountMax 0
+ClientAliveInterval 300
+
+# ignore .rhosts and .shosts
+IgnoreRhosts yes
+
+# only use the newer, more secure protocol
+Protocol 2
+
+# disable X11 forwarding as X11 is very insecure
+X11Forwarding no
+
+# disable port forwarding
+AllowTcpForwarding no
+AllowStreamLocalForwarding no
+GatewayPorts no
+PermitTunnel no
+
+# verify hostname matches IP
+UseDNS yes
+
+# others
+AllowAgentForwarding no

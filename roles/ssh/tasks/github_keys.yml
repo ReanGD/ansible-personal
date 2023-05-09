@@ -1,22 +1,20 @@
 ---
 - name: Copy ssh config for git
-  copy:
+  ansible.builtin.copy:
     src: git_config
     dest: "/home/{{ main_user }}/.ssh/config"
-    mode: 0400
-    group: users
+    mode: "0600"
     owner: "{{ main_user }}"
-  when: not set_ssh_access_keys
+    group: "{{ main_user }}"
 
 - name: Install github keys
-  copy:
+  ansible.builtin.copy:
     content: "{{ item.key }}"
     dest: "/home/{{ main_user }}/.ssh/{{ item.name }}"
-    mode: 0400
-    group: users
+    mode: "0600"
     owner: "{{ main_user }}"
+    group: "{{ main_user }}"
   loop:
     - { key: "{{ github_private_key }}", name: "github" }
-    - { key: "{{ github_public_key }}", name: "github.pub" }
   loop_control:
     label: "{{ item.name }}"

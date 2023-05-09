@@ -1,17 +1,17 @@
 ---
-- name: Create ssh directory
-  file:
-    path: "/home/{{ main_user }}/.ssh"
-    state: directory
-    mode: 0700
-    group: users
-    owner: "{{ main_user }}"
-
 # ansible-vault decrypt secrets.yml
 # ansible-vault encrypt secrets.yml
 - name: Include vars with keys
   include_vars:
     file: secrets.yml
+
+- name: Create ssh directory
+  ansible.builtin.file:
+    path: "/home/{{ main_user }}/.ssh"
+    state: directory
+    mode: "0700"
+    owner: "{{ main_user }}"
+    group: "{{ main_user }}"
 
 - import_tasks: pub_keys.yml
 - import_tasks: private_keys.yml
@@ -20,4 +20,4 @@
   when: ssh_access == "github"
 - import_tasks: sshd.yml
 - import_tasks: known_hosts.yml
-  when: not is_chroot
+  when: ssh_access == "all" or ssh_access == "github"

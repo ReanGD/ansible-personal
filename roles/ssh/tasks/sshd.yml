@@ -2,21 +2,29 @@
 - name: Install arch package for ssh server
   pkg_manager:
     name: openssh
-  when: distro == "arch" or distro == "archarm"
+    command: install
   become: true
   become_user: "{{ install_user }}"
+  when: os_family == "arch"
+
+- name: Install debian package for ssh server
+  ansible.builtin.apt:
+    name: openssh-server
+    state: present
+  become: true
+  when: os_family == "debian"
 
 - name: Copy sshd config
-  copy:
+  ansible.builtin.template:
     src: sshd_config
     dest: "/etc/ssh/sshd_config"
-    mode: 0644
-    group: root
     owner: root
+    group: root
+    mode: "0644"
   become: true
 
 - name: Enable service sshd
-  service:
+  ansible.builtin.service:
     name: sshd.service
     enabled: true
   become: true
