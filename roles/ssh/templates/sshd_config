@@ -14,6 +14,9 @@ TCPKeepAlive no
 ClientAliveCountMax 0
 ClientAliveInterval 300
 
+# Enable sftp
+Subsystem sftp internal-sftp
+
 # ignore .rhosts and .shosts
 IgnoreRhosts yes
 

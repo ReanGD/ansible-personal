@@ -1,0 +1,40 @@
+---
+- name: Install arch package for ufw
+  pkg_manager:
+    name: ufw
+    command: install
+  become: true
+  become_user: "{{ install_user }}"
+  when: os_family == "arch"
+
+- name: Install debian package for ufw
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+  become: true
+  when: os_family == "debian"
+
+- name: Default outgoing allow
+  community.general.ufw:
+    default: allow
+    direction: outgoing
+  become: true
+
+- name: Default incoming deny
+  community.general.ufw:
+    default: deny
+    direction: incoming
+  become: true
+
+- name: Allow traffic on ssh port
+  community.general.ufw:
+    rule: allow
+    port: "{{ ufw_ssh_port }}"
+    proto: tcp
+    comment: "Allow traffic on ssh port"
+  become: true
+
+- name: Enable UFW
+  community.general.ufw:
+    state: enabled
+  become: true
