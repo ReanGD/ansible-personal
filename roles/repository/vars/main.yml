@@ -43,3 +43,4 @@ lovely_helper_repositories_map:
   - { repo: "AI.git",               dest: "AI" }
   - { repo: "backend.git",          dest: "backend" }
   - { repo: "android_frontend.git", dest: "android_frontend" }
+  - { repo: "agents.git",           dest: "agents" }
