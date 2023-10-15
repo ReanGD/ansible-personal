@@ -1,9 +1,9 @@
 ---
-- import_tasks: arch.yml
-  when: os_family == "arch"
+- import_tasks: pkg_arch.yml
+  when: distro == "arch" or distro == "archarm"
 
-- import_tasks: debian.yml
-  when: os_family == "debian"
+- import_tasks: pkg_debian.yml
+  when: distro == "debian"
 
 - name: All for root user
   community.general.sudoers:
