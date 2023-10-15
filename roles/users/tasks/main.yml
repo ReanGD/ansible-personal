@@ -71,4 +71,5 @@
     user: "{{ main_user }}"
     nopassword: false
     commands: "ALL"
+    runas: "ALL"
   become: true
