@@ -1,0 +1,4 @@
+---
+- name: Debian linux not supported
+  ansible.builtin.fail:
+    msg: Not supported

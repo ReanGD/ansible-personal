@@ -10,6 +10,7 @@
     - locale
     - users
     - network
+    - sudo
     - packages_manager
     - role: setup
       when: is_chroot and x86_64
@@ -47,6 +48,8 @@
       when: 'not is_chroot and "repository" in roles.split(",")'
     - role: dotfiles
       when: not is_chroot and x86_64
+    - role: sing_box
+      when: 'not is_chroot and "sing_box" in roles.split(",")'
     - role: gui
       when: not is_chroot and gui!="none"
     - role: vs_code

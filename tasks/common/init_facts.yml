@@ -20,6 +20,7 @@
     x86_64: "{{ ansible_facts['architecture'] == 'x86_64' }}"
     arm: "{{ ansible_facts['architecture'] == 'armv7l'}}"
     distro: "{{ reg_distro.stdout }}"
+    os_family: "{{ 'arch' if reg_distro.stdout in ['arch', 'archarm'] else ('debian' if reg_distro.stdout == 'debian' else 'unknown') }}"
 
 - name: Find board uuid for x86_64
   command: cat /sys/class/dmi/id/product_name
@@ -41,13 +42,14 @@
 # gui: "none" or ["lightdm", "awesome", "kde"]
 # develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "sqlite", "android"]
 # monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
-# roles: "none" or ["font", "docker", "k8s", "automount", "web", "game", "messengers", "audio", "media", "office", "file_managers", "torrent", "bluetooth", "work", "repository", "rsync_server", "hass"]
+# roles: "none" or ["font", "docker", "k8s", "automount", "web", "game", "messengers",
+#                   "audio", "media", "office", "file_managers", "torrent", "bluetooth",
+#                   "work", "repository", "rsync_server", "hass", "sing_box"]
 
 - name: Set hass facts
   set_fact:
     hostname_id: "hass"
     boot: "nvram_write_enble"
-    add_dop_user: false
     network_type: "wired_old,systemd"
     ssh_access: "github"
     gui: "none"
@@ -62,7 +64,6 @@
   set_fact:
     hostname_id: "server"
     boot: "nvram_write_disable"
-    add_dop_user: false
     network_type: "wired,systemd"
     ssh_access: "github"
     gui: "none"
@@ -77,13 +78,12 @@
   set_fact:
     hostname_id: "master"
     boot: "nvram_write_disable"
-    add_dop_user: false
     network_type: "wired,wireless,systemd"
     ssh_access: "all"
     gui: "lightdm,awesome,kde"
     develop: "std,cpp,python,go,android"
     monitoring: "std,hddtemp"
-    roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,torrent,bluetooth,work,repository"
+    roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,torrent,bluetooth,work,repository,sing_box"
     swap_size: 20480
     swappiness: 10
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7C90'
@@ -92,7 +92,6 @@
   set_fact:
     hostname_id: "xnote"
     boot: "nvram_write_disable"
-    add_dop_user: true
     network_type: "wired,wireless,systemd"
     ssh_access: "all"
     gui: "lightdm,awesome,kde"
@@ -107,13 +106,12 @@
   set_fact:
     hostname_id: "worknote"
     boot: "nvram_write_disable"
-    add_dop_user: false
     network_type: "networkmanager"
     ssh_access: "all"
     gui: "lightdm,awesome,kde"
     develop: "std,cpp,python,go"
     monitoring: "std,notebook,hddtemp"
-    roles: "font,docker,web,messengers,audio,media,office,file_managers,bluetooth,work,repository"
+    roles: "font,docker,web,messengers,audio,media,office,file_managers,bluetooth,work,repository,sing_box"
     swap_size: 35840
     swappiness: 10
   when: x86_64 and reg_product_name_x86_64.stdout == '20WE'
@@ -122,7 +120,6 @@
   set_fact:
     hostname_id: "vdsina"
     boot: ""
-    add_dop_user: false
     network_type: ""
     ssh_access: "none"
     gui: "none"
@@ -137,7 +134,6 @@
   set_fact:
     hostname_id: "kvmtest"
     boot: "nvram_write_disable,crypto_home,textonly"
-    add_dop_user: false
     network_type: "wired,systemd"
     ssh_access: "none"
     gui: "lightdm,awesome,kde"

@@ -1,0 +1,6 @@
+---
+- name: Install sing box package
+  pkg_manager:
+    name: sing-box
+  become: true
+  become_user: "{{ install_user }}"
