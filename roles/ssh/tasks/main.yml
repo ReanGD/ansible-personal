@@ -9,15 +9,19 @@
   ansible.builtin.file:
     path: "/home/{{ main_user }}/.ssh"
     state: directory
-    mode: "0700"
-    owner: "{{ main_user }}"
     group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0700"
 
 - import_tasks: pub_keys.yml
+
 - import_tasks: private_keys.yml
   when: ssh_access == "all"
+
 - import_tasks: github_keys.yml
   when: ssh_access == "github"
+
 - import_tasks: sshd.yml
+
 - import_tasks: known_hosts.yml
   when: ssh_access == "all" or ssh_access == "github"

@@ -3,25 +3,25 @@
   ansible.builtin.template:
     src: config
     dest: "/home/{{ main_user }}/.ssh/config"
-    mode: "0600"
-    owner: "{{ main_user }}"
     group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0600"
 
 - name: Copy ansible ssh config
   ansible.builtin.template:
     src: ansible_config
     dest: "/home/{{ main_user }}/.ssh/ansible_config"
-    mode: "0600"
-    owner: "{{ main_user }}"
     group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0600"
 
 - name: Add public keys
   ansible.builtin.copy:
     content: "{{ item.key }}"
     dest: "/home/{{ main_user }}/.ssh/{{ item.name }}"
-    mode: "0600"
-    owner: "{{ main_user }}"
     group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0600"
   loop:
     - { key: "{{ aur_private_key }}", name: "aur" }
     - { key: "{{ github_private_key }}", name: "github" }

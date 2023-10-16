@@ -5,22 +5,22 @@
     command: install
   become: true
   become_user: "{{ install_user }}"
-  when: os_family == "arch"
+  when: distro == "arch" or distro == "archarm"
 
 - name: Install debian package for ssh server
   ansible.builtin.apt:
     name: openssh-server
     state: present
   become: true
-  when: os_family == "debian"
+  when: distro == "debian"
 
 - name: Copy sshd config
   ansible.builtin.template:
     src: sshd_config
-    dest: "/etc/ssh/sshd_config"
-    owner: root
-    group: root
+    dest: /etc/ssh/sshd_config
     mode: "0644"
+    group: root
+    owner: root
   become: true
 
 - name: Enable service sshd

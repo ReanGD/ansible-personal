@@ -3,17 +3,17 @@
   ansible.builtin.copy:
     src: git_config
     dest: "/home/{{ main_user }}/.ssh/config"
-    mode: "0600"
-    owner: "{{ main_user }}"
     group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0600"
 
 - name: Install github keys
   ansible.builtin.copy:
     content: "{{ item.key }}"
     dest: "/home/{{ main_user }}/.ssh/{{ item.name }}"
-    mode: "0600"
-    owner: "{{ main_user }}"
     group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0600"
   loop:
     - { key: "{{ github_private_key }}", name: "github" }
   loop_control:
