@@ -1,9 +1,9 @@
 ---
-- import_tasks: arch.yml
+- import_tasks: pkg_arch.yml
   when: distro == "arch"
 
-- import_tasks: archarm.yml
+- import_tasks: pkg_archarm.yml
   when: distro == "archarm"
 
-- import_tasks: debian.yml
+- import_tasks: pkg_debian.yml
   when: distro == "debian"
