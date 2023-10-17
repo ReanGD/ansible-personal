@@ -6,6 +6,7 @@
     group: "{{ main_user }}"
     owner: "{{ main_user }}"
     mode: "0600"
+  become: true
 
 - name: Copy ansible ssh config
   ansible.builtin.template:

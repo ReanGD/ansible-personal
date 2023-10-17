@@ -8,16 +8,16 @@
 - import_tasks: pkg_debian.yml
   when: distro == "debian"
 
-# ansible-vault decrypt main_cfg.json
-# ansible-vault encrypt main_cfg.json
+# ansible-vault decrypt 0_config.json
+# ansible-vault encrypt 0_config.json
 - name: Copy sing box config files
   ansible.builtin.copy:
-    src: main_cfg.json
-    dest: /etc/sing-box/main_cfg.json
-    decrypt: yes
+    src: 0_config.json
+    dest: /etc/sing-box/0_config.json
+    decrypt: true
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   become: true
 
 - name: Enable and restart sing box service

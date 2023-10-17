@@ -460,6 +460,13 @@ def work():
             ]
 
 
+def sing_box():
+    if not is_role("sing_box"):
+        return []
+
+    return ["sing-box"]
+
+
 groups = ["base-devel"]
 
 packages = []
@@ -485,6 +492,7 @@ packages += bluetooth()
 packages += rsync_server()
 packages += hass()
 packages += work()
+packages += sing_box()
 
 ignore_packages = ["squadus"]
 
