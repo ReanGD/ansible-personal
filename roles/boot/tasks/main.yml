@@ -2,6 +2,7 @@
 - name: Install package refind
   pkg_manager:
     name: refind
+    command: install
   become: true
   become_user: "{{ install_user }}"
 
@@ -47,22 +48,22 @@
   become: true
 
 - name: Create refind_linux config without crypto_home
-  template:
+  ansible.builtin.template:
     src: refind_linux.conf
     dest: /boot/refind_linux.conf
-    mode: 0644
-    owner: root
     group: root
+    owner: root
+    mode: "0644"
   when: "'crypto_home' not in boot.split(',')"
   become: true
 
 - name: Create refind_linux config with crypto_home
-  template:
+  ansible.builtin.template:
     src: refind_linux_crypto_home.conf
     dest: /boot/refind_linux.conf
-    mode: 0644
-    owner: root
     group: root
+    owner: root
+    mode: "0644"
   when: "'crypto_home' in boot.split(',')"
   become: true
 

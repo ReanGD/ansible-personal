@@ -15,16 +15,16 @@
   ansible.builtin.copy:
     src: locale.conf
     dest: /etc/locale.conf
-    mode: 0644
-    owner: root
     group: root
+    owner: root
+    mode: "0644"
   become: true
 
 - name: Copy vconsole.conf
   ansible.builtin.copy:
     src: vconsole.conf
     dest: /etc/vconsole.conf
-    mode: 0644
-    owner: root
     group: root
+    owner: root
+    mode: "0644"
   become: true

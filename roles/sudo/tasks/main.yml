@@ -15,10 +15,10 @@
   become: true
 
 - name: Configure sudoers
-  template:
+  ansible.builtin.template:
     src: sudoers
     dest: /etc/sudoers
-    mode: "0440"
     owner: root
     group: root
+    mode: "0440"
   become: true
