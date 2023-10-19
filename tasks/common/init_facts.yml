@@ -23,7 +23,7 @@
     os_family: "{{ 'arch' if reg_distro.stdout in ['arch', 'archarm'] else ('debian' if reg_distro.stdout == 'debian' else 'unknown') }}"
 
 - name: Find board uuid for x86_64
-  command: cat /sys/class/dmi/id/product_name
+  ansible.builtin.command: cat /sys/class/dmi/id/product_name
   register: reg_product_name_x86_64
   changed_when: false
   become: true

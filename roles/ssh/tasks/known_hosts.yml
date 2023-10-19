@@ -1,6 +1,6 @@
 ---
 - name: Get public ssh key for github.com
-  command: ssh-keyscan -t rsa github.com
+  ansible.builtin.command: ssh-keyscan -t rsa github.com
   register: reg_github_pub_key
   changed_when: false
 

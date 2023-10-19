@@ -8,25 +8,25 @@
   become: true
 
 - name: Create swapfile
-  command: dd if=/dev/zero of=/swapfile bs=1M count={{ swap_size }}
+  ansible.builtin.command: dd if=/dev/zero of=/swapfile bs=1M count={{ swap_size }}
   become: true
   when: not reg_swapfile.stat.exists
 
 - name: Set swapfile permissions
   file:
     path: /swapfile
-    mode: 0600
     group: root
     owner: root
+    mode: "0600"
   become: true
 
 - name: Init swapfile
-  command: mkswap /swapfile
+  ansible.builtin.command: mkswap /swapfile
   become: true
   when: not reg_swapfile.stat.exists
 
 - name: Enable swapfile
-  command: swapon /swapfile
+  ansible.builtin.command: swapon /swapfile
   become: true
   when: not reg_swapfile.stat.exists
 
@@ -39,10 +39,10 @@
   when: not reg_swapfile.stat.exists
 
 - name: Configure swap settings
-  template:
+  ansible.builtin.template:
     src: 99-sysctl.conf
     dest: /etc/sysctl.d/99-sysctl.conf
-    mode: 0644
     group: root
     owner: root
+    mode: "0644"
   become: true

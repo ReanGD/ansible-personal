@@ -24,6 +24,5 @@
   ansible.builtin.service:
     name: sing-box.service
     enabled: true
-    daemon_reload: true
     state: restarted
   become: true
