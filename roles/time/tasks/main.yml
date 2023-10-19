@@ -1,7 +1,7 @@
 ---
 - name: Set timezone to Europe/Moscow
-  timezone:
-    hwclock: 'UTC'
+  community.general.timezone:
+    hwclock: UTC
     name: Europe/Moscow
   become: true
 
@@ -11,15 +11,15 @@
   changed_when: false
 
 - name: Copy ntp config file
-  copy:
+  ansible.builtin.copy:
     src: timesyncd.conf
     dest: /etc/systemd/timesyncd.conf
-    mode: '0446'
     group: root
     owner: root
+    mode: "0446"
   become: true
 
 - name: Enable ntp
-  command: timedatectl set-ntp true
+  ansible.builtin.command: timedatectl set-ntp true
   when: reg_timedatectl_ntp.stdout != 'yes'
   become: true
