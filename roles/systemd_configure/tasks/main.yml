@@ -1,16 +1,17 @@
 ---
 - name: Configure log size
-  copy:
+  ansible.builtin.copy:
     src: journald.conf
     dest: /etc/systemd/journald.conf
-    mode: '0446'
     group: root
     owner: root
+    mode: "0446"
   become: true
 
 - name: Install packages for set hostname
   pkg_manager:
     name: inetutils
+    command: install
   become: true
   become_user: "{{ install_user }}"
 
@@ -22,7 +23,7 @@
   when: not is_chroot
 
 - name: Enable fstrim timer
-  service:
+  ansible.builtin.service:
     name: fstrim.timer
     enabled: true
   become: true
