@@ -2,16 +2,17 @@
 - name: Install package nfs-utils
   pkg_manager:
     name: nfs-utils
+    command: install
   become: true
   become_user: "{{ install_user }}"
 
 - name: Install servicies for nfs mount
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
-    dest: /etc/systemd/system/{{ item }}
-    mode: '0644'
+    dest: "/etc/systemd/system/{{ item }}"
     group: root
     owner: root
+    mode: "0644"
   become: true
   loop:
     - mnt-nas-backup.mount
@@ -20,9 +21,9 @@
     - mnt-nas-downloads.automount
 
 - name: Enable servicies for nfs mount
-  service:
+  ansible.builtin.service:
     name: "{{ item }}"
-    enabled: yes
+    enabled: true
   become: true
   loop:
     - mnt-nas-backup.automount
