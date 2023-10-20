@@ -13,7 +13,7 @@
 - name: Copy fonts
   ansible.builtin.copy:
     src: "{{ item }}"
-    dest: /usr/share/fonts/PragmataPro/PragmataPro-{{ item }}
+    dest: "/usr/share/fonts/PragmataPro/PragmataPro-{{ item }}"
     group: root
     owner: root
     mode: "0444"

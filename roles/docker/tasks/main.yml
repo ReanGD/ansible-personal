@@ -2,18 +2,19 @@
 - name: Install package docker
   pkg_manager:
     name: docker, docker-compose
+    command: install
   become: true
   become_user: "{{ install_user }}"
 
 - name: Enable and start docker service
-  service:
+  ansible.builtin.service:
     name: docker.service
-    enabled: yes
+    enabled: true
   become: true
 
 - name: Add group user
-  user:
+  ansible.builtin.user:
     name: "{{ main_user }}"
-    append: yes
+    append: true
     groups: docker
   become: true
