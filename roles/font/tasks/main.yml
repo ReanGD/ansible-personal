@@ -1,22 +1,22 @@
 ---
 - name: Create dirs for font
-  file:
+  ansible.builtin.file:
     path: /usr/share/fonts/PragmataPro
     state: directory
-    mode: '0555'
     group: root
     owner: root
+    mode: "0555"
   become: true
 
 # ansible-vault decrypt
 # ansible-vault encrypt
 - name: Copy fonts
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: /usr/share/fonts/PragmataPro/PragmataPro-{{ item }}
-    mode: 0444
     group: root
     owner: root
+    mode: "0444"
   loop:
     - Bold.otf
     - BoldItalic.otf
@@ -27,9 +27,10 @@
 - name: Install fonts packages
   pkg_manager:
     name: ttf-ms-fonts,ttf-tahoma,ttf-fixedsys-excelsior-linux,ttf-droid,ttf-dejavu,ttf-ubuntu-font-family,noto-fonts-emoji,adobe-source-code-pro-fonts
+    command: install
   become: true
   become_user: "{{ install_user }}"
 
 - name: Update fonts
-  command: fc-cache -fr
+  ansible.builtin.command: fc-cache -fr
   changed_when: false
