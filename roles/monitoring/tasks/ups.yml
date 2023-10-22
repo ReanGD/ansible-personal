@@ -2,20 +2,21 @@
 - name: Install package apcupsd
   pkg_manager:
     name: apcupsd
+    command: install
   become: true
   become_user: "{{ install_user }}"
 
 - name: Configure apcupsd
-  copy:
+  ansible.builtin.copy:
     src: apcupsd.conf
     dest: /etc/apcupsd/apcupsd.conf
-    mode: 0644
     group: root
     owner: root
+    mode: "0644"
   become: true
 
 - name: Enable and start apcupsd service
-  service:
+  ansible.builtin.service:
     name: apcupsd.service
-    enabled: yes
+    enabled: true
   become: true

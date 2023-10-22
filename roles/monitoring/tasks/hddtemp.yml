@@ -2,59 +2,60 @@
 - name: Install packages for hddtemp
   pkg_manager:
     name: hddtemp, smartmontools
+    command: install
   become: true
   become_user: "{{ install_user }}"
 
 - name: Create hddtemp service directory
-  file:
+  ansible.builtin.file:
     path: /etc/systemd/system/hddtemp.service.d
     state: directory
-    mode: '0755'
     group: root
     owner: root
+    mode: "0755"
   become: true
 
 - name: Remove old hddtemp settings file
-  file:
+  ansible.builtin.file:
     path: /tmp/customexec.conf
     state: absent
   become: true
   changed_when: false
 
 - name: Create hddtemp settings file
-  script: generate.sh > /tmp/customexec.conf
+  ansible.builtin.script: generate.sh > /tmp/customexec.conf
   become: true
   changed_when: false
 
 - name: Install hddtemp settings file
-  copy:
+  ansible.builtin.copy:
     src: /tmp/customexec.conf
     dest: /etc/systemd/system/hddtemp.service.d/customexec.conf
-    mode: 0644
     group: root
     owner: root
-    remote_src: yes
+    mode: "0644"
+    remote_src: true
   become: true
   register: reg_settings
 
 - name: Remove new hddtemp settings file
-  file:
+  ansible.builtin.file:
     path: /tmp/customexec.conf
     state: absent
   become: true
   changed_when: false
 
 - name: Enable and start hddtemp service
-  service:
+  ansible.builtin.service:
     name: hddtemp.service
-    enabled: yes
+    enabled: true
     state: started
   become: true
 
 - name: Restart hddtemp service if config changed
-  service:
+  ansible.builtin.service:
     name: hddtemp.service
-    enabled: yes
+    enabled: true
     state: restarted
   when: reg_settings.changed
   become: true
