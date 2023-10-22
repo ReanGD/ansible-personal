@@ -2,11 +2,12 @@
 - name: Install rsync package
   pkg_manager:
     name: rsync
+    command: install
   become: true
   become_user: "{{ install_user }}"
 
 - name: Enable rsyncd service
-  service:
+  ansible.builtin.service:
     name: rsyncd.service
     enabled: yes
   become: true

@@ -13,7 +13,7 @@
   when: not reg_swapfile.stat.exists
 
 - name: Set swapfile permissions
-  file:
+  ansible.builtin.file:
     path: /swapfile
     group: root
     owner: root
