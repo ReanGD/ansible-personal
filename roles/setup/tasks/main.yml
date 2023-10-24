@@ -1,7 +1,7 @@
 ---
-
 - name: Install specific setup packages
   pkg_manager:
-    name: dialog,libnewt
+    name: dialog, libnewt
+    command: install
   become: true
   become_user: "{{ install_user }}"
