@@ -1,27 +1,29 @@
 ---
 - name: Create gpg dir
-  file:
+  ansible.builtin.file:
     path: "/home/{{ main_user }}/.config/gnupg"
     state: directory
-    mode: 0700
     group: users
     owner: "{{ main_user }}"
+    mode: "0700"
+  become: true
 
 - name: Install package gnupg
   pkg_manager:
     name: gnupg
+    command: install
   become: true
   become_user: "{{ install_user }}"
 
 - name: Import package keys
   pkg_manager:
-    command: import_config_keys
     config: "{{ packages_file }}"
+    command: import_config_keys
   become: true
 
 - name: Install packages
   pkg_manager:
-    command: install_config
     config: "{{ packages_file }}"
+    command: install_config
   become: true
   become_user: "{{ install_user }}"

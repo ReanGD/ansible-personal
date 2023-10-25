@@ -356,7 +356,7 @@ def audio():
     audio_pkgs = ["pulseaudio"]
 
     if not is_gui("none"):
-        audio_pkgs += ["pavucontrol", "volumeicon", "pasystray", "spotify"]
+        audio_pkgs += ["pavucontrol", "volumeicon", "pasystray"]
 
     return audio_pkgs
 
