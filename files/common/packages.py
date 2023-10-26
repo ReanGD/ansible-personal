@@ -467,7 +467,8 @@ def sing_box():
     return ["sing-box"]
 
 
-groups = ["base-devel"]
+metas = ["base-devel"]
+groups = []
 
 packages = []
 packages += system()

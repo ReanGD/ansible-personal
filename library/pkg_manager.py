@@ -45,6 +45,17 @@ class Pacman:
     def get_local_explicit_packages(self):
         return self.run(["-Qeq"])
 
+    def get_db_packages_for_metas(self, meta_names):
+        result = set()
+        for meta_name in meta_names:
+            for line in self.run(["-Si", meta_name]):
+                if line.startswith("Depends On"):
+                    for pkg in line.split(":", 1)[1].strip().split():
+                        if len(pkg) != 0:
+                            result.add(pkg)
+
+        return result
+
     def get_db_packages_for_groups(self, group_names):
         if len(group_names) == 0:
             return set()
@@ -202,14 +213,14 @@ def install(module, packages):
     return msg, changed
 
 
-def get_info(packages, ignore_packages, groups):
+def get_info(packages, ignore_packages, metas, groups):
     # ошибочные названия среди groups (groups_name_wrong)
     # ошибочные названия среди packages (packages_name_wrong)
     # неустановленные среди packages (packages_not_installed)
     # установленные как не explicit среди packages (packages_not_explicit)
-    # новые explicit пакеты, которых нет среди packages и пакетов groups,
+    # новые explicit пакеты, которых нет среди packages и пакетов groups + metas,
     #   которые никому не требуются (packages_new)
-    # новые explicit пакеты, которых нет среди packages и пакетов groups,
+    # новые explicit пакеты, которых нет среди packages и пакетов groups + metas,
     #   которые кому-то нужны (packages_new_required)
     # пакеты среди packages, которые находятся в aur (packages_aur)
     # пакеты среди packages, которые относятся к пакетам в groups (packages_in_group)
@@ -224,6 +235,7 @@ def get_info(packages, ignore_packages, groups):
     db_packages = pacman.get_db_packages()
     local_packages = pacman.get_local_packages().difference(ignore_packages)
     local_explicit_packages = pacman.get_local_explicit_packages().difference(ignore_packages)
+    db_packages_for_metas = pacman.get_db_packages_for_metas(metas)
     db_packages_for_groups = pacman.get_db_packages_for_groups(groups)
     local_packages_for_groups = pacman.get_local_packages_for_groups(groups)
 
@@ -244,7 +256,7 @@ def get_info(packages, ignore_packages, groups):
 
     packages_new = set()
     packages_new_required = set()
-    for pkg_name in local_explicit_packages.difference(packages, local_packages_for_groups):
+    for pkg_name in local_explicit_packages.difference(packages, local_packages_for_groups, db_packages_for_metas):
         if pacman.get_is_local_package_has_reverse_dependency(pkg_name):
             packages_new_required.add(pkg_name)
         else:
@@ -288,15 +300,18 @@ def run_module(module):
                 "changed": changed,
             }
     elif command == "get_info":
+        metas = module.params.get("metas", None)
         groups = module.params.get("groups", None)
         packages = module.params.get("packages", None)
         ignore_packages = module.params.get("ignore_packages", None)
         if packages is None:
             raise StrError("Not found required param 'packages' for command '{}'".format(command))
-        elif groups is None:
+        if metas is None:
+            raise StrError("Not found required param 'metas' for command '{}'".format(command))
+        if groups is None:
             raise StrError("Not found required param 'groups' for command '{}'".format(command))
-        else:
-            return get_info(packages, ignore_packages, groups)
+
+        return get_info(packages, ignore_packages, metas, groups)
     else:
         raise StrError("Param 'command' has unexpected value '{}'".format(command))
 
@@ -304,7 +319,7 @@ def run_module(module):
 # pkg_manager: command=install name=dropbox
 # pkg_manager: command=install name=yay, python
 # pkg_manager: command=import_keys keys=1FF2, 33ED
-# pkg_manager: command=get_info packages=python2,python ignore_packages=squadus groups=base
+# pkg_manager: command=get_info packages=python2,python ignore_packages=squadus metas=base-devel groups=base
 def main():
     module = AnsibleModule(
         argument_spec=dict(
@@ -313,6 +328,7 @@ def main():
             keys=dict(default=None, required=False, type="list"),
             packages=dict(default=None, required=False, type="list"),
             ignore_packages=dict(default=None, required=False, type="list"),
+            metas=dict(default=None, required=False, type="list"),
             groups=dict(default=None, required=False, type="list")
             ),
         supports_check_mode=False)
