@@ -379,6 +379,7 @@ def office():
         return []
 
     return ["libreoffice-fresh-ru",
+            "obsidian",
             "mupdf",  # pdf viewer (analog: llpp-git)
             "enchant", "hunspell-en_us", "hunspell-ru-aot", "languagetool",  # spell checkers
             ]
