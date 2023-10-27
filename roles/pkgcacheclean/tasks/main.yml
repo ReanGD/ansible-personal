@@ -2,29 +2,30 @@
 - name: Install package pkgcacheclean
   pkg_manager:
     name: pkgcacheclean
-  become: yes
+    command: install
+  become: true
   become_user: "{{ install_user }}"
 
 - name: Timer pkgcacheclean
-  copy:
+  ansible.builtin.copy:
     src: pkgcacheclean.timer
     dest: /etc/systemd/system/pkgcacheclean.timer
-    mode: 0644
     group: root
     owner: root
-  become: yes
+    mode: "0644"
+  become: true
 
 - name: Service pkgcacheclean
-  copy:
+  ansible.builtin.copy:
     src: pkgcacheclean.service
     dest: /etc/systemd/system/pkgcacheclean.service
-    mode: 0644
     group: root
     owner: root
-  become: yes
+    mode: "0644"
+  become: true
 
 - name: Enable pkgcacheclean service
-  service:
+  ansible.builtin.service:
     name: pkgcacheclean.timer
-    enabled: yes
-  become: yes
+    enabled: true
+  become: true
