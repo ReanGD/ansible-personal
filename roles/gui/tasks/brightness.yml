@@ -6,23 +6,24 @@
 - name: Install package for brightness control
   pkg_manager:
     name: ddcutil
-  become: yes
+    command: install
+  become: true
   become_user: "{{ install_user }}"
 
 - name: Load kernel module for ddcutil
-  copy:
+  ansible.builtin.copy:
     src: brightness.conf
     dest: /etc/modules-load.d/brightness.conf
-    mode: 0755
     group: root
     owner: root
-  become: yes
+    mode: "0755"
+  become: true
 
 - name: Set permissions for i2c devices
-  copy:
+  ansible.builtin.copy:
     src: 20-i2c-permissions.rules
     dest: /etc/udev/rules.d/20-i2c-permissions.rules
-    mode: 0644
     group: root
     owner: root
-  become: yes
+    mode: "0644"
+  become: true

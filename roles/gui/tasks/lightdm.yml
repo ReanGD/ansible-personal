@@ -2,38 +2,39 @@
 - name: Install package lightdm
   pkg_manager:
     name: lightdm, lightdm-gtk-greeter
-  become: yes
+    command: install
+  become: true
   become_user: "{{ install_user }}"
 
 - name: Create configuration for lightdm
-  copy:
+  ansible.builtin.copy:
     src: lightdm.conf
     dest: /etc/lightdm/lightdm.conf
-    mode: 0644
     group: root
     owner: root
-  become: yes
+    mode: "0644"
+  become: true
 
 - name: Create configuration for lightdm users
-  copy:
+  ansible.builtin.copy:
     src: users.conf
     dest: /etc/lightdm/users.conf
-    mode: 0644
     group: root
     owner: root
-  become: yes
+    mode: "0644"
+  become: true
 
 - name: Create session wrapper for lightdm
-  copy:
+  ansible.builtin.copy:
     src: lightdm_session.sh
     dest: /etc/lightdm/lightdm_session.sh
-    mode: 0755
     group: root
     owner: root
-  become: yes
+    mode: "0755"
+  become: true
 
 - name: Enable lightdm service
-  service:
+  ansible.builtin.service:
     name: lightdm.service
-    enabled: yes
-  become: yes
+    enabled: true
+  become: true

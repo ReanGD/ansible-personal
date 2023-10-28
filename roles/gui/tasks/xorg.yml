@@ -2,34 +2,35 @@
 - name: Install package for xorg
   pkg_manager:
     name: xorg-server, xorg-xinit
-  become: yes
+    command: install
+  become: true
   become_user: "{{ install_user }}"
 
 - name: Configure keyboard
-  copy:
+  ansible.builtin.copy:
     src: 20-keyboard.conf
     dest: /etc/X11/xorg.conf.d/20-keyboard.conf
-    mode: 0755
     group: root
     owner: root
-  become: yes
+    mode: "0755"
+  become: true
 
 - name: Configure touchpad
-  copy:
+  ansible.builtin.copy:
     src: 20-touchpad.conf
     dest: /etc/X11/xorg.conf.d/20-touchpad.conf
-    mode: 0755
     group: root
     owner: root
-  become: yes
+    mode: "0755"
+  become: true
   when: hostname_id == "xnote" or hostname_id == "worknote"
 
 - name: Configure monitor
-  copy:
+  ansible.builtin.copy:
     src: 90-monitor.conf
     dest: /etc/X11/xorg.conf.d/90-monitor.conf
-    mode: 0755
     group: root
     owner: root
-  become: yes
+    mode: "0755"
+  become: true
   when: hostname_id == "master"
