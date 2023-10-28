@@ -1,9 +1,9 @@
 ---
 - name: Check swapfile
-  stat:
+  ansible.builtin.stat:
     path: /swapfile
-    get_checksum: no
-    get_mime: no
+    get_checksum: false
+    get_mime: false
   register: reg_swapfile
   become: true
 

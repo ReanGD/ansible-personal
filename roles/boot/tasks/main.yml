@@ -7,10 +7,10 @@
   become_user: "{{ install_user }}"
 
 - name: Check that the /boot/efi/EFI exists
-  stat:
+  ansible.builtin.stat:
     path: /boot/efi/EFI
-    get_checksum: no
-    get_mime: no
+    get_checksum: false
+    get_mime: false
   register: reg_efi_installed
   become: true
 
