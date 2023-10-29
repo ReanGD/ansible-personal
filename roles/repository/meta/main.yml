@@ -1,4 +1,3 @@
 ---
-dependencies:
-  - role: network
-  - role: ssh
+dependencies: []
+  # - role: network+ssh
