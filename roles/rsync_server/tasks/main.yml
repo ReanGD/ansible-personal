@@ -9,5 +9,5 @@
 - name: Enable rsyncd service
   ansible.builtin.service:
     name: rsyncd.service
-    enabled: yes
+    enabled: true
   become: true

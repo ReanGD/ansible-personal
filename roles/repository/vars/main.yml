@@ -1,7 +1,7 @@
 ---
 reangd_repositories_map:
-  - { repo: "arena.git",                      dest: "arena.git" }
   - { repo: "ansible-personal.git",           dest: "ansible-personal" }
+  - { repo: "arena.git",                      dest: "arena.git" }
   - { repo: "bot-platform.git",               dest: "bot-platform" }
   - { repo: "cpp-coroutine.git",              dest: "cpp-coroutine" }
   - { repo: "cpp-network.git",                dest: "cpp-network" }
@@ -29,7 +29,6 @@ reangd_repositories_map:
   - { repo: "runify.git",                     dest: "runify" }
   - { repo: "rust-open3d.git",                dest: "rust-open3d" }
   - { repo: "rust-software-render.git",       dest: "rust-software-render" }
-  - { repo: "SimpleLang.git",                 dest: "SimpleLang" }
   - { repo: "smart-home.git",                 dest: "smart-home" }
   - { repo: "sublime-powerslim.git",          dest: "sublime-powerslim" }
   - { repo: "vscode-devdocs-io.git",          dest: "vscode-devdocs-io" }
@@ -40,7 +39,7 @@ terra_repositories_map:
   - { repo: "TerraEngine.git", dest: "TerraEngine" }
 
 lovely_helper_repositories_map:
-  - { repo: "AI.git",               dest: "AI" }
-  - { repo: "backend.git",          dest: "backend" }
-  - { repo: "android_frontend.git", dest: "android_frontend" }
   - { repo: "agents.git",           dest: "agents" }
+  - { repo: "AI.git",               dest: "AI" }
+  - { repo: "android_frontend.git", dest: "android_frontend" }
+  - { repo: "backend.git",          dest: "backend" }
