@@ -3,29 +3,34 @@
 - name: Install packages for parse doublecmd configs
   pkg_manager:
     name: python-lxml
-  become: yes
+    command: install
+  become: true
   become_user: "{{ install_user }}"
 
 - name: Check that the doublecmd config exists
-  stat:
+  ansible.builtin.stat:
     path: "/home/{{ main_user }}/.config/doublecmd/doublecmd.xml"
-    get_checksum: no
-    get_mime: no
+    get_checksum: false
+    get_mime: false
   register: reg_doublecmd_cfg_exists
 
 - name: Backup doublecmd config
-  copy:
+  ansible.builtin.copy:
     src: "/home/{{ main_user }}/.config/doublecmd/doublecmd.xml"
     dest: "/home/{{ main_user }}/.config/doublecmd/doublecmd.xml.backup"
+    group: users
+    owner: "{{ main_user }}"
+    mode: "0644"
   when: reg_doublecmd_cfg_exists.stat.exists
   changed_when: false
+  become: true
 
 - name: Remove from doublecmd config backup unused elements
-  xml:
+  community.general.xml:
     path: "/home/{{ main_user }}/.config/doublecmd/doublecmd.xml.backup"
     xpath: "{{ item }}"
     state: absent
-    pretty_print: yes
+    pretty_print: true
   loop:
     - "/doublecmd/Tabs/*"
     - "/doublecmd/Icons/*"
@@ -35,7 +40,11 @@
   changed_when: false
 
 - name: Copy doublecmd config from backup
-  copy:
+  ansible.builtin.copy:
     src: "/home/{{ main_user }}/.config/doublecmd/doublecmd.xml.backup"
     dest: "/home/{{ main_user }}/.config/doublecmd/doublecmd.xml"
+    group: users
+    owner: "{{ main_user }}"
+    mode: "0644"
   when: not reg_doublecmd_cfg_exists.stat.exists
+  become: true

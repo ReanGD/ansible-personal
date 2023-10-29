@@ -1,20 +1,20 @@
 ---
 - name: Copy uprofile.sh to /etc/profile.d
-  copy:
+  ansible.builtin.copy:
     src: start_profile.sh
     dest: /etc/profile.d/start_profile.sh
-    mode: 0644
     group: root
     owner: root
+    mode: "0644"
   become: true
 
 - name: Create cfg dirs
-  file:
+  ansible.builtin.file:
     path: "/home/{{ main_user }}/{{ item }}"
     state: directory
-    mode: 0755
     group: users
     owner: "{{ main_user }}"
+    mode: "0755"
   loop:
     - .local/share
     - .local/share/zsh
@@ -36,6 +36,7 @@
     - projects/work
     - projects/external
     - projects/venv
+  become: true
 
 - name: Clone or update dotfile repositories
   update_git:
@@ -70,26 +71,27 @@
     file: secrets.yml
 
 - name: Create git user configs
-  copy:
+  ansible.builtin.copy:
     content: "{{ item.key }}"
     dest: "/home/{{ main_user }}/.config/git/{{ item.name }}"
-    mode: 0644
     group: users
     owner: "{{ main_user }}"
+    mode: "0644"
+  become: true
   loop:
     - { key: "{{ git_user_home }}", name: "user.home" }
     - { key: "{{ git_user_work }}", name: "user.work" }
   loop_control:
     label: "{{ item.name }}"
 
-
 - name: Create set_hidden_params.sh
-  template:
+  ansible.builtin.template:
     src: set_hidden_params.sh
     dest: "/home/{{ main_user }}/.config/start/set_hidden_params.sh"
-    mode: 0644
     group: users
     owner: "{{ main_user }}"
+    mode: "0644"
+  become: true
 
 - import_tasks: cloud.yml
   when: gui!="none"
@@ -100,11 +102,12 @@
 - name: Install packages for update desktop database
   pkg_manager:
     name: desktop-file-utils
+    command: install
   when: gui!="none"
   become: true
   become_user: "{{ install_user }}"
 
 - name: Update desktop database
-  command: update-desktop-database ~/.local/share/applications
+  ansible.builtin.command: update-desktop-database ~/.local/share/applications
   when: gui!="none"
   changed_when: false

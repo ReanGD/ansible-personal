@@ -1,11 +1,12 @@
 ---
 - name: Create cfg dirs
-  file:
+  ansible.builtin.file:
     path: "/home/{{ main_user }}/{{ item }}"
     state: directory
-    mode: 0755
     group: users
     owner: "{{ main_user }}"
+    mode: "0755"
+  become: true
   loop:
     - cloud
     - doc
