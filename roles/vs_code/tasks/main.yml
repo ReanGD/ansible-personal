@@ -2,15 +2,16 @@
 - name: Install VS code package
   pkg_manager:
     name: visual-studio-code-bin
+    command: install
   become: true
   become_user: "{{ install_user }}"
 
 - name: Get list of installed extensions
-  command: "/usr/bin/code --extensions-dir ~/.local/share/vscode --list-extensions"
+  ansible.builtin.command: "/usr/bin/code --extensions-dir ~/.local/share/vscode --list-extensions"
   register: reg_vscode_installed_extensions
   changed_when: false
 
 - name: Install extensions
-  command: "/usr/bin/code --extensions-dir ~/.local/share/vscode --install-extension {{ item }}"
+  ansible.builtin.command: "/usr/bin/code --extensions-dir ~/.local/share/vscode --install-extension {{ item }}"
   loop: "{{ vs_code_extensions }}"
   when: item not in reg_vscode_installed_extensions.stdout
