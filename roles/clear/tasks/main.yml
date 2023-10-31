@@ -1,7 +1,7 @@
 ---
 - name: Remove old configs
-  file:
-    path: /home/{{ main_user }}{{ item }}
+  ansible.builtin.file:
+    path: "/home/{{ main_user }}{{ item }}"
     state: absent
   loop:
     - /.bash_history
@@ -18,4 +18,4 @@
     - /Общедоступные
     - /Рабочий стол
     - /Шаблоны
-  become: yes
+  become: true
