@@ -15,8 +15,8 @@
     src: 0_config.json
     dest: /etc/sing-box/0_config.json
     decrypt: true
-    owner: root
     group: root
+    owner: root
     mode: "0644"
   become: true
 

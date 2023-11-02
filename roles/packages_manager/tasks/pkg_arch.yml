@@ -24,18 +24,18 @@
   ansible.builtin.copy:
     src: arch_pacman.conf
     dest: /etc/pacman.conf
-    mode: 0644
-    owner: root
     group: root
+    owner: root
+    mode: "0644"
   become: true
 
 - name: Copy arch mirrorlist configuration
   ansible.builtin.copy:
     src: arch_mirrorlist
     dest: /etc/pacman.d/mirrorlist
-    mode: 0644
-    owner: root
     group: root
+    owner: root
+    mode: "0644"
   become: true
 
 - name: Update pacman cache

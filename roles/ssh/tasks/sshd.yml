@@ -18,9 +18,9 @@
   ansible.builtin.template:
     src: sshd_config
     dest: /etc/ssh/sshd_config
-    mode: "0644"
     group: root
     owner: root
+    mode: "0644"
   become: true
 
 - name: Enable service sshd

@@ -18,7 +18,7 @@
   ansible.builtin.template:
     src: sudoers
     dest: /etc/sudoers
-    owner: root
     group: root
+    owner: root
     mode: "0440"
   become: true
