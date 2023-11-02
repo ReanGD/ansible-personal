@@ -2,14 +2,15 @@
 - name: Install pulseaudio
   pkg_manager:
     name: pulseaudio
+    command: install
   become: true
   become_user: "{{ install_user }}"
 
 - name: Add "Jack Headphone Mic" and "Jack Headset Mic"
-  copy:
+  ansible.builtin.copy:
     src: analog-input-internal-mic.conf
     dest: /usr/share/pulseaudio/alsa-mixer/paths/analog-input-internal-mic.conf
-    mode: 0644
     group: root
     owner: root
+    mode: "0644"
   become: true
