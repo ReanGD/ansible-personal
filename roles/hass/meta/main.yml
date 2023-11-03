@@ -1,4 +1,3 @@
 ---
-dependencies:
-  - role: packages_manager
-  - role: packages
+dependencies: []
+  # - role: packages_manager + packages

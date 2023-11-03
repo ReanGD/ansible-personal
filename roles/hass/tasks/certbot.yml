@@ -2,31 +2,32 @@
 - name: Install packages for install ssl certificates
   pkg_manager:
     name: certbot
+    command: install
   become: true
   become_user: "{{ install_user }}"
 
 - name: Check that certificate files exist
-  stat:
+  ansible.builtin.stat:
     path: /etc/letsencrypt/live/iot.fr.to/fullchain.pem
   register: cert_file
   become: true
 
 - name: Create certificates
-  command: certbot certonly --standalone --noninteractive --agree-tos --preferred-challenges=http-01 --email=reangd@yandex.ru --domain=iot.fr.to
+  ansible.builtin.command: certbot certonly --standalone --noninteractive --agree-tos --preferred-challenges=http-01 --email=reangd@yandex.ru --domain=iot.fr.to
   become: true
   when: not cert_file.stat.exists
 
 - name: Update certificates
-  command: certbot renew --standalone  --noninteractive --agree-tos --pre-hook "systemctl stop hass" --post-hook "systemctl start hass"
+  ansible.builtin.command: certbot renew --standalone  --noninteractive --agree-tos --pre-hook "systemctl stop hass" --post-hook "systemctl start hass"
   become: true
   when: cert_file.stat.exists
 
 - name: Recursively change ownership of a directory
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    recurse: yes
-    mode: 0755
+    recurse: true
+    mode: "0755"
   loop:
     - /etc/letsencrypt/live/
     - /etc/letsencrypt/archive/

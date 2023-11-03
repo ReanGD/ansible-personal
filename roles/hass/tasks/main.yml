@@ -2,12 +2,12 @@
 - import_tasks: certbot.yml
 
 - name: Udev rule for Z-Wave stick
-  copy:
+  ansible.builtin.copy:
     src: 99-usb-serial.rules
     dest: /etc/udev/rules.d/99-usb-serial.rules
-    mode: 0644
     group: root
     owner: root
+    mode: "0644"
   become: true
 
 - name: Turn off "Disco lights"
@@ -15,12 +15,12 @@
   become: true
 
 - name: Create dirs for homeassistant
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    mode: 0755
     group: users
     owner: rean
+    mode: "0755"
   loop:
     - /hass
     - /hass/venv
@@ -33,7 +33,7 @@
     name: homeassistant
     virtualenv: /hass/venv
     version: 2021.10.7
-    virtualenv_site_packages: yes
+    virtualenv_site_packages: true
 
 - name: Install HACS
   ansible.builtin.unarchive:
@@ -43,20 +43,20 @@
     mode: '0755'
     group: users
     owner: rean
-    remote_src: yes
+    remote_src: true
   become: true
 
 - name: Create service homeassistant
-  copy:
+  ansible.builtin.copy:
     src: hass.service
     dest: /etc/systemd/system/hass.service
-    mode: '0644'
     group: root
     owner: root
+    mode: "0644"
   become: true
 
 - name: Enable homeassistant service
-  service:
+  ansible.builtin.service:
     name: hass.service
-    enabled: yes
+    enabled: true
   become: true
