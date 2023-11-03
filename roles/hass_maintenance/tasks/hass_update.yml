@@ -2,30 +2,30 @@
 # ansible-vault decrypt secrets.yaml
 # ansible-vault encrypt secrets.yaml
 - name: Copy secrets.yaml for hass
-  copy:
+  ansible.builtin.copy:
     src: secrets.yaml
     dest: /hass/dotfiles-hass
-    decrypt: yes
-    owner: "{{ main_user }}"
+    decrypt: true
     group: users
-    mode: 0644
+    owner: "{{ main_user }}"
+    mode: "0644"
 
 - name: Synchronization smart-home
-  synchronize:
+  ansible.posix.synchronize:
     src: /home/{{ main_user }}/projects/home/smart-home
     dest: /hass
     delete: true
 
 - name: Synchronization dotfiles-hass
-  synchronize:
+  ansible.posix.synchronize:
     src: /home/{{ main_user }}/projects/home/dotfiles-hass
     dest: /hass
 
 - name: Generate protobuf
-  command: /hass/smart-home/generate_proto.sh
+  ansible.builtin.command: /hass/smart-home/generate_proto.sh
 
 - name: Restart homeassistant service
-  service:
+  ansible.builtin.service:
     name: hass.service
     state: restarted
   become: true
