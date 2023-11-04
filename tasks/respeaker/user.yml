@@ -1,7 +1,7 @@
 --- # abs_path, without dependencies
 - name: Remove the user 'respeaker'
-  user:
+  ansible.builtin.user:
     name: respeaker
     state: absent
-    remove: yes
-  become: yes
+    remove: true
+  become: true
