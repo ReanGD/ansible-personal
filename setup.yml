@@ -31,6 +31,8 @@
       when: '"automount" in roles.split(",")'
     - role: rsync_server
       when: '"rsync_server" in roles.split(",")'
+    - role: sing_box
+      when: 'not is_chroot and "sing_box" in roles.split(",")'
     - role: hass
       when: '"hass" in roles.split(",")'
     - role: hass_maintenance
@@ -48,8 +50,6 @@
       when: 'not is_chroot and "repository" in roles.split(",")'
     - role: dotfiles
       when: not is_chroot and x86_64
-    - role: sing_box
-      when: 'not is_chroot and "sing_box" in roles.split(",")'
     - role: gui
       when: not is_chroot and gui!="none"
     - role: vs_code
