@@ -1,9 +1,9 @@
 --- # abs_path, without dependencies
 - name: Remove unused packages
-  apt:
+  ansible.builtin.apt:
     name: "{{ packages }}"
     state: absent
-    purge: yes
+    purge: true
   vars:
     packages:
       - vim
@@ -20,8 +20,10 @@
       - libpython2.7-stdlib
       - libpython2.7-minimal
       - pulseaudio-module-bluetooth
-  become: yes
+  become: true
 
 - name: Disable bluetooth service
-  service: name=bluetooth.service enabled=no
-  become: yes
+  ansible.builtin.service:
+    name: bluetooth.service
+    enabled: false
+  become: true
