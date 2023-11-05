@@ -1,26 +1,42 @@
 --- # abs_path, pyenv.yml
 
 - name: Install packages for smart home
-  apt:
+  ansible.builtin.apt:
     name: "{{ packages }}"
     state: present
   vars:
     packages:
       - protobuf-compiler
       - portaudio19-dev
-  become: yes
+  become: true
 
 - name: Create dirs for smart-home
-  file: path=/project/venv state=directory mode=0755 group=users owner=rean recurse=yes
-  become: yes
+  ansible.builtin.file:
+    path: /project/venv
+    state: directory
+    group: users
+    owner: rean
+    mode: "0755"
+    recurse: true
+  become: true
 
 - name: requirements.txt for smart_home
-  template: src="{{files_dir}}/respeaker/project/requirements.txt" dest=/project/requirements.txt mode=0644 group=users owner=rean
+  ansible.builtin.template:
+    src: "{{files_dir}}/respeaker/project/requirements.txt"
+    dest: /project/requirements.txt
+    group: users
+    owner: rean
+    mode: "0644"
 
 - name: .python-version for use python3.7
-  template: src="{{files_dir}}/respeaker/project/.python-version" dest=/project/.python-version mode=0644 group=users owner=rean
+  ansible.builtin.template:
+    src: "{{files_dir}}/respeaker/project/.python-version"
+    dest: /project/.python-version
+    group: users
+    owner: rean
+    mode: "0644"
 
-- name: Install packages for smart-home 
-  pip:
+- name: Install packages for smart-home
+  ansible.builtin.pip:
     requirements: /project/requirements.txt
     chdir: /project/

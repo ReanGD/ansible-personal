@@ -1,14 +1,22 @@
 --- # abs_path, without dependencies
 - name: Install rsync for sync settings
-  apt:
+  ansible.builtin.apt:
     name: rsync
     state: present
-  become: yes
+  become: true
 
 - name: rsyncd.conf
-  template: src="{{files_dir}}/respeaker/etc/rsyncd.conf" dest=/etc/rsyncd.conf mode=0644 group=root owner=root
-  become: yes
+  ansible.builtin.template:
+    src: "{{files_dir}}/respeaker/etc/rsyncd.conf"
+    dest: /etc/rsyncd.conf
+    group: root
+    owner: root
+    mode: "0644"
+  become: true
 
 - name: Enable and start rsyncd service for sync settings
-  service: name=rsync.service enabled=yes state=started
-  become: yes
+  ansible.builtin.service:
+    name: rsync.service
+    enabled: true
+    state: started
+  become: true
