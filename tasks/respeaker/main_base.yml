@@ -18,6 +18,6 @@
     - include: "{{tasks_dir}}/respeaker/logger.yml"
     - include: "{{tasks_dir}}/respeaker/remove_unused.yml"
     - include: "{{tasks_dir}}/respeaker/rsync.yml"
-    - include: "{{tasks_dir}}/respeaker/pyenv.yml"    
+    - include: "{{tasks_dir}}/respeaker/pyenv.yml"
     - include: "{{tasks_dir}}/respeaker/smart_home_install.yml"
     - include: "{{tasks_dir}}/respeaker/smart_home_update.yml"

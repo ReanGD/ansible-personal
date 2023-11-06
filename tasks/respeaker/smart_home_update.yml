@@ -1,21 +1,21 @@
 --- # abs_path, rsync.yml, smart_home_install.yml
 
 - name: Synchronization smart-home
-  synchronize:
+  ansible.posix.synchronize:
     src: /home/rean/projects/home/smart-home
     dest: /project
     delete: true
 
 - name: Generate protobuf
-  shell: /project/smart-home/generate_proto.sh
+  ansible.builtin.shell: /project/smart-home/generate_proto.sh
 
 # ansible-vault decrypt config.py
 # ansible-vault encrypt config.py
 - name: Copy config.py for smart-home
-  copy:
+  ansible.builtin.copy:
     src: "{{files_dir}}/respeaker/project/smart-home/config.py"
     dest: /project/smart-home/
-    decrypt: yes
-    owner: rean
+    decrypt: true
     group: users
-    mode: 0644
+    owner: rean
+    mode: "0644"
