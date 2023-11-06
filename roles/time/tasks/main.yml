@@ -6,7 +6,7 @@
   become: true
 
 - name: Check is ntp enabled
-  shell: timedatectl | grep "System clock synchronized\|NTP synchronized" | awk '{ print $NF }'
+  ansible.builtin.shell: timedatectl | grep "System clock synchronized\|NTP synchronized" | awk '{ print $NF }'
   register: reg_timedatectl_ntp
   changed_when: false
 

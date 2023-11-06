@@ -15,17 +15,17 @@
   become: true
 
 - name: Find efi partition name
-  shell: findmnt -o SOURCE --noheadings /boot/efi
+  ansible.builtin.shell: findmnt -o SOURCE --noheadings /boot/efi
   register: efi_partition_name_reg
   changed_when: false
 
 - name: Find root partition uuid
-  shell: findmnt -o UUID --noheadings /
+  ansible.builtin.shell: findmnt -o UUID --noheadings /
   register: root_partition_uuid_reg
   changed_when: false
 
 - name: Find home partition uuid
-  shell: findmnt -o UUID --noheadings /home
+  ansible.builtin.shell: findmnt -o UUID --noheadings /home
   register: home_partition_uuid_reg
   changed_when: false
   failed_when: home_partition_uuid_reg.rc > 1
@@ -38,12 +38,12 @@
     conf_path: "{% if 'nvram_write_disable' in boot.split(',') %}/boot/efi/EFI/BOOT/refind.conf{% else %}/boot/efi/EFI/refind/refind.conf{% endif %}"
 
 - name: UEFI install for nvram write disable
-  shell: refind-install --usedefault {{ efi_partition_name }} --alldrivers
+  ansible.builtin.shell: refind-install --usedefault {{ efi_partition_name }} --alldrivers
   when: "'nvram_write_disable' in boot.split(',') and reg_efi_installed.stat.exists == False"
   become: true
 
 - name: UEFI install for nvram write enable
-  shell: refind-install --alldrivers
+  ansible.builtin.shell: refind-install --alldrivers
   when: "'nvram_write_enble' in boot.split(',') and reg_efi_installed.stat.exists == False"
   become: true
 
@@ -68,14 +68,14 @@
   become: true
 
 - name: Update refind timeout
-  lineinfile:
+  ansible.builtin.lineinfile:
     regexp: "^timeout .*$"
     line: "timeout 1"
     path: "{{conf_path}}"
   become: true
 
 - name: Use refind textonly mode
-  lineinfile:
+  ansible.builtin.lineinfile:
     regexp: "^#textonly$"
     line: "textonly"
     path: "{{conf_path}}"

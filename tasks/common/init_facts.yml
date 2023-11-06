@@ -6,7 +6,7 @@
       - '!any'
 
 - name: Find distro name
-  shell: cat /etc/os-release | grep "^ID=" | cut -d'=' -f2-
+  ansible.builtin.shell: cat /etc/os-release | grep "^ID=" | cut -d'=' -f2-
   register: reg_distro
   changed_when: false
 
@@ -30,7 +30,7 @@
   when: x86_64
 
 - name: Find board uuid for armv7l
-  shell: grep -Po '^Serial\s*:\s*\K[[:xdigit:]]{16}' /proc/cpuinfo
+  ansible.builtin.shell: grep -Po '^Serial\s*:\s*\K[[:xdigit:]]{16}' /proc/cpuinfo
   register: reg_product_name_armv7l
   changed_when: false
   when: arm

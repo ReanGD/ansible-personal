@@ -31,7 +31,7 @@
   when: not reg_swapfile.stat.exists
 
 - name: Add swapfile to /etc/fstab
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/fstab
     line: "/swapfile none swap defaults 0 0"
     state: present

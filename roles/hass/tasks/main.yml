@@ -11,7 +11,7 @@
   become: true
 
 - name: Turn off "Disco lights"
-  shell: echo -e -n "\x01\x08\x00\xF2\x51\x01\x00\x05\x01\x51" > /dev/serial/by-id/usb-0658_0200-if00
+  ansible.builtin.shell: echo -e -n "\x01\x08\x00\xF2\x51\x01\x00\x05\x01\x51" > /dev/serial/by-id/usb-0658_0200-if00
   become: true
 
 - name: Create dirs for homeassistant
@@ -29,7 +29,7 @@
   become: true
 
 - name: Install homeassistant
-  pip:
+  ansible.builtin.pip:
     name: homeassistant
     virtualenv: /hass/venv
     version: 2021.10.7
