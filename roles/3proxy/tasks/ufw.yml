@@ -1,0 +1,16 @@
+---
+- name: Allow traffic on http proxy port
+  community.general.ufw:
+    rule: allow
+    port: "{{ proxy3_http_port }}"
+    proto: tcp
+    comment: "Allow traffic on http proxy port"
+  become: true
+
+- name: Allow traffic on socks proxy port
+  community.general.ufw:
+    rule: allow
+    port: "{{ proxy3_socks_port }}"
+    proto: tcp
+    comment: "Allow traffic on socks proxy port"
+  become: true

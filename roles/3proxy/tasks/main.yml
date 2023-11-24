@@ -15,7 +15,7 @@
   when: "proxy3_reinstall"
 
 - name: Check that binary exists
-  stat:
+  ansible.builtin.stat:
     path: /usr/bin/3proxy
     get_checksum: false
     get_mime: false
@@ -25,19 +25,10 @@
 - import_tasks: bin.yml
   when: "proxy3_reinstall or not reg_3proxy_bin_exists.stat.exists"
 
-- name: Check that config exists
-  stat:
-    path: /etc/3proxy/3proxy.cfg
-    get_checksum: false
-    get_mime: false
-  register: reg_3proxy_cfg_exists
-  become: true
-
 - import_tasks: config.yml
-  when: "proxy3_reinstall or not reg_3proxy_cfg_exists.stat.exists"
 
 - name: Check that log dir exists
-  stat:
+  ansible.builtin.stat:
     path: /var/log/3proxy
     get_checksum: false
     get_mime: false
@@ -48,3 +39,4 @@
   when: "proxy3_reinstall or not reg_3proxy_log_exists.stat.exists"
 
 - import_tasks: systemd.yml
+- import_tasks: ufw.yml

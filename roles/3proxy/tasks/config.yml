@@ -17,19 +17,12 @@
     mode: "0440"
   become: true
 
-- name: Check that auth exists
-  stat:
-    path: /etc/3proxy/3proxy.cfg
-    get_checksum: false
-    get_mime: false
-  register: reg_3proxy_auth_exists
-  become: true
-
+# ansible-vault decrypt
+# ansible-vault encrypt
 - name: Create auth config
-  copy:
-    content: ""
+  ansible.builtin.copy:
+    src: auth
     dest: /etc/3proxy/auth
-    force: false
     group: proxy3
     owner: proxy3
     mode: "0440"
