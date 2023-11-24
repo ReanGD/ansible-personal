@@ -31,7 +31,7 @@
   failed_when: home_partition_uuid_reg.rc > 1
 
 - name: Set partitions facts
-  set_fact:
+  ansible.builtin.set_fact:
     efi_partition_name: "{{ efi_partition_name_reg.stdout }}"
     root_partition_uuid: "{{ root_partition_uuid_reg.stdout }}"
     home_partition_uuid: "{{ home_partition_uuid_reg.stdout }}"

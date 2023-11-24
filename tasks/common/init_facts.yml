@@ -11,7 +11,7 @@
   changed_when: false
 
 - name: Set common facts
-  set_fact:
+  ansible.builtin.set_fact:
     main_user: rean
     install_user: aur_builder
     is_chroot: "{{ is_chroot_param }}"
@@ -47,7 +47,7 @@
 #                   "work", "repository", "rsync_server", "hass", "sing_box"]
 
 - name: Set hass facts
-  set_fact:
+  ansible.builtin.set_fact:
     hostname_id: "hass"
     boot: "nvram_write_enble"
     network_type: "wired_old,systemd"
@@ -61,7 +61,7 @@
   when: arm and reg_product_name_armv7l.stdout == '00000000bed57e85'
 
 - name: Set server facts
-  set_fact:
+  ansible.builtin.set_fact:
     hostname_id: "server"
     boot: "nvram_write_disable"
     network_type: "wired,systemd"
@@ -75,7 +75,7 @@
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7978'
 
 - name: Set master facts
-  set_fact:
+  ansible.builtin.set_fact:
     hostname_id: "master"
     boot: "nvram_write_disable"
     network_type: "wired,wireless,systemd"
@@ -89,7 +89,7 @@
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7C90'
 
 - name: Set xnote facts (xiaomi)
-  set_fact:
+  ansible.builtin.set_fact:
     hostname_id: "xnote"
     boot: "nvram_write_disable"
     network_type: "wired,wireless,systemd"
@@ -103,7 +103,7 @@
   when: x86_64 and reg_product_name_x86_64.stdout == 'TM1613'
 
 - name: Set worknote facts
-  set_fact:
+  ansible.builtin.set_fact:
     hostname_id: "worknote"
     boot: "nvram_write_disable"
     network_type: "networkmanager"
@@ -117,7 +117,7 @@
   when: x86_64 and reg_product_name_x86_64.stdout == '20WE'
 
 - name: Set vdsina facts
-  set_fact:
+  ansible.builtin.set_fact:
     hostname_id: "vdsina"
     boot: ""
     network_type: ""
@@ -131,7 +131,7 @@
   when: x86_64 and reg_product_name_x86_64.stdout == 'KVM'
 
 - name: Set KVM test facts
-  set_fact:
+  ansible.builtin.set_fact:
     hostname_id: "kvmtest"
     boot: "nvram_write_disable,crypto_home,textonly"
     network_type: "wired,systemd"
