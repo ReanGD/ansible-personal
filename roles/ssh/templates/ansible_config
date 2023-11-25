@@ -65,3 +65,12 @@ host vdsina
 host 91.201.115.56
  IdentityFile ~/.ssh/vdsina
  User {{ main_user }}
+
+host weaselproxy
+ HostName weaselproxy.d7x.ru
+ IdentityFile ~/.ssh/weaselproxy
+ User {{ main_user }}
+
+host 194.87.82.132
+ IdentityFile ~/.ssh/weaselproxy
+ User {{ main_user }}

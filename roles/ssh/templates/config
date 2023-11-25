@@ -80,6 +80,19 @@ host wiki
  IdentityFile ~/.ssh/vscale
  User root
 
+host weaselproxy
+ HostName weaselproxy.d7x.ru
+ IdentityFile ~/.ssh/weaselproxy
+ User {{ main_user }}
+ RequestTTY yes
+ RemoteCommand /usr/bin/bash
+
+host 194.87.82.132
+ IdentityFile ~/.ssh/weaselproxy
+ User {{ main_user }}
+ RequestTTY yes
+ RemoteCommand /usr/bin/bash
+
 host worknote
  HostName 192.168.1.22
  IdentityFile ~/.ssh/worknote

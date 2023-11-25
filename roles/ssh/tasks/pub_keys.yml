@@ -52,3 +52,26 @@
     owner: "{{ main_user }}"
     mode: "0644"
   when: hostname_id == "vdsina"
+
+- name: Add public key for weaselproxy
+  ansible.builtin.copy:
+    content: "{{ weaselproxy_public_key }}"
+    dest: "/home/{{ main_user }}/.ssh/authorized_keys"
+    group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0644"
+  when: hostname_id == "weaselproxy"
+
+- name: Add public keys
+  ansible.builtin.copy:
+    content: "{{ item.key }}"
+    dest: "/home/{{ main_user }}/.ssh/{{ item.name }}.pub"
+    group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0600"
+  loop:
+    - { key: "{{ vdsina_public_key }}", name: "vdsina" }
+    - { key: "{{ weaselproxy_public_key }}", name: "weaselproxy" }
+  loop_control:
+    label: "{{ item.name }}"
+  when: ssh_access == "all"
