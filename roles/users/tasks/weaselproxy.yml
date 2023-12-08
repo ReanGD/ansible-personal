@@ -1,0 +1,31 @@
+---
+- name: Remove debian user
+  ansible.builtin.user:
+    name: debian
+    state: absent
+    remove: yes
+  become: true
+
+- name: Remove debian group
+  ansible.builtin.group:
+    name: debian
+    state: absent
+  become: true
+
+- name: Create group for main user
+  ansible.builtin.group:
+    name: "{{ main_user }}"
+    gid: 1000
+    state: present
+  become: true
+
+- name: Create main user for weaselproxy
+  ansible.builtin.user:
+    name: "{{ main_user }}"
+    uid: 1000
+    # append: true
+    # groups is not set
+    create_home: true
+    group: rean
+    password: "{{ weaselproxy_user_password }}"
+  become: true

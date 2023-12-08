@@ -10,6 +10,7 @@
     name: "{{ main_user }}"
     gid: 1000
     state: present
+  when: hostname_id != "weaselproxy"
   become: true
 
 - name: Create main user for home
@@ -44,12 +45,16 @@
   ansible.builtin.user:
     name: "{{ main_user }}"
     uid: 1000
-    # append: true # groups is not set
+    # append: true
+    # groups is not set
     create_home: true
     group: rean
     password: "{{ srvr_user_password }}"
   when: hostname_id == "vdsina"
   become: true
+
+- import_tasks: weaselproxy.yml
+  when: hostname_id == "weaselproxy"
 
 - name: Nopassword for main user
   community.general.sudoers:
