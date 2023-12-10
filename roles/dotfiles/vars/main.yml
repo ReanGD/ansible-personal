@@ -11,7 +11,6 @@ dotfiles_path_map:
   - {src: ".config/fd",            dst: ".config/fd" }
   - {src: ".config/git",           dst: ".config/git" }
   - {src: ".config/python",        dst: ".config/python" }
-  - {src: ".config/qtile",         dst: ".config/qtile" }
   - {src: ".config/start",         dst: ".config/start" }
   - {src: ".config/yay",           dst: ".config/yay" }
   - {src: ".config/zsh",           dst: ".config/zsh" }
@@ -22,7 +21,9 @@ dotfiles_gui_path_map:
   - {src: ".config/doublecmd",     dst: ".config/doublecmd" }
   - {src: ".config/enchant",       dst: ".config/enchant" }
   - {src: ".config/fontconfig",    dst: ".config/fontconfig" }
+  - {src: ".config/polybar",       dst: ".config/polybar" }
   - {src: ".config/proxy",         dst: ".config/proxy" }
+  - {src: ".config/qtile",         dst: ".config/qtile" }
   - {src: ".config/redshift",      dst: ".config/redshift" }
   - {src: ".config/rofi",          dst: ".config/rofi" }
   - {src: ".config/terminator",    dst: ".config/terminator" }
