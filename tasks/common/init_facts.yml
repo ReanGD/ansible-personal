@@ -39,7 +39,8 @@
 # boot: "nvram_write_enble"|"nvram_write_disable" and ["crypto_home", "textonly"]
 # network_type: ["wired", "wired_old", "wireless", "systemd", "networkmanager"]
 # ssh_access: ["all"|"github"|"none"]
-# gui: "none" or ["lightdm", "awesome", "qtile", "kde"]
+# dmanager: ["lightdm"|"ssdm"]
+# gui: "none" or ["awesome", "qtile", "kde"]
 # develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "sqlite", "android"]
 # monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
 # roles: "none" or ["font", "docker", "k8s", "automount", "web", "game", "messengers",
@@ -80,7 +81,8 @@
     boot: "nvram_write_disable"
     network_type: "wired,wireless,systemd"
     ssh_access: "all"
-    gui: "lightdm,awesome,qtile,kde"
+    dmanager: "ssdm"
+    gui: "awesome,qtile,kde"
     develop: "std,cpp,python,go,android"
     monitoring: "std,hddtemp"
     roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,torrent,bluetooth,work,repository,sing_box"
@@ -94,7 +96,8 @@
     boot: "nvram_write_disable"
     network_type: "wired,wireless,systemd"
     ssh_access: "all"
-    gui: "lightdm,awesome,qtile,kde"
+    dmanager: "ssdm"
+    gui: "awesome,qtile,kde"
     develop: "std,cpp,python,go"
     monitoring: "std,notebook,hddtemp"
     roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,bluetooth,work,repository"
@@ -108,7 +111,8 @@
     boot: "nvram_write_disable"
     network_type: "networkmanager"
     ssh_access: "all"
-    gui: "lightdm,awesome,qtile,kde"
+    dmanager: "ssdm"
+    gui: "awesome,qtile,kde"
     develop: "std,cpp,python,go"
     monitoring: "std,notebook,hddtemp"
     roles: "font,docker,web,messengers,audio,media,office,file_managers,bluetooth,work,repository,sing_box"
@@ -150,7 +154,8 @@
     boot: "nvram_write_disable,crypto_home,textonly"
     network_type: "wired,systemd"
     ssh_access: "none"
-    gui: "lightdm,kde"
+    dmanager: "ssdm"
+    gui: "kde"
     develop: "std,cpp,python,go"
     monitoring: "std,hddtemp"
     roles: "font,docker,web,messengers,audio,media,office,file_managers,repository"

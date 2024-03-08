@@ -1,4 +1,4 @@
-# global x86_64, hostname_id, distro, network_type, gui, develop, monitoring, roles
+# global x86_64, hostname_id, distro, network_type, dmanager, gui, develop, monitoring, roles
 
 
 # pylama:ignore=E0602
@@ -12,6 +12,10 @@ def is_role(name: str) -> bool:
 
 def is_monitoring(name: str) -> bool:
     return name in monitoring.split(",")  # type: ignore
+
+
+def is_dmanager(name: str) -> bool:
+    return name in dmanager.split(",")  # type: ignore
 
 
 def is_gui(name: str) -> bool:
@@ -166,8 +170,11 @@ def desktop_env():
     # "rofi-proxy"
     gui_pkgs += ["rofi", "python-psutil"]
 
-    if is_gui("lightdm"):
+    if is_dmanager("lightdm"):
         gui_pkgs += ["lightdm", "lightdm-gtk-greeter"]
+
+    if is_dmanager("ssdm"):
+        gui_pkgs += ["sddm"]
 
     if is_gui("qtile"):
         gui_pkgs += ["qtile"]
