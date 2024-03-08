@@ -169,11 +169,18 @@ def desktop_env():
     if is_gui("lightdm"):
         gui_pkgs += ["lightdm", "lightdm-gtk-greeter"]
 
+    if is_gui("qtile"):
+        gui_pkgs += ["qtile"]
+
     if is_gui("awesome"):
         gui_pkgs += ["awesome",
-                     "redshift",  # brightness control
                      "mate-icon-theme",
                      "inter-font"]
+
+    if is_gui("qtile") or is_gui("awesome"):
+        gui_pkgs += ["redshift",  # brightness control
+                     "polybar",
+                     ]
 
     if is_gui("kde"):
         gui_pkgs += ["kdeconnect",  # connect to phone
