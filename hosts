@@ -26,10 +26,10 @@ localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python3
 91.201.115.56 ansible_connection=ssh ansible_user=rean ansible_python_interpreter=/usr/bin/python3
 
 [weaselproxy_root]
-194.87.82.132 ansible_connection=ssh ansible_user=root ansible_python_interpreter=/usr/bin/python3
+194.147.33.186 ansible_connection=ssh ansible_user=root ansible_python_interpreter=/usr/bin/python3
 
 [weaselproxy]
-194.87.82.132 ansible_connection=ssh ansible_user=rean ansible_python_interpreter=/usr/bin/python3
+194.147.33.186 ansible_connection=ssh ansible_user=rean ansible_python_interpreter=/usr/bin/python3
 
 [vscale]
 82.202.236.207 ansible_connection=ssh

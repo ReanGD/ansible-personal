@@ -87,7 +87,7 @@ host weaselproxy
  RequestTTY yes
  RemoteCommand /usr/bin/bash
 
-host 194.87.82.132
+host 194.147.33.186
  IdentityFile ~/.ssh/weaselproxy
  User {{ main_user }}
  RequestTTY yes
