@@ -1,0 +1,19 @@
+---
+- name: Base install "{{ variable_host }}"
+  hosts: "{{ variable_host }}"
+  gather_facts: false
+  vars:
+    ansible_user: root
+    is_chroot_param: false
+  pre_tasks:
+    - import_tasks: ../../tasks/common/init_facts.yml
+  roles:
+    - locale
+    - users
+    - sudo
+    - packages_manager
+    - ssh
+    - host_custom
+    - role: ufw
+      vars:
+        ufw_ssh_port: 22

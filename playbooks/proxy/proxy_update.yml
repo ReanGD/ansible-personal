@@ -1,0 +1,26 @@
+---
+- name: Update "{{ variable_host }}"
+  hosts: "{{ variable_host }}"
+  gather_facts: false
+  vars:
+    is_chroot_param: false
+  environment:
+    PATH: /sbin:{{ ansible_env.PATH }}
+  pre_tasks:
+    - import_tasks: ../../tasks/common/init_facts.yml
+  roles:
+    - locale
+    - users
+    - sudo
+    - packages_manager
+    - ssh
+    - host_custom
+    - role: ufw
+      vars:
+        ufw_ssh_port: 22
+    - role: 3proxy
+      vars:
+        proxy3_version: 0.9.4
+        proxy3_http_port: 4550
+        proxy3_socks_port: 4551
+        proxy3_reinstall: false
