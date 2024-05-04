@@ -1,0 +1,42 @@
+---
+- name: Check tmp directory for profile
+  ansible.builtin.stat:
+    path: "/home/{{ main_user }}/.local/state/nix/profile"
+  register: reg_profile_dir_stat_post
+
+- name: Remove tmp directory for profile
+  ansible.builtin.file:
+    path: "/home/{{ main_user }}/.local/state/nix/profile"
+    state: absent
+  when: not reg_profile_dir_stat_post.stat.islnk
+
+- name: Check if specified Nix channel exists
+  ansible.builtin.command: nix-channel --list
+  register: reg_nix_channel_list
+  changed_when: false
+
+- name: Add Nix channel if it does not exist
+  ansible.builtin.command: "nix-channel --add {{ nix_channel_url }} nixpkgs"
+  when: "nix_channel_url not in reg_nix_channel_list.stdout"
+
+- name: Add Home manager channel if it does not exist
+  ansible.builtin.command: "nix-channel --add {{ nix_home_manager_url }} home-manager"
+  when: "nix_home_manager_url not in reg_nix_channel_list.stdout"
+
+- name: Update Nix channels
+  ansible.builtin.command: nix-channel --update
+  when: "nix_channel_url not in reg_nix_channel_list.stdout or nix_home_manager_url not in reg_nix_channel_list.stdout"
+
+- name: Check if Home Manager is in PATH
+  ansible.builtin.command: which home-manager
+  register: reg_home_manager_installed
+  failed_when: false
+  changed_when: false
+
+- name: Install Home Manager
+  ansible.builtin.command: nix-shell '<home-manager>' -A install
+  when: reg_home_manager_installed.rc != 0
+
+- name: Home Manager switch to new version
+  ansible.builtin.command: home-manager switch
+  when: reg_home_manager_installed.rc != 0

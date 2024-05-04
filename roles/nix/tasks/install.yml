@@ -1,0 +1,54 @@
+---
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: /etc/nix
+    state: directory
+    group: root
+    owner: root
+    mode: "0755"
+  become: true
+
+- name: Copy nix config
+  ansible.builtin.template:
+    src: nix.conf
+    dest: /etc/nix/nix.conf
+    group: root
+    owner: root
+    mode: "0644"
+  become: true
+
+- name: Install package nix
+  pkg_manager:
+    name: nix
+    command: install
+  become: true
+  become_user: "{{ install_user }}"
+
+- name: Enable nix-daemon service
+  ansible.builtin.service:
+    name: nix-daemon.service
+    enabled: true
+  become: true
+
+- name: Add group user
+  ansible.builtin.user:
+    name: "{{ main_user }}"
+    append: true
+    groups: nix-users
+  become: true
+
+- name: Check tmp directory for profile
+  ansible.builtin.stat:
+    path: "/home/{{ main_user }}/.local/state/nix/profile"
+  register: reg_profile_dir_stat_install
+
+- name: Create tmp directory for profile
+  ansible.builtin.file:
+    path: "/home/{{ main_user }}/.local/state/nix/profile"
+    state: directory
+    force: false
+    recurse: true
+    group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0755"
+  when: not reg_profile_dir_stat_install.stat.exists

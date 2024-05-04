@@ -1,0 +1,5 @@
+---
+# nix_channel_url: https://nixos.org/channels/nixos-23.11
+nix_channel_url: https://nixos.org/channels/nixpkgs-unstable
+# nix_home_manager_url: https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz
+nix_home_manager_url: https://github.com/nix-community/home-manager/archive/master.tar.gz
