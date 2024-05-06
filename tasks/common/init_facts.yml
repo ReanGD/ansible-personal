@@ -148,6 +148,20 @@
     swappiness: 0
   when: x86_64 and reg_product_name_x86_64.stdout == 'OpenStack Nova'
 
+- name: Set pqhost facts
+  ansible.builtin.set_fact:
+    hostname_id: "pqhost"
+    boot: ""
+    network_type: ""
+    ssh_access: "none"
+    gui: "none"
+    develop: "none"
+    monitoring: ""
+    roles: ""
+    swap_size: 0
+    swappiness: 0
+  when: x86_64 and reg_product_name_x86_64.stdout == 'KVM'
+
 - name: Set KVM test facts
   ansible.builtin.set_fact:
     hostname_id: "kvmtest"

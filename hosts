@@ -31,5 +31,11 @@ localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python3
 [weaselproxy]
 194.147.33.186 ansible_connection=ssh ansible_user=rean ansible_python_interpreter=/usr/bin/python3
 
+[pqhost_root]
+74.119.195.185 ansible_connection=ssh ansible_user=root ansible_python_interpreter=/usr/bin/python3
+
+[pqhost]
+74.119.195.185 ansible_connection=ssh ansible_user=rean ansible_python_interpreter=/usr/bin/python3
+
 [vscale]
 82.202.236.207 ansible_connection=ssh

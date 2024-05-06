@@ -74,3 +74,12 @@ host weaselproxy
 host 194.147.33.186
  IdentityFile ~/.ssh/weaselproxy
  User {{ main_user }}
+
+host pqhost
+ HostName pqhost.d7x.ru
+ IdentityFile ~/.ssh/pqhost
+ User {{ main_user }}
+
+host 74.119.195.185
+ IdentityFile ~/.ssh/pqhost
+ User {{ main_user }}

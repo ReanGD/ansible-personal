@@ -93,6 +93,19 @@ host 194.147.33.186
  RequestTTY yes
  RemoteCommand /usr/bin/bash
 
+host pqhost
+ HostName pqhost.d7x.ru
+ IdentityFile ~/.ssh/pqhost
+ User {{ main_user }}
+ RequestTTY yes
+ RemoteCommand /usr/bin/bash
+
+host 74.119.195.185
+ IdentityFile ~/.ssh/pqhost
+ User {{ main_user }}
+ RequestTTY yes
+ RemoteCommand /usr/bin/bash
+
 host worknote
  HostName 192.168.1.22
  IdentityFile ~/.ssh/worknote

@@ -33,6 +33,7 @@
     - { key: "{{ server_private_key }}", name: "server" }
     - { key: "{{ vdsina_private_key }}", name: "vdsina" }
     - { key: "{{ vscale_private_key }}", name: "vscale" }
+    - { key: "{{ pqhost_private_key }}", name: "pqhost" }
     - { key: "{{ weaselproxy_private_key }}", name: "weaselproxy" }
     - { key: "{{ worknote_private_key }}", name: "worknote" }
     - { key: "{{ xnote_private_key }}", name: "xnote" }
