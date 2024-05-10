@@ -2,7 +2,6 @@
 Description=3proxy Proxy Server
 After=network.target
 
-
 [Service]
 Type=simple
 ExecStart=/usr/bin/3proxy /etc/3proxy/3proxy.cfg
