@@ -38,17 +38,43 @@
     - projects/venv
   become: true
 
+- name: Create cfg dirs for nix
+  ansible.builtin.file:
+    path: "/home/{{ main_user }}/{{ item }}"
+    state: directory
+    group: users
+    owner: "{{ main_user }}"
+    mode: "0755"
+  loop:
+    - .config/zsh
+  when: "'nix' in roles.split(',')"
+  become: true
+
 - name: Clone or update dotfile repositories
   update_git:
     repo: git@github.com:ReanGD/{{ item.repo }}
     dest: /home/{{ main_user }}/projects/home/{{ item.dest }}
   loop: "{{ dotfiles_repositories_map }}"
 
-- name: Create links for dotfiles
+- name: Create common links for dotfiles
   link:
     src: /home/{{ main_user }}/projects/home/dotfiles/{{ item.src }}
     dst: /home/{{ main_user }}/{{ item.dst }}
   loop: "{{ dotfiles_path_map }}"
+
+- name: Create common nix links for dotfiles
+  link:
+    src: /home/{{ main_user }}/projects/home/dotfiles/{{ item.src }}
+    dst: /home/{{ main_user }}/{{ item.dst }}
+  when: "'nix' in roles.split(',')"
+  loop: "{{ dotfiles_path_map_nix }}"
+
+- name: Create common no nix links for dotfiles
+  link:
+    src: /home/{{ main_user }}/projects/home/dotfiles/{{ item.src }}
+    dst: /home/{{ main_user }}/{{ item.dst }}
+  when: "'nix' not in roles.split(',')"
+  loop: "{{ dotfiles_path_map_no_nix }}"
 
 - name: Create links for GUI dotfiles
   link:
