@@ -62,19 +62,6 @@ host 192.168.1.4
  RequestTTY yes
  RemoteCommand . ~/.config/start/login_profile.sh; zsh
 
-host vdsina
- HostName vdsina.d7x.ru
- IdentityFile ~/.ssh/vdsina
- User {{ main_user }}
- RequestTTY yes
- RemoteCommand export PATH=$PATH:/sbin; /usr/bin/bash
-
-host 91.201.115.56
- IdentityFile ~/.ssh/vdsina
- User {{ main_user }}
- RequestTTY yes
- RemoteCommand export PATH=$PATH:/sbin; /usr/bin/bash
-
 host wiki
  HostName wiki.fr.to
  IdentityFile ~/.ssh/vscale

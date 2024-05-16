@@ -57,15 +57,6 @@ host 192.168.1.50
  IdentityFile ~/.ssh/respeaker
  User {{ main_user }}
 
-host vdsina
- HostName vdsina.d7x.ru
- IdentityFile ~/.ssh/vdsina
- User {{ main_user }}
-
-host 91.201.115.56
- IdentityFile ~/.ssh/vdsina
- User {{ main_user }}
-
 host weaselproxy
  HostName weaselproxy.d7x.ru
  IdentityFile ~/.ssh/weaselproxy

@@ -19,12 +19,6 @@ localhost ansible_connection=local ansible_python_interpreter=/usr/bin/python3
 [respeaker]
 192.168.1.50 ansible_connection=ssh ansible_user=rean ansible_python_interpreter=/usr/bin/python3
 
-[vdsina_root]
-91.201.115.56 ansible_connection=ssh ansible_user=root ansible_python_interpreter=/usr/bin/python3
-
-[vdsina]
-91.201.115.56 ansible_connection=ssh ansible_user=rean ansible_python_interpreter=/usr/bin/python3
-
 [weaselproxy_root]
 194.147.33.186 ansible_connection=ssh ansible_user=root ansible_python_interpreter=/usr/bin/python3
 
