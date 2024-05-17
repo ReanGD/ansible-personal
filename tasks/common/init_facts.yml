@@ -120,20 +120,6 @@
     swappiness: 10
   when: x86_64 and reg_product_name_x86_64.stdout == '20WE'
 
-- name: Set vdsina facts
-  ansible.builtin.set_fact:
-    hostname_id: "vdsina"
-    boot: ""
-    network_type: ""
-    ssh_access: "none"
-    gui: "none"
-    develop: "none"
-    monitoring: ""
-    roles: ""
-    swap_size: 0
-    swappiness: 0
-  when: x86_64 and reg_product_name_x86_64.stdout == 'KVM'
-
 - name: Set weaselproxy facts
   ansible.builtin.set_fact:
     hostname_id: "weaselproxy"

@@ -41,7 +41,7 @@
   when: hostname_id == "worknote"
   become: true
 
-- name: Create main user for vdsina
+- name: Create main user for pqhost
   ansible.builtin.user:
     name: "{{ main_user }}"
     uid: 1000
@@ -49,32 +49,10 @@
     # groups is not set
     create_home: true
     group: rean
-    password: "{{ srvr_user_password }}"
-  when: hostname_id == "vdsina"
+    password: "{{ pqhost_user_password }}"
+  when: hostname_id == "pqhost"
   become: true
 
 - import_tasks: weaselproxy.yml
   when: hostname_id == "weaselproxy"
 
-- name: Nopassword for main user
-  community.general.sudoers:
-    name: "{{ main_user }}-nopassword"
-    state: present
-    user: "{{ main_user }}"
-    nopassword: true
-    commands:
-      - /usr/bin/systemctl poweroff
-      - /usr/bin/systemctl reboot
-      - /usr/bin/systemctl suspend
-      - /usr/bin/systemctl hibernate
-  become: true
-
-- name: All for main user
-  community.general.sudoers:
-    name: "{{ main_user }}-all"
-    state: present
-    user: "{{ main_user }}"
-    nopassword: false
-    commands: "ALL"
-    runas: "ALL"
-  become: true
