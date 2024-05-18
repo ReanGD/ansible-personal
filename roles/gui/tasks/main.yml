@@ -5,5 +5,5 @@
 - import_tasks: lightdm.yml
   when: "'lightdm' in dmanager.split(',')"
 
-- import_tasks: ssdm.yml
-  when: "'ssdm' in dmanager.split(',')"
+- import_tasks: sddm.yml
+  when: "'sddm' in dmanager.split(',')"

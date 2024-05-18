@@ -15,6 +15,15 @@
     mode: "0644"
   become: true
 
+- name: Create session wrapper for ssdm
+  ansible.builtin.copy:
+    src: sddm_xsession.sh
+    dest: /etc/sddm.conf.d/sddm_xsession.sh
+    group: root``
+    owner: root
+    mode: "0755"
+  become: true
+
 - name: Enable sddm service
   ansible.builtin.service:
     name: sddm.service

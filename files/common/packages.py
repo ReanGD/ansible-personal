@@ -173,7 +173,7 @@ def desktop_env():
     if is_dmanager("lightdm"):
         gui_pkgs += ["lightdm", "lightdm-gtk-greeter"]
 
-    if is_dmanager("ssdm"):
+    if is_dmanager("sddm"):
         gui_pkgs += ["sddm"]
 
     if is_gui("qtile"):

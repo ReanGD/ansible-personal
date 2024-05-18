@@ -39,7 +39,7 @@
 # boot: "nvram_write_enble"|"nvram_write_disable" and ["crypto_home", "textonly"]
 # network_type: ["wired", "wired_old", "wireless", "systemd", "networkmanager"]
 # ssh_access: ["all"|"github"|"none"]
-# dmanager: ["lightdm"|"ssdm"]
+# dmanager: ["lightdm"|"sddm"]
 # gui: "none" or ["awesome", "qtile", "kde"]
 # develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "sqlite", "android"]
 # monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
@@ -81,7 +81,7 @@
     boot: "nvram_write_disable"
     network_type: "wired,wireless,systemd"
     ssh_access: "all"
-    dmanager: "ssdm"
+    dmanager: "sddm"
     gui: "awesome,qtile,kde"
     develop: "std,cpp,python,go,android"
     monitoring: "std,hddtemp"
@@ -96,7 +96,7 @@
     boot: "nvram_write_disable"
     network_type: "wired,wireless,systemd"
     ssh_access: "all"
-    dmanager: "ssdm"
+    dmanager: "sddm"
     gui: "awesome,qtile,kde"
     develop: "std,cpp,python,go"
     monitoring: "std,notebook,hddtemp"
@@ -111,7 +111,7 @@
     boot: "nvram_write_disable"
     network_type: "networkmanager"
     ssh_access: "all"
-    dmanager: "ssdm"
+    dmanager: "sddm"
     gui: "awesome,qtile,kde"
     develop: "std,cpp,python,go"
     monitoring: "std,notebook,hddtemp"
@@ -154,7 +154,7 @@
     boot: "nvram_write_disable,crypto_home,textonly"
     network_type: "wired,systemd"
     ssh_access: "none"
-    dmanager: "ssdm"
+    dmanager: "sddm"
     gui: "kde"
     develop: "std,cpp,python,go"
     monitoring: "std,hddtemp"
