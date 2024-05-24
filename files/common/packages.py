@@ -179,6 +179,9 @@ def desktop_env():
     if is_gui("qtile"):
         gui_pkgs += ["qtile"]
 
+    if is_gui("hyprland"):
+        gui_pkgs += ["hyprland", "hyprlock"]
+
     if is_gui("awesome"):
         gui_pkgs += ["awesome",
                      "mate-icon-theme",

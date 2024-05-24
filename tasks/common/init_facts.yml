@@ -40,7 +40,7 @@
 # network_type: ["wired", "wired_old", "wireless", "systemd", "networkmanager"]
 # ssh_access: ["all"|"github"|"none"]
 # dmanager: ["lightdm"|"sddm"]
-# gui: "none" or ["awesome", "qtile", "kde"]
+# gui: "none" or ["awesome", "qtile", "hyprland", "kde"]
 # develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "sqlite", "android"]
 # monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
 # roles: "none" or ["font", "docker", "k8s", "automount", "web", "game", "messengers",
@@ -82,7 +82,7 @@
     network_type: "wired,wireless,systemd"
     ssh_access: "all"
     dmanager: "sddm"
-    gui: "awesome,qtile,kde"
+    gui: "awesome,qtile,hyprland,kde"
     develop: "std,cpp,python,go,android"
     monitoring: "std,hddtemp"
     roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,torrent,bluetooth,work,repository,sing_box"
@@ -97,7 +97,7 @@
     network_type: "wired,wireless,systemd"
     ssh_access: "all"
     dmanager: "sddm"
-    gui: "awesome,qtile,kde"
+    gui: "awesome,qtile,hyprland,kde"
     develop: "std,cpp,python,go"
     monitoring: "std,notebook,hddtemp"
     roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,bluetooth,work,repository"
@@ -112,7 +112,7 @@
     network_type: "networkmanager"
     ssh_access: "all"
     dmanager: "sddm"
-    gui: "awesome,qtile,kde"
+    gui: "awesome,qtile,hyprland,kde"
     develop: "std,cpp,python,go"
     monitoring: "std,notebook,hddtemp"
     roles: "font,docker,web,messengers,audio,media,office,file_managers,bluetooth,work,repository,sing_box"
