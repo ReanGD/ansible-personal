@@ -180,7 +180,7 @@ def desktop_env():
         gui_pkgs += ["qtile"]
 
     if is_gui("hyprland"):
-        gui_pkgs += ["hyprland", "hyprlock"]
+        gui_pkgs += ["hyprland", "hyprlock", "waybar"]
 
     if is_gui("awesome"):
         gui_pkgs += ["awesome",
