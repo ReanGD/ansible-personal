@@ -24,6 +24,20 @@
     - Regular.otf
   become: true
 
+- name: Copy fonts
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/usr/share/fonts/OTF/Font Awesome 6 Pro-{{ item }}"
+    group: root
+    owner: root
+    mode: "0444"
+  loop:
+    - Light-300.otf
+    - Regular-400.otf
+    - Solid-900.otf
+    - Thin-100.otf
+  become: true
+
 - name: Install fonts packages
   pkg_manager:
     name: ttf-ms-fonts,ttf-tahoma,ttf-fixedsys-excelsior-linux,ttf-droid,ttf-dejavu,ttf-ubuntu-font-family,noto-fonts-emoji,adobe-source-code-pro-fonts

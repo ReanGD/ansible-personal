@@ -182,8 +182,10 @@ def desktop_env():
     if is_gui("hyprland"):
         gui_pkgs += ["hyprland",
                      "hyprlock",
-                     "waybar",            # status bar
-                     "aylurs-gtk-shell",  # ags
+                     "waybar",                # status bar
+                     "aylurs-gtk-shell",      # ags
+                     "rose-pine-cursor",      # X11 cursor
+                     "rose-pine-hyprcursor",  # hyprland cursor
                      ]
 
     if is_gui("awesome"):
