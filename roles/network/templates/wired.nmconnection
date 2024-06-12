@@ -1,0 +1,19 @@
+[connection]
+id=Wired
+uuid=33f87376-fab1-3b1f-a388-971a284c2d82
+type=ethernet
+metered=2
+interface-name={{ ethernet_interface }}
+
+[ethernet]
+auto-negotiate=true
+mac-address={{ mac_address }}
+
+[ipv4]
+method=auto
+
+[ipv6]
+method=disabled
+addr-gen-mode=stable-privacy
+
+[proxy]

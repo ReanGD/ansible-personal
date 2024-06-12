@@ -1,65 +1,68 @@
 ---
-- name: Copy systemd-networkd configuration for modern interface
-  copy:
-    src: wired.network
-    dest: /etc/systemd/network/10-wired.network
-    owner: root
-    group: root
-    mode: 0644
-  become: yes
-  when: '"wired" in network_type.split(",")'
-
-- name: Copy systemd-networkd configuration for old interface
-  copy:
-    src: eth0.network
-    dest: /etc/systemd/network/20-eth0.network
-    owner: root
-    group: root
-    mode: 0644
-  become: yes
-  when: '"wired_old" in network_type.split(",")'
-
-- name: Copy systemd-networkd configuration for wireless interface
-  copy:
-    src: wireless.network
-    dest: /etc/systemd/network/20-wireless.network
-    owner: root
-    group: root
-    mode: 0644
-  become: yes
-  when: '"wireless" in network_type.split(",")'
-
 - name: Install iwd package
   pkg_manager:
     name: iwd
-  become: yes
+    command: install
+  become: true
   become_user: "{{ install_user }}"
-  when: '"wireless" in network_type.split(",")'
+  when: '"smd_wireless" in network_type.split(",")'
 
-- name: Create symbolic links for /etc/resolv.conf
-  file:
-    src: /run/systemd/resolve/resolv.conf
-    dest: /etc/resolv.conf
-    state: link
-    force: yes
-  become: yes
-  when: not is_chroot
+- name: Copy systemd-networkd configuration for modern interface
+  ansible.builtin.copy:
+    src: wired.network
+    dest: /etc/systemd/network/10-wired.network
+    group: root
+    owner: root
+    mode: "0644"
+  become: true
+  when: '"smd_wired" in network_type.split(",")'
+
+- name: Copy systemd-networkd configuration for old interface
+  ansible.builtin.copy:
+    src: wired-old.network
+    dest: /etc/systemd/network/20-wired-old.network
+    group: root
+    owner: root
+    mode: "0644"
+  become: true
+  when: '"smd_wired" in network_type.split(",")'
+
+- name: Copy systemd-networkd configuration for wireless interface
+  ansible.builtin.copy:
+    src: wireless.network
+    dest: /etc/systemd/network/20-wireless.network
+    group: root
+    owner: root
+    mode: "0644"
+  become: true
+  when: '"smd_wireless" in network_type.split(",")'
 
 - name: Enable service systemd-networkd
-  service:
+  ansible.builtin.service:
     name: systemd-networkd.service
-    enabled: yes
-  become: yes
+    enabled: true
+  become: true
+  when: is_chroot
 
-- name: Enable service systemd-resolved
-  service:
-    name: systemd-resolved.service
-    enabled: yes
-  become: yes
+- name: Enable ans start service systemd-networkd
+  ansible.builtin.service:
+    name: systemd-networkd.service
+    enabled: true
+    state: started
+  become: true
+  when: is_chroot
 
 - name: Enable service iwd
-  service:
+  ansible.builtin.service:
     name: iwd.service
-    enabled: yes
-  become: yes
-  when: '"wireless" in network_type.split(",")'
+    enabled: true
+  become: true
+  when: 'is_chroot and "smd_wireless" in network_type.split(",")'
+
+- name: Enable ans start service iwd
+  ansible.builtin.service:
+    name: iwd.service
+    enabled: true
+    state: started
+  become: true
+  when: 'not is_chroot and "smd_wireless" in network_type.split(",")'

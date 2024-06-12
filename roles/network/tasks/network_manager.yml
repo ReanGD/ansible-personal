@@ -1,0 +1,90 @@
+---
+- name: Install networkmanager package
+  pkg_manager:
+    name: networkmanager
+    command: install
+  become: true
+  become_user: "{{ install_user }}"
+
+- name: Gather network facts
+  ansible.builtin.setup:
+    gather_subset:
+      - network
+
+- name: Find first active Ethernet interface
+  set_fact:
+    ethernet_interface: "{{ ansible_facts['interfaces'] | select('match', '^en') | list | first }}"
+
+- name: Get MAC address for the interface
+  set_fact:
+    mac_address: "{{ ansible_facts[ethernet_interface]['macaddress'] }}"
+
+- name: Create network manager configuration for modern interface
+  ansible.builtin.template:
+    src: wired.nmconnection
+    dest: /etc/NetworkManager/system-connections/wired.nmconnection
+    group: root
+    owner: root
+    mode: "0600"
+  become: true
+  when: '"nm_wired" in network_type.split(",")'
+  register: nm_wired_config
+
+- name: Copy dns configuration
+  ansible.builtin.copy:
+    src: dns.conf
+    dest: /etc/NetworkManager/conf.d/dns.conf
+    group: root
+    owner: root
+    mode: "0644"
+  become: true
+
+- name: Disable service systemd-networkd
+  ansible.builtin.service:
+    name: systemd-networkd.service
+    enabled: false
+  become: true
+  when: is_chroot
+
+- name: Stop and disable service systemd-networkd
+  ansible.builtin.service:
+    name: systemd-networkd.service
+    enabled: false
+    state: stopped
+  become: true
+  when: not is_chroot
+
+- name: Disable service iwd
+  ansible.builtin.service:
+    name: iwd.service
+    enabled: false
+  become: true
+  when: is_chroot
+
+- name: Stop and disable service iwd
+  ansible.builtin.service:
+    name: iwd.service
+    enabled: false
+    state: stopped
+  become: true
+  when: not is_chroot
+
+- name: Enable service NetworkManager
+  ansible.builtin.service:
+    name: NetworkManager.service
+    enabled: true
+  become: true
+  when: is_chroot
+
+- name: Enable and start service NetworkManager
+  ansible.builtin.service:
+    name: NetworkManager.service
+    enabled: true
+    state: started
+  become: true
+  when: not is_chroot
+
+- name: Reload NetworkManager connections
+  command: nmcli connection reload
+  become: true
+  when: not is_chroot and nm_wired_config.changed

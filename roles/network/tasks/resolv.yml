@@ -1,0 +1,24 @@
+---
+- name: Create symbolic links for /etc/resolv.conf
+  ansible.builtin.file:
+    src: /run/systemd/resolve/resolv.conf
+    dest: /etc/resolv.conf
+    state: link
+    force: true
+  become: true
+  when: not is_chroot
+
+- name: Enable service systemd-resolved
+  ansible.builtin.service:
+    name: systemd-resolved.service
+    enabled: true
+  become: true
+  when: is_chroot
+
+- name: Enable and start service systemd-resolved
+  ansible.builtin.service:
+    name: systemd-resolved.service
+    enabled: true
+    state: started
+  become: true
+  when: not is_chroot
