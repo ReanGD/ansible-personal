@@ -37,7 +37,7 @@
 
 # distro: "arch"|"archarm"|"debian"
 # boot: "nvram_write_enble"|"nvram_write_disable" and ["crypto_home", "textonly"]
-# network_type: ["wired", "wired_old", "wireless", "systemd", "networkmanager"]
+# network_type: ["smd_wired", "smd_wireless", "nm_wired", "nm_wireless"]
 # ssh_access: ["all"|"github"|"none"]
 # dmanager: ["lightdm"|"sddm"]
 # gui: "none" or ["awesome", "qtile", "hyprland", "kde"]
@@ -51,7 +51,7 @@
   ansible.builtin.set_fact:
     hostname_id: "hass"
     boot: "nvram_write_enble"
-    network_type: "wired_old,systemd"
+    network_type: "smd_wired" # old (eth0) interface
     ssh_access: "github"
     gui: "none"
     develop: "none"
@@ -65,7 +65,7 @@
   ansible.builtin.set_fact:
     hostname_id: "server"
     boot: "nvram_write_disable"
-    network_type: "wired,systemd"
+    network_type: "smd_wired"
     ssh_access: "github"
     gui: "none"
     develop: "none"
@@ -79,7 +79,7 @@
   ansible.builtin.set_fact:
     hostname_id: "master"
     boot: "nvram_write_disable"
-    network_type: "wired,wireless,systemd"
+    network_type: "nm_wired,nm_wireless"
     ssh_access: "all"
     dmanager: "sddm"
     gui: "awesome,qtile,hyprland,kde"
@@ -94,7 +94,7 @@
   ansible.builtin.set_fact:
     hostname_id: "xnote"
     boot: "nvram_write_disable"
-    network_type: "wired,wireless,systemd"
+    network_type: "nm_wired,nm_wireless"
     ssh_access: "all"
     dmanager: "sddm"
     gui: "awesome,qtile,hyprland,kde"
@@ -109,7 +109,7 @@
   ansible.builtin.set_fact:
     hostname_id: "worknote"
     boot: "nvram_write_disable"
-    network_type: "networkmanager"
+    network_type: "nm_wired,nm_wireless"
     ssh_access: "all"
     dmanager: "sddm"
     gui: "awesome,qtile,hyprland,kde"
@@ -152,7 +152,7 @@
   ansible.builtin.set_fact:
     hostname_id: "kvmtest"
     boot: "nvram_write_disable,crypto_home,textonly"
-    network_type: "wired,systemd"
+    network_type: "smd_wired"
     ssh_access: "none"
     dmanager: "sddm"
     gui: "kde"

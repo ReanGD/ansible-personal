@@ -132,10 +132,10 @@ def network():
                     "openvpn",
                     "openssh"]  # ssh server
 
-    if is_network_type("wireless"):
+    if is_network_type("smd_wireless"):
         network_pkgs += ["iwd"]
 
-    if is_network_type("networkmanager"):
+    if is_network_type("nm_wired") or is_network_type("nm_wireless"):
         network_pkgs += ["networkmanager"]
 
     return network_pkgs
@@ -412,7 +412,7 @@ def file_managers():
     if not is_role("file_managers"):
         return []
 
-    return ["doublecmd-gtk2",
+    return ["doublecmd-qt6",
             "fsearch-git",
             "yandex-disk",  # yandex-disk setup/start
             "dropbox"]
