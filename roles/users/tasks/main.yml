@@ -55,4 +55,3 @@
 
 - import_tasks: weaselproxy.yml
   when: hostname_id == "weaselproxy"
-

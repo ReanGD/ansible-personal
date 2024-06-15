@@ -3,7 +3,7 @@
   ansible.builtin.user:
     name: debian
     state: absent
-    remove: yes
+    remove: true
   become: true
 
 - name: Remove debian group
