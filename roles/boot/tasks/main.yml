@@ -15,17 +15,17 @@
   become: true
 
 - name: Find efi partition name
-  ansible.builtin.shell: findmnt -o SOURCE --noheadings /boot/efi
+  ansible.builtin.command: findmnt -o SOURCE --noheadings /boot/efi
   register: efi_partition_name_reg
   changed_when: false
 
 - name: Find root partition uuid
-  ansible.builtin.shell: findmnt -o UUID --noheadings /
+  ansible.builtin.command: findmnt -o UUID --noheadings /
   register: root_partition_uuid_reg
   changed_when: false
 
 - name: Find home partition uuid
-  ansible.builtin.shell: findmnt -o UUID --noheadings /home
+  ansible.builtin.command: findmnt -o UUID --noheadings /home
   register: home_partition_uuid_reg
   changed_when: false
   failed_when: home_partition_uuid_reg.rc > 1
@@ -36,15 +36,16 @@
     root_partition_uuid: "{{ root_partition_uuid_reg.stdout }}"
     home_partition_uuid: "{{ home_partition_uuid_reg.stdout }}"
     conf_path: "{% if 'nvram_write_disable' in boot.split(',') %}/boot/efi/EFI/BOOT/refind.conf{% else %}/boot/efi/EFI/refind/refind.conf{% endif %}"
+    nvidia_drm_modeset: "{% if 'nvidia' in hardware.split(',') %} nvidia_drm.modeset=1{% else %}{% endif %}"
 
 - name: UEFI install for nvram write disable
-  ansible.builtin.shell: refind-install --usedefault {{ efi_partition_name }} --alldrivers
-  when: "'nvram_write_disable' in boot.split(',') and reg_efi_installed.stat.exists == False"
+  ansible.builtin.command: refind-install --usedefault {{ efi_partition_name }} --alldrivers
+  when: "'nvram_write_disable' in boot.split(',') and not reg_efi_installed.stat.exists"
   become: true
 
 - name: UEFI install for nvram write enable
-  ansible.builtin.shell: refind-install --alldrivers
-  when: "'nvram_write_enble' in boot.split(',') and reg_efi_installed.stat.exists == False"
+  ansible.builtin.command: refind-install --alldrivers
+  when: "'nvram_write_enble' in boot.split(',') and not reg_efi_installed.stat.exists"
   become: true
 
 - name: Create refind_linux config without crypto_home
