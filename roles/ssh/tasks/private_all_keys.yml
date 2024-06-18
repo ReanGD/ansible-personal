@@ -1,7 +1,7 @@
 ---
 - name: Copy ssh config
   ansible.builtin.template:
-    src: config
+    src: config_all
     dest: "/home/{{ main_user }}/.ssh/config"
     group: "{{ main_user }}"
     owner: "{{ main_user }}"
@@ -28,7 +28,7 @@
     - { key: "{{ github_private_key }}", name: "github" }
     - { key: "{{ hass_private_key }}", name: "hass" }
     - { key: "{{ master_private_key }}", name: "master" }
-    - { key: "{{ myoffice_private_key }}", name: "myoffice" }
+    - { key: "{{ nikif_private_key }}", name: "nikif" }
     - { key: "{{ respeaker_private_key }}", name: "respeaker" }
     - { key: "{{ server_private_key }}", name: "server" }
     - { key: "{{ vscale_private_key }}", name: "vscale" }

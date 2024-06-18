@@ -39,7 +39,7 @@
 # boot: "nvram_write_enble"|"nvram_write_disable" and ["crypto_home", "textonly"]
 # network_type: ["smd_wired", "smd_wireless", "nm_wired", "nm_wireless"]
 # hardware: ["nvidia"]
-# ssh_access: ["all"|"github"|"none"]
+# ssh_access: ["all"|"github"|"work"|"none"]
 # dmanager: ["lightdm"|"sddm"]
 # gui: "none" or ["awesome", "qtile", "hyprland", "kde"]
 # develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "sqlite", "android"]
@@ -116,7 +116,7 @@
     boot: "nvram_write_disable"
     network_type: "nm_wired,nm_wireless"
     hardware: "nvidia"
-    ssh_access: "github"
+    ssh_access: "work"
     dmanager: "sddm"
     gui: "awesome,qtile,hyprland,kde"
     develop: "std,cpp,python,go"

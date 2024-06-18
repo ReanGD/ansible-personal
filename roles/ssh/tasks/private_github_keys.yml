@@ -1,0 +1,21 @@
+---
+- name: Copy ssh config
+  ansible.builtin.template:
+    src: config_github
+    dest: "/home/{{ main_user }}/.ssh/config"
+    group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0600"
+  become: true
+
+- name: Install github keys
+  ansible.builtin.copy:
+    content: "{{ item.key }}"
+    dest: "/home/{{ main_user }}/.ssh/{{ item.name }}"
+    group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0600"
+  loop:
+    - { key: "{{ github_private_key }}", name: "github" }
+  loop_control:
+    label: "{{ item.name }}"
