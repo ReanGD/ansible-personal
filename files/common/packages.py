@@ -1,4 +1,4 @@
-# global x86_64, hostname_id, distro, network_type, dmanager, gui, develop, monitoring, roles
+# global x86_64, hostname_id, distro, network_type, hardware, dmanager, gui, develop, monitoring, roles
 
 
 # pylama:ignore=E0602
@@ -28,6 +28,11 @@ def is_develop(name: str) -> bool:
 
 def is_network_type(name: str) -> bool:
     return name in network_type.split(",")  # type: ignore
+
+
+def is_hardware(name: str) -> bool:
+    return name in hardware.split(",")  # type: ignore
+
 
 def is_work_host() -> bool:
     return hostname_id == "worknote"  # type: ignore
@@ -182,10 +187,15 @@ def desktop_env():
     if is_gui("hyprland"):
         gui_pkgs += ["hyprland",
                      "hyprlock",
-                     "waybar",                # status bar
-                     "aylurs-gtk-shell",      # ags
-                     "rose-pine-cursor",      # X11 cursor
-                     "rose-pine-hyprcursor",  # hyprland cursor
+                     "hyprpaper",              # wallpaper manager
+                     "waypaper",               # wallpaper selector
+                     "waybar",                 # status bar
+                     "aylurs-gtk-shell",       # ags
+                     "dart-sass",              # scss compiler for ags
+                     "inotify-tools",          # for auto reload ags and waybar
+                     "network-manager-applet", # nm-applet
+                     "rose-pine-cursor",       # X11 cursor
+                     "rose-pine-hyprcursor",   # hyprland cursor
                      ]
 
     if is_gui("awesome"):
@@ -234,7 +244,7 @@ def development():
                          # "python-dateutil",  # for include-what-you-use
                          # "include-what-you-use",
                          # "vulkan-mesa-layers",  # show vulkan draw statistics
-                        #  "cpp-dependencies",  # show dependencies graph
+                         # "cpp-dependencies",  # show dependencies graph
                          ]
 
     if is_develop("python"):
@@ -243,6 +253,7 @@ def development():
                          "python-jedi",  # for vs-code ?
                          "pyenv",  # install others versions of python
                          "python-poetry",  # project deps manager
+                         "python-pdm",  # modern project deps manager
                          "pylama",  # linter
                          "mypy",  # linter
                          "python-pylint",  # linter
@@ -267,8 +278,8 @@ def development():
 
     if is_develop("android"):
         develop_pkgs += ["android-tools",  # for adb
-                         "jdk8-openjdk",  # for flutter
-                         "android-sdk",  # for flutter
+                         "jdk8-openjdk",   # for flutter
+                         "android-sdk",    # for flutter
                          "android-sdk-platform-tools",  # for flutter
                          "android-sdk-build-tools",  # for flutter
                          "flutter"]
@@ -316,7 +327,8 @@ def font():
             "ttf-droid",
             "ttf-dejavu",
             "ttf-ubuntu-font-family",
-            "inter-font",  # for awesome
+            "inter-font",  # for awesome wm
+            "ttf-font-awesome",
             "noto-fonts-emoji",  # emoji for chrome
             "adobe-source-code-pro-fonts"]
 
@@ -353,7 +365,10 @@ def game():
     if not is_role("game"):
         return []
 
-    game_pkgs = ["steam"]
+    game_pkgs = [
+        "steam",
+        "r2modman-bin",  # easy to use mod manager for games
+    ]
 
     # game_pkgs += ["minecraft-launcher"]
 
@@ -364,7 +379,7 @@ def messengers():
     if not is_role("messengers"):
         return []
 
-    messengers_pkgs = ["telegram-desktop"]
+    messengers_pkgs = ["telegram-desktop", "element-desktop"]
 
     if is_work_host():
         messengers_pkgs += ["zoom"]
@@ -394,7 +409,9 @@ def media():
             "inkscape",  # vector editor
             "blender",
             "smplayer",
-            "deadbeef"]
+            "deadbeef",
+            "vlc",
+            ]
 
 
 def office():
@@ -430,7 +447,7 @@ def torrent():
     if not is_role("torrent"):
         return []
 
-    return ["transmission-remote-gui"]  # transmission-remote-gui-bin - not work now
+    return ["transgui-qt"]
 
 
 def bluetooth():
@@ -478,9 +495,8 @@ def work():
     if not is_role("work"):
         return []
 
-    return ["openconnect",  # for vpn to work
+    return ["openconnect",         # for vpn to work
             "allure-commandline",  # view allure report
-            "bazelisk",  # build tool for bazel
             ]
 
 
