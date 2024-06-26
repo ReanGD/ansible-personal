@@ -39,4 +39,3 @@
 
 - name: Home Manager switch to new version
   ansible.builtin.command: home-manager switch
-  when: reg_home_manager_installed.rc != 0

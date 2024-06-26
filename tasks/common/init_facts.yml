@@ -46,7 +46,7 @@
 # monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
 # roles: "none" or ["font", "docker", "k8s", "automount", "web", "game", "messengers",
 #                   "audio", "media", "office", "file_managers", "torrent", "bluetooth",
-#                   "work", "repository", "rsync_server", "hass", "sing_box"]
+#                   "work", "repository", "rsync_server", "hass", "sing_box", "nix"]
 
 - name: Set hass facts
   ansible.builtin.set_fact:
@@ -89,7 +89,7 @@
     gui: "awesome,qtile,hyprland,kde"
     develop: "std,cpp,python,go,android"
     monitoring: "std,hddtemp"
-    roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,torrent,bluetooth,work,repository,sing_box"
+    roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,torrent,bluetooth,work,repository,sing_box,nix"
     swap_size: 20480
     swappiness: 10
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7C90'
@@ -121,7 +121,7 @@
     gui: "awesome,qtile,hyprland,kde"
     develop: "std,cpp,python,go"
     monitoring: "std,notebook,hddtemp"
-    roles: "font,docker,web,messengers,audio,media,office,file_managers,bluetooth,work,repository,sing_box"
+    roles: "font,docker,web,messengers,audio,media,office,file_managers,bluetooth,work,repository,sing_box,nix"
     swap_size: 35840
     swappiness: 10
   when: x86_64 and reg_product_name_x86_64.stdout == '20WE'

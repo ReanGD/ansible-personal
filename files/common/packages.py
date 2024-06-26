@@ -72,12 +72,14 @@ def system():
     system_pkgs += ["ansible", "python", "python-lxml"]
 
     # terminal
-    system_pkgs += ["fd",       # fast find alternative
-                    "ripgrep",  # fast grep
-                    "exa",      # ls alternative
-                    "ncdu",     # disk usage analyzer
-                    "zsh",
-                    "fzf"]
+    system_pkgs += [
+                    # "fd",       # (nix) fast find alternative
+                    # "ripgrep",  # (nix) fast grep alternative
+                    # "eza",      # (nix) modern ls alternative (old exa)
+                    # "ncdu",     # (nix) disk usage analyzer
+                    # "zsh",      # (nix) shell
+                    # "fzf",      # (nix) fuzzy search
+                    ]
 
     if not is_gui("none"):
         system_pkgs += ["terminator",
@@ -86,7 +88,11 @@ def system():
         system_pkgs += ["rxvt-unicode-terminfo"]
 
     # archivers
-    system_pkgs += ["p7zip", "unzip", "unrar"]
+    system_pkgs += [
+        # "p7zip",  # (nix)
+        "unzip",
+        # "unrar",  # (nix)
+    ]
 
     if is_x86_64():
         system_pkgs += ["yay",  # AUR package manager
@@ -196,6 +202,7 @@ def desktop_env():
                      "network-manager-applet", # nm-applet
                      "rose-pine-cursor",       # X11 cursor
                      "rose-pine-hyprcursor",   # hyprland cursor
+                     "python-materialyoucolor-git",  # color theme generator
                      ]
 
     if is_gui("awesome"):
@@ -223,12 +230,13 @@ def development():
 
     develop_pkgs = []
     if is_develop("std"):
-        # "pycharm-community-edition", "pycharm-professional", "clion", "clion-cmake"
         develop_pkgs += ["git",
-                         "icdiff",  # console diff
-                         "meld",
+                         "hurl",       # http client for tests
+                         "icdiff",     # console diff
+                         "git-delta",  # syntax-highlighting pager for git and diff output
+                        #  "meld",     # (nix) git UI diff tool
                          "emacs",
-                         "sublime-merge",
+                        #  "sublime-merge",  # (nix) git UI tool
                          "sublime-text-dev",
                          "ansible-lint",  # for ansible plugin in vscode
                          "visual-studio-code-bin"]
@@ -330,6 +338,7 @@ def font():
             "inter-font",  # for awesome wm
             "ttf-font-awesome",
             "noto-fonts-emoji",  # emoji for chrome
+            "ttf-material-symbols-variable-git", # material icons for ags
             "adobe-source-code-pro-fonts"]
 
 
