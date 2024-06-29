@@ -50,6 +50,8 @@
       when: 'not is_chroot and "repository" in roles.split(",")'
     - role: dotfiles
       when: not is_chroot and x86_64
+    - role: nix
+      when: '"nix" in roles.split(",")'
     - role: gui
       when: not is_chroot and gui!="none"
     - role: vs_code

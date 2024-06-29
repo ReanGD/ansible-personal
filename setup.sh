@@ -160,7 +160,7 @@ function setup_base {
     'TM1613')
         FUNC="xnote"
         ;;
-    '20WE')
+    'Zenbook UX7602VI_UX7602VI')
         FUNC="worknote"
         ;;
     'Standard PC (Q35 + ICH9, 2009)')

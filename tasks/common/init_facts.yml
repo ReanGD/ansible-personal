@@ -124,7 +124,7 @@
     roles: "font,docker,web,messengers,audio,media,office,file_managers,bluetooth,work,repository,sing_box,nix"
     swap_size: 35840
     swappiness: 10
-  when: x86_64 and reg_product_name_x86_64.stdout == '20WE'
+  when: x86_64 and reg_product_name_x86_64.stdout == 'Zenbook UX7602VI_UX7602VI'
 
 - name: Set weaselproxy facts
   ansible.builtin.set_fact:

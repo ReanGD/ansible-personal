@@ -217,6 +217,7 @@ def desktop_env():
 
     if is_gui("kde"):
         gui_pkgs += ["kdeconnect",  # connect to phone
+                     "plasma-meta",
                      "plasma5-applets-virtual-desktop-bar-git",  # tilling bar
                      "dolphin-plugins",
                      "print-manager"]
@@ -301,9 +302,12 @@ def monitoring_utils():
 
     monitoring_pkgs = []
     if is_monitoring("std"):
-        monitoring_pkgs += ["iftop",  # network monitor
-                            "htop",  # process monitor
-                            "iotop"]  # disk monitor
+        monitoring_pkgs += ["iftop",    # network monitor
+                            "htop",     # process monitor
+                            "iotop",    # disk monitor
+                            "psensor",  # gui temperature monitor
+                            "nload",    # network monitor
+        ]
 
         if is_x86_64():
             monitoring_pkgs += ["hwinfo",    # info about hardware
@@ -338,6 +342,7 @@ def font():
             "inter-font",  # for awesome wm
             "ttf-font-awesome",
             "noto-fonts-emoji",  # emoji for chrome
+            "ttf-material-design-icons-git",     # material icons for ags
             "ttf-material-symbols-variable-git", # material icons for ags
             "adobe-source-code-pro-fonts"]
 
@@ -516,6 +521,13 @@ def sing_box():
     return ["sing-box"]
 
 
+def nix():
+    if not is_role("nix"):
+        return []
+
+    return ["nix"]
+
+
 metas = ["base-devel"]
 groups = []
 
@@ -543,6 +555,7 @@ packages += rsync_server()
 packages += hass()
 packages += work()
 packages += sing_box()
+packages += nix()
 
 ignore_packages = ["squadus"]
 
