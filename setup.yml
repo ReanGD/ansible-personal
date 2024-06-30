@@ -9,8 +9,8 @@
   roles:
     - locale
     - users
-    - network
     - sudo
+    - network
     - packages_manager
     - role: setup
       when: is_chroot and x86_64
