@@ -10,8 +10,8 @@
     - locale
     - users
     - sudo
-    - network
     - packages_manager
+    - network
     - role: setup
       when: is_chroot and x86_64
     - ssh
