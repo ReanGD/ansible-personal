@@ -113,12 +113,14 @@ def driver():
     if not is_gui("none"):
         driver_pkgs = ["mesa"]
 
+    if is_hardware("nvidia"):
+        driver_pkgs += ["nvidia", "nvidia-settings"]
+
     if get_hostname_id() == "server":
         #  "xf86-video-intel"
         driver_pkgs += ["btrfs-progs"]
     elif get_hostname_id() == "master":
-        driver_pkgs += ["nvidia",
-                        "gwe"]  # Controlling NVIDIA Fans
+        driver_pkgs += ["gwe"]  # Controlling NVIDIA Fans
     elif get_hostname_id() == "xnote":
         driver_pkgs += ["bbswitch",
                         # "bumblebee",
@@ -333,8 +335,6 @@ def font():
 
     return ["font-manager",  # viewer for fonts
             "ttf-ms-fonts",
-            "ttf-tahoma",
-            # "ttf-vista-fonts",
             "ttf-fixedsys-excelsior-linux",
             "ttf-droid",
             "ttf-dejavu",
