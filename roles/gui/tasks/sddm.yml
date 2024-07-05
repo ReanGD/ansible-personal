@@ -1,27 +1,18 @@
 ---
-- name: Install package ssdm
+- name: Install package sddm
   pkg_manager:
-    name: ssdm
+    name: sddm
     command: install
   become: true
   become_user: "{{ install_user }}"
 
-- name: Create configuration for ssdm
+- name: Create configuration for sddm
   ansible.builtin.copy:
     src: zz_sddm.conf
     dest: /etc/sddm.conf.d/zz_sddm.conf
     group: root
     owner: root
     mode: "0644"
-  become: true
-
-- name: Create session wrapper for ssdm
-  ansible.builtin.copy:
-    src: sddm_xsession.sh
-    dest: /etc/sddm.conf.d/sddm_xsession.sh
-    group: root``
-    owner: root
-    mode: "0755"
   become: true
 
 - name: Enable sddm service

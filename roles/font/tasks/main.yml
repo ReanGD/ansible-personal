@@ -45,7 +45,6 @@
   become: true
   become_user: "{{ install_user }}"
 
-
 - name: Install second fonts packages
   pkg_manager:
     name: ttf-font-awesome,noto-fonts-emoji,ttf-material-design-icons-git,ttf-material-symbols-variable-git,adobe-source-code-pro-fonts
