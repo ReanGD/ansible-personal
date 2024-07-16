@@ -17,16 +17,19 @@
 - name: Find efi partition name
   ansible.builtin.command: findmnt -o SOURCE --noheadings /boot/efi
   register: efi_partition_name_reg
+  become: true
   changed_when: false
 
 - name: Find root partition uuid
   ansible.builtin.command: findmnt -o UUID --noheadings /
   register: root_partition_uuid_reg
+  become: true
   changed_when: false
 
 - name: Find home partition uuid
   ansible.builtin.command: findmnt -o UUID --noheadings /home
   register: home_partition_uuid_reg
+  become: true
   changed_when: false
   failed_when: home_partition_uuid_reg.rc > 1
 
