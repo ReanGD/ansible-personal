@@ -30,7 +30,6 @@ reangd_repositories_map:
   - { repo: "rust-open3d.git",                dest: "rust-open3d" }
   - { repo: "rust-software-render.git",       dest: "rust-software-render" }
   - { repo: "smart-home.git",                 dest: "smart-home" }
-  - { repo: "sublime-powerslim.git",          dest: "sublime-powerslim" }
   - { repo: "vscode-devdocs-io.git",          dest: "vscode-devdocs-io" }
   - { repo: "web-home-manage.git",            dest: "web-home-manage" }
   - { repo: "zrpc.git",                       dest: "zrpc" }
@@ -43,3 +42,6 @@ lovely_helper_repositories_map:
   - { repo: "AI.git",               dest: "AI" }
   - { repo: "android_frontend.git", dest: "android_frontend" }
   - { repo: "backend.git",          dest: "backend" }
+
+lumivox_ai_repositories_map:
+  - { repo: "speechlab.git", dest: "speechlab" }
