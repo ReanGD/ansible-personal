@@ -32,7 +32,6 @@ reangd_repositories_map:
   - { repo: "smart-home.git",                 dest: "smart-home" }
   - { repo: "vscode-devdocs-io.git",          dest: "vscode-devdocs-io" }
   - { repo: "web-home-manage.git",            dest: "web-home-manage" }
-  - { repo: "zrpc.git",                       dest: "zrpc" }
 
 terra_repositories_map:
   - { repo: "TerraEngine.git", dest: "TerraEngine" }
@@ -45,3 +44,4 @@ lovely_helper_repositories_map:
 
 lumivox_ai_repositories_map:
   - { repo: "speechlab.git", dest: "speechlab" }
+  - { repo: "voice-agent.git", dest: "voice-agent" }
