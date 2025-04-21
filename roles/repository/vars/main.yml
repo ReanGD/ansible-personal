@@ -33,9 +33,6 @@ reangd_repositories_map:
   - { repo: "vscode-devdocs-io.git",          dest: "vscode-devdocs-io" }
   - { repo: "web-home-manage.git",            dest: "web-home-manage" }
 
-terra_repositories_map:
-  - { repo: "TerraEngine.git", dest: "TerraEngine" }
-
 lovely_helper_repositories_map:
   - { repo: "agents.git",           dest: "agents" }
   - { repo: "AI.git",               dest: "AI" }
@@ -43,5 +40,11 @@ lovely_helper_repositories_map:
   - { repo: "backend.git",          dest: "backend" }
 
 lumivox_ai_repositories_map:
-  - { repo: "speechlab.git", dest: "speechlab" }
+  - { repo: "speechlab.git",   dest: "speechlab" }
   - { repo: "voice-agent.git", dest: "voice-agent" }
+
+runix_org_repositories_map:
+  - { repo: "runix.git", dest: "runix" }
+
+terra_repositories_map:
+  - { repo: "TerraEngine.git", dest: "TerraEngine" }
