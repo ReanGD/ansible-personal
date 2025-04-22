@@ -1,0 +1,35 @@
+---
+
+- name: Create config dir for pulse
+  ansible.builtin.file:
+    path: "/home/{{ main_user }}/.config/pipewire/pipewire-pulse.conf.d/"
+    state: directory
+    group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0755"
+    recurse: true
+
+- name: Disable mic autogain for pulse
+  ansible.builtin.copy:
+    src: 20-pulse-disable-mic-autogain.conf
+    dest: "/home/{{ main_user }}/.config/pipewire/pipewire-pulse.conf.d/20-pulse-disable-mic-autogain.conf"
+    group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0644"
+
+- name: Create config dir for pipewire
+  ansible.builtin.file:
+    path: "/home/{{ main_user }}/.config/pipewire/pipewire.conf.d/"
+    state: directory
+    group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0755"
+    recurse: true
+
+- name: Disable mic autogain for pipewire
+  ansible.builtin.copy:
+    src: 20-pipewire-disable-mic-autogain.conf
+    dest: "/home/{{ main_user }}/.config/pipewire/pipewire.conf.d/20-pipewire-disable-mic-autogain.conf"
+    group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0644"

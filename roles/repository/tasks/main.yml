@@ -17,9 +17,9 @@
     dest: /home/{{ main_user }}/projects/lumivox_ai/{{ item.dest }}
   loop: "{{ lumivox_ai_repositories_map }}"
 
-- name: Clone or update LumivoxAI repositories
+- name: Clone or update Runix repositories
   update_git:
-    repo: git@github.com:LumivoxAI/{{ item.repo }}
+    repo: git@github.com:Runix-Org/{{ item.repo }}
     dest: /home/{{ main_user }}/projects/runix/{{ item.dest }}
   loop: "{{ runix_org_repositories_map }}"
 

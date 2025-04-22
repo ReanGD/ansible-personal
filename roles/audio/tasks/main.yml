@@ -1,16 +1,16 @@
 ---
-- name: Install pulseaudio
+- name: Install pipewire
   pkg_manager:
-    name: pulseaudio
+    name: pipewire, lib32-pipewire, pipewire-audio, pipewire-alsa, pipewire-pulse, pipewire-jack, wireplumber
     command: install
   become: true
   become_user: "{{ install_user }}"
 
-- name: Add "Jack Headphone Mic" and "Jack Headset Mic"
-  ansible.builtin.copy:
-    src: analog-input-internal-mic.conf
-    dest: /usr/share/pulseaudio/alsa-mixer/paths/analog-input-internal-mic.conf
-    group: root
-    owner: root
-    mode: "0644"
-  become: true
+- name: Enable wireplumber systemd user service
+  ansible.builtin.systemd_service:
+    name: wireplumber
+    scope: user
+    enabled: true
+  when: not is_chroot
+
+- import_tasks: config.yml
