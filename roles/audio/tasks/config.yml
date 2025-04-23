@@ -33,3 +33,21 @@
     group: "{{ main_user }}"
     owner: "{{ main_user }}"
     mode: "0644"
+
+- name: Create config dir for wireplumber
+  ansible.builtin.file:
+    path: "/home/{{ main_user }}/.config/wireplumber/wireplumber.conf.d/"
+    state: directory
+    group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0755"
+    recurse: true
+
+- name: Disable suspend
+  ansible.builtin.copy:
+    src: 60-disable-suspend.conf
+    dest: "/home/{{ main_user }}/.config/wireplumber/wireplumber.conf.d/60-disable-suspend.conf"
+    group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0644"
+  when: hostname_id == "master"
