@@ -34,6 +34,14 @@
     owner: "{{ main_user }}"
     mode: "0644"
 
+- name: Create virtual mics
+  ansible.builtin.copy:
+    src: 10-vmics.conf
+    dest: "/home/{{ main_user }}/.config/pipewire/pipewire.conf.d/10-vmics.conf"
+    group: "{{ main_user }}"
+    owner: "{{ main_user }}"
+    mode: "0644"
+
 - name: Create config dir for wireplumber
   ansible.builtin.file:
     path: "/home/{{ main_user }}/.config/wireplumber/wireplumber.conf.d/"
