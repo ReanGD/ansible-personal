@@ -1,11 +1,66 @@
 ---
-- name: Configure log size
-  ansible.builtin.copy:
-    src: journald.conf
-    dest: /etc/systemd/journald.conf
-    group: root
+- name: Create systemd user.conf.d directory
+  ansible.builtin.file:
+    path: /etc/systemd/user.conf.d
+    state: directory
     owner: root
-    mode: "0446"
+    group: root
+    mode: "0755"
+  become: true
+
+- name: Configure file descriptor limits (soft:hard)
+  ansible.builtin.copy:
+    content: |
+      [Manager]
+      DefaultLimitNOFILE=8192:65535
+    dest: /etc/systemd/user.conf.d/file-limits.conf
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+
+- name: Create security limits.d directory
+  ansible.builtin.file:
+    path: /etc/security/limits.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: Configure file descriptor limits in PAM
+  ansible.builtin.copy:
+    content: |
+      *           soft    nofile     8192
+      *           hard    nofile     65535
+      root        soft    nofile     65535
+      root        hard    nofile     1048576
+    dest: /etc/security/limits.d/file-limits.conf
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+
+- name: Create systemd journald.conf.d directory
+  ansible.builtin.file:
+    path: /etc/systemd/journald.conf.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: Configure journald max size
+  ansible.builtin.copy:
+    content: |
+      [Journal]
+      SystemMaxUse=500M
+      SystemMaxFileSize=50M
+      MaxFileSec=1week
+    dest: /etc/systemd/journald.conf.d/max-size.conf
+    owner: root
+    group: root
+    mode: "0644"
   become: true
 
 - name: Install packages for set hostname
