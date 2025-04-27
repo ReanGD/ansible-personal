@@ -47,7 +47,7 @@
     mode: "0755"
   loop:
     - .config/zsh
-  when: "'nix' in roles.split(',')"
+  when: "'nix' in setup.split(',')"
   become: true
 
 - name: Clone or update dotfile repositories
@@ -66,14 +66,14 @@
   link:
     src: /home/{{ main_user }}/projects/home/dotfiles/{{ item.src }}
     dst: /home/{{ main_user }}/{{ item.dst }}
-  when: "'nix' in roles.split(',')"
+  when: "'nix' in setup.split(',')"
   loop: "{{ dotfiles_path_map_nix }}"
 
 - name: Create common no nix links for dotfiles
   link:
     src: /home/{{ main_user }}/projects/home/dotfiles/{{ item.src }}
     dst: /home/{{ main_user }}/{{ item.dst }}
-  when: "'nix' not in roles.split(',')"
+  when: "'nix' not in setup.split(',')"
   loop: "{{ dotfiles_path_map_no_nix }}"
 
 - name: Create links for GUI dotfiles

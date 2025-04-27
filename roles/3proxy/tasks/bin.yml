@@ -25,8 +25,8 @@
   ansible.builtin.copy:
     src: /tmp/3proxy-{{ proxy3_version }}/bin/3proxy
     dest: /usr/bin/3proxy
+    remote_src: true
     group: root
     owner: root
     mode: "0755"
-    remote_src: true
   become: true

@@ -1,25 +1,27 @@
 import os
 from traceback import format_exc
+
 from ansible.plugins.action import ActionBase
 
 try:
     from __main__ import display
 except ImportError:
     from ansible.utils.display import Display
+
     display = Display()
 
 
 class Clr:
-    COLOR_HIGHLIGHT = 'white'
-    COLOR_VERBOSE = 'blue'
-    COLOR_WARN = 'bright purple'
-    COLOR_ERROR = 'red'
-    COLOR_DEBUG = 'dark gray'
-    COLOR_DEPRECATE = 'purple'
-    COLOR_SKIP = 'cyan'
-    COLOR_UNREACHABLE = 'bright red'
-    COLOR_OK = 'green'
-    COLOR_CHANGED = 'yellow'
+    COLOR_HIGHLIGHT = "white"
+    COLOR_VERBOSE = "blue"
+    COLOR_WARN = "bright purple"
+    COLOR_ERROR = "red"
+    COLOR_DEBUG = "dark gray"
+    COLOR_DEPRECATE = "purple"
+    COLOR_SKIP = "cyan"
+    COLOR_UNREACHABLE = "bright red"
+    COLOR_OK = "green"
+    COLOR_CHANGED = "yellow"
 
 
 class StrError(RuntimeError):
@@ -63,7 +65,18 @@ class ActionModule(ActionBase):
         if not os.path.exists(config):
             raise StrError("Config file '{}' not found".format(config))
 
-        gkeys = ["x86_64", "hostname_id", "distro", "network_type", "hardware", "dmanager", "gui", "develop", "monitoring", "roles"]
+        gkeys = [
+            "x86_64",
+            "hostname_id",
+            "distro",
+            "network_type",
+            "hardware",
+            "dmanager",
+            "gui",
+            "develop",
+            "monitoring",
+            "setup",
+        ]
         gvars = {key: self._get_var(key) for key in gkeys}
         exec(open(config).read(), gvars)
         keys = {it.strip() for it in gvars["keys"]}
@@ -71,18 +84,21 @@ class ActionModule(ActionBase):
         groups = {it.strip() for it in gvars["groups"]}
         packages = {it.strip() for it in gvars["packages"]}
         ignore_packages = {it.strip() for it in gvars["ignore_packages"]}
-        return {"packages": list(packages),
-                "ignore_packages": list(ignore_packages),
-                "metas": list(metas),
-                "groups": list(groups),
-                "keys": list(keys)}
+        return {
+            "packages": list(packages),
+            "ignore_packages": list(ignore_packages),
+            "metas": list(metas),
+            "groups": list(groups),
+            "keys": list(keys),
+        }
 
     def _get_param_name(self, command):
         param_name = "name"
         result = self._task.args.get(param_name, None)
         if result is None:
-            raise StrError("Not found required param '{}' for command '{}'.".format(param_name,
-                                                                                    command))
+            raise StrError(
+                "Not found required param '{}' for command '{}'.".format(param_name, command)
+            )
 
         return result
 
@@ -123,7 +139,7 @@ class ActionModule(ActionBase):
             "ignore_packages": ignore_packages,
             "metas": metas,
             "groups": groups,
-            }
+        }
         result = self._call_module(name="pkg_manager", args=args)
 
         ActionModule._print_section("group, name wrong", result.get("groups_name_wrong"))
@@ -134,7 +150,9 @@ class ActionModule(ActionBase):
         ActionModule._print_section("package, new (required)", result.get("packages_new_required"))
         ActionModule._print_section("package, aur", result.get("packages_aur"))
         ActionModule._print_section("package, in group", result.get("packages_in_group"))
-        ActionModule._print_section("package, not installed in group", result.get("packages_not_installed_in_group"))
+        ActionModule._print_section(
+            "package, not installed in group", result.get("packages_not_installed_in_group")
+        )
 
         return result
 
@@ -152,7 +170,9 @@ class ActionModule(ActionBase):
             return self._install(config["packages"])
         elif command == "get_info":
             config = self._get_param_config_value(command)
-            return self._get_info(config["packages"], config["ignore_packages"], config["metas"], config["groups"])
+            return self._get_info(
+                config["packages"], config["ignore_packages"], config["metas"], config["groups"]
+            )
         else:
             raise StrError("Param 'command' has unexpected value '{}'.".format(command))
 
@@ -170,11 +190,11 @@ class ActionModule(ActionBase):
         try:
             result.update(self._run())
         except StrError as e:
-            result['failed'] = True
-            result['msg'] = "Error in action_plugin/pkg_manager: " + str(e)
+            result["failed"] = True
+            result["msg"] = "Error in action_plugin/pkg_manager: " + str(e)
         except Exception:
             ActionModule._print_exception(format_exc())
-            result['failed'] = True
-            result['msg'] = "Exception in action_plugin/pkg_manager: "
+            result["failed"] = True
+            result["msg"] = "Exception in action_plugin/pkg_manager: "
 
         return result

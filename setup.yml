@@ -24,7 +24,7 @@
     - role: font
       when: '"font" in roles.split(",")'
     - role: audio
-      when: '"audio" in roles.split(",")'
+      when: '"audio" in setup.split(",")'
     - role: docker
       when: '"docker" in roles.split(",")'
     - role: automount
@@ -47,7 +47,7 @@
     - role: pkgcacheclean
       when: x86_64
     - role: repository
-      when: 'not is_chroot and "repository" in roles.split(",")'
+      when: 'not is_chroot and "repository" in setup.split(",")'
     - role: dotfiles
       when: not is_chroot and x86_64
     - role: nix

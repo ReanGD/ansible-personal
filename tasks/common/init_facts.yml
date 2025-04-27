@@ -14,7 +14,7 @@
   ansible.builtin.set_fact:
     main_user: rean
     install_user: aur_builder
-    is_chroot: "{{ is_chroot_param }}"
+    is_chroot: "{{ is_chroot_param == 'True' }}"
     root_dir: "{{ inventory_dir }}"
     packages_file: "{{ inventory_dir }}/files/common/packages.py"
     x86_64: "{{ ansible_facts['architecture'] == 'x86_64' }}"
@@ -44,7 +44,7 @@
 # gui: "none" or ["awesome", "qtile", "hyprland", "kde"]
 # develop: "none" or ["std", "cpp", "python", "go", "rust", "rust3D", "sqlite", "android"]
 # monitoring: "none" or ["std", "notebook", "hddtemp", "ups"]
-# roles: "none" or ["font", "docker", "k8s", "automount", "web", "game", "messengers",
+# setup: "none" or ["font", "docker", "k8s", "automount", "web", "game", "messengers",
 #                   "audio", "media", "office", "file_managers", "torrent", "bluetooth",
 #                   "work", "repository", "rsync_server", "hass", "sing_box", "nix"]
 
@@ -58,7 +58,7 @@
     gui: "none"
     develop: "none"
     monitoring: "std,hddtemp"
-    roles: "rsync_server,hass"
+    setup: "rsync_server,hass"
     swap_size: 2048
     swappiness: 1
   when: arm and reg_product_name_armv7l.stdout == '00000000bed57e85'
@@ -73,7 +73,7 @@
     gui: "none"
     develop: "none"
     monitoring: "std,hddtemp"
-    roles: "k8s,automount"
+    setup: "k8s,automount"
     swap_size: 10240
     swappiness: 10
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7978'
@@ -89,7 +89,7 @@
     gui: "awesome,qtile,hyprland,kde"
     develop: "std,cpp,python,go,android"
     monitoring: "std,hddtemp"
-    roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,torrent,bluetooth,work,repository,sing_box,nix"
+    setup: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,torrent,bluetooth,work,repository,sing_box,nix"
     swap_size: 20480
     swappiness: 10
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7C90'
@@ -105,7 +105,7 @@
     gui: "awesome,qtile,hyprland,kde"
     develop: "std,cpp,python,go"
     monitoring: "std,notebook,hddtemp"
-    roles: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,bluetooth,work,repository"
+    setup: "font,docker,automount,web,game,messengers,audio,media,office,file_managers,bluetooth,work,repository"
     swap_size: 8192
     swappiness: 20
   when: x86_64 and reg_product_name_x86_64.stdout == 'TM1613'
@@ -121,7 +121,7 @@
     gui: "awesome,qtile,hyprland,kde"
     develop: "std,cpp,python,go"
     monitoring: "std,notebook,hddtemp"
-    roles: "font,docker,web,messengers,audio,media,office,file_managers,bluetooth,work,repository,sing_box,nix"
+    setup: "font,docker,web,messengers,audio,media,office,file_managers,bluetooth,work,repository,sing_box,nix"
     swap_size: 35840
     swappiness: 10
   when: x86_64 and reg_product_name_x86_64.stdout == 'Zenbook UX7602VI_UX7602VI'
@@ -136,7 +136,7 @@
     gui: "none"
     develop: "none"
     monitoring: ""
-    roles: ""
+    setup: ""
     swap_size: 0
     swappiness: 0
   when: x86_64 and reg_product_name_x86_64.stdout == 'OpenStack Nova'
@@ -151,7 +151,7 @@
     gui: "none"
     develop: "none"
     monitoring: ""
-    roles: ""
+    setup: ""
     swap_size: 0
     swappiness: 0
   when: x86_64 and reg_product_name_x86_64.stdout == 'KVM'
@@ -167,7 +167,7 @@
     gui: "kde"
     develop: "std,cpp,python,go"
     monitoring: "std,hddtemp"
-    roles: "font,docker,web,messengers,audio,media,office,file_managers,repository"
+    setup: "font,docker,web,messengers,audio,media,office,file_managers,repository"
     swap_size: 4096
     swappiness: 1
   when: x86_64 and reg_product_name_x86_64.stdout == 'Standard PC (Q35 + ICH9, 2009)'
