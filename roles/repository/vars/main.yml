@@ -3,7 +3,6 @@ reangd_repositories_map:
   - { repo: "ansible-personal.git",           dest: "ansible-personal" }
   - { repo: "arena.git",                      dest: "arena.git" }
   - { repo: "bot-platform.git",               dest: "bot-platform" }
-  - { repo: "cpp-coroutine.git",              dest: "cpp-coroutine" }
   - { repo: "cpp-network.git",                dest: "cpp-network" }
   - { repo: "cpp-rtge.git",                   dest: "cpp-rtge" }
   - { repo: "dokuwiki-plugin-addnewpage.git", dest: "dokuwiki-plugin-addnewpage" }
@@ -40,6 +39,7 @@ lovely_helper_repositories_map:
   - { repo: "backend.git",          dest: "backend" }
 
 lumivox_ai_repositories_map:
+  - { repo: "logiclab.git",    dest: "logiclab" }
   - { repo: "speechlab.git",   dest: "speechlab" }
   - { repo: "voice-agent.git", dest: "voice-agent" }
 

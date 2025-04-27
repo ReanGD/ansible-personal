@@ -41,6 +41,7 @@
     group: "{{ main_user }}"
     owner: "{{ main_user }}"
     mode: "0644"
+  when: hostname_id == "master"
 
 - name: Create config dir for wireplumber
   ansible.builtin.file:
