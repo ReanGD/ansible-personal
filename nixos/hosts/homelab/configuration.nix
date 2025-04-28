@@ -9,7 +9,6 @@
 
   networking.hostName = "homelab";
   networking.networkmanager.enable = true;
-  networking.useDHCP = true;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
