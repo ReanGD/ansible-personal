@@ -18,6 +18,7 @@
   ];
 
   nix.settings = {
+    trusted-users = [ "root" "rean" ];
     experimental-features = [ "nix-command" "flakes" ];
     auto-optimise-store = true;
   };
