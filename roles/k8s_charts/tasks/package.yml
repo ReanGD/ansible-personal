@@ -1,12 +1,12 @@
 ---
 - name: "Create volume dirs for {{ name }} chart"
-  file:
+  ansible.builtin.file:
     path: "{{ volumes_dir_root }}{{ it.path }}"
     state: directory
-    mode: 0755
     group: root
     owner: "{{ main_user }}"
-  become: yes
+    mode: "0755"
+  become: true
   when: volumes is defined and action == 'install'
   loop: "{{ volumes }}"
   loop_control:

@@ -51,7 +51,7 @@
     - role: dotfiles
       when: not is_chroot and x86_64
     - role: nix
-      when: '"nix" in roles.split(",")'
+      when: '"nix" in setup.split(",")'
     - role: gui
       when: not is_chroot and gui!="none"
     - role: vs_code

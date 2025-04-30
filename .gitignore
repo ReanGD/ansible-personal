@@ -3,3 +3,4 @@ scripts/hddtemp/customexec.conf
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+.aider*

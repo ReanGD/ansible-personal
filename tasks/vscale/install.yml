@@ -20,11 +20,14 @@
         filename: 'ydcmd'
 
     - name: Update repositories cache
-      apt: update_cache=yes
+      ansible.builtin.apt:
+        update_cache: true
       changed_when: false
 
     - name: Install packages
-      apt: name={{ item }} state=present
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: present
       with_items:
         - htop
         - lego
@@ -37,28 +40,28 @@
         - php7.0-sqlite3
 
     - name: Copy nginx config
-      copy:
+      ansible.builtin.copy:
         src: "{{file_root}}/etc/nginx/sites-enabled/default"
         dest: /etc/nginx/sites-enabled/default
-        owner: root
         group: root
-        mode: 0777
+        owner: root
+        mode: "0777"
 
     - name: Copy rsnapshot config
-      copy:
+      ansible.builtin.copy:
         src: "{{file_root}}/etc/rsnapshot.conf"
         dest: /etc/rsnapshot.conf
-        owner: root
         group: root
-        mode: 0644
+        owner: root
+        mode: "0644"
 
     - name: Copy user scripts
-      copy:
+      ansible.builtin.copy:
         src: "{{file_root}}/usr/bin/{{ item }}"
         dest: /usr/bin/{{ item }}
-        owner: root
         group: root
-        mode: 0755
+        owner: root
+        mode: "0755"
       with_items:
         - renew
         - backup
@@ -68,27 +71,27 @@
         - restore_last
 
     - name: Copy cron config
-      copy:
+      ansible.builtin.copy:
         src: "{{file_root}}/etc/cron.d/rsnapshot"
         dest: /etc/cron.d/rsnapshot
-        owner: root
         group: root
-        mode: 0644
+        owner: root
+        mode: "0644"
 
 # ansible-vault decrypt .ydcmd.cfg
 # ansible-vault encrypt .ydcmd.cfg
 # https://moonback.ru/page/vestacp-backup-to-yandex-disk#more-5320
     - name: Copy ydcmd config
-      copy:
+      ansible.builtin.copy:
         src: "{{file_root}}/root/.ydcmd.cfg"
         dest: /root/.ydcmd.cfg
-        decrypt: yes
-        owner: root
+        decrypt: true
         group: root
-        mode: 0400
+        owner: root
+        mode: "0400"
 
     - name: Remove dirs
-      file: path={{ item }} state=absent
+      ansible.builtin.file: path={{ item }} state=absent
       with_items:
         - /tmp/dokuwiki-{{dokuwiki_version}}
         - /dokuwiki
@@ -96,31 +99,34 @@
     - name: Download dokuwiki
       unarchive:
         src: http://download.dokuwiki.org/src/dokuwiki/dokuwiki-{{dokuwiki_version}}.tgz
-        remote_src: yes
+        remote_src: true
         dest: /tmp
 
     - name: Move dokuwiki
-      command: mv /tmp/dokuwiki-{{dokuwiki_version}} /dokuwiki
+      ansible.builtin.command: mv /tmp/dokuwiki-{{dokuwiki_version}} /dokuwiki
 
     - name: Check ssl certificates dir
-      stat: path=/etc/letsencrypt/certificates get_checksum=no get_mime=no
+      ansible.builtin.stat:
+        path: /etc/letsencrypt/certificates
+        get_checksum: false
+        get_mime: false
       register: ssl_dir
 
     - name: Stop nginx for generate ssl certificates
-      service: name=nginx state=stopped
+      ansible.builtin.service: name=nginx state=stopped
       when: ssl_dir.stat.isdir is not defined
 
     - name: Generate dhparam
-      command: openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+      ansible.builtin.command: openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
       when: ssl_dir.stat.isdir is not defined
 
     # for testing: --server=https://acme-staging.api.letsencrypt.org/directory
     - name: Generate ssl certificates
-      command: lego --email=reangd@yandex.ru --domains=wiki.fr.to --accept-tos --path=/etc/letsencrypt/ --webroot=/dokuwiki --http=:80 --tls=:443 run
+      ansible.builtin.command: lego --email=reangd@yandex.ru --domains=wiki.fr.to --accept-tos --path=/etc/letsencrypt/ --webroot=/dokuwiki --http=:80 --tls=:443 run
       when: ssl_dir.stat.isdir is not defined
 
     - name: Restore dokuwiki rsnapshot backup
-      command: /usr/bin/restore_cloud
+      ansible.builtin.command: /usr/bin/restore_cloud
 
     - name: Restore dokuwiki last backup
-      command: /usr/bin/restore_impl daily.0
+      ansible.builtin.command: /usr/bin/restore_impl daily.0

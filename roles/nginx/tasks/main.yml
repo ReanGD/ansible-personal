@@ -6,7 +6,7 @@
   when: distro == "debian"
 
 - name: Check that the nginx config exists
-  stat:
+  ansible.builtin.stat:
     path: /etc/nginx/sites-enabled/{{ domain }}
     get_checksum: false
     get_mime: false
@@ -17,7 +17,7 @@
   when: "reinstall or not reg_nginx_cfg_exists.stat.exists"
 
 - name: Add group www-data for main user
-  user:
+  ansible.builtin.user:
     name: "{{ main_user }}"
     append: true
     groups: www-data
