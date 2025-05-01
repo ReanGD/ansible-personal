@@ -10,6 +10,7 @@
 
   environment.systemPackages = with pkgs; [
     vim
+    bat
     git
     htop
     curl
@@ -18,7 +19,7 @@
   ];
 
   nix.settings = {
-    trusted-users = [ "root" "rean" ];
+    trusted-users = [ "rean" ];
     experimental-features = [ "nix-command" "flakes" ];
     auto-optimise-store = true;
   };
