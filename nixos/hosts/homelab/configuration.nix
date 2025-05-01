@@ -4,7 +4,6 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ./disk-config.nix
-    ../../modules/common.nix
   ];
 
   networking.hostName = "homelab";
@@ -12,6 +11,19 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  sops = {
+    defaultSopsFile = ./secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+
+    # private key
+    age.keyFile = "/var/lib/sops-nix/key.txt";
+    secrets = {
+      "k3s_token" = {};
+      "public_ip" = {};
+      "local_ip" = {};
+    };
+  };
 
   services.openssh = {
     enable = true;
@@ -35,6 +47,10 @@
     enable = true;
     allowedTCPPorts = [ 22 ];
   };
+
+  systemd.tmpfiles.rules = [
+    "d /var/lib/sops-nix 0700 root root -"
+  ];
 
   system.stateVersion = "25.11";
 }

@@ -3,13 +3,19 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, disko, ... }: {
+  outputs = { self, nixpkgs, disko, sops-nix, ... }@inputs: {
     colmena = {
       meta = {
         nixpkgs = import nixpkgs {
@@ -34,9 +40,12 @@
 
     nixosConfigurations.homelab = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
       modules = [
         disko.nixosModules.disko
+        sops-nix.nixosModules.sops
         ./hosts/homelab/configuration.nix
+        ./modules/common.nix
       ];
     };
   };
