@@ -9,13 +9,12 @@
   };
 
   environment.systemPackages = with pkgs; [
-    vim
     bat
     git
     htop
     curl
     wget
-    tmux
+    micro
   ];
 
   nix.settings = {
