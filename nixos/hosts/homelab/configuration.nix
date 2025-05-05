@@ -1,7 +1,8 @@
-{ config, pkgs, modulesPath, ... }:
+{ config, pkgs, modulesPath, inputs, ... }:
 
 {
   imports = [
+    inputs.sops-nix.nixosModules.sops
     (modulesPath + "/installer/scan/not-detected.nix")
      ../../modules/k3s.nix
     ./disk-config.nix
