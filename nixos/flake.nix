@@ -22,6 +22,7 @@
           system = "x86_64-linux";
           config.allowUnfree = true;
         };
+        specialArgs = { inherit inputs; };
       };
 
       homelab = {
@@ -33,6 +34,7 @@
 
         imports = [
           disko.nixosModules.disko
+          inputs.sops-nix.nixosModules.sops
           ./hosts/homelab/configuration.nix
         ];
       };

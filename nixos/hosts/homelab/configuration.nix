@@ -21,9 +21,9 @@
     # private key
     age.keyFile = "/var/lib/sops-nix/key.txt";
     secrets = {
-      "k3s/token" = {};
-      "k3s/public_ip" = {};
-      "k3s/local_ip" = {};
+      "k3s/token" = { };
+      "k3s/public_ip" = { };
+      "k3s/local_ip" = { };
     };
   };
 
