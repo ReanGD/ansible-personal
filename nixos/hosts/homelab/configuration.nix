@@ -5,6 +5,7 @@
     inputs.sops-nix.nixosModules.sops
     (modulesPath + "/installer/scan/not-detected.nix")
      ../../modules/k3s.nix
+     ../../modules/common.nix
     ./disk-config.nix
   ];
 
