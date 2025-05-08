@@ -23,8 +23,17 @@
   boot.kernelModules = [ "overlay" "br_netfilter" ];
 
   networking.firewall = {
-    allowedTCPPorts = [ 6443 80 443 2379 2380 10250 ];
-    allowedUDPPorts = [ 8472 ];
+    allowedTCPPorts = [
+      80    # HTTP
+      443   # HTTPS
+      6443  # Kubernetes API Server — для удаленного управления через kubectl
+      2379  # etcd client — обмен данными между компонентами управления (нужен для HA)
+      2380  # etcd peer — взаимодействие между узлами etcd (нужен для HA/cluster-init)
+      10250 # Kubelet API — для получения логов и выполнения команд внутри подов
+    ];
+    allowedUDPPorts = [
+      8472  # Flannel VXLAN — необходим для сетевого взаимодействия между подами (CNI)
+    ];
   };
 
   environment.systemPackages = with pkgs; [ k3s kubectl kubernetes-helm ];

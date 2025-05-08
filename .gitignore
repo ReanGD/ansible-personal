@@ -1,4 +1,5 @@
 scripts/hddtemp/customexec.conf
+.ansible
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
