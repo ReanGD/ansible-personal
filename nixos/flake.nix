@@ -19,7 +19,7 @@
     colmena = {
       meta = {
         nixpkgs = import nixpkgs {
-          system = "x86_64-linux";
+          localSystem = "x86_64-linux";
           config.allowUnfree = true;
         };
         specialArgs = { inherit inputs; };
@@ -36,14 +36,15 @@
           disko.nixosModules.disko
           inputs.sops-nix.nixosModules.sops
           ./hosts/homelab/configuration.nix
+          ./modules/common.nix
         ];
       };
     };
 
     nixosConfigurations.homelab = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
+        { nixpkgs.hostPlatform = "x86_64-linux"; }
         disko.nixosModules.disko
         sops-nix.nixosModules.sops
         ./hosts/homelab/configuration.nix
