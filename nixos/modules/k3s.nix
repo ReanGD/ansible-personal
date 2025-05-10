@@ -20,6 +20,54 @@
     bind-address: "0.0.0.0"
   '';
 
+environment.etc."rancher/k3s/manifests/argocd-installer.yaml".text = ''
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      name: argocd
+    ---
+    apiVersion: helm.cattle.io/v1
+    kind: HelmChart
+    metadata:
+      name: argocd
+      namespace: kube-system
+    spec:
+      chart: argo-cd
+      repo: https://argoproj.github.io/argo-helm
+      targetNamespace: argocd
+      createNamespace: true
+      version: 7.3.4
+      valuesContent: |
+        configs:
+          params:
+            server.insecure: true
+          secret:
+            argocdServerAdminPassword: "${config.sops.placeholder."argocd/admin_password_hash"}"
+          repositories:
+            cluster-configs:
+              url: https://github.com/ReanGD/ansible-personal
+        server:
+          additionalApplications:
+            - name: root-cluster
+              namespace: argocd
+              project: default
+              source:
+                repoURL: https://github.com/ReanGD/ansible-personal
+                targetRevision: master
+                path: argocd
+              destination:
+                server: https://kubernetes.default.svc
+                namespace: argocd
+              syncPolicy:
+                automated:
+                  prune: true
+                  selfHeal: true
+  '';
+
+  systemd.tmpfiles.rules = [
+    "L+ /var/lib/rancher/k3s/server/manifests/argocd-installer.yaml - - - - /etc/rancher/k3s/manifests/argocd-installer.yaml"
+  ];
+
   boot.kernelModules = [ "overlay" "br_netfilter" ];
 
   networking.firewall = {
@@ -36,6 +84,6 @@
     ];
   };
 
-  environment.systemPackages = with pkgs; [ k3s kubectl kubernetes-helm ];
+  environment.systemPackages = with pkgs; [ k3s kubectl kubernetes-helm argocd ];
   environment.variables.KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
 }

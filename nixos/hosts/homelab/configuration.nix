@@ -24,6 +24,7 @@
       "k3s/token" = { };
       "k3s/public_ip" = { };
       "k3s/local_ip" = { };
+      "argocd/admin_password_hash" = { };
     };
   };
 
