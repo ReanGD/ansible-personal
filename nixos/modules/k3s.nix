@@ -36,36 +36,39 @@ environment.etc."rancher/k3s/manifests/argocd-installer.yaml".text = ''
       repo: https://argoproj.github.io/argo-helm
       targetNamespace: argocd
       createNamespace: true
-      version: 7.3.4
+      version: 7.9.1
       valuesContent: |
         configs:
           params:
             server.insecure: true
           secret:
             argocdServerAdminPassword: "${config.sops.placeholder."argocd/admin_password_hash"}"
-          repositories:
-            cluster-configs:
-              url: https://github.com/ReanGD/ansible-personal
-        server:
-          additionalApplications:
-            - name: root-cluster
-              namespace: argocd
-              project: default
-              source:
-                repoURL: https://github.com/ReanGD/ansible-personal
-                targetRevision: master
-                path: argocd
-              destination:
-                server: https://kubernetes.default.svc
-                namespace: argocd
-              syncPolicy:
-                automated:
-                  prune: true
-                  selfHeal: true
+  '';
+
+environment.etc."rancher/k3s/manifests/argocd-root-app.yaml".text = ''
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: root-cluster
+      namespace: argocd
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/ReanGD/ansible-personal
+        targetRevision: master
+        path: argocd/apps
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: argocd
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
   '';
 
   systemd.tmpfiles.rules = [
     "L+ /var/lib/rancher/k3s/server/manifests/argocd-installer.yaml - - - - /etc/rancher/k3s/manifests/argocd-installer.yaml"
+    "L+ /var/lib/rancher/k3s/server/manifests/argocd-root-app.yaml - - - - /etc/rancher/k3s/manifests/argocd-root-app.yaml"
   ];
 
   boot.kernelModules = [ "overlay" "br_netfilter" ];
