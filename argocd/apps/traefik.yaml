@@ -13,6 +13,9 @@ spec:
       values: |
         deployment:
           kind: DaemonSet
+          rollingUpdate:
+            maxUnavailable: 1
+            maxSurge: 0
         hostNetwork: true
         service:
           enabled: false
@@ -29,11 +32,6 @@ spec:
             protocol: TCP
         ingressRoute:
           dashboard:
-            enabled: true
-        logs:
-          general:
-            level: INFO
-          access:
             enabled: true
   destination:
     server: https://kubernetes.default.svc
