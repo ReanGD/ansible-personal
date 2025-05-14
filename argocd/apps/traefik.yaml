@@ -13,6 +13,8 @@ spec:
       values: |
         deployment:
           kind: DaemonSet
+        updateStrategy:
+          type: RollingUpdate
           rollingUpdate:
             maxUnavailable: 1
             maxSurge: 0
