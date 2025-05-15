@@ -21,6 +21,14 @@ spec:
         hostNetwork: true
         service:
           enabled: false
+        securityContext:
+          capabilities:
+            drop: [ALL]
+            add: [NET_BIND_SERVICE]
+          readOnlyRootFilesystem: false
+          runAsGroup: 0
+          runAsNonRoot: false
+          runAsUser: 0
         ports:
           web:
             port: 80
