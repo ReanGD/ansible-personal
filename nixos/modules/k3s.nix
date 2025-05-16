@@ -36,7 +36,7 @@ environment.etc."rancher/k3s/manifests/argocd-installer.yaml".text = ''
       repo: https://argoproj.github.io/argo-helm
       targetNamespace: argocd
       createNamespace: true
-      version: 7.9.1
+      version: 9.3.4
       valuesContent: |
         configs:
           params:
