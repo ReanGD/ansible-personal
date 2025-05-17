@@ -24,6 +24,19 @@ environment.etc."rancher/k3s/manifests/argocd-installer.yaml".text = ''
     apiVersion: v1
     kind: Namespace
     metadata:
+      name: external-secrets
+    ---
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: sops-age-key
+      namespace: external-secrets
+    stringData:
+      keys.txt: "${config.sops.placeholder."k3s/age_private_key"}"
+    ---
+    apiVersion: v1
+    kind: Namespace
+    metadata:
       name: argocd
     ---
     apiVersion: helm.cattle.io/v1
