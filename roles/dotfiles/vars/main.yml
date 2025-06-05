@@ -18,6 +18,7 @@ dotfiles_path_map_nix:
   - {src: ".config/nix",           dst: ".config/nix" }
   - {src: ".config/nixpkgs",       dst: ".config/nixpkgs" }
   - {src: ".config/zsh/lib",       dst: ".config/zsh/lib" }
+  - {src: ".config/zsh/app",       dst: ".config/zsh/app" }
 
 dotfiles_path_map_no_nix:
   - {src: ".config/fd",            dst: ".config/fd" }
