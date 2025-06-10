@@ -21,7 +21,6 @@ dotfiles_path_map_nix:
   - {src: ".config/zsh/app",       dst: ".config/zsh/app" }
 
 dotfiles_path_map_no_nix:
-  - {src: ".config/fd",            dst: ".config/fd" }
   - {src: ".config/zsh",           dst: ".config/zsh" }
 
 dotfiles_gui_path_map:
