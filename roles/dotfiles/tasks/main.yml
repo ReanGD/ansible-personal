@@ -17,12 +17,10 @@
     mode: "0755"
   loop:
     - .local/share
-    - .local/share/zsh
     - .local/share/rofi
     - .local/share/vscode
     - .local/share/firefox/.mozilla/firefox/rean.default-release
     - .cache
-    - .cache/zsh
     - .config
     - .config/lib
     - .config/pulse
@@ -35,18 +33,6 @@
     - projects/work
     - projects/external
     - projects/venv
-  become: true
-
-- name: Create cfg dirs for nix
-  ansible.builtin.file:
-    path: "/home/{{ main_user }}/{{ item }}"
-    state: directory
-    group: users
-    owner: "{{ main_user }}"
-    mode: "0755"
-  loop:
-    - .config/zsh
-  when: "'nix' in setup.split(',')"
   become: true
 
 - name: Clone or update dotfile repositories
@@ -67,13 +53,6 @@
     dst: /home/{{ main_user }}/{{ item.dst }}
   when: "'nix' in setup.split(',')"
   loop: "{{ dotfiles_path_map_nix }}"
-
-- name: Create common no nix links for dotfiles
-  link:
-    src: /home/{{ main_user }}/projects/home/dotfiles/{{ item.src }}
-    dst: /home/{{ main_user }}/{{ item.dst }}
-  when: "'nix' not in setup.split(',')"
-  loop: "{{ dotfiles_path_map_no_nix }}"
 
 - name: Create links for GUI dotfiles
   link:
