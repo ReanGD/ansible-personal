@@ -1,8 +1,0 @@
----
-- import_tasks: package.yml
-  vars:
-  - name: reg
-  - version: 3.1.0
-  - repo: k8s-at-home/reg
-  - namespace: storage
-  - values_template: reg_values.yml

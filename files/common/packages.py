@@ -373,13 +373,6 @@ def docker():
     return ["docker", "docker-compose"]
 
 
-def k8s():
-    if not is_role("k8s"):
-        return []
-
-    return ["helm"]
-
-
 def automount():
     if not is_role("automount"):
         return []
@@ -571,7 +564,6 @@ packages += development()
 packages += monitoring_utils()
 packages += font()
 packages += docker()
-packages += k8s()
 packages += automount()
 packages += web()
 packages += game()
