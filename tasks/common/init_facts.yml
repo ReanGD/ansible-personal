@@ -73,7 +73,7 @@
     gui: "none"
     develop: "none"
     monitoring: "std,hddtemp"
-    setup: "k8s,automount"
+    setup: "automount"
     swap_size: 10240
     swappiness: 10
   when: x86_64 and reg_product_name_x86_64.stdout == 'MS-7978'
